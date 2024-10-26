@@ -111,7 +111,7 @@ PowerRun.exe cmd.exe /c "reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\C
 set desktopPath=%USERPROFILE%\Desktop
 
 :: URL del file da scaricare
-set fileURL=https://github.com/MrNico98/WinHubX/releases/download/WinHubX/WinHubX.exe
+set fileURL=https://github.com/Italian-Developer/WinHubX/releases/latest/download/WinHubX.exe
 
 :: Nome del file scaricato
 set fileName=WinHubX.exe
@@ -122,7 +122,7 @@ powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.Security
 set desktopPath=%USERPROFILE%\Desktop
 
 :: URL del file da scaricare
-set fileURL=https://github.com/MrNico98/AIMODS-Store/releases/download/AIMODS-Store/AIMODS-Store.exe
+set fileURL=https://github.com/AIMODSstore/AIMODS-Store/releases/latest/download/AIMODS-Store.exe
 
 :: Nome del file scaricato
 set fileName=AIMODS-Store.exe

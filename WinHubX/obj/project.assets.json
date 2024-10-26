@@ -1200,23 +1200,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Nico\\.nuget\\packages\\": {},
+    "C:\\Users\\Riky\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Nico\\Downloads\\WinHubX-main\\WinHubX\\WinHubX.csproj",
+      "projectUniqueName": "C:\\Users\\Riky\\Desktop\\Script\\C#\\WinHubX\\WinHubX\\WinHubX.csproj",
       "projectName": "WinHubX",
-      "projectPath": "C:\\Users\\Nico\\Downloads\\WinHubX-main\\WinHubX\\WinHubX.csproj",
-      "packagesPath": "C:\\Users\\Nico\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Nico\\Downloads\\WinHubX-main\\WinHubX\\obj\\",
+      "projectPath": "C:\\Users\\Riky\\Desktop\\Script\\C#\\WinHubX\\WinHubX\\WinHubX.csproj",
+      "packagesPath": "C:\\Users\\Riky\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Riky\\Desktop\\Script\\C#\\WinHubX\\WinHubX\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Nico\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Riky\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -1242,9 +1242,8 @@
       "restoreAuditProperties": {
         "enableAudit": "true",
         "auditLevel": "low",
-        "auditMode": "all"
-      },
-      "SdkAnalysisLevel": "9.0.100"
+        "auditMode": "direct"
+      }
     },
     "frameworks": {
       "net8.0-windows7.0": {
@@ -1278,20 +1277,16 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
       }
     }
   },
   "logs": [
     {
-      "code": "NU1903",
+      "code": "Undefined",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Il pacchetto 'System.Formats.Asn1' 8.0.0 presenta una vulnerabilità nota di gravità alta, https://github.com/advisories/GHSA-447r-wph3-92pm",
-      "libraryId": "System.Formats.Asn1",
-      "targetGraphs": [
-        "net8.0-windows7.0"
-      ]
+      "message": "Si è verificato un problema durante la lettura del file di cache C:\\Users\\Riky\\Desktop\\Script\\C#\\WinHubX\\WinHubX\\obj\\project.nuget.cache: Invalid property identifier character: <. Path 'version', line 3, position 0."
     }
   ]
 }
