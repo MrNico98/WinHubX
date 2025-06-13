@@ -6,7 +6,7 @@
 ## Introduction 🌟
 <p>WinHubX is a versatile open source tool designed to optimize and manage Windows operating systems.</p>
 <p>WinHubX is constantly updated to include new features and improvements, making it an indispensable tool for those who want to optimize their Windows experience.</p>
-<p>WinHubX was born from the original idea of **mrnico98**</p>
+<p>WinHubX was born from the original idea of **MrNico98**</p>
 
 ### Language 🖥️
 <p>
