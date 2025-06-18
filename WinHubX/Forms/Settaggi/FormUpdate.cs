@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using System.Diagnostics;
+using System.Globalization;
 using WinHubX.Forms.Base;
 
 namespace WinHubX.Forms.Settaggi
@@ -12,6 +13,8 @@ namespace WinHubX.Forms.Settaggi
         private int tIndex = -1;
         public FormUpdate(FormSettaggi formSettaggi, Form1 form1)
         {
+            string savedLanguage = Properties.Settings.Default.Language ?? "it";
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(savedLanguage);
             InitializeComponent();
             this.form1 = form1;
             this.formSettaggi = formSettaggi;

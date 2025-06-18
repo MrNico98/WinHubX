@@ -119,7 +119,7 @@
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="btnWin7.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left</value>
+    <value>Left</value>
   </data>
   <data name="btnWin7.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -161,7 +161,7 @@
     <value>8</value>
   </data>
   <data name="btnWin8dot1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Right</value>
+    <value>Right</value>
   </data>
   <data name="btnWin8dot1.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -200,7 +200,7 @@
     <value>7</value>
   </data>
   <data name="btnWin11.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Right</value>
+    <value>Right</value>
   </data>
   <data name="btnWin11.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -239,7 +239,7 @@
     <value>5</value>
   </data>
   <data name="btnWin10.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left</value>
+    <value>Left</value>
   </data>
   <data name="btnWin10.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -278,7 +278,7 @@
     <value>6</value>
   </data>
   <data name="btnWinLive.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left</value>
+    <value>Left</value>
   </data>
   <data name="btnWinLive.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -319,7 +319,7 @@ Live
     <value>4</value>
   </data>
   <data name="btnWin12.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Right</value>
+    <value>Right</value>
   </data>
   <data name="btnWin12.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -361,7 +361,7 @@ Live
     <value>3</value>
   </data>
   <data name="lblInfoWin12.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Right</value>
+    <value>Right</value>
   </data>
   <data name="lblInfoWin12.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -398,7 +398,7 @@ Live
     <value>2</value>
   </data>
   <data name="btnAttivaWin.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Right</value>
+    <value>Right</value>
   </data>
   <data name="btnAttivaWin.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -437,7 +437,7 @@ Live
     <value>1</value>
   </data>
   <data name="btnCambioEdizione.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left</value>
+    <value>Left</value>
   </data>
   <data name="btnCambioEdizione.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -475,6 +475,9 @@ Live
   <data name="&gt;&gt;btnCambioEdizione.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <metadata name="$this.Language" type="System.Globalization.CultureInfo, System.Private.CoreLib, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+    <value>en</value>
+  </metadata>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>

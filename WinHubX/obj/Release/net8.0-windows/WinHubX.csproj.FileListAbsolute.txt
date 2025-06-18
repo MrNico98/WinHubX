@@ -2497,8 +2497,6 @@ C:\Users\utente\Downloads\WinHubX-main - Copia\WinHubX\bin\Release\net8.0-window
 C:\Users\utente\Downloads\WinHubX-main - Copia\WinHubX\bin\Release\net8.0-windows\Resources\Product Sans.ttf
 C:\Users\utente\Downloads\WinHubX-main - Copia\WinHubX\bin\Release\net8.0-windows\Resources\Product Sans Black.ttf
 C:\Users\utente\Downloads\WinHubX-main - Copia\WinHubX\bin\Release\net8.0-windows\Resources\translations.json
-C:\Users\utente\Downloads\WinHubX-main - Copia\WinHubX\bin\Release\net8.0-windows\Resources\TSforge_Activation.cmd
-C:\Users\utente\Downloads\WinHubX-main - Copia\WinHubX\bin\Release\net8.0-windows\Resources\TSforge_Activation_Office.cmd
 C:\Users\utente\Downloads\WinHubX-main - Copia\WinHubX\bin\Release\net8.0-windows\Resources\WinHubXStatoAttivazione.cmd
 C:\Users\utente\Downloads\WinHubX-main - Copia\WinHubX\bin\Release\net8.0-windows\Resources\WinHubXWSL.ps1
 C:\Users\utente\Downloads\WinHubX-main - Copia\WinHubX\bin\Release\net8.0-windows\WinHubX.dll.config
@@ -2606,7 +2604,6 @@ C:\Users\utente\Downloads\WinHubX-main - Copia\WinHubX\obj\Release\net8.0-window
 C:\Users\utente\Downloads\WinHubX-main - Copia\WinHubX\obj\Release\net8.0-windows\WinHubX.Dialog.Tools.DialogRSTDriver.resources
 C:\Users\utente\Downloads\WinHubX-main - Copia\WinHubX\obj\Release\net8.0-windows\WinHubX.Dialog.Tools.DialogRufus4Lite.resources
 C:\Users\utente\Downloads\WinHubX-main - Copia\WinHubX\obj\Release\net8.0-windows\WinHubX.Dialog.Tools.DialogWIMToolKit.resources
-C:\Users\utente\Downloads\WinHubX-main - Copia\WinHubX\obj\Release\net8.0-windows\WinHubX.DiskTypeSelectorForm.resources
 C:\Users\utente\Downloads\WinHubX-main - Copia\WinHubX\obj\Release\net8.0-windows\WinHubX.Form1.resources
 C:\Users\utente\Downloads\WinHubX-main - Copia\WinHubX\obj\Release\net8.0-windows\WinHubX.Forms.Base.FormCreaISO.resources
 C:\Users\utente\Downloads\WinHubX-main - Copia\WinHubX\obj\Release\net8.0-windows\WinHubX.Forms.Base.FormDebloat.resources
@@ -2634,7 +2631,6 @@ C:\Users\utente\Downloads\WinHubX-main - Copia\WinHubX\obj\Release\net8.0-window
 C:\Users\utente\Downloads\WinHubX-main - Copia\WinHubX\obj\Release\net8.0-windows\WinHubX.FormWin7.resources
 C:\Users\utente\Downloads\WinHubX-main - Copia\WinHubX\obj\Release\net8.0-windows\WinHubX.Forms.Windows.FormWin8Dot1.resources
 C:\Users\utente\Downloads\WinHubX-main - Copia\WinHubX\obj\Release\net8.0-windows\WinHubX.Properties.Resources.resources
-C:\Users\utente\Downloads\WinHubX-main - Copia\WinHubX\obj\Release\net8.0-windows\WinHubX.DiskTypeSelectorForm.en.resources
 C:\Users\utente\Downloads\WinHubX-main - Copia\WinHubX\obj\Release\net8.0-windows\WinHubX.Form1.en.resources
 C:\Users\utente\Downloads\WinHubX-main - Copia\WinHubX\obj\Release\net8.0-windows\WinHubX.Forms.Base.FormCreaISO.en.resources
 C:\Users\utente\Downloads\WinHubX-main - Copia\WinHubX\obj\Release\net8.0-windows\WinHubX.Forms.Base.FormDebloat.en.resources
@@ -2729,3 +2725,5 @@ C:\Users\utente\Downloads\WinHubX-main - Copia\WinHubX\bin\Release\net8.0-window
 C:\Users\utente\Downloads\WinHubX-main - Copia\WinHubX\bin\Release\net8.0-windows\Resources\Immagini\FormWin\pngWindows11.png
 C:\Users\utente\Downloads\WinHubX-main - Copia\WinHubX\bin\Release\net8.0-windows\Resources\Immagini\FormWin\pngWinLive.png
 C:\Users\utente\Downloads\WinHubX-main - Copia\WinHubX\bin\Release\net8.0-windows\Resources\Immagini\FormWin\pngWinWhat.png
+C:\Users\utente\Downloads\WinHubX-main - Copia\WinHubX\obj\Release\net8.0-windows\WinHubX.Forms.Base.FormOperazioni.resources
+C:\Users\utente\Downloads\WinHubX-main - Copia\WinHubX\obj\Release\net8.0-windows\WinHubX.Forms.Base.FormOperazioni.en.resources

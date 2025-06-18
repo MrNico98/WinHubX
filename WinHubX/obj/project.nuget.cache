@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "FKidG1PaEx8=",
+  "dgSpecHash": "Cv20Q0nDjho=",
   "success": true,
-  "projectFilePath": "C:\\Users\\utente\\Documents\\GitHub\\ItalianDevelopers\\WinHubX\\WinHubX\\WinHubX.csproj",
+  "projectFilePath": "C:\\Users\\utente\\Downloads\\WinHubX-main - Copia\\WinHubX\\WinHubX.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\utente\\.nuget\\packages\\discutils.core\\0.16.13\\discutils.core.0.16.13.nupkg.sha512",
     "C:\\Users\\utente\\.nuget\\packages\\discutils.iso9660\\0.16.13\\discutils.iso9660.0.16.13.nupkg.sha512",

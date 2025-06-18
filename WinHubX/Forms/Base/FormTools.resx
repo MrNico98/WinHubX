@@ -119,7 +119,7 @@
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="btnKasperky.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left</value>
+    <value>Left</value>
   </data>
   <data name="btnKasperky.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -164,7 +164,7 @@
     <value>5</value>
   </data>
   <data name="btnWimTK.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Right</value>
+    <value>Right</value>
   </data>
   <data name="btnWimTK.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -203,7 +203,7 @@
     <value>4</value>
   </data>
   <data name="btnWinHubXLiteOS.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Right</value>
+    <value>Right</value>
   </data>
   <data name="btnWinHubXLiteOS.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -242,7 +242,7 @@
     <value>3</value>
   </data>
   <data name="btnDaRT.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left</value>
+    <value>Left</value>
   </data>
   <data name="btnDaRT.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -281,7 +281,7 @@
     <value>2</value>
   </data>
   <data name="btnMPM.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left</value>
+    <value>Left</value>
   </data>
   <data name="btnMPM.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -324,7 +324,7 @@ Manager</value>
     <value>1</value>
   </data>
   <data name="btnRSTDriver.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Right</value>
+    <value>Right</value>
   </data>
   <data name="btnRSTDriver.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>

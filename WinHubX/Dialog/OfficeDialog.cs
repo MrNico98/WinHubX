@@ -31,7 +31,7 @@ namespace WinHubX.Dialog
             notifyIcon = new NotifyIcon
             {
                 Icon = SystemIcons.Information,
-                Visible = true
+                Visible = false
             };
 
             // Crea il pulsante per chiudere la finestra di dialogo

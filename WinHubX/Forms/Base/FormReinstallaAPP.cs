@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Globalization;
 using System.Net;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -13,6 +14,8 @@ namespace WinHubX.Forms.ReinstallaAPP
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 14, FontStyle.Bold);
             label1.ForeColor = Color.FromArgb(224, 224, 224);
+            string savedLanguage = Properties.Settings.Default.Language ?? "it";
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(savedLanguage);
         }
         static void RegisterAppxPackage(string packageName)
         {
@@ -203,11 +206,8 @@ namespace WinHubX.Forms.ReinstallaAPP
 
         private void ParseSearchResults(string output)
         {
-            // Pulizia precedente
             dataGridViewResults.Rows.Clear();
             dataGridViewResults.Columns.Clear();
-
-            // Aggiunta colonne al DataGridView
             if (dataGridViewResults.Columns.Count == 0)
             {
                 dataGridViewResults.Columns.Add("Name", "Name");
@@ -216,13 +216,10 @@ namespace WinHubX.Forms.ReinstallaAPP
                 dataGridViewResults.Columns.Add("Source", "Source");
                 dataGridViewResults.Columns.Add("Origine", "Origine");
             }
-
-            // Leggi riga per riga l'output
             string[] lines = output.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
 
             foreach (string line in lines)
             {
-                // Regex per catturare i valori
                 var match = Regex.Match(line, @"^(.+?)\s{2,}(.+?)\s{2,}(.+?)\s{2,}(.+?)\s{2,}(.*)$");
 
                 if (match.Success)
@@ -232,13 +229,10 @@ namespace WinHubX.Forms.ReinstallaAPP
                     string version = match.Groups[3].Value.Trim();
                     string source = match.Groups[4].Value.Trim();
                     string origine = match.Groups[5].Value.Trim();
-
-                    // Aggiunta della riga
                     dataGridViewResults.Rows.Add(name, id, version, source, origine);
                 }
             }
 
-            // Mostra un messaggio se non ci sono risultati
             if (dataGridViewResults.Rows.Count == 0)
             {
                 MessageBox.Show(
@@ -357,10 +351,8 @@ namespace WinHubX.Forms.ReinstallaAPP
 
         private void btn_Aggiorna_Click(object sender, EventArgs e)
         {
-            // Verifica che sia selezionata una riga nel DataGridView
             if (dataGridViewResults.SelectedRows.Count > 0)
             {
-                // Estrae l'ID del pacchetto dalla riga selezionata
                 string packageId = dataGridViewResults.SelectedRows[0].Cells["Id"].Value.ToString();
                 if (!string.IsNullOrEmpty(packageId))
                 {

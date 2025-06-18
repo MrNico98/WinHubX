@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="comboBox1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="pictureBox1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -131,6 +134,12 @@
         rkJggg==
 </value>
   </data>
+  <data name="pictureBox1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="pictureBox2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="groupBox4.Text" xml:space="preserve">
     <value>Process</value>
   </data>
@@ -140,11 +149,17 @@
   <data name="NotRemProcRad.Text" xml:space="preserve">
     <value>Don't Remove</value>
   </data>
+  <data name="NotRemProcRad.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="RemProcRad.Size" type="System.Drawing.Size, System.Drawing">
     <value>68, 19</value>
   </data>
   <data name="RemProcRad.Text" xml:space="preserve">
     <value>Remove</value>
+  </data>
+  <data name="RemProcRad.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="pictureBox5.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -166,8 +181,20 @@
         oQfjg0Z1wB6OcO/YDP8EpwvcM+r5CwGTtqoPoWOZAAAAAElFTkSuQmCC
 </value>
   </data>
+  <data name="pictureBox5.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="groupBox6.Text" xml:space="preserve">
     <value>Architecture</value>
+  </data>
+  <data name="ThirTwoRad.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SixforArchRad.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="groupBox5.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="StockAppRad.Size" type="System.Drawing.Size, System.Drawing">
     <value>63, 19</value>
@@ -184,17 +211,14 @@
   <data name="groupBox3.Text" xml:space="preserve">
     <value>Select Defender preference</value>
   </data>
-  <data name="NotDisWinDefRad.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 27</value>
-  </data>
   <data name="NotDisWinDefRad.Size" type="System.Drawing.Size, System.Drawing">
     <value>60, 19</value>
   </data>
   <data name="NotDisWinDefRad.Text" xml:space="preserve">
     <value>Enable</value>
   </data>
-  <data name="DisWindDefRad.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 52</value>
+  <data name="NotDisWinDefRad.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="DisWindDefRad.Size" type="System.Drawing.Size, System.Drawing">
     <value>63, 19</value>
@@ -202,8 +226,20 @@
   <data name="DisWindDefRad.Text" xml:space="preserve">
     <value>Disable</value>
   </data>
+  <data name="DisWindDefRad.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="groupBox7.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="groupBox2.Text" xml:space="preserve">
     <value>Select Windows ISO version</value>
+  </data>
+  <data name="Win11Rad.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Win10Rad.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="groupBox1.Text" xml:space="preserve">
     <value>Select Edge preference</value>
@@ -217,6 +253,9 @@
   <data name="RemEdgeRad.Text" xml:space="preserve">
     <value>Disable</value>
   </data>
+  <data name="RemEdgeRad.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="NotRemEdgeRad.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 22</value>
   </data>
@@ -226,8 +265,23 @@
   <data name="NotRemEdgeRad.Text" xml:space="preserve">
     <value>Enable</value>
   </data>
+  <data name="NotRemEdgeRad.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btn_browser.Text" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="btn_browser.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="textBox1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="btn_CreaISO.Text" xml:space="preserve">
-    <value>CrateISO</value>
+    <value>Crate ISO</value>
+  </data>
+  <data name="btn_CreaISO.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="pictureBox3.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -326,6 +380,9 @@
         QmCC
 </value>
   </data>
+  <data name="pictureBox3.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="pictureBox4.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABGdBTUEAALGPC/xhBQAABVVJREFUeF7t
@@ -354,6 +411,9 @@
         ZAI+S2wkJ1Uz/AtT1veG5p55vNeo/xdEnMw1kpOriNK/PF3N23/i+PaByseB5gAAAABJRU5ErkJggg==
 </value>
   </data>
+  <data name="pictureBox4.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="pictureBox6.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABGdBTUEAALGPC/xhBQAAArVJREFUeF7t
@@ -371,6 +431,9 @@
         9pVSV7CDd2FRF6aXI7x3MEq+wbky3rNs/QVMlx0RRIwveQAAAABJRU5ErkJggg==
 </value>
   </data>
+  <data name="pictureBox6.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="pictureBox7.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABGdBTUEAALGPC/xhBQAAAbhJREFUeF7t
@@ -384,16 +447,97 @@
         n9ta8OY7dXll05f/AUF8sBoHWDWVAAAAAElFTkSuQmCC
 </value>
   </data>
+  <data name="pictureBox7.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
     <value>131, 24</value>
   </data>
   <data name="label2.Text" xml:space="preserve">
     <value>Select ISO file:</value>
   </data>
+  <data name="label2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
     <value>211, 24</value>
   </data>
   <data name="label1.Text" xml:space="preserve">
     <value>Select Windows edition:</value>
+  </data>
+  <data name="label1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="pictureBox8.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="pictureBox9.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="groupBox8.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="NoDriver.Size" type="System.Drawing.Size, System.Drawing">
+    <value>153, 19</value>
+  </data>
+  <data name="NoDriver.Text" xml:space="preserve">
+    <value>Do not insert any drivers</value>
+  </data>
+  <data name="DriverQuestoPC.Size" type="System.Drawing.Size, System.Drawing">
+    <value>168, 19</value>
+  </data>
+  <data name="DriverQuestoPC.Text" xml:space="preserve">
+    <value>Enter the drivers for this PC</value>
+  </data>
+  <data name="DriverCartella.Size" type="System.Drawing.Size, System.Drawing">
+    <value>110, 19</value>
+  </data>
+  <data name="DriverCartella.Text" xml:space="preserve">
+    <value>Enter the drivers</value>
+  </data>
+  <data name="pictureBox10.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="groupBox9.Text" xml:space="preserve">
+    <value>Typology</value>
+  </data>
+  <data name="IsoGaming.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="IsoLavorWork.Size" type="System.Drawing.Size, System.Drawing">
+    <value>122, 19</value>
+  </data>
+  <data name="IsoLavorWork.Text" xml:space="preserve">
+    <value>Work/Workstation</value>
+  </data>
+  <data name="IsoLavorWork.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="IsoLite.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="pictureBox11.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="NonImportWinhub.Size" type="System.Drawing.Size, System.Drawing">
+    <value>239, 19</value>
+  </data>
+  <data name="NonImportWinhub.Text" xml:space="preserve">
+    <value>Do not import current WinHubX settings</value>
+  </data>
+  <data name="NonImportWinhub.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ImpSettWinHub.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 19</value>
+  </data>
+  <data name="ImpSettWinHub.Text" xml:space="preserve">
+    <value>Import current WinHubX settings</value>
+  </data>
+  <data name="ImpSettWinHub.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="$this.ToolTip" xml:space="preserve">
+    <value />
   </data>
 </root>

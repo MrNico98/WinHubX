@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Globalization;
 using System.IO.Compression;
 using System.Text.Json;
 using WinHubX.Dialog;
@@ -9,7 +10,7 @@ namespace WinHubX.Forms.Base
     public partial class FormCreaISO : Form
     {
         private Form1 form1;
-        private string selectedFile; // Class-level variable to store selected ISO file path
+        private string selectedFile;
 
         public FormCreaISO(Form1 form1)
         {
@@ -21,6 +22,8 @@ namespace WinHubX.Forms.Base
             pictureBox4.Hide();
             this.FormClosing += FormCreaISO_FormClosing;
             this.ActiveControl = btn_browser;
+            string savedLanguage = Properties.Settings.Default.Language ?? "it";
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(savedLanguage);
         }
 
         string IsoMountLetter;
@@ -144,7 +147,6 @@ namespace WinHubX.Forms.Base
                 ComboSelected = comboxstr.Substring(0, index);
             }
 
-            // Ottieni le preferenze selezionate
             string windowsVersion = Win10Rad.Checked ? "10" : Win11Rad.Checked ? "11" : "";
             string edgeRemovalPreference = RemEdgeRad.Checked ? "RemoveEdge" : NotRemEdgeRad.Checked ? "SiEdge" : "";
             string defenderPreference = DisWindDefRad.Checked ? "DisableWindowsDefender" : NotDisWinDefRad.Checked ? "SiDefender" : "";
@@ -152,6 +154,9 @@ namespace WinHubX.Forms.Base
             string Unattend = Win11BypassRad.Checked ? "Bypass" : Win11StockRad.Checked ? "Stock" : "";
             string Architettura = SixforArchRad.Checked ? "x64" : ThirTwoRad.Checked ? "x32" : "";
             string DebloatApp = DebAppRad.Checked ? "Debloat" : StockAppRad.Checked ? "NonDebloat" : "";
+            string ImportaSettaggiWinhubx = ImpSettWinHub.Checked ? "SiImporta" : NonImportWinhub.Checked ? "NonImporta" : "";
+            string DriverWin = DriverCartella.Checked ? "DriverCartella" : DriverQuestoPC.Checked ? "DriverQuestoPC" : NoDriver.Checked ? "NoDriver" : "";
+            string TipoOttimizzazione = IsoLite.Checked ? "IsoLite" : IsoLavorWork.Checked ? "LavorWork" : IsoGaming.Checked ? "IsoGaming" : "";
 
             var parametri = new Dictionary<string, string>
     {
@@ -164,9 +169,11 @@ namespace WinHubX.Forms.Base
         { "DebloatApp", DebloatApp },
         { "ComboSelected", ComboSelected },
         { "SelectedFile", selectedFile },
+        { "ImportaSettaggiWinhubx", ImportaSettaggiWinhubx },
+        { "DriverWin", DriverWin },
+        { "TipoOttimizzazione", TipoOttimizzazione },
     };
 
-            // Crea la nuova form
             FormCreazioneISO nuovaForm = new FormCreazioneISO(form1, this)
             {
                 ParametriISO = parametri
@@ -301,7 +308,6 @@ namespace WinHubX.Forms.Base
 
         private void FormCreaISO_FormClosing(object sender, FormClosingEventArgs e)
         {
-            // Controlla se IsoMountLetter è stato assegnato
             if (!string.IsNullOrEmpty(IsoMountLetter))
             {
                 ExecuteCommand("Dismount-DiskImage -ImagePath " + "\"" + selectedFile + "\"", false);

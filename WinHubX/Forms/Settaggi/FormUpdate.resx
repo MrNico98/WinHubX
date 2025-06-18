@@ -173,7 +173,7 @@
     <value>24, 91</value>
   </data>
   <data name="DisabilitaUpdate.Size" type="System.Drawing.Size, System.Drawing">
-    <value>433, 120</value>
+    <value>433, 144</value>
   </data>
   <data name="DisabilitaUpdate.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -254,7 +254,7 @@
     <value>485, 91</value>
   </data>
   <data name="AbilitaUpdate.Size" type="System.Drawing.Size, System.Drawing">
-    <value>391, 120</value>
+    <value>391, 144</value>
   </data>
   <data name="AbilitaUpdate.TabIndex" type="System.Int32, mscorlib">
     <value>25</value>

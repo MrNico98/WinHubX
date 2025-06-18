@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Globalization;
 using WinHubX.Dialog;
 
 namespace WinHubX
@@ -8,6 +9,8 @@ namespace WinHubX
         public FormHome()
         {
             InitializeComponent();
+            string savedLanguage = Properties.Settings.Default.Language ?? "it";
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(savedLanguage);
         }
 
         private void btnChangelog_Click(object sender, EventArgs e)

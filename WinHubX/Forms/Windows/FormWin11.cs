@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using System.Diagnostics;
+using System.Globalization;
 using WinHubX.Dialog;
 
 namespace WinHubX.Forms.Windows
@@ -18,13 +19,15 @@ namespace WinHubX.Forms.Windows
 
         public FormWin11(FormWin formWin, Form1 form1)
         {
+            string savedLanguage = Properties.Settings.Default.Language ?? "it";
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(savedLanguage);
             InitializeComponent();
             this.form1 = form1;
             this.formWin = formWin;
             notifyIcon = new NotifyIcon
             {
                 Icon = SystemIcons.Information,
-                Visible = true
+                Visible = false
             };
             LoadJsonLinks();
         }

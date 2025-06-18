@@ -73,7 +73,7 @@
             // panel3
             // 
             resources.ApplyResources(panel3, "panel3");
-            panel3.BackColor = Color.FromArgb(37, 38, 39);
+            panel3.BackColor = Color.FromArgb(64, 60, 59);
             panel3.Controls.Add(btnFullScreen);
             panel3.Controls.Add(btnMnmz);
             panel3.Controls.Add(btnClose);

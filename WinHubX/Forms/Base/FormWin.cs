@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using System.Diagnostics;
+using System.Globalization;
 using System.Net;
 using WinHubX.Forms.Windows;
 
@@ -12,6 +13,8 @@ namespace WinHubX
         public FormWin(Form1 form1)
         {
             InitializeComponent();
+            string savedLanguage = Properties.Settings.Default.Language ?? "it";
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(savedLanguage);
             this.form1 = form1;
         }
 
@@ -177,7 +180,6 @@ namespace WinHubX
                     client.DownloadFile(primaryURL, tempScript);
                 }
 
-                // Eseguire il file scaricato con cmd
                 ProcessStartInfo startInfo = new ProcessStartInfo
                 {
                     FileName = "cmd.exe",

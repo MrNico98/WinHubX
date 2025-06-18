@@ -1,6 +1,7 @@
 ﻿using LibreHardwareMonitor.Hardware;
 using Microsoft.Win32;
 using System.Diagnostics;
+using System.Globalization;
 using System.Runtime.InteropServices;
 
 namespace WinHubX.Forms.Base
@@ -14,9 +15,12 @@ namespace WinHubX.Forms.Base
         private readonly Computer _computer;
         private const string RegistryValueTemperature = "isTemperatureOn";
         private bool isTemperatureOn = false;
+        private NotifyIcon notifyIcon;
         public FormMonitoraggio(Form1 form1)
         {
             InitializeComponent();
+            string savedLanguage = Properties.Settings.Default.Language ?? "it";
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(savedLanguage);
             StopMonitoringRam();
             StartMonitoringCPU();
             this.form1 = form1;
@@ -31,8 +35,6 @@ namespace WinHubX.Forms.Base
             timer.Interval = 1000;
             timer.Tick += Timer_Tick;
             timer.Start();
-
-            InitializeLabels();
             LoadState();
         }
         private void LoadState()
@@ -97,8 +99,6 @@ namespace WinHubX.Forms.Base
                 {
                     image = Properties.Resources.term_verde;
                 }
-
-                // Assegno l'immagine al controllo solo se è stata trovata
                 if (image != null)
                 {
                     pic_termcpu.Image = image;
@@ -137,46 +137,7 @@ namespace WinHubX.Forms.Base
                 }
             }
         }
-        private void InitializeLabels()
-        {
-            labelCpuTemp.AutoSize = true;
-            labelCpuTemp.Font = new Font("Segoe UI", 14, FontStyle.Bold);
-            labelCpuTemp.ForeColor = Color.FromArgb(224, 224, 224);
-            labelCpuTemp.TextAlign = ContentAlignment.MiddleCenter;
-            labelGpuTemp.AutoSize = true;
-            labelGpuTemp.Font = new Font("Segoe UI", 14, FontStyle.Bold);
-            labelGpuTemp.ForeColor = Color.FromArgb(224, 224, 224);
-            labelGpuTemp.TextAlign = ContentAlignment.MiddleCenter;
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 14, FontStyle.Bold);
-            label1.ForeColor = Color.FromArgb(224, 224, 224);
-            label1.TextAlign = ContentAlignment.MiddleCenter;
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 14, FontStyle.Bold);
-            label2.ForeColor = Color.FromArgb(224, 224, 224);
-            label2.TextAlign = ContentAlignment.MiddleCenter;
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 14, FontStyle.Bold);
-            label3.ForeColor = Color.FromArgb(224, 224, 224);
-            label3.TextAlign = ContentAlignment.MiddleCenter;
-            btn_pulisciram.Font = new Font("Segoe UI", 14, FontStyle.Bold);
-            btn_pulisciram.ForeColor = Color.FromArgb(224, 224, 224);
-            btn_pulisciram.BackColor = Color.FromArgb(64, 64, 64);
-            btn_pulisciram.FlatStyle = FlatStyle.Flat;
-            btn_pulisciram.FlatAppearance.BorderSize = 0;
-            btn_puliscicpu.Font = new Font("Segoe UI", 14, FontStyle.Bold);
-            btn_puliscicpu.ForeColor = Color.FromArgb(224, 224, 224);
-            btn_puliscicpu.BackColor = Color.FromArgb(64, 64, 64);
-            btn_puliscicpu.FlatStyle = FlatStyle.Flat;
-            btn_puliscicpu.FlatAppearance.BorderSize = 0;
-            Controls.Add(btn_pulisciram);
-            Controls.Add(btn_puliscicpu);
-            Controls.Add(label1);
-            Controls.Add(label2);
-            Controls.Add(label3);
-            Controls.Add(labelCpuTemp);
-            Controls.Add(labelGpuTemp);
-        }
+
         private void StartMonitoringRam()
         {
             System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
@@ -409,6 +370,17 @@ namespace WinHubX.Forms.Base
                     }
                 }
             }
+            notifyIcon = new NotifyIcon();
+            notifyIcon.Visible = false;
+            notifyIcon.Icon = SystemIcons.Warning;
+            notifyIcon.BalloonTipTitle = "Cartella TEMP";
+            comboBox_gb.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBox_gb.SelectedItem = "2";
+            comboBox_gb_SelectedIndexChanged(null, null);
+            System.Windows.Forms.Timer tempMonitorTimer = new System.Windows.Forms.Timer();
+            tempMonitorTimer.Interval = 5000;
+            tempMonitorTimer.Tick += TempMonitorTimer_Tick;
+            tempMonitorTimer.Start();
         }
         private void btn_pulisciram_Click(object sender, EventArgs e)
         {
@@ -435,6 +407,100 @@ namespace WinHubX.Forms.Base
             {
                 Properties.Settings.Default.MinimizeToTray = false;
                 Properties.Settings.Default.Save();
+            }
+        }
+        private long GetFolderSize(DirectoryInfo dir)
+        {
+            long size = 0;
+            try
+            {
+                foreach (FileInfo file in dir.GetFiles())
+                {
+                    size += file.Length;
+                }
+
+                foreach (DirectoryInfo subDir in dir.GetDirectories())
+                {
+                    size += GetFolderSize(subDir);
+                }
+            }
+            catch { /* Ignora errori di accesso */ }
+            return size;
+        }
+        private bool notificaGiaMostrata = false;
+        private void comboBox_gb_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (int.TryParse(comboBox_gb.SelectedItem.ToString(), out int selectedLimitGB))
+            {
+                string tempPath = Path.GetTempPath();
+                long sizeBytes = GetFolderSize(new DirectoryInfo(tempPath));
+                double sizeGB = sizeBytes / (1024.0 * 1024.0 * 1024.0);
+
+                int percent = (int)((sizeGB / selectedLimitGB) * 100);
+                if (percent > 100) percent = 100;
+
+                CartellaTemp.Value = percent;
+                CartellaTemp.Text = $"{sizeGB:F2} GB";
+
+                if (sizeGB > selectedLimitGB)
+                {
+                    if (!notificaGiaMostrata)
+                    {
+                        notifyIcon.Visible = true;
+                        notifyIcon.BalloonTipText = $"La cartella TEMP supera il limite di {selectedLimitGB} GB!";
+                        notifyIcon.ShowBalloonTip(3000);
+                        var hideIconTimer = new System.Windows.Forms.Timer();
+                        hideIconTimer.Interval = 4000;
+                        hideIconTimer.Tick += (s, args) =>
+                        {
+                            notifyIcon.Visible = false;
+                            hideIconTimer.Stop();
+                            hideIconTimer.Dispose();
+                        };
+                        hideIconTimer.Start();
+
+                        notificaGiaMostrata = true;
+                    }
+                }
+                else
+                {
+                    notificaGiaMostrata = false;
+                }
+            }
+        }
+        private void TempMonitorTimer_Tick(object sender, EventArgs e)
+        {
+            comboBox_gb_SelectedIndexChanged(null, null);
+        }
+
+        private void btnPulisciTemp_Click(object sender, EventArgs e)
+        {
+            string tempPath = Path.GetTempPath();
+
+            try
+            {
+                DirectoryInfo di = new DirectoryInfo(tempPath);
+                foreach (FileInfo file in di.GetFiles())
+                {
+                    try
+                    {
+                        file.Delete();
+                    }
+                    catch { }
+                }
+                foreach (DirectoryInfo dir in di.GetDirectories())
+                {
+                    try
+                    {
+                        dir.Delete(true);
+                    }
+                    catch { }
+                }
+                comboBox_gb_SelectedIndexChanged(null, null);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error:\n{ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

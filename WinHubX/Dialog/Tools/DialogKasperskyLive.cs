@@ -27,7 +27,7 @@ namespace WinHubX.Dialog.Tools
             notifyIcon = new NotifyIcon
             {
                 Icon = SystemIcons.Information,
-                Visible = true
+                Visible = false
             };
         }
 

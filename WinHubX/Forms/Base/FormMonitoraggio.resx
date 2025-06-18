@@ -119,11 +119,11 @@
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="pic_termcpu.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom</value>
+    <value>Top</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="pic_termcpu.Location" type="System.Drawing.Point, System.Drawing">
-    <value>628, 286</value>
+    <value>356, 273</value>
   </data>
   <data name="pic_termcpu.Size" type="System.Drawing.Size, System.Drawing">
     <value>57, 112</value>
@@ -145,13 +145,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;pic_termcpu.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>17</value>
   </data>
   <data name="pic_termgpu.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom</value>
+    <value>Top</value>
   </data>
   <data name="pic_termgpu.Location" type="System.Drawing.Point, System.Drawing">
-    <value>108, 286</value>
+    <value>48, 273</value>
   </data>
   <data name="pic_termgpu.Size" type="System.Drawing.Size, System.Drawing">
     <value>57, 112</value>
@@ -172,25 +172,31 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;pic_termgpu.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>16</value>
   </data>
   <data name="labelCpuTemp.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom</value>
+    <value>Top</value>
   </data>
   <data name="labelCpuTemp.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="labelCpuTemp.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 14pt, style=Bold</value>
+  </data>
   <data name="labelCpuTemp.Location" type="System.Drawing.Point, System.Drawing">
-    <value>633, 247</value>
+    <value>361, 234</value>
   </data>
   <data name="labelCpuTemp.Size" type="System.Drawing.Size, System.Drawing">
-    <value>38, 15</value>
+    <value>65, 25</value>
   </data>
   <data name="labelCpuTemp.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
   </data>
   <data name="labelCpuTemp.Text" xml:space="preserve">
     <value>label1</value>
+  </data>
+  <data name="labelCpuTemp.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
   </data>
   <data name="&gt;&gt;labelCpuTemp.Name" xml:space="preserve">
     <value>labelCpuTemp</value>
@@ -202,25 +208,31 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;labelCpuTemp.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>15</value>
   </data>
   <data name="labelGpuTemp.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom</value>
+    <value>Top</value>
   </data>
   <data name="labelGpuTemp.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="labelGpuTemp.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 14pt, style=Bold</value>
+  </data>
   <data name="labelGpuTemp.Location" type="System.Drawing.Point, System.Drawing">
-    <value>108, 247</value>
+    <value>48, 234</value>
   </data>
   <data name="labelGpuTemp.Size" type="System.Drawing.Size, System.Drawing">
-    <value>38, 15</value>
+    <value>65, 25</value>
   </data>
   <data name="labelGpuTemp.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
   <data name="labelGpuTemp.Text" xml:space="preserve">
     <value>label2</value>
+  </data>
+  <data name="labelGpuTemp.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
   </data>
   <data name="&gt;&gt;labelGpuTemp.Name" xml:space="preserve">
     <value>labelGpuTemp</value>
@@ -232,13 +244,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;labelGpuTemp.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>14</value>
   </data>
   <data name="BarRAM.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom</value>
+    <value>Top</value>
   </data>
   <data name="BarRAM.Location" type="System.Drawing.Point, System.Drawing">
-    <value>67, 98</value>
+    <value>12, 98</value>
   </data>
   <data name="BarRAM.Size" type="System.Drawing.Size, System.Drawing">
     <value>135, 133</value>
@@ -259,13 +271,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;BarRAM.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>13</value>
   </data>
   <data name="BarCPU.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom</value>
+    <value>Top</value>
   </data>
   <data name="BarCPU.Location" type="System.Drawing.Point, System.Drawing">
-    <value>594, 98</value>
+    <value>322, 98</value>
   </data>
   <data name="BarCPU.Size" type="System.Drawing.Size, System.Drawing">
     <value>135, 133</value>
@@ -286,13 +298,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;BarCPU.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>12</value>
   </data>
   <data name="swapButton1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="swapButton1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>456, 24</value>
+    <value>252, 7</value>
   </data>
   <data name="swapButton1.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>45, 24</value>
@@ -313,25 +325,31 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;swapButton1.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>11</value>
   </data>
   <data name="label1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom</value>
+    <value>Top</value>
   </data>
   <data name="label1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="label1.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 14pt, style=Bold</value>
+  </data>
   <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>113, 70</value>
+    <value>50, 70</value>
   </data>
   <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>33, 15</value>
+    <value>55, 25</value>
   </data>
   <data name="label1.TabIndex" type="System.Int32, mscorlib">
     <value>11</value>
   </data>
   <data name="label1.Text" xml:space="preserve">
     <value>RAM</value>
+  </data>
+  <data name="label1.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
   </data>
   <data name="&gt;&gt;label1.Name" xml:space="preserve">
     <value>label1</value>
@@ -343,25 +361,31 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>10</value>
   </data>
   <data name="label2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom</value>
+    <value>Top</value>
   </data>
   <data name="label2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="label2.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 14pt, style=Bold</value>
+  </data>
   <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>633, 70</value>
+    <value>361, 70</value>
   </data>
   <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>30, 15</value>
+    <value>50, 25</value>
   </data>
   <data name="label2.TabIndex" type="System.Int32, mscorlib">
     <value>12</value>
   </data>
   <data name="label2.Text" xml:space="preserve">
     <value>CPU</value>
+  </data>
+  <data name="label2.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
   </data>
   <data name="&gt;&gt;label2.Name" xml:space="preserve">
     <value>label2</value>
@@ -373,22 +397,28 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>9</value>
   </data>
   <data name="label3.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="label3.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 14pt, style=Bold</value>
+  </data>
   <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>184, 29</value>
+    <value>12, 7</value>
   </data>
   <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>138, 15</value>
+    <value>234, 25</value>
   </data>
   <data name="label3.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
   </data>
   <data name="label3.Text" xml:space="preserve">
     <value>Attivare il monitoraggio?</value>
+  </data>
+  <data name="label3.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
   </data>
   <data name="&gt;&gt;label3.Name" xml:space="preserve">
     <value>label3</value>
@@ -400,16 +430,19 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>8</value>
   </data>
   <data name="btn_pulisciram.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom</value>
+    <value>Top</value>
   </data>
   <data name="btn_pulisciram.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
   </data>
+  <data name="btn_pulisciram.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 14pt, style=Bold</value>
+  </data>
   <data name="btn_pulisciram.Location" type="System.Drawing.Point, System.Drawing">
-    <value>335, 148</value>
+    <value>172, 149</value>
   </data>
   <data name="btn_pulisciram.Size" type="System.Drawing.Size, System.Drawing">
     <value>125, 32</value>
@@ -430,16 +463,19 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btn_pulisciram.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>7</value>
   </data>
   <data name="btn_puliscicpu.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom</value>
+    <value>Top</value>
   </data>
   <data name="btn_puliscicpu.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
   </data>
+  <data name="btn_puliscicpu.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 14pt, style=Bold</value>
+  </data>
   <data name="btn_puliscicpu.Location" type="System.Drawing.Point, System.Drawing">
-    <value>335, 286</value>
+    <value>172, 287</value>
   </data>
   <data name="btn_puliscicpu.Size" type="System.Drawing.Size, System.Drawing">
     <value>125, 32</value>
@@ -460,7 +496,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btn_puliscicpu.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>6</value>
   </data>
   <data name="panel1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -520,7 +556,7 @@
     <value>1</value>
   </data>
   <data name="panel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>709, 7</value>
+    <value>699, 7</value>
   </data>
   <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
     <value>174, 63</value>
@@ -538,6 +574,207 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;panel1.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="CartellaTemp.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="CartellaTemp.Location" type="System.Drawing.Point, System.Drawing">
+    <value>549, 98</value>
+  </data>
+  <data name="CartellaTemp.Size" type="System.Drawing.Size, System.Drawing">
+    <value>135, 133</value>
+  </data>
+  <data name="CartellaTemp.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="CartellaTemp.Text" xml:space="preserve">
+    <value>circularProgressBar2</value>
+  </data>
+  <data name="&gt;&gt;CartellaTemp.Name" xml:space="preserve">
+    <value>CartellaTemp</value>
+  </data>
+  <data name="&gt;&gt;CartellaTemp.Type" xml:space="preserve">
+    <value>WinHubX.Bottoni.CircularProgressBar, WinHubX, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;CartellaTemp.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;CartellaTemp.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="label4.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="label4.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label4.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 14pt, style=Bold</value>
+  </data>
+  <data name="label4.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>507, 234</value>
+  </data>
+  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>223, 25</value>
+  </data>
+  <data name="label4.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="label4.Text" xml:space="preserve">
+    <value>GB massimi in %TEMP%</value>
+  </data>
+  <data name="label4.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="&gt;&gt;label4.Name" xml:space="preserve">
+    <value>label4</value>
+  </data>
+  <data name="&gt;&gt;label4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label4.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="comboBox_gb.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="comboBox_gb.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="comboBox_gb.Items" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="comboBox_gb.Items1" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="comboBox_gb.Items2" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="comboBox_gb.Items3" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="comboBox_gb.Items4" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="comboBox_gb.Items5" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="comboBox_gb.Items6" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="comboBox_gb.Items7" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="comboBox_gb.Items8" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="comboBox_gb.Items9" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="comboBox_gb.Location" type="System.Drawing.Point, System.Drawing">
+    <value>591, 273</value>
+  </data>
+  <data name="comboBox_gb.Size" type="System.Drawing.Size, System.Drawing">
+    <value>56, 23</value>
+  </data>
+  <data name="comboBox_gb.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
+  </data>
+  <data name="&gt;&gt;comboBox_gb.Name" xml:space="preserve">
+    <value>comboBox_gb</value>
+  </data>
+  <data name="&gt;&gt;comboBox_gb.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;comboBox_gb.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;comboBox_gb.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="btnPulisciTemp.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="btnPulisciTemp.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="btnPulisciTemp.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 14pt, style=Bold</value>
+  </data>
+  <data name="btnPulisciTemp.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnPulisciTemp.Location" type="System.Drawing.Point, System.Drawing">
+    <value>553, 316</value>
+  </data>
+  <data name="btnPulisciTemp.Size" type="System.Drawing.Size, System.Drawing">
+    <value>139, 32</value>
+  </data>
+  <data name="btnPulisciTemp.TabIndex" type="System.Int32, mscorlib">
+    <value>21</value>
+  </data>
+  <data name="btnPulisciTemp.Text" xml:space="preserve">
+    <value>Pulisci TEMP</value>
+  </data>
+  <data name="&gt;&gt;btnPulisciTemp.Name" xml:space="preserve">
+    <value>btnPulisciTemp</value>
+  </data>
+  <data name="&gt;&gt;btnPulisciTemp.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnPulisciTemp.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;btnPulisciTemp.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <metadata name="tempMonitorTimer.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <data name="label5.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="label5.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label5.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 14pt, style=Bold</value>
+  </data>
+  <data name="label5.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
+    <value>568, 70</value>
+  </data>
+  <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>95, 25</value>
+  </data>
+  <data name="label5.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="label5.Text" xml:space="preserve">
+    <value>%TEMP%</value>
+  </data>
+  <data name="label5.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="&gt;&gt;label5.Name" xml:space="preserve">
+    <value>label5</value>
+  </data>
+  <data name="&gt;&gt;label5.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label5.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
@@ -548,6 +785,12 @@
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>885, 419</value>
+  </data>
+  <data name="&gt;&gt;tempMonitorTimer.Name" xml:space="preserve">
+    <value>tempMonitorTimer</value>
+  </data>
+  <data name="&gt;&gt;tempMonitorTimer.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Timer, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>FormMonitoraggio</value>

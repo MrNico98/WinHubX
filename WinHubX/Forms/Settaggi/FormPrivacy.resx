@@ -302,7 +302,7 @@
     <value>Microsoft Sans Serif, 19.800001pt, style=Bold</value>
   </data>
   <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>421, 4</value>
+    <value>448, 4</value>
   </data>
   <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
     <value>200, 31</value>
@@ -383,7 +383,7 @@
     <value>Abilita Notifiche Tray/Calendario</value>
   </data>
   <data name="AbilitaPrivacy.Location" type="System.Drawing.Point, System.Drawing">
-    <value>421, 38</value>
+    <value>448, 38</value>
   </data>
   <data name="AbilitaPrivacy.Size" type="System.Drawing.Size, System.Drawing">
     <value>254, 360</value>

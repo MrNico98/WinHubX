@@ -35,7 +35,7 @@ namespace WinHubX.Dialog
             notifyIcon = new NotifyIcon
             {
                 Icon = SystemIcons.Information,
-                Visible = true
+                Visible = false
             };
 
             Button closeButton = new Button();

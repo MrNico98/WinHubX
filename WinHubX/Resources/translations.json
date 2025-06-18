@@ -17,10 +17,10 @@
   },
   "FormHome": {
     "en": {
-      "Changelog": "Changelog WinHubX\n\n26/05/2025 - v2.4.2.8:\n- Added logic for application resizing\n\n23/05/2025 - v2.4.2.7:\n- Fixed title Personalized office\n- Modify OfficeScrubber to make it more intuitive\n\n20/05/2025 - v2.4.2.6:\n- Fix WinHubXLiteOS\n- Added English language support in Custom Office Installation\n- New UI for ISO Creation\n- Added WinHubXLiteOS\n- Added tooltips in Tools section\n- Fix Custom Installation Office\n\n22/04/2025 - v2.4.2.4:\n- Fix Custom Installation Office\n\n17/04/2025 - v2.4.2.3:\n- Added support for English language\n\n22/04/2025 - v2.4.2.4:\n- Fix Custom Installation Office\n\n17/04/2025 - v2.4.2.3:\n- Added support for English language\n\n15/04/2025 - v2.4.2.2:\n- Implemented background work to improve responsiveness on Settings panel\n- Added progress bar on all settings for visual feedback\n- Added tooltips on settings for clarification\n- Fixed saving of settings, now persist correctly\n- New settings for latest Windows updates\n- Debloat: added service management (beta)\n- Direct activation of Windows (online and offline)\n- Direct activation of Office (online and offline)\n\n10/04/2025 - v2.4.2.1:\n- Fix for System Restore, code was not continuing\n\n19/02/2025 - v2.4.2.0:\n- Added WinHubX to CMD path, run 'winhubx /help' for more info\n- Updated all Windows 10/11 stock ISOs\n- Improved 'System Restore' section with HW/SW check and stress test\n- 'Debloat' updated: dynamic app detection and advanced mode\n- Option to show monitoring in taskbar or notification area\n- Fix WinGet installation in 'Install App'\n- Fix red texts on ISO optimization\n- Automatic HDD/SSD detection for system compacting\n- Office installation improvements\n- New Windows 10/11 Lite ISOs updated to Feb 2025\n- New permanent offline activation method"
+      "Changelog": "Changelog WinHubX\n\n18/06/2025 - v2.4.3.0:\n- ISO Creation enhancements and fixes\n- Automatic architecture detection for custom office\n- Ability to import and export WinHubX settings\n\n11/06/2025 - v2.4.2.9:\n- Fix icons in system tray\n- Added monitoring of %TEMP% folder\n- Update ISO STOCK Win10 and 11\n- Update of Office 2024 and 365 (Online and Offline)\n- Update WSA\n- Added new defender deactivation mode (from cmd type winhubx /help)\n\n26/05/2025 - v2.4.2.8:\n- Added logic for application resizing\n\n23/05/2025 - v2.4.2.7:\n- Fixed title Personalized office\n- Modify OfficeScrubber to make it more intuitive\n\n20/05/2025 - v2.4.2.6:\n- Fix WinHubXLiteOS\n- Added English language support in Custom Office Installation\n- New UI for ISO Creation\n- Added WinHubXLiteOS\n- Added tooltips in Tools section\n- Fix Custom Installation Office\n\n22/04/2025 - v2.4.2.4:\n- Fix Custom Installation Office\n\n17/04/2025 - v2.4.2.3:\n- Added support for English language\n\n22/04/2025 - v2.4.2.4:\n- Fix Custom Installation Office\n\n17/04/2025 - v2.4.2.3:\n- Added support for English language\n\n15/04/2025 - v2.4.2.2:\n- Implemented background work to improve responsiveness on Settings panel\n- Added progress bar on all settings for visual feedback\n- Added tooltips on settings for clarification\n- Fixed saving of settings, now persist correctly\n- New settings for latest Windows updates\n- Debloat: added service management (beta)\n- Direct activation of Windows (online and offline)\n- Direct activation of Office (online and offline)\n\n10/04/2025 - v2.4.2.1:\n- Fix for System Restore, code was not continuing\n\n19/02/2025 - v2.4.2.0:\n- Added WinHubX to CMD path, run 'winhubx /help' for more info\n- Updated all Windows 10/11 stock ISOs\n- Improved 'System Restore' section with HW/SW check and stress test\n- 'Debloat' updated: dynamic app detection and advanced mode\n- Option to show monitoring in taskbar or notification area\n- Fix WinGet installation in 'Install App'\n- Fix red texts on ISO optimization\n- Automatic HDD/SSD detection for system compacting\n- Office installation improvements\n- New Windows 10/11 Lite ISOs updated to Feb 2025\n- New permanent offline activation method"
     },
     "it": {
-      "Changelog": "Changelog WinHubX\n\n26/05/2025 - v2.4.2.8:\n- Inserita logica per ridimensionamento applicazione\n\n23/05/2025 - v2.4.2.7:\n- Fix titolo Office personalizzato\n- Modifica OfficeScrubber per renderlo più intuitivo\n\n20/05/2025 - v2.4.2.6:\n- Fix WinHubXLiteOS\n- Aggiunta della lingua EN nella Personalizzazione Office\n- Nuova UI per la Creazione ISO\n- Aggiunta di WinHubXLiteOS\n- Aggiunti tooltip nella sezione Tools\n- Fix Personalizzazione Office\n\n17/04/2025 - v2.4.2.4:\n- Fix Personalizzazione Office\n\n17/04/2025 - v2.4.2.3:\n- Aggiunto supporto per lingua inglese\n\n17/04/2025 - v2.4.2.4:\n- Fix Personalizzazione Office\n\n17/04/2025 - v2.4.2.3:\n- Aggiunto supporto per lingua inglese\n\n15/04/2025 - v2.4.2.2:\n- Implementato \"background work\" per velocizzare il codice sul pannello Settaggi, ora è più responsivo\n- Inserita progressbar su tutti i settaggi per avere un responso visivo\n- Inserito sui settaggi il tooltip esplicativo per sapere cosa è quell'impostazione\n- Fix salvataggio settaggi, ora vengono correttamente mantenuti in memoria\n- Aggiunti nuovi settaggi per gli ultimi aggiornamenti Windows\n- Inserito su Debloat la gestione dei servizi (beta)\n- Attivazione diretta windows (online e offline)\n- Attivazione diretta office (online e offline)\n\n10/04/2025 - v2.4.2.1:\n- Fix Ripristino SO, il codice non proseguiva\n\n19/02/2025 - v2.4.2.0:\n- Aggiunto winhubx al path cmd e ampliati i comandi digitare winhubx /help per maggiori info\n- Aggiornate tutte le iso di Win10/11 Stock\n- Sezione 'Ripristino SO' migliorata con verifica HW/SW e stress test\n- Sezione 'Debloat' aggiornata: rilevamento dinamico app e modalità avanzata\n- Opzione per mostrare il monitoraggio in barra applicazioni o area notifiche\n- Fix installazione WinGet su 'Installa App'\n- Fix scritte rosse su ottimizzazione ISO\n- Verifica automatica HDD/SSD per compattazione sistema\n- Aggiornamenti per installazioni Office\n- Nuove ISO Windows 10/11 Lite aggiornate a Febbraio 2025\n- Nuovo metodo di attivazione offline permanente"
+      "Changelog": "Changelog WinHubX\n\n18/06/2025 - v2.4.3.0:\n- Ampliamento e sistemazione Crea ISO\n- Rilevamento automatico dell'architettura per office personalizzato\n- Possibilità di importare ed esporatare i settaggi di WinHubX\n\n11/06/2025 - v2.4.2.9:\n- Fix icone in system tray\n- Aggiunto monitoraggio cartella %TEMP%\n- Aggiornamento ISO STOCK Win10 e 11\n- Aggiornamento degli Office 2024 e 365 (Online e Offline)\n- Aggiornamento WSA\n- Aggiunta nuova modalità disattivazione defender (da cmd digitare winhubx /help)\n\n26/05/2025 - v2.4.2.8:\n- Inserita logica per ridimensionamento applicazione\n\n23/05/2025 - v2.4.2.7:\n- Fix titolo Office personalizzato\n- Modifica OfficeScrubber per renderlo più intuitivo\n\n20/05/2025 - v2.4.2.6:\n- Fix WinHubXLiteOS\n- Aggiunta della lingua EN nella Personalizzazione Office\n- Nuova UI per la Creazione ISO\n- Aggiunta di WinHubXLiteOS\n- Aggiunti tooltip nella sezione Tools\n- Fix Personalizzazione Office\n\n17/04/2025 - v2.4.2.4:\n- Fix Personalizzazione Office\n\n17/04/2025 - v2.4.2.3:\n- Aggiunto supporto per lingua inglese\n\n17/04/2025 - v2.4.2.4:\n- Fix Personalizzazione Office\n\n17/04/2025 - v2.4.2.3:\n- Aggiunto supporto per lingua inglese\n\n15/04/2025 - v2.4.2.2:\n- Implementato \"background work\" per velocizzare il codice sul pannello Settaggi, ora è più responsivo\n- Inserita progressbar su tutti i settaggi per avere un responso visivo\n- Inserito sui settaggi il tooltip esplicativo per sapere cosa è quell'impostazione\n- Fix salvataggio settaggi, ora vengono correttamente mantenuti in memoria\n- Aggiunti nuovi settaggi per gli ultimi aggiornamenti Windows\n- Inserito su Debloat la gestione dei servizi (beta)\n- Attivazione diretta windows (online e offline)\n- Attivazione diretta office (online e offline)\n\n10/04/2025 - v2.4.2.1:\n- Fix Ripristino SO, il codice non proseguiva\n\n19/02/2025 - v2.4.2.0:\n- Aggiunto winhubx al path cmd e ampliati i comandi digitare winhubx /help per maggiori info\n- Aggiornate tutte le iso di Win10/11 Stock\n- Sezione 'Ripristino SO' migliorata con verifica HW/SW e stress test\n- Sezione 'Debloat' aggiornata: rilevamento dinamico app e modalità avanzata\n- Opzione per mostrare il monitoraggio in barra applicazioni o area notifiche\n- Fix installazione WinGet su 'Installa App'\n- Fix scritte rosse su ottimizzazione ISO\n- Verifica automatica HDD/SSD per compattazione sistema\n- Aggiornamenti per installazioni Office\n- Nuove ISO Windows 10/11 Lite aggiornate a Febbraio 2025\n- Nuovo metodo di attivazione offline permanente"
     }
   },
   "Form1": {
@@ -99,7 +99,22 @@
       "filenotfound": "File not found in the Downloads folder. Please ensure you have saved the file.",
       "downloadlinknotfound": "Unable to determine the download link.",
       "restoreos": "Restore OS",
-      "customization": "Customization"
+      "customization": "Customization",
+      "startdownload": "Starting download...",
+      "downloading": "Downloading...",
+      "downloadcomplete": "Download complete. Extracting...",
+      "extractioncomplete": "Extraction complete.",
+      "executingrunbat": "Executing Run.bat...",
+      "scriptcomplete": "Script completed.",
+      "generalerror": "Error: {0}",
+      "successmessage": "Download completed and program executed.",
+      "exporttitle": "Save WinHubX settings",
+      "exportsuccess": "Registry exported to:\n{0}",
+      "exportdone": "Export completed",
+      "exporterrorcode": "Error during export. Exit code: {0}",
+      "exportexception": "An error occurred:\n{0}",
+      "exception": "Exception",
+      "error": "Error"
     },
     "it": {
       "savezip": "Salva lo zip nella cartella Downloads e premi 'OK' quando il download è finito.",
@@ -107,7 +122,22 @@
       "filenotfound": "File non trovato nella cartella Downloads. Assicurati di aver salvato il file.",
       "downloadlinknotfound": "Impossibile determinare il link per il download.",
       "restoreos": "Ripristina SO",
-      "customization": "Personalizzazione"
+      "customization": "Personalizzazione",
+      "startdownload": "Inizio download...",
+      "downloading": "Download in corso...",
+      "downloadcomplete": "Download completato. Estrazione in corso...",
+      "extractioncomplete": "Estrazione completata.",
+      "executingrunbat": "Esecuzione Run.bat...",
+      "scriptcomplete": "Script completato.",
+      "generalerror": "Errore: {0}",
+      "successmessage": "Download completato e programma eseguito.",
+      "exporttitle": "Salva i settaggi di WinHubX",
+      "exportsuccess": "Registro esportato in:\n{0}",
+      "exportdone": "Esportazione completata",
+      "exporterrorcode": "Errore durante l'esportazione. Codice uscita: {0}",
+      "exportexception": "Si è verificato un errore:\n{0}",
+      "exception": "Eccezione",
+      "error": "Errore"
     }
   },
   "FormDefender": {
@@ -521,7 +551,22 @@
       "operazioneannullatatoken": "Operation cancelled.",
       "estrazioneisook": "ISO extraction complete",
       "successo1": "CUSTOM ISO CREATED SUCCESSFULLY",
-      "successo2": "You will find your custom ISO in C: renamed as 'WindowsISO_edited.iso'"
+      "successo2": "You will find your custom ISO in C: renamed as 'WindowsISO_edited.iso'",
+      "iniziocopianeccessari": "Starting copy of necessary files...",
+      "importazionesettaggiabilitata": "WinHubX settings import enabled.",
+      "fileconfigcopiato": "config.dat file exported and moved successfully.",
+      "fileconfignontrovato": "config.dat file NOT found after export.",
+      "erroreexportreg": "Error during registry export",
+      "copiatofile": "Copied",
+      "selezionacartelladriver": "Select the folder containing the drivers to integrate",
+      "driverintegratocartella": "Drivers integrated successfully from folder",
+      "erroreintegracartella": "Error integrating drivers from folder",
+      "driversuccessoesportazione": "Drivers successfully exported",
+      "erroreesportazionedriver": "Error exporting drivers",
+      "driverintegrazionesistema": "Drivers from current system integrated successfully",
+      "erroreintegrasistema": "Error integrating drivers from system",
+      "erroregenerale": "General error",
+      "cartelladeletedrimossa": "The folder [DELETED] has been removed successfully."
     },
     "it": {
       "erroreindicenonselezionato": "Errore: Nessun indice selezionato.",
@@ -569,7 +614,22 @@
       "operazioneannullatatoken": "Operazione annullata.",
       "estrazioneisook": "Estrazione ISO completata",
       "successo1": "ISO PERSONALIZZATA CREATA CORRETTAMENTE",
-      "successo2": "Troverai la tua ISO personalizzata in C: rinominata come 'WindowsISO_edited.iso'"
+      "successo2": "Troverai la tua ISO personalizzata in C: rinominata come 'WindowsISO_edited.iso'",
+      "iniziocopianeccessari": "Inizio copia file necessari...",
+      "importazionesettaggiabilitata": "Importazione settaggi WinHubX abilitata.",
+      "fileconfigcopiato": "File config.dat esportato e spostato correttamente.",
+      "fileconfignontrovato": "File config.dat NON trovato dopo l'esportazione.",
+      "erroreexportreg": "Errore durante l'esportazione del registro",
+      "copiatofile": "Copiato",
+      "selezionacartelladriver": "Seleziona la cartella contenente i driver da integrare",
+      "driverintegratocartella": "Driver integrati con successo da cartella",
+      "erroreintegracartella": "Errore durante l'integrazione dei driver dalla cartella",
+      "driversuccessoesportazione": "Driver esportati con successo",
+      "erroreesportazionedriver": "Errore durante l'esportazione dei driver",
+      "driverintegrazionesistema": "Driver dal sistema attuale integrati correttamente",
+      "erroreintegrasistema": "Errore durante l'integrazione dei driver dal sistema",
+      "erroregenerale": "Errore generale",
+      "cartelladeletedrimossa": "La cartella [DELETED] è stata rimossa con successo."
     }
   }
 }

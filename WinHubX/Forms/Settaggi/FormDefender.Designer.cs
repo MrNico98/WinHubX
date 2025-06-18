@@ -60,6 +60,7 @@
             resources.ApplyResources(DisabilitaDefender, "DisabilitaDefender");
             DisabilitaDefender.BackColor = Color.FromArgb(37, 38, 39);
             DisabilitaDefender.BorderStyle = BorderStyle.None;
+            DisabilitaDefender.Cursor = Cursors.Hand;
             DisabilitaDefender.ForeColor = Color.White;
             DisabilitaDefender.FormattingEnabled = true;
             DisabilitaDefender.Items.AddRange(new object[] { resources.GetString("DisabilitaDefender.Items"), resources.GetString("DisabilitaDefender.Items1"), resources.GetString("DisabilitaDefender.Items2"), resources.GetString("DisabilitaDefender.Items3"), resources.GetString("DisabilitaDefender.Items4"), resources.GetString("DisabilitaDefender.Items5"), resources.GetString("DisabilitaDefender.Items6"), resources.GetString("DisabilitaDefender.Items7"), resources.GetString("DisabilitaDefender.Items8"), resources.GetString("DisabilitaDefender.Items9"), resources.GetString("DisabilitaDefender.Items10"), resources.GetString("DisabilitaDefender.Items11"), resources.GetString("DisabilitaDefender.Items12") });
@@ -100,6 +101,7 @@
             resources.ApplyResources(AbilitaDefender, "AbilitaDefender");
             AbilitaDefender.BackColor = Color.FromArgb(37, 38, 39);
             AbilitaDefender.BorderStyle = BorderStyle.None;
+            AbilitaDefender.Cursor = Cursors.Hand;
             AbilitaDefender.ForeColor = Color.White;
             AbilitaDefender.FormattingEnabled = true;
             AbilitaDefender.Items.AddRange(new object[] { resources.GetString("AbilitaDefender.Items"), resources.GetString("AbilitaDefender.Items1"), resources.GetString("AbilitaDefender.Items2"), resources.GetString("AbilitaDefender.Items3"), resources.GetString("AbilitaDefender.Items4"), resources.GetString("AbilitaDefender.Items5"), resources.GetString("AbilitaDefender.Items6"), resources.GetString("AbilitaDefender.Items7"), resources.GetString("AbilitaDefender.Items8"), resources.GetString("AbilitaDefender.Items9"), resources.GetString("AbilitaDefender.Items10"), resources.GetString("AbilitaDefender.Items11"), resources.GetString("AbilitaDefender.Items12") });

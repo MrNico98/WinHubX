@@ -138,18 +138,15 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;comboBox1.ZOrder" xml:space="preserve">
-    <value>10</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="pictureBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom</value>
+    <value>16</value>
   </data>
   <data name="pictureBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>494, 169</value>
+    <value>440, 191</value>
   </data>
   <data name="pictureBox1.Size" type="System.Drawing.Size, System.Drawing">
     <value>29, 25</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="pictureBox1.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>Zoom</value>
   </data>
@@ -166,13 +163,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;pictureBox1.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>14</value>
   </data>
-  <data name="pictureBox2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Left</value>
+  <data name="pictureBox2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="pictureBox2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>214, 171</value>
+    <value>214, 192</value>
   </data>
   <data name="pictureBox2.Size" type="System.Drawing.Size, System.Drawing">
     <value>24, 23</value>
@@ -193,10 +190,61 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;pictureBox2.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>18</value>
   </data>
-  <data name="groupBox4.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Left</value>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <data name="&gt;&gt;NotRemProcRad.Name" xml:space="preserve">
+    <value>NotRemProcRad</value>
+  </data>
+  <data name="&gt;&gt;NotRemProcRad.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;NotRemProcRad.Parent" xml:space="preserve">
+    <value>groupBox4</value>
+  </data>
+  <data name="&gt;&gt;NotRemProcRad.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;RemProcRad.Name" xml:space="preserve">
+    <value>RemProcRad</value>
+  </data>
+  <data name="&gt;&gt;RemProcRad.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RemProcRad.Parent" xml:space="preserve">
+    <value>groupBox4</value>
+  </data>
+  <data name="&gt;&gt;RemProcRad.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="groupBox4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 311</value>
+  </data>
+  <data name="groupBox4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>215, 85</value>
+  </data>
+  <data name="groupBox4.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
+  </data>
+  <data name="groupBox4.Text" xml:space="preserve">
+    <value>Processi</value>
+  </data>
+  <data name="groupBox4.ToolTip" xml:space="preserve">
+    <value>Seleziona se rimuovere alcuni processi non necessari nella nuova installazione Windows</value>
+  </data>
+  <data name="&gt;&gt;groupBox4.Name" xml:space="preserve">
+    <value>groupBox4</value>
+  </data>
+  <data name="&gt;&gt;groupBox4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupBox4.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;groupBox4.ZOrder" xml:space="preserve">
+    <value>17</value>
   </data>
   <data name="NotRemProcRad.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -252,35 +300,8 @@
   <data name="&gt;&gt;RemProcRad.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="groupBox4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 290</value>
-  </data>
-  <data name="groupBox4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>215, 85</value>
-  </data>
-  <data name="groupBox4.TabIndex" type="System.Int32, mscorlib">
-    <value>20</value>
-  </data>
-  <data name="groupBox4.Text" xml:space="preserve">
-    <value>Processi</value>
-  </data>
-  <data name="&gt;&gt;groupBox4.Name" xml:space="preserve">
-    <value>groupBox4</value>
-  </data>
-  <data name="&gt;&gt;groupBox4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;groupBox4.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;groupBox4.ZOrder" xml:space="preserve">
-    <value>11</value>
-  </data>
-  <data name="pictureBox5.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Left</value>
-  </data>
   <data name="pictureBox5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>212, 285</value>
+    <value>212, 306</value>
   </data>
   <data name="pictureBox5.Size" type="System.Drawing.Size, System.Drawing">
     <value>29, 26</value>
@@ -301,10 +322,58 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;pictureBox5.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>10</value>
   </data>
-  <data name="groupBox6.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Right</value>
+  <data name="&gt;&gt;ThirTwoRad.Name" xml:space="preserve">
+    <value>ThirTwoRad</value>
+  </data>
+  <data name="&gt;&gt;ThirTwoRad.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ThirTwoRad.Parent" xml:space="preserve">
+    <value>groupBox6</value>
+  </data>
+  <data name="&gt;&gt;ThirTwoRad.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;SixforArchRad.Name" xml:space="preserve">
+    <value>SixforArchRad</value>
+  </data>
+  <data name="&gt;&gt;SixforArchRad.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SixforArchRad.Parent" xml:space="preserve">
+    <value>groupBox6</value>
+  </data>
+  <data name="&gt;&gt;SixforArchRad.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="groupBox6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>487, 311</value>
+  </data>
+  <data name="groupBox6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>129, 85</value>
+  </data>
+  <data name="groupBox6.TabIndex" type="System.Int32, mscorlib">
+    <value>21</value>
+  </data>
+  <data name="groupBox6.Text" xml:space="preserve">
+    <value>Architettura</value>
+  </data>
+  <data name="groupBox6.ToolTip" xml:space="preserve">
+    <value>Seleziona l'architettura della nuova installazione Windows</value>
+  </data>
+  <data name="&gt;&gt;groupBox6.Name" xml:space="preserve">
+    <value>groupBox6</value>
+  </data>
+  <data name="&gt;&gt;groupBox6.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupBox6.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;groupBox6.ZOrder" xml:space="preserve">
+    <value>19</value>
   </data>
   <data name="ThirTwoRad.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -360,32 +429,53 @@
   <data name="&gt;&gt;SixforArchRad.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="groupBox6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>579, 290</value>
+  <data name="&gt;&gt;StockAppRad.Name" xml:space="preserve">
+    <value>StockAppRad</value>
   </data>
-  <data name="groupBox6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>237, 85</value>
+  <data name="&gt;&gt;StockAppRad.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="groupBox6.TabIndex" type="System.Int32, mscorlib">
-    <value>21</value>
+  <data name="&gt;&gt;StockAppRad.Parent" xml:space="preserve">
+    <value>groupBox5</value>
   </data>
-  <data name="groupBox6.Text" xml:space="preserve">
-    <value>Architettura</value>
+  <data name="&gt;&gt;StockAppRad.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
-  <data name="&gt;&gt;groupBox6.Name" xml:space="preserve">
-    <value>groupBox6</value>
+  <data name="&gt;&gt;DebAppRad.Name" xml:space="preserve">
+    <value>DebAppRad</value>
   </data>
-  <data name="&gt;&gt;groupBox6.Type" xml:space="preserve">
+  <data name="&gt;&gt;DebAppRad.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;DebAppRad.Parent" xml:space="preserve">
+    <value>groupBox5</value>
+  </data>
+  <data name="&gt;&gt;DebAppRad.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="groupBox5.Location" type="System.Drawing.Point, System.Drawing">
+    <value>487, 195</value>
+  </data>
+  <data name="groupBox5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>129, 81</value>
+  </data>
+  <data name="groupBox5.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="groupBox5.Text" xml:space="preserve">
+    <value>Debloat APP</value>
+  </data>
+  <data name="&gt;&gt;groupBox5.Name" xml:space="preserve">
+    <value>groupBox5</value>
+  </data>
+  <data name="&gt;&gt;groupBox5.Type" xml:space="preserve">
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;groupBox6.Parent" xml:space="preserve">
+  <data name="&gt;&gt;groupBox5.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;groupBox6.ZOrder" xml:space="preserve">
-    <value>13</value>
-  </data>
-  <data name="groupBox5.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Right</value>
+  <data name="&gt;&gt;groupBox5.ZOrder" xml:space="preserve">
+    <value>20</value>
   </data>
   <data name="StockAppRad.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -401,6 +491,9 @@
   </data>
   <data name="StockAppRad.Text" xml:space="preserve">
     <value>Disabilita</value>
+  </data>
+  <data name="StockAppRad.ToolTip" xml:space="preserve">
+    <value>Non rimuovere i bloatware</value>
   </data>
   <data name="&gt;&gt;StockAppRad.Name" xml:space="preserve">
     <value>StockAppRad</value>
@@ -429,6 +522,9 @@
   <data name="DebAppRad.Text" xml:space="preserve">
     <value>Abilita</value>
   </data>
+  <data name="DebAppRad.ToolTip" xml:space="preserve">
+    <value>Rimozione dei bloatware nella nuova installazione Windows</value>
+  </data>
   <data name="&gt;&gt;DebAppRad.Name" xml:space="preserve">
     <value>DebAppRad</value>
   </data>
@@ -441,32 +537,56 @@
   <data name="&gt;&gt;DebAppRad.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="groupBox5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>579, 174</value>
+  <data name="&gt;&gt;NotDisWinDefRad.Name" xml:space="preserve">
+    <value>NotDisWinDefRad</value>
   </data>
-  <data name="groupBox5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>237, 81</value>
+  <data name="&gt;&gt;NotDisWinDefRad.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="groupBox5.TabIndex" type="System.Int32, mscorlib">
-    <value>22</value>
+  <data name="&gt;&gt;NotDisWinDefRad.Parent" xml:space="preserve">
+    <value>groupBox3</value>
   </data>
-  <data name="groupBox5.Text" xml:space="preserve">
-    <value>Debloat APP</value>
+  <data name="&gt;&gt;NotDisWinDefRad.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
-  <data name="&gt;&gt;groupBox5.Name" xml:space="preserve">
-    <value>groupBox5</value>
+  <data name="&gt;&gt;DisWindDefRad.Name" xml:space="preserve">
+    <value>DisWindDefRad</value>
   </data>
-  <data name="&gt;&gt;groupBox5.Type" xml:space="preserve">
+  <data name="&gt;&gt;DisWindDefRad.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;DisWindDefRad.Parent" xml:space="preserve">
+    <value>groupBox3</value>
+  </data>
+  <data name="&gt;&gt;DisWindDefRad.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="groupBox3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>256, 195</value>
+  </data>
+  <data name="groupBox3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>199, 81</value>
+  </data>
+  <data name="groupBox3.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="groupBox3.Text" xml:space="preserve">
+    <value>Seleziona preferenza Defender</value>
+  </data>
+  <data name="groupBox3.ToolTip" xml:space="preserve">
+    <value>Seleziona se abilitare o disabilitare Windows Defender nella nuova installazione Windows</value>
+  </data>
+  <data name="&gt;&gt;groupBox3.Name" xml:space="preserve">
+    <value>groupBox3</value>
+  </data>
+  <data name="&gt;&gt;groupBox3.Type" xml:space="preserve">
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;groupBox5.Parent" xml:space="preserve">
+  <data name="&gt;&gt;groupBox3.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;groupBox5.ZOrder" xml:space="preserve">
-    <value>14</value>
-  </data>
-  <data name="groupBox3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom</value>
+  <data name="&gt;&gt;groupBox3.ZOrder" xml:space="preserve">
+    <value>21</value>
   </data>
   <data name="NotDisWinDefRad.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -522,32 +642,53 @@
   <data name="&gt;&gt;DisWindDefRad.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="groupBox3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>272, 174</value>
+  <data name="&gt;&gt;Win11BypassRad.Name" xml:space="preserve">
+    <value>Win11BypassRad</value>
   </data>
-  <data name="groupBox3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>237, 81</value>
+  <data name="&gt;&gt;Win11BypassRad.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="groupBox3.TabIndex" type="System.Int32, mscorlib">
-    <value>23</value>
+  <data name="&gt;&gt;Win11BypassRad.Parent" xml:space="preserve">
+    <value>groupBox7</value>
   </data>
-  <data name="groupBox3.Text" xml:space="preserve">
-    <value>Seleziona preferenza Defender</value>
+  <data name="&gt;&gt;Win11BypassRad.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
-  <data name="&gt;&gt;groupBox3.Name" xml:space="preserve">
-    <value>groupBox3</value>
+  <data name="&gt;&gt;Win11StockRad.Name" xml:space="preserve">
+    <value>Win11StockRad</value>
   </data>
-  <data name="&gt;&gt;groupBox3.Type" xml:space="preserve">
+  <data name="&gt;&gt;Win11StockRad.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Win11StockRad.Parent" xml:space="preserve">
+    <value>groupBox7</value>
+  </data>
+  <data name="&gt;&gt;Win11StockRad.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="groupBox7.Location" type="System.Drawing.Point, System.Drawing">
+    <value>256, 311</value>
+  </data>
+  <data name="groupBox7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>199, 85</value>
+  </data>
+  <data name="groupBox7.TabIndex" type="System.Int32, mscorlib">
+    <value>24</value>
+  </data>
+  <data name="groupBox7.Text" xml:space="preserve">
+    <value>Windows 11 Bypass</value>
+  </data>
+  <data name="&gt;&gt;groupBox7.Name" xml:space="preserve">
+    <value>groupBox7</value>
+  </data>
+  <data name="&gt;&gt;groupBox7.Type" xml:space="preserve">
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;groupBox3.Parent" xml:space="preserve">
+  <data name="&gt;&gt;groupBox7.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;groupBox3.ZOrder" xml:space="preserve">
-    <value>15</value>
-  </data>
-  <data name="groupBox7.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom</value>
+  <data name="&gt;&gt;groupBox7.ZOrder" xml:space="preserve">
+    <value>22</value>
   </data>
   <data name="Win11BypassRad.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -563,6 +704,9 @@
   </data>
   <data name="Win11BypassRad.Text" xml:space="preserve">
     <value>Bypass</value>
+  </data>
+  <data name="Win11BypassRad.ToolTip" xml:space="preserve">
+    <value>Applica i bypass dei requisiti installazione</value>
   </data>
   <data name="&gt;&gt;Win11BypassRad.Name" xml:space="preserve">
     <value>Win11BypassRad</value>
@@ -591,6 +735,9 @@
   <data name="Win11StockRad.Text" xml:space="preserve">
     <value>Stock</value>
   </data>
+  <data name="Win11StockRad.ToolTip" xml:space="preserve">
+    <value>Non rimuovere i requisiti installazione</value>
+  </data>
   <data name="&gt;&gt;Win11StockRad.Name" xml:space="preserve">
     <value>Win11StockRad</value>
   </data>
@@ -603,32 +750,56 @@
   <data name="&gt;&gt;Win11StockRad.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="groupBox7.Location" type="System.Drawing.Point, System.Drawing">
-    <value>272, 290</value>
+  <data name="&gt;&gt;Win11Rad.Name" xml:space="preserve">
+    <value>Win11Rad</value>
   </data>
-  <data name="groupBox7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>237, 85</value>
+  <data name="&gt;&gt;Win11Rad.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="groupBox7.TabIndex" type="System.Int32, mscorlib">
-    <value>24</value>
+  <data name="&gt;&gt;Win11Rad.Parent" xml:space="preserve">
+    <value>groupBox2</value>
   </data>
-  <data name="groupBox7.Text" xml:space="preserve">
-    <value>Windows 11 Bypass</value>
+  <data name="&gt;&gt;Win11Rad.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
-  <data name="&gt;&gt;groupBox7.Name" xml:space="preserve">
-    <value>groupBox7</value>
+  <data name="&gt;&gt;Win10Rad.Name" xml:space="preserve">
+    <value>Win10Rad</value>
   </data>
-  <data name="&gt;&gt;groupBox7.Type" xml:space="preserve">
+  <data name="&gt;&gt;Win10Rad.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Win10Rad.Parent" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="&gt;&gt;Win10Rad.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="groupBox2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 195</value>
+  </data>
+  <data name="groupBox2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>215, 81</value>
+  </data>
+  <data name="groupBox2.TabIndex" type="System.Int32, mscorlib">
+    <value>25</value>
+  </data>
+  <data name="groupBox2.Text" xml:space="preserve">
+    <value>Seleziona versione ISO Windows</value>
+  </data>
+  <data name="groupBox2.ToolTip" xml:space="preserve">
+    <value>Seleziona se l'ISO caricata sia Windows 10 o Windows 11</value>
+  </data>
+  <data name="&gt;&gt;groupBox2.Name" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="&gt;&gt;groupBox2.Type" xml:space="preserve">
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;groupBox7.Parent" xml:space="preserve">
+  <data name="&gt;&gt;groupBox2.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;groupBox7.ZOrder" xml:space="preserve">
-    <value>16</value>
-  </data>
-  <data name="groupBox2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Left</value>
+  <data name="&gt;&gt;groupBox2.ZOrder" xml:space="preserve">
+    <value>23</value>
   </data>
   <data name="Win11Rad.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -684,32 +855,56 @@
   <data name="&gt;&gt;Win10Rad.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="groupBox2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 174</value>
+  <data name="&gt;&gt;RemEdgeRad.Name" xml:space="preserve">
+    <value>RemEdgeRad</value>
   </data>
-  <data name="groupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>215, 81</value>
+  <data name="&gt;&gt;RemEdgeRad.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="groupBox2.TabIndex" type="System.Int32, mscorlib">
-    <value>25</value>
+  <data name="&gt;&gt;RemEdgeRad.Parent" xml:space="preserve">
+    <value>groupBox1</value>
   </data>
-  <data name="groupBox2.Text" xml:space="preserve">
-    <value>Seleziona versione ISO Windows</value>
+  <data name="&gt;&gt;RemEdgeRad.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
-  <data name="&gt;&gt;groupBox2.Name" xml:space="preserve">
-    <value>groupBox2</value>
+  <data name="&gt;&gt;NotRemEdgeRad.Name" xml:space="preserve">
+    <value>NotRemEdgeRad</value>
   </data>
-  <data name="&gt;&gt;groupBox2.Type" xml:space="preserve">
+  <data name="&gt;&gt;NotRemEdgeRad.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;NotRemEdgeRad.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;NotRemEdgeRad.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>417, 75</value>
+  </data>
+  <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>171, 85</value>
+  </data>
+  <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="groupBox1.Text" xml:space="preserve">
+    <value>Seleziona preferenza Edge</value>
+  </data>
+  <data name="groupBox1.ToolTip" xml:space="preserve">
+    <value>Abilita o disabilita Microsoft Edge nella nuova installazione Windows</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Name" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Type" xml:space="preserve">
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;groupBox2.Parent" xml:space="preserve">
+  <data name="&gt;&gt;groupBox1.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;groupBox2.ZOrder" xml:space="preserve">
-    <value>17</value>
-  </data>
-  <data name="groupBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Right</value>
+  <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
+    <value>24</value>
   </data>
   <data name="RemEdgeRad.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -765,32 +960,11 @@
   <data name="&gt;&gt;NotRemEdgeRad.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>579, 70</value>
-  </data>
-  <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>237, 85</value>
-  </data>
-  <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
-    <value>19</value>
-  </data>
-  <data name="groupBox1.Text" xml:space="preserve">
-    <value>Seleziona preferenza Edge</value>
-  </data>
-  <data name="&gt;&gt;groupBox1.Name" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="&gt;&gt;groupBox1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;groupBox1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
-    <value>18</value>
+  <data name="btn_browser.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>System</value>
   </data>
   <data name="btn_browser.Location" type="System.Drawing.Point, System.Drawing">
-    <value>522, 28</value>
+    <value>555, 29</value>
   </data>
   <data name="btn_browser.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
@@ -799,7 +973,7 @@
     <value>15</value>
   </data>
   <data name="btn_browser.Text" xml:space="preserve">
-    <value>Browse</value>
+    <value>Seleziona</value>
   </data>
   <data name="&gt;&gt;btn_browser.Name" xml:space="preserve">
     <value>btn_browser</value>
@@ -811,13 +985,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btn_browser.ZOrder" xml:space="preserve">
-    <value>19</value>
+    <value>25</value>
   </data>
   <data name="textBox1.Location" type="System.Drawing.Point, System.Drawing">
     <value>10, 29</value>
   </data>
   <data name="textBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>501, 23</value>
+    <value>539, 23</value>
   </data>
   <data name="textBox1.TabIndex" type="System.Int32, mscorlib">
     <value>14</value>
@@ -832,10 +1006,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;textBox1.ZOrder" xml:space="preserve">
-    <value>20</value>
+    <value>26</value>
   </data>
   <data name="btn_CreaISO.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
+  </data>
+  <data name="btn_CreaISO.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>System</value>
   </data>
   <data name="btn_CreaISO.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI Semibold, 10.2pt, style=Bold</value>
@@ -850,7 +1027,7 @@
     <value>30</value>
   </data>
   <data name="btn_CreaISO.Text" xml:space="preserve">
-    <value>CreaISO</value>
+    <value>Crea ISO</value>
   </data>
   <data name="&gt;&gt;btn_CreaISO.Name" xml:space="preserve">
     <value>btn_CreaISO</value>
@@ -862,13 +1039,10 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btn_CreaISO.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
-  <data name="pictureBox3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Right</value>
+    <value>15</value>
   </data>
   <data name="pictureBox3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>802, 65</value>
+    <value>575, 70</value>
   </data>
   <data name="pictureBox3.Size" type="System.Drawing.Size, System.Drawing">
     <value>29, 26</value>
@@ -889,13 +1063,10 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;pictureBox3.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="pictureBox4.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Right</value>
+    <value>13</value>
   </data>
   <data name="pictureBox4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>801, 285</value>
+    <value>601, 306</value>
   </data>
   <data name="pictureBox4.Size" type="System.Drawing.Size, System.Drawing">
     <value>29, 26</value>
@@ -916,13 +1087,10 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;pictureBox4.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="pictureBox6.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Right</value>
+    <value>12</value>
   </data>
   <data name="pictureBox6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>801, 169</value>
+    <value>601, 190</value>
   </data>
   <data name="pictureBox6.Size" type="System.Drawing.Size, System.Drawing">
     <value>29, 26</value>
@@ -943,13 +1111,10 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;pictureBox6.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="pictureBox7.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom</value>
+    <value>11</value>
   </data>
   <data name="pictureBox7.Location" type="System.Drawing.Point, System.Drawing">
-    <value>493, 285</value>
+    <value>440, 306</value>
   </data>
   <data name="pictureBox7.Size" type="System.Drawing.Size, System.Drawing">
     <value>29, 26</value>
@@ -970,7 +1135,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;pictureBox7.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>6</value>
   </data>
   <data name="label2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1003,7 +1168,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>9</value>
   </data>
   <data name="label1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1036,7 +1201,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>8</value>
   </data>
   <data name="pictureBox8.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
@@ -1063,8 +1228,515 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;pictureBox8.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="pictureBox9.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="pictureBox9.Location" type="System.Drawing.Point, System.Drawing">
+    <value>817, 170</value>
+  </data>
+  <data name="pictureBox9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>29, 26</value>
+  </data>
+  <data name="pictureBox9.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
+    <value>Zoom</value>
+  </data>
+  <data name="pictureBox9.TabIndex" type="System.Int32, mscorlib">
+    <value>85</value>
+  </data>
+  <data name="&gt;&gt;pictureBox9.Name" xml:space="preserve">
+    <value>pictureBox9</value>
+  </data>
+  <data name="&gt;&gt;pictureBox9.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pictureBox9.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;pictureBox9.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;NoDriver.Name" xml:space="preserve">
+    <value>NoDriver</value>
+  </data>
+  <data name="&gt;&gt;NoDriver.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;NoDriver.Parent" xml:space="preserve">
+    <value>groupBox8</value>
+  </data>
+  <data name="&gt;&gt;NoDriver.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="&gt;&gt;DriverQuestoPC.Name" xml:space="preserve">
+    <value>DriverQuestoPC</value>
+  </data>
+  <data name="&gt;&gt;DriverQuestoPC.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;DriverQuestoPC.Parent" xml:space="preserve">
+    <value>groupBox8</value>
+  </data>
+  <data name="&gt;&gt;DriverQuestoPC.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;DriverCartella.Name" xml:space="preserve">
+    <value>DriverCartella</value>
+  </data>
+  <data name="&gt;&gt;DriverCartella.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;DriverCartella.Parent" xml:space="preserve">
+    <value>groupBox8</value>
+  </data>
+  <data name="&gt;&gt;DriverCartella.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="groupBox8.Location" type="System.Drawing.Point, System.Drawing">
+    <value>648, 175</value>
+  </data>
+  <data name="groupBox8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>186, 101</value>
+  </data>
+  <data name="groupBox8.TabIndex" type="System.Int32, mscorlib">
+    <value>84</value>
+  </data>
+  <data name="groupBox8.Text" xml:space="preserve">
+    <value>Driver</value>
+  </data>
+  <data name="&gt;&gt;groupBox8.Name" xml:space="preserve">
+    <value>groupBox8</value>
+  </data>
+  <data name="&gt;&gt;groupBox8.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupBox8.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;groupBox8.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="NoDriver.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="NoDriver.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="NoDriver.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 76</value>
+  </data>
+  <data name="NoDriver.Size" type="System.Drawing.Size, System.Drawing">
+    <value>162, 19</value>
+  </data>
+  <data name="NoDriver.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="NoDriver.Text" xml:space="preserve">
+    <value>Non inserire nessun driver</value>
+  </data>
+  <data name="NoDriver.ToolTip" xml:space="preserve">
+    <value>Non aggiungere driver aggiuntivi</value>
+  </data>
+  <data name="&gt;&gt;NoDriver.Name" xml:space="preserve">
+    <value>NoDriver</value>
+  </data>
+  <data name="&gt;&gt;NoDriver.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;NoDriver.Parent" xml:space="preserve">
+    <value>groupBox8</value>
+  </data>
+  <data name="&gt;&gt;NoDriver.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="DriverQuestoPC.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="DriverQuestoPC.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="DriverQuestoPC.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 52</value>
+  </data>
+  <data name="DriverQuestoPC.Size" type="System.Drawing.Size, System.Drawing">
+    <value>174, 19</value>
+  </data>
+  <data name="DriverQuestoPC.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="DriverQuestoPC.Text" xml:space="preserve">
+    <value>Inserisci i driver di questo pc</value>
+  </data>
+  <data name="DriverQuestoPC.ToolTip" xml:space="preserve">
+    <value>I driver di questo PC verranno inseriti nella nuova installazione Windows</value>
+  </data>
+  <data name="&gt;&gt;DriverQuestoPC.Name" xml:space="preserve">
+    <value>DriverQuestoPC</value>
+  </data>
+  <data name="&gt;&gt;DriverQuestoPC.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;DriverQuestoPC.Parent" xml:space="preserve">
+    <value>groupBox8</value>
+  </data>
+  <data name="&gt;&gt;DriverQuestoPC.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="DriverCartella.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="DriverCartella.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="DriverCartella.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 27</value>
+  </data>
+  <data name="DriverCartella.Size" type="System.Drawing.Size, System.Drawing">
+    <value>106, 19</value>
+  </data>
+  <data name="DriverCartella.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="DriverCartella.Text" xml:space="preserve">
+    <value>Inserisci i driver</value>
+  </data>
+  <data name="DriverCartella.ToolTip" xml:space="preserve">
+    <value>Seleziona la cartella contenente i driver, quest'ultimi verranno inseriti nella nuova installazione Windows</value>
+  </data>
+  <data name="&gt;&gt;DriverCartella.Name" xml:space="preserve">
+    <value>DriverCartella</value>
+  </data>
+  <data name="&gt;&gt;DriverCartella.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;DriverCartella.Parent" xml:space="preserve">
+    <value>groupBox8</value>
+  </data>
+  <data name="&gt;&gt;DriverCartella.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="pictureBox10.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="pictureBox10.Location" type="System.Drawing.Point, System.Drawing">
+    <value>777, 285</value>
+  </data>
+  <data name="pictureBox10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>29, 26</value>
+  </data>
+  <data name="pictureBox10.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
+    <value>Zoom</value>
+  </data>
+  <data name="pictureBox10.TabIndex" type="System.Int32, mscorlib">
+    <value>87</value>
+  </data>
+  <data name="&gt;&gt;pictureBox10.Name" xml:space="preserve">
+    <value>pictureBox10</value>
+  </data>
+  <data name="&gt;&gt;pictureBox10.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pictureBox10.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;pictureBox10.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;IsoGaming.Name" xml:space="preserve">
+    <value>IsoGaming</value>
+  </data>
+  <data name="&gt;&gt;IsoGaming.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;IsoGaming.Parent" xml:space="preserve">
+    <value>groupBox9</value>
+  </data>
+  <data name="&gt;&gt;IsoGaming.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;IsoLavorWork.Name" xml:space="preserve">
+    <value>IsoLavorWork</value>
+  </data>
+  <data name="&gt;&gt;IsoLavorWork.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;IsoLavorWork.Parent" xml:space="preserve">
+    <value>groupBox9</value>
+  </data>
+  <data name="&gt;&gt;IsoLavorWork.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;IsoLite.Name" xml:space="preserve">
+    <value>IsoLite</value>
+  </data>
+  <data name="&gt;&gt;IsoLite.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;IsoLite.Parent" xml:space="preserve">
+    <value>groupBox9</value>
+  </data>
+  <data name="&gt;&gt;IsoLite.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="groupBox9.Location" type="System.Drawing.Point, System.Drawing">
+    <value>648, 290</value>
+  </data>
+  <data name="groupBox9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>143, 106</value>
+  </data>
+  <data name="groupBox9.TabIndex" type="System.Int32, mscorlib">
+    <value>86</value>
+  </data>
+  <data name="groupBox9.Text" xml:space="preserve">
+    <value>Tipologia</value>
+  </data>
+  <data name="groupBox9.ToolTip" xml:space="preserve">
+    <value>Seleziona la tipologia di ottimizzazione per la nuova installazione Windows</value>
+  </data>
+  <data name="&gt;&gt;groupBox9.Name" xml:space="preserve">
+    <value>groupBox9</value>
+  </data>
+  <data name="&gt;&gt;groupBox9.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupBox9.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;groupBox9.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="IsoGaming.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="IsoGaming.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="IsoGaming.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 77</value>
+  </data>
+  <data name="IsoGaming.Size" type="System.Drawing.Size, System.Drawing">
+    <value>67, 19</value>
+  </data>
+  <data name="IsoGaming.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="IsoGaming.Text" xml:space="preserve">
+    <value>Gaming</value>
+  </data>
+  <data name="&gt;&gt;IsoGaming.Name" xml:space="preserve">
+    <value>IsoGaming</value>
+  </data>
+  <data name="&gt;&gt;IsoGaming.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;IsoGaming.Parent" xml:space="preserve">
+    <value>groupBox9</value>
+  </data>
+  <data name="&gt;&gt;IsoGaming.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="IsoLavorWork.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="IsoLavorWork.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="IsoLavorWork.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 52</value>
+  </data>
+  <data name="IsoLavorWork.Size" type="System.Drawing.Size, System.Drawing">
+    <value>130, 19</value>
+  </data>
+  <data name="IsoLavorWork.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="IsoLavorWork.Text" xml:space="preserve">
+    <value>Lavoro/Workstation</value>
+  </data>
+  <data name="&gt;&gt;IsoLavorWork.Name" xml:space="preserve">
+    <value>IsoLavorWork</value>
+  </data>
+  <data name="&gt;&gt;IsoLavorWork.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;IsoLavorWork.Parent" xml:space="preserve">
+    <value>groupBox9</value>
+  </data>
+  <data name="&gt;&gt;IsoLavorWork.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="IsoLite.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="IsoLite.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="IsoLite.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 27</value>
+  </data>
+  <data name="IsoLite.Size" type="System.Drawing.Size, System.Drawing">
+    <value>44, 19</value>
+  </data>
+  <data name="IsoLite.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="IsoLite.Text" xml:space="preserve">
+    <value>Lite</value>
+  </data>
+  <data name="&gt;&gt;IsoLite.Name" xml:space="preserve">
+    <value>IsoLite</value>
+  </data>
+  <data name="&gt;&gt;IsoLite.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;IsoLite.Parent" xml:space="preserve">
+    <value>groupBox9</value>
+  </data>
+  <data name="&gt;&gt;IsoLite.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="pictureBox11.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="pictureBox11.Location" type="System.Drawing.Point, System.Drawing">
+    <value>861, 73</value>
+  </data>
+  <data name="pictureBox11.Size" type="System.Drawing.Size, System.Drawing">
+    <value>29, 26</value>
+  </data>
+  <data name="pictureBox11.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
+    <value>Zoom</value>
+  </data>
+  <data name="pictureBox11.TabIndex" type="System.Int32, mscorlib">
+    <value>89</value>
+  </data>
+  <data name="&gt;&gt;pictureBox11.Name" xml:space="preserve">
+    <value>pictureBox11</value>
+  </data>
+  <data name="&gt;&gt;pictureBox11.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pictureBox11.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;pictureBox11.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;NonImportWinhub.Name" xml:space="preserve">
+    <value>NonImportWinhub</value>
+  </data>
+  <data name="&gt;&gt;NonImportWinhub.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;NonImportWinhub.Parent" xml:space="preserve">
+    <value>groupBox10</value>
+  </data>
+  <data name="&gt;&gt;NonImportWinhub.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;ImpSettWinHub.Name" xml:space="preserve">
+    <value>ImpSettWinHub</value>
+  </data>
+  <data name="&gt;&gt;ImpSettWinHub.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ImpSettWinHub.Parent" xml:space="preserve">
+    <value>groupBox10</value>
+  </data>
+  <data name="&gt;&gt;ImpSettWinHub.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="groupBox10.Location" type="System.Drawing.Point, System.Drawing">
+    <value>611, 79</value>
+  </data>
+  <data name="groupBox10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>267, 81</value>
+  </data>
+  <data name="groupBox10.TabIndex" type="System.Int32, mscorlib">
+    <value>88</value>
+  </data>
+  <data name="groupBox10.Text" xml:space="preserve">
+    <value>Settaggi WinHubX</value>
+  </data>
+  <data name="groupBox10.ToolTip" xml:space="preserve">
+    <value>Seleziona se importare i Settaggi di WinHubX nella nuova installazione Windows</value>
+  </data>
+  <data name="&gt;&gt;groupBox10.Name" xml:space="preserve">
+    <value>groupBox10</value>
+  </data>
+  <data name="&gt;&gt;groupBox10.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupBox10.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;groupBox10.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="NonImportWinhub.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="NonImportWinhub.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="NonImportWinhub.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 52</value>
+  </data>
+  <data name="NonImportWinhub.Size" type="System.Drawing.Size, System.Drawing">
+    <value>257, 19</value>
+  </data>
+  <data name="NonImportWinhub.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="NonImportWinhub.Text" xml:space="preserve">
+    <value>Non importare i settaggi attuali di WinHubX</value>
+  </data>
+  <data name="&gt;&gt;NonImportWinhub.Name" xml:space="preserve">
+    <value>NonImportWinhub</value>
+  </data>
+  <data name="&gt;&gt;NonImportWinhub.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;NonImportWinhub.Parent" xml:space="preserve">
+    <value>groupBox10</value>
+  </data>
+  <data name="&gt;&gt;NonImportWinhub.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="ImpSettWinHub.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="ImpSettWinHub.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="ImpSettWinHub.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 27</value>
+  </data>
+  <data name="ImpSettWinHub.Size" type="System.Drawing.Size, System.Drawing">
+    <value>221, 19</value>
+  </data>
+  <data name="ImpSettWinHub.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="ImpSettWinHub.Text" xml:space="preserve">
+    <value>Importa i settaggi attuali di WinHubX</value>
+  </data>
+  <data name="&gt;&gt;ImpSettWinHub.Name" xml:space="preserve">
+    <value>ImpSettWinHub</value>
+  </data>
+  <data name="&gt;&gt;ImpSettWinHub.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ImpSettWinHub.Parent" xml:space="preserve">
+    <value>groupBox10</value>
+  </data>
+  <data name="&gt;&gt;ImpSettWinHub.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -1076,6 +1748,12 @@
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>FormCreaISO</value>
+  </data>
+  <data name="&gt;&gt;toolTip1.Name" xml:space="preserve">
+    <value>toolTip1</value>
+  </data>
+  <data name="&gt;&gt;toolTip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>FormCreaISO</value>

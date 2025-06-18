@@ -2174,11 +2174,11 @@
   "project": {
     "version": "2.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\utente\\Documents\\GitHub\\ItalianDevelopers\\WinHubX\\WinHubX\\WinHubX.csproj",
+      "projectUniqueName": "C:\\Users\\utente\\Downloads\\WinHubX-main - Copia\\WinHubX\\WinHubX.csproj",
       "projectName": "WinHubX",
-      "projectPath": "C:\\Users\\utente\\Documents\\GitHub\\ItalianDevelopers\\WinHubX\\WinHubX\\WinHubX.csproj",
+      "projectPath": "C:\\Users\\utente\\Downloads\\WinHubX-main - Copia\\WinHubX\\WinHubX.csproj",
       "packagesPath": "C:\\Users\\utente\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\utente\\Documents\\GitHub\\ItalianDevelopers\\WinHubX\\WinHubX\\obj\\",
+      "outputPath": "C:\\Users\\utente\\Downloads\\WinHubX-main - Copia\\WinHubX\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

@@ -118,270 +118,11 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="imgHomeLogo.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="imgHomeLogo.Location" type="System.Drawing.Point, System.Drawing">
-    <value>598, 0</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="imgHomeLogo.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="imgHomeLogo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>303, 175</value>
-  </data>
-  <data name="imgHomeLogo.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
-    <value>StretchImage</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="imgHomeLogo.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;imgHomeLogo.Name" xml:space="preserve">
-    <value>imgHomeLogo</value>
-  </data>
-  <data name="&gt;&gt;imgHomeLogo.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;imgHomeLogo.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;imgHomeLogo.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="btnChangelog.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="btnChangelog.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="btnChangelog.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 16.2pt</value>
-  </data>
-  <data name="btnChangelog.Location" type="System.Drawing.Point, System.Drawing">
-    <value>622, 199</value>
-  </data>
-  <data name="btnChangelog.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="btnChangelog.Size" type="System.Drawing.Size, System.Drawing">
-    <value>279, 60</value>
-  </data>
-  <data name="btnChangelog.TabIndex" type="System.Int32, mscorlib">
-    <value>94</value>
-  </data>
-  <data name="btnChangelog.Text" xml:space="preserve">
-    <value>v2.4.2.8 - Changelog</value>
-  </data>
-  <data name="btnChangelog.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>ImageBeforeText</value>
-  </data>
-  <data name="&gt;&gt;btnChangelog.Name" xml:space="preserve">
-    <value>btnChangelog</value>
-  </data>
-  <data name="&gt;&gt;btnChangelog.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnChangelog.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;btnChangelog.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
   <data name="btnKofi.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
   </data>
-  <data name="btnKofi.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="btnKofi.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 16.2pt</value>
-  </data>
-  <data name="btnKofi.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 336</value>
-  </data>
-  <data name="btnKofi.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="btnKofi.Size" type="System.Drawing.Size, System.Drawing">
-    <value>280, 64</value>
-  </data>
-  <data name="btnKofi.TabIndex" type="System.Int32, mscorlib">
-    <value>95</value>
-  </data>
-  <data name="btnKofi.Text" xml:space="preserve">
-    <value>se vuoi sostenere il
-progetto, clicca qui!</value>
-  </data>
-  <data name="btnKofi.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>TextBeforeImage</value>
-  </data>
-  <data name="&gt;&gt;btnKofi.Name" xml:space="preserve">
-    <value>btnKofi</value>
-  </data>
-  <data name="&gt;&gt;btnKofi.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnKofi.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;btnKofi.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="tgWinHubX.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Right</value>
-  </data>
-  <data name="tgWinHubX.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="tgWinHubX.Location" type="System.Drawing.Point, System.Drawing">
-    <value>772, 401</value>
-  </data>
-  <data name="tgWinHubX.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="tgWinHubX.Size" type="System.Drawing.Size, System.Drawing">
-    <value>57, 43</value>
-  </data>
-  <data name="tgWinHubX.TabIndex" type="System.Int32, mscorlib">
-    <value>96</value>
-  </data>
-  <data name="&gt;&gt;tgWinHubX.Name" xml:space="preserve">
-    <value>tgWinHubX</value>
-  </data>
-  <data name="&gt;&gt;tgWinHubX.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tgWinHubX.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;tgWinHubX.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="label3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left</value>
-  </data>
-  <data name="label3.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label3.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 10.8pt, style=Italic</value>
-  </data>
-  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 414</value>
-  </data>
-  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>714, 18</value>
-  </data>
-  <data name="label3.TabIndex" type="System.Int32, mscorlib">
-    <value>97</value>
-  </data>
-  <data name="label3.Text" xml:space="preserve">
-    <value>Per assistenza (problemi WinHubX, come installare ISO, suggerimenti per WinHubX) contattaci su telegram</value>
-  </data>
-  <data name="&gt;&gt;label3.Name" xml:space="preserve">
-    <value>label3</value>
-  </data>
-  <data name="&gt;&gt;label3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label3.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
   <data name="lblInfoOffice2024.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Right</value>
-  </data>
-  <data name="lblInfoOffice2024.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lblInfoOffice2024.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 13.8pt</value>
-  </data>
-  <data name="lblInfoOffice2024.Location" type="System.Drawing.Point, System.Drawing">
-    <value>778, 303</value>
-  </data>
-  <data name="lblInfoOffice2024.Size" type="System.Drawing.Size, System.Drawing">
-    <value>111, 24</value>
-  </data>
-  <data name="lblInfoOffice2024.TabIndex" type="System.Int32, mscorlib">
-    <value>98</value>
-  </data>
-  <data name="lblInfoOffice2024.Text" xml:space="preserve">
-    <value>Developers:</value>
-  </data>
-  <data name="lblInfoOffice2024.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
-  </data>
-  <data name="&gt;&gt;lblInfoOffice2024.Name" xml:space="preserve">
-    <value>lblInfoOffice2024</value>
-  </data>
-  <data name="&gt;&gt;lblInfoOffice2024.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblInfoOffice2024.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lblInfoOffice2024.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="label1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Right</value>
-  </data>
-  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label1.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 12pt, style=Italic</value>
-  </data>
-  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>803, 336</value>
-  </data>
-  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>76, 20</value>
-  </data>
-  <data name="label1.TabIndex" type="System.Int32, mscorlib">
-    <value>99</value>
-  </data>
-  <data name="label1.Text" xml:space="preserve">
-    <value>MrNico98</value>
-  </data>
-  <data name="label1.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
-  </data>
-  <data name="&gt;&gt;label1.Name" xml:space="preserve">
-    <value>label1</value>
-  </data>
-  <data name="&gt;&gt;label1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="lblInfoWinAIO64.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lblInfoWinAIO64.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 16.2pt</value>
-  </data>
-  <data name="lblInfoWinAIO64.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 9</value>
-  </data>
-  <data name="lblInfoWinAIO64.MaximumSize" type="System.Drawing.Size, System.Drawing">
-    <value>595, 0</value>
-  </data>
-  <data name="lblInfoWinAIO64.Size" type="System.Drawing.Size, System.Drawing">
-    <value>593, 312</value>
-  </data>
-  <data name="lblInfoWinAIO64.TabIndex" type="System.Int32, mscorlib">
-    <value>92</value>
   </data>
   <data name="lblInfoWinAIO64.Text" xml:space="preserve">
     <value>Scopri WinHubX, il tuo alleato indispensabile per Windows! Questo straordinario strumento ti permette di monitorare e ottimizzare il tuo sistema in modo semplice ed efficace.
@@ -390,40 +131,299 @@ Avrai accesso a ISO stock e lite di Windows per un’installazione su misura. Vu
 
 Con WinHubX, ogni dettaglio del tuo sistema sarà nelle tue mani. Preparati a esplorare un mondo di possibilità: WinHubX è il tuo strumento ALL-IN-ONE per dominare il tuo sistema Windows!</value>
   </data>
-  <data name="lblInfoWinAIO64.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
-  </data>
-  <data name="&gt;&gt;lblInfoWinAIO64.Name" xml:space="preserve">
-    <value>lblInfoWinAIO64</value>
-  </data>
-  <data name="&gt;&gt;lblInfoWinAIO64.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblInfoWinAIO64.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lblInfoWinAIO64.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
-  </metadata>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>96, 96</value>
   </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>901, 458</value>
+  <data name="&gt;&gt;lblInfoOffice2024.Name" xml:space="preserve">
+    <value>lblInfoOffice2024</value>
   </data>
-  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="imgHomeLogo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>598, 0</value>
   </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>FormHome</value>
+  <data name="&gt;&gt;btnKofi.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tgWinHubX.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>FormHome</value>
   </data>
+  <data name="btnChangelog.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="&gt;&gt;btnChangelog.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>96, 96</value>
+  </data>
+  <data name="btnKofi.TabIndex" type="System.Int32, mscorlib">
+    <value>95</value>
+  </data>
+  <data name="lblInfoWinAIO64.Size" type="System.Drawing.Size, System.Drawing">
+    <value>593, 312</value>
+  </data>
+  <data name="&gt;&gt;btnKofi.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;imgHomeLogo.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="imgHomeLogo.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="&gt;&gt;label3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="imgHomeLogo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>303, 175</value>
+  </data>
+  <data name="btnKofi.Location" type="System.Drawing.Point, System.Drawing">
+    <value>2, 336</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="&gt;&gt;label3.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="lblInfoOffice2024.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="lblInfoWinAIO64.TabIndex" type="System.Int32, mscorlib">
+    <value>92</value>
+  </data>
+  <data name="&gt;&gt;lblInfoWinAIO64.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>901, 458</value>
+  </data>
+  <data name="lblInfoOffice2024.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;label3.Name" xml:space="preserve">
+    <value>label3</value>
+  </data>
+  <data name="btnChangelog.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 16.2pt</value>
+  </data>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>76, 20</value>
+  </data>
+  <data name="&gt;&gt;btnChangelog.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblInfoOffice2024.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="btnChangelog.TabIndex" type="System.Int32, mscorlib">
+    <value>94</value>
+  </data>
+  <data name="tgWinHubX.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 414</value>
+  </data>
+  <data name="&gt;&gt;imgHomeLogo.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="imgHomeLogo.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>MrNico98</value>
+  </data>
+  <data name="imgHomeLogo.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="&gt;&gt;label1.Name" xml:space="preserve">
+    <value>label1</value>
+  </data>
+  <data name="tgWinHubX.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="lblInfoOffice2024.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 13.8pt</value>
+  </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.Form, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="btnChangelog.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
+    <value>ImageBeforeText</value>
+  </data>
+  <data name="label1.TabIndex" type="System.Int32, mscorlib">
+    <value>99</value>
+  </data>
+  <data name="lblInfoOffice2024.Location" type="System.Drawing.Point, System.Drawing">
+    <value>778, 303</value>
+  </data>
+  <data name="lblInfoWinAIO64.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 16.2pt</value>
+  </data>
+  <data name="tgWinHubX.Size" type="System.Drawing.Size, System.Drawing">
+    <value>57, 43</value>
+  </data>
+  <data name="btnChangelog.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="label1.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="lblInfoWinAIO64.Location" type="System.Drawing.Point, System.Drawing">
+    <value>2, 9</value>
+  </data>
+  <data name="label1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>FormHome</value>
+  </data>
+  <data name="btnKofi.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 16.2pt</value>
+  </data>
+  <data name="&gt;&gt;btnKofi.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="btnKofi.Text" xml:space="preserve">
+    <value>se vuoi sostenere il
+progetto, clicca qui!</value>
+  </data>
+  <data name="&gt;&gt;tgWinHubX.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="label3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="btnChangelog.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="lblInfoWinAIO64.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="btnChangelog.Location" type="System.Drawing.Point, System.Drawing">
+    <value>622, 199</value>
+  </data>
+  <data name="btnKofi.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="&gt;&gt;tgWinHubX.Name" xml:space="preserve">
+    <value>tgWinHubX</value>
+  </data>
+  <data name="lblInfoOffice2024.TabIndex" type="System.Int32, mscorlib">
+    <value>98</value>
+  </data>
+  <data name="lblInfoOffice2024.Text" xml:space="preserve">
+    <value>Developers:</value>
+  </data>
+  <data name="lblInfoOffice2024.Size" type="System.Drawing.Size, System.Drawing">
+    <value>111, 24</value>
+  </data>
+  <data name="imgHomeLogo.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
+    <value>StretchImage</value>
+  </data>
+  <data name="tgWinHubX.Location" type="System.Drawing.Point, System.Drawing">
+    <value>736, 402</value>
+  </data>
+  <data name="&gt;&gt;tgWinHubX.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnChangelog.Name" xml:space="preserve">
+    <value>btnChangelog</value>
+  </data>
+  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>803, 336</value>
+  </data>
+  <data name="label1.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt, style=Italic</value>
+  </data>
+  <data name="&gt;&gt;imgHomeLogo.Name" xml:space="preserve">
+    <value>imgHomeLogo</value>
+  </data>
+  <data name="&gt;&gt;lblInfoOffice2024.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="label3.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 10.8pt, style=Italic</value>
+  </data>
+  <data name="&gt;&gt;lblInfoOffice2024.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;imgHomeLogo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnKofi.Name" xml:space="preserve">
+    <value>btnKofi</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>Per assistenza (problemi WinHubX, come installare ISO, suggerimenti per WinHubX) contattaci su telegram</value>
+  </data>
+  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>714, 18</value>
+  </data>
+  <data name="&gt;&gt;lblInfoWinAIO64.Name" xml:space="preserve">
+    <value>lblInfoWinAIO64</value>
+  </data>
+  <data name="btnKofi.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
+    <value>TextBeforeImage</value>
+  </data>
+  <data name="lblInfoWinAIO64.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>595, 0</value>
+  </data>
+  <data name="tgWinHubX.TabIndex" type="System.Int32, mscorlib">
+    <value>96</value>
+  </data>
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnChangelog.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;lblInfoWinAIO64.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="btnKofi.Size" type="System.Drawing.Size, System.Drawing">
+    <value>280, 64</value>
+  </data>
+  <data name="btnKofi.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="btnChangelog.Size" type="System.Drawing.Size, System.Drawing">
+    <value>279, 60</value>
+  </data>
+  <data name="&gt;&gt;lblInfoWinAIO64.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btnChangelog.Text" xml:space="preserve">
+    <value>v2.4.3.0 - Changelog</value>
+  </data>
+  <data name="label3.TabIndex" type="System.Int32, mscorlib">
+    <value>97</value>
+  </data>
+  <data name="label3.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="tgWinHubX.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="lblInfoWinAIO64.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
 </root>

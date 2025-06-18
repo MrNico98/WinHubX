@@ -2,6 +2,7 @@
 using DiscUtils.Udf;
 using System.Data;
 using System.Diagnostics;
+using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 using WinHubX.Forms.Base;
@@ -17,6 +18,8 @@ namespace WinHubX.Forms.CreaISO
         public FormCreazioneISO(Form1 form1, FormCreaISO formcreaiso)
         {
             InitializeComponent();
+            string savedLanguage = Properties.Settings.Default.Language ?? "it";
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(savedLanguage);
             this.form1 = form1;
             this.formcreaiso = formcreaiso;
         }
@@ -35,6 +38,7 @@ namespace WinHubX.Forms.CreaISO
             form1.comboBox1.Enabled = false;
             form1.pictureBox3.Enabled = false;
             form1.btnHome.Enabled = false;
+            form1.btnTools.Enabled = false;
             form1.btnWin.Enabled = false;
             form1.btnOffice.Enabled = false;
             form1.btnSettaggi.Enabled = false;
@@ -80,7 +84,6 @@ namespace WinHubX.Forms.CreaISO
                 await AddAndAwait(CopiaFileNecessari(token));
                 progressBar1.Value = 80;
 
-                // Verifica che non ci siano altri task attivi prima di procedere
                 var stillRunning = taskList.Where(t => !t.IsCompleted).ToList();
                 if (stillRunning.Any())
                 {
@@ -129,19 +132,34 @@ namespace WinHubX.Forms.CreaISO
                     richTextBox1.SelectionColor = originalColor;
                     richTextBox1.ScrollToCaret();
                 });
+
                 btnStop.Visible = false;
                 btnBack.Enabled = true;
                 form1.comboBox1.Enabled = true;
                 form1.pictureBox3.Enabled = true;
                 form1.btnHome.Enabled = true;
+                form1.btnTools.Enabled = true;
                 form1.btnWin.Enabled = true;
                 form1.btnOffice.Enabled = true;
                 form1.btnSettaggi.Enabled = true;
                 form1.btnDebloat.Enabled = true;
                 form1.btnCreaISO.Enabled = true;
-                form1.btnCreaISO.Enabled = true;
                 form1.btnmonitoraggio.Enabled = true;
                 form1.btnReinstallaApp.Enabled = true;
+
+                string tempPath = Path.GetTempPath();
+                string zipPath = Path.Combine(tempPath, "RisorseCreaISO.zip");
+                string folderPath = Path.Combine(tempPath, "RisorseCreaISO");
+
+                if (File.Exists(zipPath))
+                {
+                    File.Delete(zipPath);
+                }
+
+                if (Directory.Exists(folderPath))
+                {
+                    Directory.Delete(folderPath, true);
+                }
             }
             catch (Exception ex)
             {
@@ -150,6 +168,7 @@ namespace WinHubX.Forms.CreaISO
 
             return Task.CompletedTask;
         }
+
 
         private async Task Settaggi(CancellationToken token)
         {
@@ -515,7 +534,6 @@ namespace WinHubX.Forms.CreaISO
 
                         await Task.Run(async () =>
                         {
-                            // Assicurati che ogni chiamata ExecuteCommand supporti l'annullamento
                             ExecuteCommand($"reg load HKLM\\TK_COMPONENTS \"{mountDir}\\Windows\\System32\\config\\COMPONENTS\"", token);
                             ExecuteCommand($"reg load HKLM\\TK_DEFAULT \"{mountDir}\\Windows\\System32\\config\\default\"", token);
                             ExecuteCommand($"reg load HKLM\\TK_NTUSER \"{mountDir}\\Users\\Default\\ntuser.dat\"", token);
@@ -641,8 +659,6 @@ namespace WinHubX.Forms.CreaISO
 
                                 foreach (var cmd in regCommands) ExecuteCommand(cmd, token);
                                 await Task.Delay(5000);
-                                ExecuteCommand("reg unload HKLM\\TK_BOOT_SYSTEM", token);
-
                                 if (File.Exists(appraiserPath))
                                 {
                                     File.Move(appraiserPath, appraiserBakPath);
@@ -652,13 +668,15 @@ namespace WinHubX.Forms.CreaISO
                                 {
                                     richTextBox1.AppendText("\n" + LanguageManager.GetTranslation("FormCreazioneISO", "appraisernontrovato"));
                                 }
+                                await Task.Delay(5000);
+                                ExecuteCommand("reg unload HKLM\\TK_BOOT_SYSTEM", token);
                                 int maxRetry = 5;
                                 for (int i = 0; i < maxRetry; i++)
                                 {
                                     if (!RegistryKeyExists(@"HKEY_LOCAL_MACHINE\TK_BOOT_SYSTEM"))
                                         break;
 
-                                    await Task.Delay(3000); // Attendi prima del prossimo tentativo
+                                    await Task.Delay(3000);
                                     ExecuteCommand("reg unload HKLM\\TK_BOOT_SYSTEM", token);
                                 }
                                 richTextBox1.AppendText("\n" + LanguageManager.GetTranslation("FormCreazioneISO", "smontaggioboot"));
@@ -694,7 +712,7 @@ namespace WinHubX.Forms.CreaISO
                             if (!RegistryKeyExists(@"HKEY_LOCAL_MACHINE\TK_SOFTWARE"))
                                 break;
 
-                            await Task.Delay(3000); // Attendi prima del prossimo tentativo
+                            await Task.Delay(3000); 
                             ExecuteCommand("reg unload HKLM\\TK_SOFTWARE", token);
                         }
                         if (arch == "x64" && File.Exists(sourceUnattend10))
@@ -720,21 +738,6 @@ namespace WinHubX.Forms.CreaISO
             }
         }
 
-        private bool RegistryKeyExistss(string keyPath)
-        {
-            try
-            {
-                using (var key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(keyPath.Replace("HKEY_LOCAL_MACHINE\\", "")))
-                {
-                    return key != null;
-                }
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
         private bool RegistryKeyExists(string keyPath)
         {
             try
@@ -751,7 +754,6 @@ namespace WinHubX.Forms.CreaISO
         }
         private async Task ExecuteCommand(string command, CancellationToken token)
         {
-            // Mostra il comando in esecuzione
             richTextBox1.Invoke((MethodInvoker)(() =>
             {
                 richTextBox1.AppendText($"\n[ESEGUITO] {command}");
@@ -772,7 +774,6 @@ namespace WinHubX.Forms.CreaISO
                 {
                     string output = process.StandardOutput.ReadToEnd();
                     string error = process.StandardError.ReadToEnd();
-                    // Puoi loggare anche output ed error se necessario
                 });
 
                 await Task.WhenAny(outputTask, Task.Delay(Timeout.Infinite, token)).ConfigureAwait(false);
@@ -853,8 +854,6 @@ namespace WinHubX.Forms.CreaISO
                                 progressBar2.Value += 1;
                         }));
                     }
-
-                    // Attesa tra i comandi (es. 1 secondo)
                     await Task.Delay(1000, token);
                 }
 
@@ -881,7 +880,6 @@ namespace WinHubX.Forms.CreaISO
             {
                 try
                 {
-                    // Controllo del token prima di ogni operazione
                     if (token.IsCancellationRequested) return;
 
                     if (!Directory.Exists(targetDir))
@@ -902,6 +900,21 @@ namespace WinHubX.Forms.CreaISO
                         }
 
                         if (token.IsCancellationRequested) return;
+                        if (ParametriISO == null || !ParametriISO.TryGetValue("windowsVersion", out var windowsVersion))
+                        {
+                            richTextBox1.AppendText("\n" + LanguageManager.GetTranslation("FormCreazioneISO", "erroreversionewindows"));
+                            return;
+                        }
+
+                        if (windowsVersion == "11" && ParametriISO.TryGetValue("Unattend", out var unattendType))
+                        {
+                            if (unattendType == "Bypass")
+                                File.Create(Path.Combine(targetDir, "bypass.pref")).Dispose();
+
+                            Invoke(new Action(() => progressBar2.Value += 1));
+                        }
+
+                        if (token.IsCancellationRequested) return;
 
                         if (ParametriISO.TryGetValue("DebloatApp", out var debloat) && debloat == "Debloat")
                         {
@@ -911,47 +924,246 @@ namespace WinHubX.Forms.CreaISO
 
                         if (token.IsCancellationRequested) return;
 
+                        if (ParametriISO.TryGetValue("TipoOttimizzazione", out var TipoOttimizzazione))
+                        {
+                            string fileName = TipoOttimizzazione switch
+                            {
+                                "LavorWork" => "workstation.pref",
+                                "IsoGaming" => "gaming.pref",
+                                _ => null
+                            };
+
+                            if (fileName != null)
+                            {
+                                string filePath = Path.Combine(targetDir, fileName);
+
+                                if (!File.Exists(filePath))
+                                {
+                                    File.Create(filePath).Dispose();
+                                    Invoke(new Action(() => progressBar2.Value += 1));
+                                }
+                            }
+                        }
+
+                        if (token.IsCancellationRequested) return;
+
                         if (ParametriISO.TryGetValue("defenderPreference", out var defender) && defender == "DisableWindowsDefender")
                         {
                             File.Create(Path.Combine(targetDir, "nodefender.pref")).Dispose();
                             Invoke(new Action(() => progressBar2.Value += 1));
                         }
-                    }
 
-                    // Verifica parametri completata
-                    Invoke(new Action(() =>
+                        if (token.IsCancellationRequested) return;
+
+                        try
+                        {
+                            if (ParametriISO.TryGetValue("DriverWin", out var DriverWin) && DriverWin == "DriverCartella")
+                            {
+                                using (var dialog = new FolderBrowserDialog())
+                                {
+                                    dialog.Description = LanguageManager.GetTranslation("FormCreazioneISO", "selezionacartelladriver");
+                                    if (dialog.ShowDialog() == DialogResult.OK)
+                                    {
+                                        string driverFolder = dialog.SelectedPath;
+                                        var process = Process.Start(new ProcessStartInfo
+                                        {
+                                            FileName = "dism.exe",
+                                            Arguments = $"/Image:\"C:\\Mount\\mount\" /Add-Driver /Driver:\"{driverFolder}\" /Recurse",
+                                            UseShellExecute = false,
+                                            RedirectStandardOutput = true,
+                                            RedirectStandardError = true,
+                                            CreateNoWindow = true
+                                        });
+
+                                        string output = process.StandardOutput.ReadToEnd();
+                                        string error = process.StandardError.ReadToEnd();
+                                        process.WaitForExit();
+
+                                        Invoke(new Action(() =>
+                                        {
+                                            if (process.ExitCode == 0)
+                                                richTextBox1.AppendText($"\n{LanguageManager.GetTranslation("FormCreazioneISO", "driverintegratocartella")}: {driverFolder}");
+                                            else
+                                                richTextBox1.AppendText($"\n{LanguageManager.GetTranslation("FormCreazioneISO", "erroreintegracartella")}\n{error}");
+                                        }));
+                                    }
+                                }
+
+                                Invoke(new Action(() => progressBar2.Value += 1));
+                            }
+
+                            if (ParametriISO.TryGetValue("DriverWin", out DriverWin) && DriverWin == "DriverQuestoPC")
+                            {
+                                string tempDriverDir = Path.Combine(Path.GetTempPath(), "DriverBackup_" + Guid.NewGuid().ToString("N"));
+                                Directory.CreateDirectory(tempDriverDir);
+
+                                var exportProcess = Process.Start(new ProcessStartInfo
+                                {
+                                    FileName = "dism.exe",
+                                    Arguments = $"/Online /Export-Driver /Destination:\"{tempDriverDir}\"",
+                                    UseShellExecute = false,
+                                    RedirectStandardOutput = true,
+                                    RedirectStandardError = true,
+                                    CreateNoWindow = true
+                                });
+
+                                string exportOutput = exportProcess.StandardOutput.ReadToEnd();
+                                string exportError = exportProcess.StandardError.ReadToEnd();
+                                exportProcess.WaitForExit();
+
+                                Invoke(new Action(() =>
+                                {
+                                    if (exportProcess.ExitCode == 0)
+                                        richTextBox1.AppendText($"\n{LanguageManager.GetTranslation("FormCreazioneISO", "driversuccessoesportazione")}.");
+                                    else
+                                        richTextBox1.AppendText($"\n{LanguageManager.GetTranslation("FormCreazioneISO", "erroreesportazionedriver")}\n{exportError}");
+                                }));
+
+                                if (exportProcess.ExitCode == 0)
+                                {
+                                    var addDriverProcess = Process.Start(new ProcessStartInfo
+                                    {
+                                        FileName = "dism.exe",
+                                        Arguments = $"/Image:\"C:\\Mount\\mount\" /Add-Driver /Driver:\"{tempDriverDir}\" /Recurse",
+                                        UseShellExecute = false,
+                                        RedirectStandardOutput = true,
+                                        RedirectStandardError = true,
+                                        CreateNoWindow = true
+                                    });
+
+                                    string addOutput = addDriverProcess.StandardOutput.ReadToEnd();
+                                    string addError = addDriverProcess.StandardError.ReadToEnd();
+                                    addDriverProcess.WaitForExit();
+
+                                    Invoke(new Action(() =>
+                                    {
+                                        if (addDriverProcess.ExitCode == 0)
+                                            richTextBox1.AppendText($"\n{LanguageManager.GetTranslation("FormCreazioneISO", "driverintegrazionesistema")}");
+                                        else
+                                            richTextBox1.AppendText($"\n{LanguageManager.GetTranslation("FormCreazioneISO", "erroreintegrasistema")}\n{addError}");
+                                    }));
+                                }
+
+                                Directory.Delete(tempDriverDir, true);
+                                Invoke(new Action(() => progressBar2.Value += 1));
+                            }
+
+                            Invoke(new Action(() =>
+                            {
+                                string verificaparametri = LanguageManager.GetTranslation("FormCreazioneISO", "verificaparametricompletata");
+                                richTextBox1.AppendText("\n" + verificaparametri);
+                            }));
+                        }
+                        catch (Exception ex)
+                        {
+                            Invoke(new Action(() =>
+                            {
+                                richTextBox1.AppendText($"\n{LanguageManager.GetTranslation("FormCreazioneISO", "erroregenerale")}: {ex.Message}");
+                            }));
+                        }
+                    }
+                }
+                catch
+                {
+                    richTextBox1.AppendText(LanguageManager.GetTranslation("FormCreazioneISO", "erroregenerale"));
+                }
+            }, token);
+        }
+
+
+        private async Task CopiaFileNecessari(CancellationToken token)
+        {
+            List<string> filesToCopy = new List<string>();
+
+            if (ParametriISO.TryGetValue("windowsVersion", out string windowsVersion))
+            {
+                if (windowsVersion == "10")
+                {
+                    filesToCopy = new List<string>
+        {
+            "lower-ram-usage.reg",
+            "PowerRun.exe",
+            "tweaks10.bat",
+            "start10.ps1",
+            "unpin_start_tiles.ps1"
+        };
+                }
+                else if (windowsVersion == "11")
+                {
+                    filesToCopy = new List<string>
+        {
+            "tweaks.bat",
+            "lower-ram-usage.reg",
+            "start.ps1",
+            "PowerRun.exe"
+        };
+                }
+            }
+
+            Invoke(new Action(() =>
+            {
+                richTextBox1.AppendText($"\n[INFO] {LanguageManager.GetTranslation("FormCreazioneISO", "iniziocopianeccessari")}");
+            }));
+
+            if (ParametriISO.TryGetValue("ImportaSettaggiWinhubx", out var ImportaSettaggiWinhubx) && ImportaSettaggiWinhubx == "SiImporta")
+            {
+                Invoke(new Action(() =>
+                {
+                    richTextBox1.AppendText($"\n[INFO] {LanguageManager.GetTranslation("FormCreazioneISO", "importazionesettaggiabilitata")}");
+                }));
+
+                string exportPath = Path.Combine(Path.GetTempPath(), "config.dat");
+                string targetExportPath = Path.Combine(Path.GetTempPath(), @"RisorseCreaISO\Risorse\config.dat");
+                string keyToExport = @"HKEY_CURRENT_USER\Software\WinHubX";
+
+                try
+                {
+                    var process = new Process();
+                    process.StartInfo.FileName = "reg.exe";
+                    process.StartInfo.Arguments = $"export \"{keyToExport}\" \"{exportPath}\" /y";
+                    process.StartInfo.CreateNoWindow = true;
+                    process.StartInfo.UseShellExecute = false;
+                    process.Start();
+                    process.WaitForExit();
+
+                    if (File.Exists(exportPath))
                     {
-                        string verificaparametri = LanguageManager.GetTranslation("FormCreazioneISO", "verificaparametricompletata");
-                        richTextBox1.AppendText("\n" + verificaparametri);
-                    }));
+                        string finalDir = Path.GetDirectoryName(targetExportPath);
+                        if (!Directory.Exists(finalDir))
+                            Directory.CreateDirectory(finalDir);
+
+                        File.Move(exportPath, targetExportPath);
+                        filesToCopy.Add("config.dat");
+
+                        Invoke(new Action(() =>
+                        {
+                            richTextBox1.AppendText($"\n[INFO] {LanguageManager.GetTranslation("FormCreazioneISO", "fileconfigcopiato")}");
+                        }));
+                    }
+                    else
+                    {
+                        Invoke(new Action(() =>
+                        {
+                            richTextBox1.AppendText($"\n[WARN] {LanguageManager.GetTranslation("FormCreazioneISO", "fileconfignontrovato")}");
+                        }));
+                    }
                 }
                 catch (Exception ex)
                 {
                     Invoke(new Action(() =>
                     {
-                        richTextBox1.AppendText($"\nError: {ex.Message}");
+                        richTextBox1.AppendText($"\n[ERROR] {LanguageManager.GetTranslation("FormCreazioneISO", "erroreexportreg")}: {ex.Message}");
                     }));
                 }
-            }, token);
-        }
+            }
 
-        private async Task CopiaFileNecessari(CancellationToken token)
-        {
             string sourceFolder = Path.Combine(Path.GetTempPath(), @"RisorseCreaISO\Risorse");
             string targetFolder = @"C:\mount\mount\Windows";
-
-            string[] filesToCopy = new string[]
-            {
-        "tweaks.bat",
-        "lower-ram-usage.reg",
-        "start.ps1",
-        "PowerRun.exe"
-            };
 
             Invoke(new Action(() =>
             {
                 progressBar2.Minimum = 0;
-                progressBar2.Maximum = filesToCopy.Length;
+                progressBar2.Maximum = filesToCopy.Count;
                 progressBar2.Value = 0;
             }));
 
@@ -968,9 +1180,12 @@ namespace WinHubX.Forms.CreaISO
 
                         if (File.Exists(sourceFilePath))
                         {
-                            if (token.IsCancellationRequested) return;
-
                             File.Copy(sourceFilePath, targetFilePath, true);
+
+                            Invoke(new Action(() =>
+                            {
+                                richTextBox1.AppendText($"\n[OK] {LanguageManager.GetTranslation("FormCreazioneISO", "copiatofile")}: {file}");
+                            }));
                         }
                         else
                         {
@@ -979,7 +1194,6 @@ namespace WinHubX.Forms.CreaISO
                                 richTextBox1.AppendText($"\n{LanguageManager.GetTranslation("FormCreazioneISO", "filenontrovato")}: {sourceFilePath}");
                             }));
                         }
-                        if (token.IsCancellationRequested) return;
 
                         Invoke(new Action(() =>
                         {
@@ -987,10 +1201,9 @@ namespace WinHubX.Forms.CreaISO
                         }));
                     }
 
-                    // Verifica completamento
                     Invoke(new Action(() =>
                     {
-                        richTextBox1.AppendText("\n" + LanguageManager.GetTranslation("FormCreazioneISO", "copiacompletata"));
+                        richTextBox1.AppendText($"\n{LanguageManager.GetTranslation("FormCreazioneISO", "copiacompletata")}");
                     }));
                 }
                 catch (Exception ex)
@@ -1003,10 +1216,10 @@ namespace WinHubX.Forms.CreaISO
             }, token);
         }
 
-
         private async Task CreazioneInstall(CancellationToken token)
         {
             string mountDir = @"C:\mount\mount";
+            string wimFilePath = @"C:\ISO\WinISO\sources\install.wim";
 
             try
             {
@@ -1015,7 +1228,12 @@ namespace WinHubX.Forms.CreaISO
                     richTextBox1.AppendText("\n" + LanguageManager.GetTranslation("FormCreazioneISO", "errordirectorymount"));
                     return;
                 }
-
+                string deletedFolderPath = Path.Combine(mountDir, "[DELETED]");
+                if (Directory.Exists(deletedFolderPath))
+                {
+                    Directory.Delete(deletedFolderPath, true);
+                    richTextBox1.AppendText("\n" + LanguageManager.GetTranslation("FormCreazioneISO", "cartelladeletedrimossa"));
+                }
                 richTextBox1.AppendText("\n" + LanguageManager.GetTranslation("FormCreazioneISO", "smontaggiosalvataggio"));
                 await Task.Delay(6000);
                 string arguments = $"/unmount-image /mountdir:\"{mountDir}\" /commit";
@@ -1063,7 +1281,6 @@ namespace WinHubX.Forms.CreaISO
                         CreateNoWindow = true
                     };
 
-                    // Esegui il processo con supporto per l'annullamento
                     using (Process oscdimgProc = Process.Start(oscdimgProcess))
                     {
                         while (!oscdimgProc.HasExited)

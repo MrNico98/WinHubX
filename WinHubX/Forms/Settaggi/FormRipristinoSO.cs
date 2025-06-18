@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Globalization;
 using System.Management;
 using WinHubX.Forms.Base;
 
@@ -15,6 +16,8 @@ namespace WinHubX.Forms.Settaggi
 
         public FormRipristinoSO(FormSettaggi formSettaggi, Form1 form1)
         {
+            string savedLanguage = Properties.Settings.Default.Language ?? "it";
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(savedLanguage);
             InitializeComponent();
             this.form1 = form1;
             this.formSettaggi = formSettaggi;
@@ -234,7 +237,6 @@ namespace WinHubX.Forms.Settaggi
             {
                 remainingTime--;
 
-                // Convertire il tempo rimanente in ore:minuti:secondi
                 TimeSpan timeSpan = TimeSpan.FromSeconds(remainingTime);
                 string formattedTime = timeSpan.ToString(@"hh\:mm\:ss");
 
@@ -249,10 +251,7 @@ namespace WinHubX.Forms.Settaggi
         }
 
         #region Hardware
-        // **Verifica Hardware**
 
-        // 1. Stress test CPU (Async)
-        // Modifica il metodo StressTestCPUAsync per accettare testDurationMinutes
         public async Task StressTestCPUAsync(CancellationToken token)
         {
             UpdateLabel("Avvio stress test CPU...");
@@ -260,7 +259,7 @@ namespace WinHubX.Forms.Settaggi
 
             try
             {
-                int numThreads = Environment.ProcessorCount; // Usa i core disponibili
+                int numThreads = Environment.ProcessorCount;
                 LogMessage($"Utilizzando {numThreads} thread per il test.");
 
                 Task monitorTask = MonitorCPUUsageAsync(token);
@@ -270,7 +269,7 @@ namespace WinHubX.Forms.Settaggi
                 {
                     tasks.Add(Task.Run(() =>
                     {
-                        Thread.CurrentThread.Priority = ThreadPriority.BelowNormal; // Abbassa la priorità
+                        Thread.CurrentThread.Priority = ThreadPriority.BelowNormal;
                         double result = 0;
                         while (!token.IsCancellationRequested)
                         {
@@ -278,9 +277,9 @@ namespace WinHubX.Forms.Settaggi
                             {
                                 result += Math.Sqrt(j) * Math.Sin(j);
                                 if (j % 1_000_000 == 0 && token.IsCancellationRequested)
-                                    return; // Controlla il token più spesso
+                                    return; 
                             }
-                            Thread.Yield(); // Lascia spazio ad altri thread (incluso l'UI)
+                            Thread.Yield();
                         }
                     }, token));
                 }
@@ -294,10 +293,9 @@ namespace WinHubX.Forms.Settaggi
             }
         }
 
-        // Monitoraggio della CPU in tempo reale
         private async Task MonitorCPUUsageAsync(CancellationToken token)
         {
-            const int thermalThreshold = 90; // Soglia di temperatura per il thermal throttling (adatta la temperatura a seconda della tua CPU)
+            const int thermalThreshold = 90; 
 
             while (!token.IsCancellationRequested)
             {
@@ -305,8 +303,6 @@ namespace WinHubX.Forms.Settaggi
                 {
                     var cpuUsage = GetCPUUsage();
                     var cpuTemp = GetCPUTemperature();
-
-                    // Verifica se la CPU sta andando in thermal throttling
                     if (cpuTemp > thermalThreshold)
                     {
                         LogMessage($"ATTENZIONE: CPU in thermal throttling! Temp: {cpuTemp}°C");
@@ -321,19 +317,17 @@ namespace WinHubX.Forms.Settaggi
                     LogError($"Errore monitoraggio CPU: {ex.Message}");
                 }
 
-                await Task.Delay(6000, token); // Aggiorna ogni 2 secondi
+                await Task.Delay(6000, token);
             }
         }
-        // Ottiene l'uso della CPU
         private static float GetCPUUsage()
         {
             using PerformanceCounter cpuCounter = new("Processor", "% Processor Time", "_Total");
             cpuCounter.NextValue();
-            Task.Delay(500).Wait(); // Attendi per ottenere un valore valido
+            Task.Delay(500).Wait();
             return cpuCounter.NextValue();
         }
 
-        // Ottiene la temperatura della CPU (tramite WMI)
         private static float GetCPUTemperature()
         {
             try
@@ -342,14 +336,12 @@ namespace WinHubX.Forms.Settaggi
                 foreach (ManagementObject obj in searcher.Get())
                 {
                     double tempK = Convert.ToDouble(obj["CurrentTemperature"]);
-                    return (float)((tempK - 2732) / 10.0); // Converti da Kelvin a Celsius
+                    return (float)((tempK - 2732) / 10.0);
                 }
             }
             catch { }
-            return -1; // Errore nel recupero della temperatura
+            return -1; 
         }
-
-        // 2. Test RAM migliorato
         public async Task TestRAMAsync(CancellationToken token)
         {
             UpdateLabel("Avvio test RAM...");
@@ -357,8 +349,8 @@ namespace WinHubX.Forms.Settaggi
 
             try
             {
-                int blockSize = 1024 * 1024 * 50; // 50MB per blocco
-                long maxRam = GetTotalRAM() * 80 / 100; // Usa solo l'80% della RAM totale
+                int blockSize = 1024 * 1024 * 50; 
+                long maxRam = GetTotalRAM() * 80 / 100; 
                 long allocatedRam = 0;
 
                 LogMessage($"Allocazione fino a {maxRam / (1024 * 1024)} MB di RAM...");
@@ -369,19 +361,17 @@ namespace WinHubX.Forms.Settaggi
                     byte[] block = new byte[blockSize];
                     for (int i = 0; i < block.Length; i += 4096)
                     {
-                        block[i] = (byte)(i % 256); // Simula utilizzo memoria
+                        block[i] = (byte)(i % 256);
                     }
 
                     memoryBlocks.Enqueue(block);
                     allocatedRam += blockSize;
-
-                    // Log ogni 500MB allocati
                     if (allocatedRam % (1024 * 1024 * 500) == 0)
                     {
                         LogMessage($"RAM allocata: {allocatedRam / (1024 * 1024)} MB...");
                     }
 
-                    await Task.Delay(20, token); // Piccola pausa per evitare lock-up
+                    await Task.Delay(20, token);
                 }
 
                 LogMessage("Liberazione memoria...");
@@ -395,8 +385,6 @@ namespace WinHubX.Forms.Settaggi
                 LogError($"Errore test RAM: {ex.Message}");
             }
         }
-
-        // Recupera la quantità totale di RAM disponibile
         private static long GetTotalRAM()
         {
             try
@@ -412,10 +400,8 @@ namespace WinHubX.Forms.Settaggi
                 Debug.WriteLine($"Errore lettura RAM: {ex.Message}");
             }
 
-            return 8L * 1024 * 1024 * 1024; // Default: 8GB se errore
+            return 8L * 1024 * 1024 * 1024;
         }
-
-        // 3. Verifica stato SMART del disco con API Windows
         public async Task VerifyDiskStatusAsync()
         {
             UpdateLabel("Verifica stato del disco...");
@@ -428,15 +414,13 @@ namespace WinHubX.Forms.Settaggi
                 {
                     string deviceId = disk["DeviceID"]?.ToString() ?? "Sconosciuto";
                     string model = disk["Model"]?.ToString() ?? "Modello sconosciuto";
-                    long diskSize = Convert.ToInt64(disk["Size"] ?? 0) / (1024 * 1024 * 1024); // Converti in GB
+                    long diskSize = Convert.ToInt64(disk["Size"] ?? 0) / (1024 * 1024 * 1024);
 
                     string diskInfo = $"Disco rilevato: {model} ({deviceId}) - {diskSize} GB";
                     LogMessage(diskInfo);
                     UpdateLabel($"Analisi {model}...");
 
                     AppendToRichTextBox2(diskInfo + Environment.NewLine);
-
-                    // Controlla stato SMART
                     string NamespacePath = @"\\.\root\cimv2";
                     string ClassName = "Win32_DiskDrive";
                     ManagementClass oClass = new ManagementClass(NamespacePath + ":" + ClassName);
@@ -454,8 +438,6 @@ namespace WinHubX.Forms.Settaggi
                             AppendToRichTextBox2(Environment.NewLine);
                         }
                     }
-
-                    // Test velocità lettura/scrittura
                     string speedResults = DiskSpeedTest(deviceId);
                     AppendToRichTextBox2(speedResults + Environment.NewLine);
 
@@ -471,8 +453,6 @@ namespace WinHubX.Forms.Settaggi
                 LogError($"Errore verifica disco: {ex.Message}");
             }
         }
-
-        // **Metodo per aggiornare il RichTextBox in modo sicuro**
         private void AppendToRichTextBox2(string message)
         {
             if (string.IsNullOrEmpty(message))
@@ -488,29 +468,23 @@ namespace WinHubX.Forms.Settaggi
                 richTextBox2.ScrollToCaret();
             }
         }
-
-        // **Test velocità disco con scrittura/lettura di un file temporaneo**
         private string DiskSpeedTest(string deviceId)
         {
             try
             {
                 string tempFile = Path.Combine(Path.GetTempPath(), "disk_speed_test.tmp");
-                byte[] data = new byte[1024 * 1024 * 50]; // 50MB di dati casuali
+                byte[] data = new byte[1024 * 1024 * 50];
                 new Random().NextBytes(data);
-
-                // Misura velocità scrittura
                 Stopwatch stopwatch = Stopwatch.StartNew();
                 File.WriteAllBytes(tempFile, data);
                 stopwatch.Stop();
-                double writeSpeed = (50.0 / (stopwatch.ElapsedMilliseconds / 1000.0)); // MB/s
-
-                // Misura velocità lettura
+                double writeSpeed = (50.0 / (stopwatch.ElapsedMilliseconds / 1000.0));
                 stopwatch.Restart();
                 _ = File.ReadAllBytes(tempFile);
                 stopwatch.Stop();
-                double readSpeed = (50.0 / (stopwatch.ElapsedMilliseconds / 1000.0)); // MB/s
+                double readSpeed = (50.0 / (stopwatch.ElapsedMilliseconds / 1000.0));
 
-                File.Delete(tempFile); // Rimuove il file temporaneo
+                File.Delete(tempFile);
 
                 string speedResult = $"Velocità scrittura: {writeSpeed:F2} MB/s | Velocità lettura: {readSpeed:F2} MB/s";
                 LogMessage(speedResult);

@@ -385,6 +385,7 @@
             FormBorderStyle = FormBorderStyle.None;
             Name = "PersonalizzazioneOffice";
             FormClosing += PersonalizzazioneOffice_FormClosing;
+            Load += PersonalizzazioneOffice_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             panel2.ResumeLayout(false);

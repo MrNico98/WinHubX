@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using System.Diagnostics;
+using System.Globalization;
 using WinHubX.Forms.Base;
 
 namespace WinHubX.Forms.Settaggi
@@ -12,6 +13,8 @@ namespace WinHubX.Forms.Settaggi
         private int totalSteps = 0;
         public FormUtility(FormSettaggi formSettaggi, Form1 form1)
         {
+            string savedLanguage = Properties.Settings.Default.Language ?? "it";
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(savedLanguage);
             InitializeComponent();
             this.form1 = form1;
             this.formSettaggi = formSettaggi;
@@ -410,7 +413,7 @@ namespace WinHubX.Forms.Settaggi
                     CreateNoWindow = true,
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
-                    Verb = "runas" // usa "runas" per i privilegi elevati
+                    Verb = "runas"
                 };
 
                 using (var process = System.Diagnostics.Process.Start(startInfo))
@@ -952,7 +955,6 @@ namespace WinHubX.Forms.Settaggi
                 backgroundWorker1.ReportProgress(currentStep);
                 try
                 {
-                    // Elimina la chiave nella vista a 64-bit
                     using (RegistryKey key64 = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64))
                     {
                         key64.DeleteSubKeyTree(@"SOFTWARE\Microsoft\Windows\CurrentVersion\StorageSense\Parameters\StoragePolicy", false);

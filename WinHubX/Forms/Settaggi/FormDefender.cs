@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using System.Globalization;
 using System.Security.AccessControl;
 using System.Security.Principal;
 using WinHubX.Forms.Base;
@@ -13,11 +14,13 @@ namespace WinHubX.Forms.Settaggi
         private int tIndex = -1;
         public FormDefender(FormSettaggi formSettaggi, Form1 form1)
         {
+            string savedLanguage = Properties.Settings.Default.Language ?? "it";
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(savedLanguage);
             InitializeComponent();
             this.form1 = form1;
             this.formSettaggi = formSettaggi;
             LoadCheckboxStates();
-            loadmsginziale();
+            //loadmsginziale();
             DisabilitaDefender.MouseMove += new MouseEventHandler(checkedListBox1_MouseMove);
             AbilitaDefender.MouseMove += new MouseEventHandler(checkedListBox2_MouseMove);
         }
@@ -725,7 +728,6 @@ namespace WinHubX.Forms.Settaggi
                 backgroundWorker1.ReportProgress(currentStep);
                 try
                 {
-                    // Percorsi delle chiavi di registro da modificare
                     string[] registryPaths = new[]
                     {
             @"SYSTEM\CurrentControlSet\Services\WinDefend",

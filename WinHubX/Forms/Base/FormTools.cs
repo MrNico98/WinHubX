@@ -1,4 +1,5 @@
-﻿using WinHubX.Dialog.Tools;
+﻿using System.Globalization;
+using WinHubX.Dialog.Tools;
 using WinHubX.Forms;
 
 namespace WinHubX
@@ -11,6 +12,8 @@ namespace WinHubX
             InitializeComponent();
             this.form1 = form1;
             SetTooltips();
+            string savedLanguage = Properties.Settings.Default.Language ?? "it";
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(savedLanguage);
         }
         private void SetTooltips()
         {

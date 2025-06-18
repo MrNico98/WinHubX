@@ -30,6 +30,7 @@ namespace WinHubX.Forms.Base
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMonitoraggio));
             pic_termcpu = new PictureBox();
             pic_termgpu = new PictureBox();
@@ -46,6 +47,12 @@ namespace WinHubX.Forms.Base
             panel1 = new Panel();
             radioButton_taskbar = new RadioButton();
             radioButton_notifica = new RadioButton();
+            CartellaTemp = new CircularProgressBar();
+            label4 = new Label();
+            comboBox_gb = new ComboBox();
+            btnPulisciTemp = new Button();
+            tempMonitorTimer = new System.Windows.Forms.Timer(components);
+            label5 = new Label();
             ((System.ComponentModel.ISupportInitialize)pic_termcpu).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pic_termgpu).BeginInit();
             panel1.SuspendLayout();
@@ -68,11 +75,13 @@ namespace WinHubX.Forms.Base
             // labelCpuTemp
             // 
             resources.ApplyResources(labelCpuTemp, "labelCpuTemp");
+            labelCpuTemp.ForeColor = Color.FromArgb(224, 224, 224);
             labelCpuTemp.Name = "labelCpuTemp";
             // 
             // labelGpuTemp
             // 
             resources.ApplyResources(labelGpuTemp, "labelGpuTemp");
+            labelGpuTemp.ForeColor = Color.FromArgb(224, 224, 224);
             labelGpuTemp.Name = "labelGpuTemp";
             // 
             // BarRAM
@@ -105,30 +114,39 @@ namespace WinHubX.Forms.Base
             // label1
             // 
             resources.ApplyResources(label1, "label1");
+            label1.ForeColor = Color.FromArgb(224, 224, 224);
             label1.Name = "label1";
             // 
             // label2
             // 
             resources.ApplyResources(label2, "label2");
+            label2.ForeColor = Color.FromArgb(224, 224, 224);
             label2.Name = "label2";
             // 
             // label3
             // 
             resources.ApplyResources(label3, "label3");
+            label3.ForeColor = Color.FromArgb(224, 224, 224);
             label3.Name = "label3";
             // 
             // btn_pulisciram
             // 
             resources.ApplyResources(btn_pulisciram, "btn_pulisciram");
+            btn_pulisciram.BackColor = Color.FromArgb(64, 64, 64);
+            btn_pulisciram.FlatAppearance.BorderSize = 0;
+            btn_pulisciram.ForeColor = Color.FromArgb(224, 224, 224);
             btn_pulisciram.Name = "btn_pulisciram";
-            btn_pulisciram.UseVisualStyleBackColor = true;
+            btn_pulisciram.UseVisualStyleBackColor = false;
             btn_pulisciram.Click += btn_pulisciram_Click;
             // 
             // btn_puliscicpu
             // 
             resources.ApplyResources(btn_puliscicpu, "btn_puliscicpu");
+            btn_puliscicpu.BackColor = Color.FromArgb(64, 64, 64);
+            btn_puliscicpu.FlatAppearance.BorderSize = 0;
+            btn_puliscicpu.ForeColor = Color.FromArgb(224, 224, 224);
             btn_puliscicpu.Name = "btn_puliscicpu";
-            btn_puliscicpu.UseVisualStyleBackColor = true;
+            btn_puliscicpu.UseVisualStyleBackColor = false;
             btn_puliscicpu.Click += btn_puliscicpu_Click;
             // 
             // panel1
@@ -156,11 +174,55 @@ namespace WinHubX.Forms.Base
             radioButton_notifica.UseVisualStyleBackColor = true;
             radioButton_notifica.CheckedChanged += radioButton_notifica_CheckedChanged;
             // 
+            // CartellaTemp
+            // 
+            resources.ApplyResources(CartellaTemp, "CartellaTemp");
+            CartellaTemp.Maximum = 100;
+            CartellaTemp.Minimum = 0;
+            CartellaTemp.Name = "CartellaTemp";
+            CartellaTemp.Value = 30;
+            // 
+            // label4
+            // 
+            resources.ApplyResources(label4, "label4");
+            label4.ForeColor = Color.FromArgb(224, 224, 224);
+            label4.Name = "label4";
+            // 
+            // comboBox_gb
+            // 
+            resources.ApplyResources(comboBox_gb, "comboBox_gb");
+            comboBox_gb.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBox_gb.FormattingEnabled = true;
+            comboBox_gb.Items.AddRange(new object[] { resources.GetString("comboBox_gb.Items"), resources.GetString("comboBox_gb.Items1"), resources.GetString("comboBox_gb.Items2"), resources.GetString("comboBox_gb.Items3"), resources.GetString("comboBox_gb.Items4"), resources.GetString("comboBox_gb.Items5"), resources.GetString("comboBox_gb.Items6"), resources.GetString("comboBox_gb.Items7"), resources.GetString("comboBox_gb.Items8"), resources.GetString("comboBox_gb.Items9") });
+            comboBox_gb.Name = "comboBox_gb";
+            comboBox_gb.SelectedIndexChanged += comboBox_gb_SelectedIndexChanged;
+            // 
+            // btnPulisciTemp
+            // 
+            resources.ApplyResources(btnPulisciTemp, "btnPulisciTemp");
+            btnPulisciTemp.BackColor = Color.FromArgb(64, 64, 64);
+            btnPulisciTemp.FlatAppearance.BorderSize = 0;
+            btnPulisciTemp.ForeColor = Color.FromArgb(224, 224, 224);
+            btnPulisciTemp.Name = "btnPulisciTemp";
+            btnPulisciTemp.UseVisualStyleBackColor = false;
+            btnPulisciTemp.Click += btnPulisciTemp_Click;
+            // 
+            // label5
+            // 
+            resources.ApplyResources(label5, "label5");
+            label5.ForeColor = Color.FromArgb(224, 224, 224);
+            label5.Name = "label5";
+            // 
             // FormMonitoraggio
             // 
             resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.FromArgb(37, 38, 39);
+            Controls.Add(label5);
+            Controls.Add(btnPulisciTemp);
+            Controls.Add(comboBox_gb);
+            Controls.Add(label4);
+            Controls.Add(CartellaTemp);
             Controls.Add(panel1);
             Controls.Add(btn_puliscicpu);
             Controls.Add(btn_pulisciram);
@@ -203,5 +265,11 @@ namespace WinHubX.Forms.Base
         private Panel panel1;
         private RadioButton radioButton_taskbar;
         private RadioButton radioButton_notifica;
+        private CircularProgressBar CartellaTemp;
+        private Label label4;
+        private ComboBox comboBox_gb;
+        private Button btnPulisciTemp;
+        private System.Windows.Forms.Timer tempMonitorTimer;
+        private Label label5;
     }
 }

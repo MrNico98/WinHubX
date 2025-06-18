@@ -34,12 +34,14 @@ namespace WinHubX.Forms.Base
             // lblStatus
             // 
             resources.ApplyResources(lblStatus, "lblStatus");
+            lblStatus.ForeColor = Color.WhiteSmoke;
             lblStatus.Name = "lblStatus";
             // 
             // ProgressForm
             // 
             resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Dpi;
+            BackColor = Color.FromArgb(64, 60, 59);
             Controls.Add(lblStatus);
             Controls.Add(progressBar);
             FormBorderStyle = FormBorderStyle.FixedDialog;

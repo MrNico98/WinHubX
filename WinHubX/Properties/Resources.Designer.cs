@@ -283,6 +283,16 @@ namespace WinHubX.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap pngDriverIso {
+            get {
+                object obj = ResourceManager.GetObject("pngDriverIso", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap pngDriverRST {
             get {
                 object obj = ResourceManager.GetObject("pngDriverRST", resourceCulture);
@@ -483,9 +493,29 @@ namespace WinHubX.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap pngSettaggioWinHubx {
+            get {
+                object obj = ResourceManager.GetObject("pngSettaggioWinHubx", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap pngTelegram {
             get {
                 object obj = ResourceManager.GetObject("pngTelegram", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap pngTipologia {
+            get {
+                object obj = ResourceManager.GetObject("pngTipologia", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

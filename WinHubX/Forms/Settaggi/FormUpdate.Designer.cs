@@ -59,6 +59,7 @@
             resources.ApplyResources(DisabilitaUpdate, "DisabilitaUpdate");
             DisabilitaUpdate.BackColor = Color.FromArgb(37, 38, 39);
             DisabilitaUpdate.BorderStyle = BorderStyle.None;
+            DisabilitaUpdate.Cursor = Cursors.Hand;
             DisabilitaUpdate.ForeColor = Color.White;
             DisabilitaUpdate.FormattingEnabled = true;
             DisabilitaUpdate.Items.AddRange(new object[] { resources.GetString("DisabilitaUpdate.Items"), resources.GetString("DisabilitaUpdate.Items1"), resources.GetString("DisabilitaUpdate.Items2"), resources.GetString("DisabilitaUpdate.Items3"), resources.GetString("DisabilitaUpdate.Items4") });
@@ -79,6 +80,7 @@
             resources.ApplyResources(AbilitaUpdate, "AbilitaUpdate");
             AbilitaUpdate.BackColor = Color.FromArgb(37, 38, 39);
             AbilitaUpdate.BorderStyle = BorderStyle.None;
+            AbilitaUpdate.Cursor = Cursors.Hand;
             AbilitaUpdate.ForeColor = Color.White;
             AbilitaUpdate.FormattingEnabled = true;
             AbilitaUpdate.Items.AddRange(new object[] { resources.GetString("AbilitaUpdate.Items"), resources.GetString("AbilitaUpdate.Items1"), resources.GetString("AbilitaUpdate.Items2"), resources.GetString("AbilitaUpdate.Items3"), resources.GetString("AbilitaUpdate.Items4") });

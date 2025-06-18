@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using Microsoft.Win32.TaskScheduler;
 using System.ComponentModel;
+using System.Globalization;
 using System.ServiceProcess;
 using WinHubX.Forms.Base;
 
@@ -14,6 +15,8 @@ namespace WinHubX.Forms.Settaggi
         private int totalSteps = 0;
         public FormPrivacy(FormSettaggi formSettaggi, Form1 form1)
         {
+            string savedLanguage = Properties.Settings.Default.Language ?? "it";
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(savedLanguage);
             InitializeComponent();
             this.form1 = form1;
             this.formSettaggi = formSettaggi;

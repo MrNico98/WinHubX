@@ -45,6 +45,8 @@
             label7 = new Label();
             btnPersonalizzazione = new Button();
             label4 = new Label();
+            btnEsportaSettaggi = new Button();
+            btnImportaSettaggi = new Button();
             SuspendLayout();
             // 
             // btnPrivacy
@@ -183,11 +185,33 @@
             label4.ForeColor = Color.Coral;
             label4.Name = "label4";
             // 
+            // btnEsportaSettaggi
+            // 
+            resources.ApplyResources(btnEsportaSettaggi, "btnEsportaSettaggi");
+            btnEsportaSettaggi.Cursor = Cursors.Hand;
+            btnEsportaSettaggi.FlatAppearance.BorderSize = 2;
+            btnEsportaSettaggi.ForeColor = Color.White;
+            btnEsportaSettaggi.Name = "btnEsportaSettaggi";
+            btnEsportaSettaggi.UseVisualStyleBackColor = true;
+            btnEsportaSettaggi.Click += btnEsportaSettaggi_Click;
+            // 
+            // btnImportaSettaggi
+            // 
+            resources.ApplyResources(btnImportaSettaggi, "btnImportaSettaggi");
+            btnImportaSettaggi.Cursor = Cursors.Hand;
+            btnImportaSettaggi.FlatAppearance.BorderSize = 2;
+            btnImportaSettaggi.ForeColor = Color.White;
+            btnImportaSettaggi.Name = "btnImportaSettaggi";
+            btnImportaSettaggi.UseVisualStyleBackColor = true;
+            btnImportaSettaggi.Click += btnImportaSettaggi_Click;
+            // 
             // FormSettaggi
             // 
             resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.FromArgb(37, 38, 39);
+            Controls.Add(btnImportaSettaggi);
+            Controls.Add(btnEsportaSettaggi);
             Controls.Add(btnPersonalizzazione);
             Controls.Add(label4);
             Controls.Add(btnUpdate);
@@ -228,5 +252,7 @@
         private Label label7;
         private Button btnPersonalizzazione;
         private Label label4;
+        private Button btnEsportaSettaggi;
+        private Button btnImportaSettaggi;
     }
 }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormCreaISO));
             comboBox1 = new ComboBox();
             pictureBox1 = new PictureBox();
@@ -64,6 +65,21 @@
             label2 = new Label();
             label1 = new Label();
             pictureBox8 = new PictureBox();
+            pictureBox9 = new PictureBox();
+            groupBox8 = new GroupBox();
+            NoDriver = new RadioButton();
+            DriverQuestoPC = new RadioButton();
+            DriverCartella = new RadioButton();
+            pictureBox10 = new PictureBox();
+            groupBox9 = new GroupBox();
+            IsoGaming = new RadioButton();
+            IsoLavorWork = new RadioButton();
+            IsoLite = new RadioButton();
+            pictureBox11 = new PictureBox();
+            groupBox10 = new GroupBox();
+            NonImportWinhub = new RadioButton();
+            ImpSettWinHub = new RadioButton();
+            toolTip1 = new ToolTip(components);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             groupBox4.SuspendLayout();
@@ -79,6 +95,12 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox6).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox7).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox8).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox9).BeginInit();
+            groupBox8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox10).BeginInit();
+            groupBox9.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox11).BeginInit();
+            groupBox10.SuspendLayout();
             SuspendLayout();
             // 
             // comboBox1
@@ -89,28 +111,29 @@
             // 
             // pictureBox1
             // 
-            resources.ApplyResources(pictureBox1, "pictureBox1");
             pictureBox1.BackColor = Color.Transparent;
             pictureBox1.Image = Properties.Resources.pngDefenderWin;
+            resources.ApplyResources(pictureBox1, "pictureBox1");
             pictureBox1.Name = "pictureBox1";
             pictureBox1.TabStop = false;
             // 
             // pictureBox2
             // 
-            resources.ApplyResources(pictureBox2, "pictureBox2");
             pictureBox2.BackColor = Color.Transparent;
             pictureBox2.Image = Properties.Resources.pngWin10;
+            resources.ApplyResources(pictureBox2, "pictureBox2");
             pictureBox2.Name = "pictureBox2";
             pictureBox2.TabStop = false;
             // 
             // groupBox4
             // 
-            resources.ApplyResources(groupBox4, "groupBox4");
             groupBox4.Controls.Add(NotRemProcRad);
             groupBox4.Controls.Add(RemProcRad);
             groupBox4.ForeColor = Color.White;
+            resources.ApplyResources(groupBox4, "groupBox4");
             groupBox4.Name = "groupBox4";
             groupBox4.TabStop = false;
+            toolTip1.SetToolTip(groupBox4, resources.GetString("groupBox4.ToolTip"));
             // 
             // NotRemProcRad
             // 
@@ -130,20 +153,21 @@
             // 
             // pictureBox5
             // 
-            resources.ApplyResources(pictureBox5, "pictureBox5");
             pictureBox5.BackColor = Color.Transparent;
             pictureBox5.Image = Properties.Resources.pngDebloat;
+            resources.ApplyResources(pictureBox5, "pictureBox5");
             pictureBox5.Name = "pictureBox5";
             pictureBox5.TabStop = false;
             // 
             // groupBox6
             // 
-            resources.ApplyResources(groupBox6, "groupBox6");
             groupBox6.Controls.Add(ThirTwoRad);
             groupBox6.Controls.Add(SixforArchRad);
             groupBox6.ForeColor = Color.White;
+            resources.ApplyResources(groupBox6, "groupBox6");
             groupBox6.Name = "groupBox6";
             groupBox6.TabStop = false;
+            toolTip1.SetToolTip(groupBox6, resources.GetString("groupBox6.ToolTip"));
             // 
             // ThirTwoRad
             // 
@@ -163,10 +187,10 @@
             // 
             // groupBox5
             // 
-            resources.ApplyResources(groupBox5, "groupBox5");
             groupBox5.Controls.Add(StockAppRad);
             groupBox5.Controls.Add(DebAppRad);
             groupBox5.ForeColor = Color.White;
+            resources.ApplyResources(groupBox5, "groupBox5");
             groupBox5.Name = "groupBox5";
             groupBox5.TabStop = false;
             // 
@@ -176,6 +200,7 @@
             StockAppRad.ForeColor = Color.White;
             StockAppRad.Name = "StockAppRad";
             StockAppRad.TabStop = true;
+            toolTip1.SetToolTip(StockAppRad, resources.GetString("StockAppRad.ToolTip"));
             StockAppRad.UseVisualStyleBackColor = true;
             // 
             // DebAppRad
@@ -184,16 +209,18 @@
             DebAppRad.ForeColor = Color.White;
             DebAppRad.Name = "DebAppRad";
             DebAppRad.TabStop = true;
+            toolTip1.SetToolTip(DebAppRad, resources.GetString("DebAppRad.ToolTip"));
             DebAppRad.UseVisualStyleBackColor = true;
             // 
             // groupBox3
             // 
-            resources.ApplyResources(groupBox3, "groupBox3");
             groupBox3.Controls.Add(NotDisWinDefRad);
             groupBox3.Controls.Add(DisWindDefRad);
             groupBox3.ForeColor = Color.White;
+            resources.ApplyResources(groupBox3, "groupBox3");
             groupBox3.Name = "groupBox3";
             groupBox3.TabStop = false;
+            toolTip1.SetToolTip(groupBox3, resources.GetString("groupBox3.ToolTip"));
             // 
             // NotDisWinDefRad
             // 
@@ -213,10 +240,10 @@
             // 
             // groupBox7
             // 
-            resources.ApplyResources(groupBox7, "groupBox7");
             groupBox7.Controls.Add(Win11BypassRad);
             groupBox7.Controls.Add(Win11StockRad);
             groupBox7.ForeColor = Color.White;
+            resources.ApplyResources(groupBox7, "groupBox7");
             groupBox7.Name = "groupBox7";
             groupBox7.TabStop = false;
             // 
@@ -226,6 +253,7 @@
             Win11BypassRad.ForeColor = Color.White;
             Win11BypassRad.Name = "Win11BypassRad";
             Win11BypassRad.TabStop = true;
+            toolTip1.SetToolTip(Win11BypassRad, resources.GetString("Win11BypassRad.ToolTip"));
             Win11BypassRad.UseVisualStyleBackColor = true;
             // 
             // Win11StockRad
@@ -234,16 +262,18 @@
             Win11StockRad.ForeColor = Color.White;
             Win11StockRad.Name = "Win11StockRad";
             Win11StockRad.TabStop = true;
+            toolTip1.SetToolTip(Win11StockRad, resources.GetString("Win11StockRad.ToolTip"));
             Win11StockRad.UseVisualStyleBackColor = true;
             // 
             // groupBox2
             // 
-            resources.ApplyResources(groupBox2, "groupBox2");
             groupBox2.Controls.Add(Win11Rad);
             groupBox2.Controls.Add(Win10Rad);
             groupBox2.ForeColor = Color.White;
+            resources.ApplyResources(groupBox2, "groupBox2");
             groupBox2.Name = "groupBox2";
             groupBox2.TabStop = false;
+            toolTip1.SetToolTip(groupBox2, resources.GetString("groupBox2.ToolTip"));
             // 
             // Win11Rad
             // 
@@ -265,12 +295,13 @@
             // 
             // groupBox1
             // 
-            resources.ApplyResources(groupBox1, "groupBox1");
             groupBox1.Controls.Add(RemEdgeRad);
             groupBox1.Controls.Add(NotRemEdgeRad);
             groupBox1.ForeColor = Color.White;
+            resources.ApplyResources(groupBox1, "groupBox1");
             groupBox1.Name = "groupBox1";
             groupBox1.TabStop = false;
+            toolTip1.SetToolTip(groupBox1, resources.GetString("groupBox1.ToolTip"));
             // 
             // RemEdgeRad
             // 
@@ -290,7 +321,9 @@
             // 
             // btn_browser
             // 
+            btn_browser.Cursor = Cursors.Hand;
             resources.ApplyResources(btn_browser, "btn_browser");
+            btn_browser.ForeColor = Color.Black;
             btn_browser.Name = "btn_browser";
             btn_browser.UseVisualStyleBackColor = true;
             btn_browser.Click += btn_browser_Click;
@@ -310,33 +343,33 @@
             // 
             // pictureBox3
             // 
-            resources.ApplyResources(pictureBox3, "pictureBox3");
             pictureBox3.BackColor = Color.Transparent;
             pictureBox3.Image = Properties.Resources.pngEdge;
+            resources.ApplyResources(pictureBox3, "pictureBox3");
             pictureBox3.Name = "pictureBox3";
             pictureBox3.TabStop = false;
             // 
             // pictureBox4
             // 
-            resources.ApplyResources(pictureBox4, "pictureBox4");
             pictureBox4.BackColor = Color.Transparent;
             pictureBox4.Image = Properties.Resources.pngArchitettura;
+            resources.ApplyResources(pictureBox4, "pictureBox4");
             pictureBox4.Name = "pictureBox4";
             pictureBox4.TabStop = false;
             // 
             // pictureBox6
             // 
-            resources.ApplyResources(pictureBox6, "pictureBox6");
             pictureBox6.BackColor = Color.Transparent;
             pictureBox6.Image = Properties.Resources.pngprocessi;
+            resources.ApplyResources(pictureBox6, "pictureBox6");
             pictureBox6.Name = "pictureBox6";
             pictureBox6.TabStop = false;
             // 
             // pictureBox7
             // 
-            resources.ApplyResources(pictureBox7, "pictureBox7");
             pictureBox7.BackColor = Color.Transparent;
             pictureBox7.Image = Properties.Resources.pngbypass;
+            resources.ApplyResources(pictureBox7, "pictureBox7");
             pictureBox7.Name = "pictureBox7";
             pictureBox7.TabStop = false;
             // 
@@ -361,16 +394,144 @@
             pictureBox8.TabStop = false;
             pictureBox8.Click += pictureBox8_Click;
             // 
+            // pictureBox9
+            // 
+            pictureBox9.BackColor = Color.Transparent;
+            pictureBox9.Image = Properties.Resources.pngDriverIso;
+            resources.ApplyResources(pictureBox9, "pictureBox9");
+            pictureBox9.Name = "pictureBox9";
+            pictureBox9.TabStop = false;
+            // 
+            // groupBox8
+            // 
+            groupBox8.Controls.Add(NoDriver);
+            groupBox8.Controls.Add(DriverQuestoPC);
+            groupBox8.Controls.Add(DriverCartella);
+            groupBox8.ForeColor = Color.White;
+            resources.ApplyResources(groupBox8, "groupBox8");
+            groupBox8.Name = "groupBox8";
+            groupBox8.TabStop = false;
+            // 
+            // NoDriver
+            // 
+            resources.ApplyResources(NoDriver, "NoDriver");
+            NoDriver.ForeColor = Color.White;
+            NoDriver.Name = "NoDriver";
+            NoDriver.TabStop = true;
+            toolTip1.SetToolTip(NoDriver, resources.GetString("NoDriver.ToolTip"));
+            NoDriver.UseVisualStyleBackColor = true;
+            // 
+            // DriverQuestoPC
+            // 
+            resources.ApplyResources(DriverQuestoPC, "DriverQuestoPC");
+            DriverQuestoPC.ForeColor = Color.White;
+            DriverQuestoPC.Name = "DriverQuestoPC";
+            DriverQuestoPC.TabStop = true;
+            toolTip1.SetToolTip(DriverQuestoPC, resources.GetString("DriverQuestoPC.ToolTip"));
+            DriverQuestoPC.UseVisualStyleBackColor = true;
+            // 
+            // DriverCartella
+            // 
+            resources.ApplyResources(DriverCartella, "DriverCartella");
+            DriverCartella.ForeColor = Color.White;
+            DriverCartella.Name = "DriverCartella";
+            DriverCartella.TabStop = true;
+            toolTip1.SetToolTip(DriverCartella, resources.GetString("DriverCartella.ToolTip"));
+            DriverCartella.UseVisualStyleBackColor = true;
+            // 
+            // pictureBox10
+            // 
+            pictureBox10.BackColor = Color.Transparent;
+            pictureBox10.Image = Properties.Resources.pngTipologia;
+            resources.ApplyResources(pictureBox10, "pictureBox10");
+            pictureBox10.Name = "pictureBox10";
+            pictureBox10.TabStop = false;
+            // 
+            // groupBox9
+            // 
+            groupBox9.Controls.Add(IsoGaming);
+            groupBox9.Controls.Add(IsoLavorWork);
+            groupBox9.Controls.Add(IsoLite);
+            groupBox9.ForeColor = Color.White;
+            resources.ApplyResources(groupBox9, "groupBox9");
+            groupBox9.Name = "groupBox9";
+            groupBox9.TabStop = false;
+            toolTip1.SetToolTip(groupBox9, resources.GetString("groupBox9.ToolTip"));
+            // 
+            // IsoGaming
+            // 
+            resources.ApplyResources(IsoGaming, "IsoGaming");
+            IsoGaming.ForeColor = Color.White;
+            IsoGaming.Name = "IsoGaming";
+            IsoGaming.TabStop = true;
+            IsoGaming.UseVisualStyleBackColor = true;
+            // 
+            // IsoLavorWork
+            // 
+            resources.ApplyResources(IsoLavorWork, "IsoLavorWork");
+            IsoLavorWork.ForeColor = Color.White;
+            IsoLavorWork.Name = "IsoLavorWork";
+            IsoLavorWork.TabStop = true;
+            IsoLavorWork.UseVisualStyleBackColor = true;
+            // 
+            // IsoLite
+            // 
+            resources.ApplyResources(IsoLite, "IsoLite");
+            IsoLite.ForeColor = Color.White;
+            IsoLite.Name = "IsoLite";
+            IsoLite.TabStop = true;
+            IsoLite.UseVisualStyleBackColor = true;
+            // 
+            // pictureBox11
+            // 
+            pictureBox11.BackColor = Color.Transparent;
+            pictureBox11.Image = Properties.Resources.pngSettaggioWinHubx;
+            resources.ApplyResources(pictureBox11, "pictureBox11");
+            pictureBox11.Name = "pictureBox11";
+            pictureBox11.TabStop = false;
+            // 
+            // groupBox10
+            // 
+            groupBox10.Controls.Add(NonImportWinhub);
+            groupBox10.Controls.Add(ImpSettWinHub);
+            groupBox10.ForeColor = Color.White;
+            resources.ApplyResources(groupBox10, "groupBox10");
+            groupBox10.Name = "groupBox10";
+            groupBox10.TabStop = false;
+            toolTip1.SetToolTip(groupBox10, resources.GetString("groupBox10.ToolTip"));
+            // 
+            // NonImportWinhub
+            // 
+            resources.ApplyResources(NonImportWinhub, "NonImportWinhub");
+            NonImportWinhub.ForeColor = Color.White;
+            NonImportWinhub.Name = "NonImportWinhub";
+            NonImportWinhub.TabStop = true;
+            NonImportWinhub.UseVisualStyleBackColor = true;
+            // 
+            // ImpSettWinHub
+            // 
+            resources.ApplyResources(ImpSettWinHub, "ImpSettWinHub");
+            ImpSettWinHub.ForeColor = Color.White;
+            ImpSettWinHub.Name = "ImpSettWinHub";
+            ImpSettWinHub.TabStop = true;
+            ImpSettWinHub.UseVisualStyleBackColor = true;
+            // 
             // FormCreaISO
             // 
             resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.FromArgb(37, 38, 39);
+            Controls.Add(pictureBox11);
+            Controls.Add(groupBox10);
+            Controls.Add(pictureBox10);
+            Controls.Add(groupBox9);
+            Controls.Add(pictureBox9);
+            Controls.Add(groupBox8);
+            Controls.Add(pictureBox7);
             Controls.Add(pictureBox8);
             Controls.Add(label1);
             Controls.Add(label2);
             Controls.Add(pictureBox5);
-            Controls.Add(pictureBox7);
             Controls.Add(pictureBox6);
             Controls.Add(pictureBox4);
             Controls.Add(pictureBox3);
@@ -412,6 +573,15 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox6).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox7).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox8).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox9).EndInit();
+            groupBox8.ResumeLayout(false);
+            groupBox8.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox10).EndInit();
+            groupBox9.ResumeLayout(false);
+            groupBox9.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox11).EndInit();
+            groupBox10.ResumeLayout(false);
+            groupBox10.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -454,5 +624,20 @@
         private Label label2;
         private Label label1;
         private PictureBox pictureBox8;
+        private PictureBox pictureBox9;
+        private GroupBox groupBox8;
+        private RadioButton DriverQuestoPC;
+        private RadioButton DriverCartella;
+        private RadioButton NoDriver;
+        private PictureBox pictureBox10;
+        private GroupBox groupBox9;
+        private RadioButton IsoLavorWork;
+        private RadioButton IsoLite;
+        private RadioButton IsoGaming;
+        private PictureBox pictureBox11;
+        private GroupBox groupBox10;
+        private RadioButton NonImportWinhub;
+        private RadioButton ImpSettWinHub;
+        private ToolTip toolTip1;
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System.Data;
 using System.Diagnostics;
+using System.Globalization;
 using System.Management;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -20,6 +21,8 @@ namespace WinHubX.Forms
         FormTools formtools;
         public FormWinHubXLiteOS(Form1 form1, FormTools formtools)
         {
+            string savedLanguage = Properties.Settings.Default.Language ?? "it";
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(savedLanguage);
             InitializeComponent();
             this.form1 = form1;
             this.formtools = formtools;
@@ -262,7 +265,6 @@ if ($existingRestorePoints.Count -eq 0) {
         }
         public async Task DisableDesktop()
         {
-            // Disabilita la taskbar
             string registryKey = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer";
             Registry.SetValue(registryKey, "NoDesktop", 1, RegistryValueKind.DWord);
         }
@@ -302,14 +304,8 @@ if ($existingRestorePoints.Count -eq 0) {
                 {
                     throw new Exception("OpenProcessToken failed. Error: " + Marshal.GetLastWin32Error());
                 }
-
-                // Abilita SeDebugPrivilege
                 EnablePrivilege(hToken, SE_DEBUG_NAME);
-
-                // Abilita SeTakeOwnershipPrivilege
                 EnablePrivilege(hToken, SE_TAKE_OWNERSHIP_NAME);
-
-                // Abilita SeTcbPrivilege
                 EnablePrivilege(hToken, SE_TCB_NAME);
             }
             catch (Exception ex)
@@ -393,24 +389,18 @@ if ($existingRestorePoints.Count -eq 0) {
                 try
                 {
                     string name = process.ProcessName;
-
-                    // Non terminare i processi essenziali
                     if (Array.IndexOf(essentialProcesses, name) >= 0)
                         continue;
-
-                    // Non terminare 'explorer' o 'desktop'
                     if (name.Equals("explorer", StringComparison.OrdinalIgnoreCase) || name.Equals("desktop", StringComparison.OrdinalIgnoreCase))
                         continue;
-
-                    // Termina i processi non essenziali
                     if (Array.IndexOf(processesToKill, name) >= 0 ||
                         name.EndsWith("Host") || name.EndsWith("Helper"))
                     {
                         process.Kill();
-                        Thread.Sleep(100); // Piccola pausa per evitare sovraccarico
+                        Thread.Sleep(100);
                     }
                 }
-                catch { /* Ignora gli errori */ }
+                catch { }
             }
         }
 
@@ -426,15 +416,13 @@ if ($existingRestorePoints.Count -eq 0) {
                 Process.Start("wmic.exe", "shadowcopy delete").WaitForExit();
                 Process.Start("vssadmin.exe", "Delete Shadows /All /Quiet").WaitForExit();
             }
-            catch { /* Ignora gli errori */ }
+            catch { }
         }
 
         public async Task RestoreDesktopIcons()
         {
             string registryKey32 = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer";
             string registryKey64 = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer";
-
-            // Modifica la chiave per entrambe le versioni a 32-bit e 64-bit
             Registry.SetValue(registryKey32, "NoDesktop", 0, RegistryValueKind.DWord);
             Registry.SetValue(registryKey64, "NoDesktop", 0, RegistryValueKind.DWord);
         }
@@ -443,8 +431,6 @@ if ($existingRestorePoints.Count -eq 0) {
         {
             string registryKey32 = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer";
             string registryKey64 = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer";
-
-            // Modifica la chiave per entrambe le versioni a 32-bit e 64-bit
             Registry.SetValue(registryKey32, "NoDesktop", 0, RegistryValueKind.DWord);
             Registry.SetValue(registryKey64, "NoDesktop", 0, RegistryValueKind.DWord);
         }
@@ -457,7 +443,6 @@ if ($existingRestorePoints.Count -eq 0) {
 
             try
             {
-                // Modifica la chiave per entrambe le versioni a 32-bit e 64-bit
                 Registry.SetValue(registryKey32, valueName, "explorer.exe");
                 Registry.SetValue(registryKey64, valueName, "explorer.exe");
             }
@@ -755,7 +740,6 @@ if ($existingRestorePoints.Count -eq 0) {
                     label1.Invoke(() => label1.Text = config.Description);
                     if (config?.PS != null)
                     {
-                        // Calcola solo i comandi che verranno effettivamente eseguiti
                         var eseguibili = config.PS.Where(ps =>
                             (string.IsNullOrEmpty(ps._4ram) || !(ps._4ram.Equals("true", StringComparison.OrdinalIgnoreCase) && ramGB != 4)) &&
                             (string.IsNullOrEmpty(ps._hdd) ||
@@ -771,7 +755,6 @@ if ($existingRestorePoints.Count -eq 0) {
 
                         foreach (var ps in config.PS)
                         {
-                            // Controlli per saltare in base a RAM/HDD
                             if (!string.IsNullOrEmpty(ps._4ram) && ps._4ram.Equals("true", StringComparison.OrdinalIgnoreCase) && ramGB != 4)
                             {
                                 AppendToLog($"⏭️ Salto \"{ps.Nome}\" (Richiede 4 GB RAM)");
@@ -860,7 +843,6 @@ if ($existingRestorePoints.Count -eq 0) {
                     label1.Invoke(() => label1.Text = config.Description);
                     if (config?.PSArray != null)
                     {
-                        // Filtra i comandi effettivamente eseguibili
                         var eseguibili = config.PSArray.Where(ps =>
                             (
                                 (is24H2 && ps.Command24h2 != null && ps.Command24h2.Count > 0) ||
@@ -959,7 +941,6 @@ if ($existingRestorePoints.Count -eq 0) {
                     label1.Invoke(() => label1.Text = config.Description);
                     if (config?.CMD != null)
                     {
-                        // Filtra i comandi eseguibili in base a isMicrosoft e isHDD
                         var eseguibili = config.CMD.Where(cmd =>
                              (string.IsNullOrEmpty(cmd._hdd) ||
                              (cmd._hdd.Equals("true", StringComparison.OrdinalIgnoreCase) && isHDD) ||
@@ -1159,7 +1140,6 @@ if ($existingRestorePoints.Count -eq 0) {
                     label1.Invoke(() => label1.Text = config.Description);
                     if (config?.CMD != null)
                     {
-                        // Filtra i comandi eseguibili in base a isMicrosoft e isHDD
                         var eseguibili = config.CMD.Where(cmd =>
                              (string.IsNullOrEmpty(cmd._hdd) ||
                              (cmd._hdd.Equals("true", StringComparison.OrdinalIgnoreCase) && isHDD) ||
@@ -1435,7 +1415,6 @@ if ($existingRestorePoints.Count -eq 0) {
                     label1.Invoke(() => label1.Text = config.Description);
                     if (config?.PS != null)
                     {
-                        // Calcola solo i comandi che verranno effettivamente eseguiti
                         var eseguibili = config.PS.Where(ps =>
                             (string.IsNullOrEmpty(ps._4ram) || !(ps._4ram.Equals("true", StringComparison.OrdinalIgnoreCase) && ramGB != 4)) &&
                             (string.IsNullOrEmpty(ps._hdd) ||
@@ -1451,7 +1430,6 @@ if ($existingRestorePoints.Count -eq 0) {
 
                         foreach (var ps in config.PS)
                         {
-                            // Controlli per saltare in base a RAM/HDD
                             if (!string.IsNullOrEmpty(ps._4ram) && ps._4ram.Equals("true", StringComparison.OrdinalIgnoreCase) && ramGB != 4)
                             {
                                 AppendToLog($"⏭️ Salto \"{ps.Nome}\" (Richiede 4 GB RAM)");
@@ -1540,7 +1518,6 @@ if ($existingRestorePoints.Count -eq 0) {
                     label1.Invoke(() => label1.Text = config.Description);
                     if (config?.PSArray != null)
                     {
-                        // Filtra i comandi effettivamente eseguibili
                         var eseguibili = config.PSArray.Where(ps =>
                             (
                                 (is24H2 && ps.Command24h2 != null && ps.Command24h2.Count > 0) ||
@@ -1639,7 +1616,6 @@ if ($existingRestorePoints.Count -eq 0) {
                     label1.Invoke(() => label1.Text = config.Description);
                     if (config?.CMD != null)
                     {
-                        // Filtra i comandi eseguibili in base a isMicrosoft e isHDD
                         var eseguibili = config.CMD.Where(cmd =>
                              (string.IsNullOrEmpty(cmd._hdd) ||
                              (cmd._hdd.Equals("true", StringComparison.OrdinalIgnoreCase) && isHDD) ||
@@ -1839,7 +1815,6 @@ if ($existingRestorePoints.Count -eq 0) {
                     label1.Invoke(() => label1.Text = config.Description);
                     if (config?.CMD != null)
                     {
-                        // Filtra i comandi eseguibili in base a isMicrosoft e isHDD
                         var eseguibili = config.CMD.Where(cmd =>
                              (string.IsNullOrEmpty(cmd._hdd) ||
                              (cmd._hdd.Equals("true", StringComparison.OrdinalIgnoreCase) && isHDD) ||
@@ -1962,22 +1937,16 @@ if ($existingRestorePoints.Count -eq 0) {
             string downloadPath = @"C:\ToolAIMODS";
             string url1 = "https://github.com/MrNico98/WinHubX-Resource/releases/download/WinHubX-Risorse/PowerRun.exe";
             string url2 = "https://github.com/MrNico98/WinHubX-Resource/releases/download/WinHubX-Risorse/lower-ram-usage.reg";
-
-            // Verifica se la cartella di destinazione esiste, altrimenti la crea
             if (!Directory.Exists(downloadPath))
             {
                 Directory.CreateDirectory(downloadPath);
             }
-
-            // Scarica il primo file
             string filePath1 = Path.Combine(downloadPath, "PowerRun.exe");
             using (HttpClient client = new HttpClient())
             {
                 byte[] fileBytes = await client.GetByteArrayAsync(url1);
                 await File.WriteAllBytesAsync(filePath1, fileBytes);
             }
-
-            // Scarica il secondo file
             string filePath2 = Path.Combine(downloadPath, "lower-ram-usage.reg");
             using (HttpClient client = new HttpClient())
             {

@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.Diagnostics;
+using System.Globalization;
 
 namespace WinHubX.Forms.DebloatAvanzato
 {
@@ -8,6 +9,8 @@ namespace WinHubX.Forms.DebloatAvanzato
         private int totalSteps = 0;
         public FormServizi()
         {
+            string savedLanguage = Properties.Settings.Default.Language ?? "it";
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(savedLanguage);
             InitializeComponent();
         }
 
@@ -69,7 +72,6 @@ namespace WinHubX.Forms.DebloatAvanzato
 
                         if (servizio != null)
                         {
-                            // Prima fermiamo il servizio
                             string stopComando = $"Get-Service -Name \"{servizio.Name}\" -ErrorAction Stop | Stop-Service";
 
                             string comando = $"Set-Service -Name \"{servizio.Name}\" -StartupType {servizio.StartupType}";

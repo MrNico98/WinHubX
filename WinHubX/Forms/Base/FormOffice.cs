@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO.Compression;
 using System.Net;
 using WinHubX.Dialog;
@@ -19,10 +20,12 @@ namespace WinHubX
         public FormOffice(Form1 form1)
         {
             InitializeComponent();
+            string savedLanguage = Properties.Settings.Default.Language ?? "it";
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(savedLanguage);
             notifyIcon = new NotifyIcon
             {
                 Icon = SystemIcons.Information,
-                Visible = true
+                Visible = false
             };
             this.form1 = form1;
         }
@@ -291,16 +294,13 @@ namespace WinHubX
         {
             try
             {
-                // Scarica il contenuto del file CMD
                 using (HttpClient client = new HttpClient())
                 {
                     var scriptContent = await client.GetStringAsync(url);
                     string tempFilePath = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "Ohook_Activation_AIO.cmd");
 
-                    // Salva il file temporaneamente
                     System.IO.File.WriteAllText(tempFilePath, scriptContent);
 
-                    // Esegui il file CMD
                     Process.Start(new ProcessStartInfo
                     {
                         FileName = tempFilePath,
@@ -371,16 +371,13 @@ namespace WinHubX
                 string jsonUrl = "https://aimodsitalia.store/ConfigWinHubX/configWinHubX.json";
                 string zipFileUrl = await OttiniURL(jsonUrl);
 
-                // Percorso cartella temporanea
                 string tempFolder = Path.Combine(Path.GetTempPath(), "OfficeScrubber");
                 string tempZipPath = Path.Combine(tempFolder, "OfficeScrubber.zip");
 
-                // Pulisce ed eventualmente ricrea la cartella
                 if (Directory.Exists(tempFolder))
                     Directory.Delete(tempFolder, true);
                 Directory.CreateDirectory(tempFolder);
 
-                // Scarica lo ZIP
                 using (HttpClient client = new HttpClient())
                 using (HttpResponseMessage response = await client.GetAsync(zipFileUrl))
                 using (FileStream fs = new FileStream(tempZipPath, FileMode.Create, FileAccess.Write))
@@ -388,22 +385,19 @@ namespace WinHubX
                     await response.Content.CopyToAsync(fs);
                 }
 
-                // Estrai ZIP
                 ZipFile.ExtractToDirectory(tempZipPath, tempFolder);
 
-                // Verifica esistenza .cmd
                 string cmdPath = Path.Combine(tempFolder, "OfficeScrubber.cmd");
                 if (!File.Exists(cmdPath))
                 {
                     return;
                 }
 
-                // Avvia come amministratore e attendi chiusura
                 Process process = new Process();
                 process.StartInfo.FileName = "cmd.exe";
                 process.StartInfo.Arguments = $"/c \"{cmdPath}\"";
                 process.StartInfo.WorkingDirectory = tempFolder;
-                process.StartInfo.Verb = "runas"; // Avvia come amministratore
+                process.StartInfo.Verb = "runas"; 
                 process.StartInfo.UseShellExecute = true;
 
                 process.Start();

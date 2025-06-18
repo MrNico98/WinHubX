@@ -15,6 +15,7 @@ namespace WinHubX
         private const int WM_NCHITTEST = 0x84;
         private const int HT_CAPTION = 0x2;
         private bool isLoading = true;
+        private bool light = false;
 
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
         private static extern IntPtr CreateRoundRectRgn(int nLeftRect, int nTopRect, int nRightRect, int nBottomRect, int nWidthEllipse, int nHeightEllipse);
@@ -83,7 +84,7 @@ namespace WinHubX
         public Form1()
         {
             InitializeComponent();
-            this.Padding = new Padding(2); // Aiuta visivamente con il resize
+            this.Padding = new Padding(2);
             this.FormBorderStyle = FormBorderStyle.None;
             this.Resize += (s, e) =>
             {
@@ -91,14 +92,12 @@ namespace WinHubX
             };
             bottoni.AddRange(new[] { btnHome, btnWin, btnOffice, btnSettaggi, btnDebloat, btnCreaISO, btnTools, btnmonitoraggio });
             LoadForm(new FormHome(), btnHome, "Home");
-            CheckForUpdatesOnStartup();
             InitializeTrayIcon();
             LanguageManager.LoadTranslations();
         }
 
         private void EnableDragging(Control control)
         {
-            // Non aggiungere il trascinamento a controlli interattivi
             if (control is Button || control is TextBox || control is CheckBox || control is ComboBox || control is ListBox)
                 return;
 
@@ -110,8 +109,6 @@ namespace WinHubX
                     SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
                 }
             };
-
-            // Ricorsivamente abilita il dragging solo sui controlli "contenitori"
             foreach (Control child in control.Controls)
             {
                 EnableDragging(child);
@@ -168,7 +165,7 @@ namespace WinHubX
         private async Task CheckForUpdatesAsync()
         {
             string configUrl = "https://aimodsitalia.store/ConfigWinHubX/configWinHubX.json";
-            string currentVersion = "2.4.2.7";
+            string currentVersion = "2.4.3.0";
 
             try
             {
@@ -179,7 +176,11 @@ namespace WinHubX
                 var response = await client.GetStringAsync(updateInfoUrl);
                 dynamic updateInfo = JsonConvert.DeserializeObject(response);
                 string latestVersion = (string)updateInfo.version;
-                string updateUrl = (string)updateInfo.updateUrl;
+
+                string updateUrl = light
+                    ? (string)updateInfo.updateUrlLight
+                    : (string)updateInfo.updateUrl;
+
                 var releaseNotes = updateInfo.releaseNotes;
                 string releaseNotesText = string.Join("\n", releaseNotes);
 
@@ -328,7 +329,6 @@ namespace WinHubX
             }
         }
 
-
         private void puntodiripristino()
         {
             string titolo = LanguageManager.GetTranslation("Form1", "restorepoint_title");
@@ -476,6 +476,7 @@ if ($existingRestorePoints.Count -eq 0) {
             LoadForm(new FormHome(), btnHome, "Home");
             string savedLanguage = Properties.Settings.Default.Language ?? "it";
             LanguageManager.SetLanguage(savedLanguage);
+
             comboBox1.SelectedIndexChanged -= comboBox1_SelectedIndexChanged;
             if (savedLanguage == "it")
             {
@@ -565,21 +566,17 @@ if ($existingRestorePoints.Count -eq 0) {
         {
             if (!isFullScreen)
             {
-                // Salvo lo stato precedente
                 previousWindowState = this.WindowState;
                 previousBorderStyle = this.FormBorderStyle;
                 previousBounds = this.Bounds;
-
-                // Imposto il full screen
                 this.FormBorderStyle = FormBorderStyle.None;
-                this.WindowState = FormWindowState.Normal; // Necessario per evitare problemi con la massimizzazione precedente
+                this.WindowState = FormWindowState.Normal;
                 this.Bounds = Screen.PrimaryScreen.Bounds;
 
                 isFullScreen = true;
             }
             else
             {
-                // Ripristino lo stato precedente
                 this.FormBorderStyle = previousBorderStyle;
                 this.WindowState = previousWindowState;
                 this.Bounds = previousBounds;

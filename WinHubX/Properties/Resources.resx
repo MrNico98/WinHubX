@@ -127,11 +127,14 @@
   <data name="pngHome" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Immagini\Form1\pngHome.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="TSforge_Activation_Office" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TSforge_Activation_Office.cmd;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="pngXtndLogo_WinHubX" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Immagini\Form1\pngXtndLogo_WinHubX.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="pngextWIMToolkit" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Immagini\FormTools\pngextWIMToolkit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Product_Sans" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Product Sans.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="pngEdge" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Immagini\FormCreaISO\pngEdge.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -148,8 +151,8 @@
   <data name="png365" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Immagini\FormOffice\png365.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="pngDomanda" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Immagini\FormCreaISO\pngDomanda.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icoLogoWhite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icoLogoWhite.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="pngAttivaWSA" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Immagini\FormSettaggi\pngAttivaWSA.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -160,11 +163,14 @@
   <data name="pngBackArrow" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pngBackArrow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="pngWin" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Immagini\Form1\pngWin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="pngDomanda" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormCreaISO\pngDomanda.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="TSforge_Activation_Office" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TSforge_Activation_Office.cmd;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="pngTelegram" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormHome\pngTelegram.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngOffline" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormOffice\pngOffline.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="pngMonitoraggio" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Immagini\Form1\pngMonitoraggio.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -175,26 +181,20 @@
   <data name="pngPersonalizzazione" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Immagini\FormSettaggi\pngPersonalizzazione.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="pngOfficeHome" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\Form1\pngOfficeHome.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="pngKasperskyLive" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Immagini\FormTools\pngKasperskyLive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="pngWin7" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Immagini\FormWin\pngWin7.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="pngRipristinaWindows" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Immagini\FormSettaggi\pngRipristinaWindows.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="pngCoffee" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Immagini\FormHome\pngCoffee.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="pngSettaggi" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\Form1\pngSettaggi.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icoLogoWhite" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icoLogoWhite.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="pngTelegram" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Immagini\FormHome\pngTelegram.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="pngOffline" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Immagini\FormOffice\pngOffline.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="pngWin" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\Form1\pngWin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="pngUpdateWin" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Immagini\FormSettaggi\pngUpdateWin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -223,9 +223,6 @@
   <data name="term_verde" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Immagini\FormMonitoraggio\term_verde.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="pngOffice" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Immagini\FormOffice\pngOffice.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="pngWinWhat" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Immagini\FormWin\pngWinWhat.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -238,20 +235,23 @@
   <data name="pngAttivaWin" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Immagini\FormWin\pngAttivaWin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="pngmaxi" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\Form1\pngmaxi.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="term_rosso" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Immagini\FormMonitoraggio\term_rosso.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="term_giallo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Immagini\FormMonitoraggio\term_giallo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="pngbypass" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Immagini\FormCreaISO\pngbypass.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="pngArchitettura" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Immagini\FormCreaISO\pngArchitettura.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="TSforge_Activation" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TSforge_Activation.cmd;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="pngOnline" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormOffice\pngOnline.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngWin7" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormWin\pngWin7.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="pngDaRT" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Immagini\FormTools\pngDaRT.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -262,17 +262,17 @@
   <data name="pngPrivacy" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Immagini\FormSettaggi\pngPrivacy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="pngOfficeHome" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Immagini\Form1\pngOfficeHome.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="pngCoffee" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormHome\pngCoffee.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="pngOnline" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Immagini\FormOffice\pngOnline.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="pngbypass" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormCreaISO\pngbypass.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="pngWinHubXLiteOS" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Immagini\FormTools\pngWinHubXLiteOS.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="pngSettaggi" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Immagini\Form1\pngSettaggi.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="pngOffice" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormOffice\pngOffice.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="pngprocessi" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Immagini\Form1\pngprocessi.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -280,8 +280,8 @@
   <data name="englisj" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Immagini\Form1\englisj.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Product_Sans" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Product Sans.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="pngextWIMToolkit" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormTools\pngextWIMToolkit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="pngWinLive" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Immagini\FormWin\pngWinLive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -304,7 +304,16 @@
   <data name="pngClose" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Immagini\Form1\pngClose.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="pngmaxi" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Immagini\Form1\pngmaxi.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="TSforge_Activation" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TSforge_Activation.cmd;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="pngTipologia" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormCreaISO\pngTipologia.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngDriverIso" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormCreaISO\pngDriverIso.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngSettaggioWinHubx" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormCreaISO\pngSettaggioWinHubx.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

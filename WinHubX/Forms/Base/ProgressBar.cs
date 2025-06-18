@@ -1,4 +1,6 @@
-﻿namespace WinHubX.Forms.Base
+﻿using System.Globalization;
+
+namespace WinHubX.Forms.Base
 {
     public partial class ProgressForm : Form
     {
@@ -6,6 +8,8 @@
         {
             InitializeComponent();
             SetMarquee();
+            string savedLanguage = Properties.Settings.Default.Language ?? "it";
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(savedLanguage);
         }
         public void SetMarquee()
         {

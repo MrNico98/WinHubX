@@ -1,9 +1,8 @@
-﻿using Microsoft.VisualBasic.Devices;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using Newtonsoft.Json.Linq;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO.Compression;
-using System.Management;
 using WinHubX.Forms.Base;
 
 
@@ -14,159 +13,21 @@ namespace WinHubX.Forms.Settaggi
         private Form1 form1;
         private FormSettaggi formSettaggi;
         private string tempFolder = Path.Combine(Path.GetTempPath(), "WinHubX");
-        private bool isSSD = false;
         private int totalSteps = 0;
+        private bool isSSD;
         public FormPersonalizzazione(FormSettaggi formSettaggi, Form1 form1)
         {
+            string savedLanguage = Properties.Settings.Default.Language ?? "it";
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(savedLanguage);
             InitializeComponent();
             this.form1 = form1;
             this.formSettaggi = formSettaggi;
-            LoadPcSpec();
         }
-        private async void LoadPcSpec()
+        public void ImpostaSpecifichePC(string driveType, string ramSize, bool isSSD)
         {
-            await Task.Run(() =>
-            {
-                string driveType = "Unknown";
-                string systemDriveLetter = GetSystemDrive();
-                bool isDriveDetected = false;
-
-                try
-                {
-                    using (var searcher = new ManagementObjectSearcher("SELECT MediaType, DeviceID, Model FROM Win32_DiskDrive"))
-                    {
-                        foreach (ManagementObject drive in searcher.Get())
-                        {
-                            string deviceID = drive["DeviceID"]?.ToString();
-                            if (deviceID == null) continue;
-
-                            string model = drive["Model"]?.ToString() ?? string.Empty;
-                            if (model.Contains("NVMe", StringComparison.OrdinalIgnoreCase))
-                            {
-                                driveType = "SSD (NVMe)";
-                                isSSD = true;
-                                isDriveDetected = true;
-                                break;
-                            }
-
-                            using (var partitionSearcher = new ManagementObjectSearcher(
-                                $"ASSOCIATORS OF {{Win32_DiskDrive.DeviceID='{deviceID}'}} WHERE AssocClass=Win32_DiskDriveToDiskPartition"))
-                            {
-                                foreach (ManagementObject partition in partitionSearcher.Get())
-                                {
-                                    var driveLetter = GetDriveLetter(partition);
-                                    if (driveLetter == systemDriveLetter)
-                                    {
-                                        var mediaType = drive["MediaType"]?.ToString();
-                                        if (mediaType == "Fixed hard disk media")
-                                        {
-                                            driveType = "HDD";
-                                            isSSD = false;
-                                        }
-                                        else if (mediaType == "Solid state drive")
-                                        {
-                                            driveType = "SSD";
-                                            isSSD = true;
-                                        }
-
-                                        isDriveDetected = true;
-                                        break;
-                                    }
-                                }
-                            }
-
-                            if (isDriveDetected) break;
-                        }
-                    }
-                }
-                catch
-                {
-
-                }
-
-                if (!isDriveDetected)
-                {
-                    Invoke(new Action(() =>
-                    {
-                        using (var selectorForm = new DiskTypeSelectorForm())
-                        {
-                            if (selectorForm.ShowDialog() == DialogResult.OK)
-                            {
-                                driveType = selectorForm.SelectedDriveType;
-                                isSSD = driveType.Contains("SSD", StringComparison.OrdinalIgnoreCase);
-                            }
-                        }
-                    }));
-                }
-
-                ulong ramBytes = new ComputerInfo().TotalPhysicalMemory;
-                string ramSizeGB = $"{ramBytes / (1024 * 1024 * 1024)} GB RAM";
-                Invoke(new Action(() =>
-                {
-                    label3.Text = driveType;
-                    label5.Text = ramSizeGB;
-                }));
-            });
-        }
-
-        private string GetDriveLetter(ManagementObject partition)
-        {
-            try
-            {
-                var driveLetters = partition.GetPropertyValue("DeviceID")?.ToString();
-                if (driveLetters != null)
-                {
-                    var path = driveLetters.Split('\\');
-                    if (path.Length > 0)
-                        return path[path.Length - 1].Substring(0, 1);
-                }
-            }
-            catch
-            {
-
-            }
-            return string.Empty;
-        }
-
-
-        private string GetSystemDrive()
-        {
-            string systemDrive = "C"; // Default
-            try
-            {
-                using (RegistryKey key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion"))
-                {
-                    if (key != null)
-                    {
-                        object systemRoot = key.GetValue("SystemRoot");
-                        if (systemRoot != null)
-                        {
-                            string path = systemRoot.ToString();
-                            systemDrive = path.Substring(0, 1);
-                        }
-                    }
-                }
-                if (systemDrive == "C")
-                {
-                    using (RegistryKey key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\WOW6432Node\Microsoft\Windows NT\CurrentVersion"))
-                    {
-                        if (key != null)
-                        {
-                            object systemRoot = key.GetValue("SystemRoot");
-                            if (systemRoot != null)
-                            {
-                                string path = systemRoot.ToString();
-                                systemDrive = path.Substring(0, 1);
-                            }
-                        }
-                    }
-                }
-            }
-            catch
-            {
-
-            }
-            return systemDrive;
+            this.isSSD = isSSD;
+            label3.Text = driveType;
+            label5.Text = ramSize;
         }
 
         private async void btnAvviaSelezionati_Click(object sender, EventArgs e)
@@ -321,7 +182,6 @@ namespace WinHubX.Forms.Settaggi
         {
             try
             {
-                // Configura il processo
                 ProcessStartInfo processInfo = new ProcessStartInfo
                 {
                     FileName = "cmd.exe",
@@ -504,12 +364,11 @@ namespace WinHubX.Forms.Settaggi
                 }
             }
 
-            return null; // Ritorna null se il file non è stato trovato
+            return null;
         }
 
         private void EseguiFileReg(string filePath)
         {
-            // Percorsi per le versioni di regedit
             string regedit64Path = @"C:\Windows\System32\regedit.exe";
             string regedit32Path = @"C:\Windows\SysWOW64\regedit.exe";
 
@@ -748,7 +607,6 @@ namespace WinHubX.Forms.Settaggi
 
         private void btn_resetselezione_Click(object sender, EventArgs e)
         {
-            // Deselect all RadioButtons
             radio_mostrasecondi.Checked = false;
             radio_mostradatasecondi.Checked = false;
             radio_orologiostandard.Checked = false;

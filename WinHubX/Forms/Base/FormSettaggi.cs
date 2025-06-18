@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO.Compression;
 using System.Management;
 using System.Reflection;
@@ -14,12 +15,133 @@ namespace WinHubX.Forms.Base
         private string wsa11x64;
         private string wsa11arm64;
         private string wsa10x64;
+        private bool isSSD = false;
+        private FormPersonalizzazione formPersonalizzazione;
         public FormSettaggi(Form1 form1)
         {
             InitializeComponent();
+            string savedLanguage = Properties.Settings.Default.Language ?? "it";
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(savedLanguage);
             this.form1 = form1;
             LoadJsonLinks();
+            LoadPcSpec();
         }
+        private void EnsureFormPersonalizzazioneIsCreated()
+        {
+            if (formPersonalizzazione == null || formPersonalizzazione.IsDisposed)
+            {
+                formPersonalizzazione = new FormPersonalizzazione(this, form1);
+            }
+        }
+
+        private async void LoadPcSpec()
+        {
+            try
+            {
+                DriveInfo systemDrive = GetSystemDrive();
+                string driveType = GetDriveType(systemDrive);
+                bool isSSD = driveType == "SSD" || driveType == "NVME";
+                string ramSize = GetSystemRAM();
+
+                EnsureFormPersonalizzazioneIsCreated();
+
+                if (formPersonalizzazione != null)
+                {
+                    formPersonalizzazione.ImpostaSpecifichePC(driveType, ramSize, isSSD);
+                }
+                else
+                {
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private DriveInfo GetSystemDrive()
+        {
+            string systemDirectory = Environment.SystemDirectory;
+            string root = Path.GetPathRoot(systemDirectory);
+
+            foreach (DriveInfo drive in DriveInfo.GetDrives())
+            {
+                if (drive.IsReady && drive.Name.Equals(root, StringComparison.OrdinalIgnoreCase))
+                {
+                    return drive;
+                }
+            }
+
+            throw new Exception("Impossibile trovare il disco di sistema");
+        }
+
+        private string GetDriveType(DriveInfo drive)
+        {
+            try
+            {
+                using (var searcher = new ManagementObjectSearcher("SELECT * FROM Win32_DiskDrive"))
+                {
+                    foreach (ManagementObject disk in searcher.Get())
+                    {
+                        if (disk["MediaType"] != null)
+                        {
+                            string mediaType = disk["MediaType"].ToString();
+                            string model = disk["Model"]?.ToString() ?? "";
+
+                            if (mediaType.Contains("Fixed hard disk media"))
+                            {
+                                if (model.Contains("SSD") || mediaType.Contains("SSD"))
+                                    return "SSD";
+                                if (model.Contains("NVMe") || model.Contains("NVME"))
+                                    return "NVME";
+                                return "HDD";
+                            }
+                        }
+                    }
+                }
+
+                string driveLetter = drive.Name.Substring(0, 1);
+                using (var searcher = new ManagementObjectSearcher($"SELECT * FROM Win32_LogicalDisk WHERE DeviceID = '{driveLetter}:'"))
+                {
+                    foreach (ManagementObject disk in searcher.Get())
+                    {
+                        if (disk["MediaType"] != null && disk["MediaType"].ToString() == "12")
+                        {
+                            return "SSD";
+                        }
+                    }
+                }
+
+                return "HDD";
+            }
+            catch
+            {
+                return "Sconosciuto";
+            }
+        }
+
+        private string GetSystemRAM()
+        {
+            try
+            {
+                using (var searcher = new ManagementObjectSearcher("SELECT * FROM Win32_ComputerSystem"))
+                {
+                    foreach (ManagementObject item in searcher.Get())
+                    {
+                        double totalMemory = Convert.ToDouble(item["TotalPhysicalMemory"]) / (1024 * 1024 * 1024);
+                        return $"{Math.Round(totalMemory)} GB";
+                    }
+                }
+            }
+            catch
+            {
+                return "Sconosciuto";
+            }
+
+            return "Sconosciuto";
+        }
+
 
         private void btnPrivacy_Click(object sender, EventArgs e)
         {
@@ -89,15 +211,16 @@ namespace WinHubX.Forms.Base
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void btnAttivaWSA_Click(object sender, EventArgs e)
+        private async void btnAttivaWSA_Click(object sender, EventArgs e)
         {
             string systemType = GetSystemType();
             string downloadUrl = "";
             string zipFileName = "";
+
             if (systemType.Contains("Windows 11"))
             {
                 if (Environment.Is64BitOperatingSystem)
@@ -117,46 +240,74 @@ namespace WinHubX.Forms.Base
                 zipFileName = "WSAwin10x64.zip";
             }
 
-            if (!string.IsNullOrEmpty(downloadUrl))
-            {
-                try
-                {
-                    Process.Start(new ProcessStartInfo(downloadUrl) { UseShellExecute = true });
-                    MessageBox.Show(LanguageManager.GetTranslation("FormSettaggi", "savezip"));
-                    string downloadsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
-                    string zipFilePath = Path.Combine(downloadsPath, zipFileName);
-                    string extractPath = Path.Combine(Path.GetTempPath(), "WSA");
-
-                    if (File.Exists(zipFilePath))
-                    {
-                        ZipFile.ExtractToDirectory(zipFilePath, extractPath, true);
-                        string batFilePath = Path.Combine(extractPath, "Run.bat");
-                        if (File.Exists(batFilePath))
-                        {
-                            var process = Process.Start(new ProcessStartInfo(batFilePath) { UseShellExecute = true });
-                            process?.WaitForExit();
-                        }
-                        else
-                        {
-                            MessageBox.Show(LanguageManager.GetTranslation("FormSettaggi", "runbatnotfound"), "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show(LanguageManager.GetTranslation("FormSettaggi", "filenotfound"), "File Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error: {ex.Message}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            else
+            if (string.IsNullOrEmpty(downloadUrl))
             {
                 MessageBox.Show(LanguageManager.GetTranslation("FormSettaggi", "downloadlinknotfound"), "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
 
-            // Mostra la finestra di dialogo PacMan
+            FormOperazioni progressForm = new FormOperazioni();
+            progressForm.Show();
+
+            try
+            {
+                progressForm.SetStatus("Downloading...", 0);
+                string downloadPath = Path.Combine(Path.GetTempPath(), zipFileName);
+                string extractPath = Path.Combine(Path.GetTempPath(), "WSA");
+
+                using (HttpClient client = new HttpClient { Timeout = TimeSpan.FromMinutes(30) })
+                using (var response = await client.GetAsync(downloadUrl, HttpCompletionOption.ResponseHeadersRead))
+                {
+                    response.EnsureSuccessStatusCode();
+                    var totalBytes = response.Content.Headers.ContentLength ?? -1L;
+                    var canReportProgress = totalBytes != -1;
+
+                    using (var contentStream = await response.Content.ReadAsStreamAsync())
+                    using (var fileStream = new FileStream(downloadPath, FileMode.Create, FileAccess.Write, FileShare.None))
+                    {
+                        var buffer = new byte[81920];
+                        long totalRead = 0;
+                        int bytesRead;
+
+                        while ((bytesRead = await contentStream.ReadAsync(buffer, 0, buffer.Length)) > 0)
+                        {
+                            await fileStream.WriteAsync(buffer, 0, bytesRead);
+                            totalRead += bytesRead;
+
+                            if (canReportProgress)
+                            {
+                                int progress = (int)((totalRead * 100) / totalBytes);
+                                progressForm.SetStatus("Downloading...", progress);
+                            }
+                        }
+                    }
+                }
+
+                progressForm.SetStatus("Extraction in progress...", 100);
+                ZipFile.ExtractToDirectory(downloadPath, extractPath, true);
+
+                string batFilePath = Path.Combine(extractPath, "Run.bat");
+                if (File.Exists(batFilePath))
+                {
+                    var process = Process.Start(new ProcessStartInfo(batFilePath) { UseShellExecute = true });
+                    process?.WaitForExit();
+                }
+                else
+                {
+                    MessageBox.Show(LanguageManager.GetTranslation("FormSettaggi", "runbatnotfound"), "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                progressForm.CompleteOperation();
+            }
+            catch (Exception ex)
+            {
+                progressForm.SetStatus($"Errore: {ex.Message}");
+                MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                progressForm.Close();
+            }
             PacManDialog pacManDialog = new PacManDialog
             {
                 TopMost = true,
@@ -165,6 +316,7 @@ namespace WinHubX.Forms.Base
             };
             pacManDialog.ShowDialog();
         }
+
 
         private string GetSystemType()
         {
@@ -232,10 +384,181 @@ namespace WinHubX.Forms.Base
         {
             form1.lblPanelTitle.Text = LanguageManager.GetTranslation("FormSettaggi", "customization");
             form1.PnlFormLoader.Controls.Clear();
-            FormPersonalizzazione formPersonalizzazione = new FormPersonalizzazione(this, form1) { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
-            formPersonalizzazione.FormBorderStyle = FormBorderStyle.None;
+
+            formPersonalizzazione = new FormPersonalizzazione(this, form1)
+            {
+                Dock = DockStyle.Fill,
+                TopLevel = false,
+                TopMost = true,
+                FormBorderStyle = FormBorderStyle.None
+            };
+
             form1.PnlFormLoader.Controls.Add(formPersonalizzazione);
             formPersonalizzazione.Show();
+            LoadPcSpec();
         }
+
+
+        private void btnEsportaSettaggi_Click(object sender, EventArgs e)
+        {
+            using (var dlg = new SaveFileDialog())
+            {
+                dlg.Title = LanguageManager.GetTranslation("FormSettaggi", "exporttitle");
+                dlg.Filter = "Dat file (*.dat)|*.dat|Tutti i file (*.*)|*.*";
+                dlg.FileName = "config.dat";
+                dlg.InitialDirectory = Application.StartupPath;
+
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    string exportPath = dlg.FileName;
+                    string keyToExport = @"HKEY_CURRENT_USER\Software\WinHubX";
+
+                    var process = new Process();
+                    process.StartInfo.FileName = "reg.exe";
+                    process.StartInfo.Arguments = $"export \"{keyToExport}\" \"{exportPath}\" /y";
+                    process.StartInfo.CreateNoWindow = true;
+                    process.StartInfo.UseShellExecute = false;
+
+                    try
+                    {
+                        process.Start();
+                        process.WaitForExit();
+
+                        if (process.ExitCode == 0)
+                        {
+                            MessageBox.Show(
+                                string.Format(LanguageManager.GetTranslation("FormSettaggi", "exportsuccess"), exportPath),
+                                LanguageManager.GetTranslation("FormSettaggi", "exportdone"),
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information
+                            );
+                        }
+                        else
+                        {
+                            MessageBox.Show(
+                                string.Format(LanguageManager.GetTranslation("FormSettaggi", "exporterrorcode"), process.ExitCode),
+                                LanguageManager.GetTranslation("FormSettaggi", "error"),
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error
+                            );
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(
+                            string.Format(LanguageManager.GetTranslation("FormSettaggi", "exportexception"), ex.Message),
+                            LanguageManager.GetTranslation("FormSettaggi", "exception"),
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error
+                        );
+                    }
+                }
+            }
+        }
+
+        private void btnImportaSettaggi_Click(object sender, EventArgs e)
+        {
+            using (var dlg = new OpenFileDialog())
+            {
+                dlg.Title = "Seleziona file di registro da importare";
+                dlg.Filter = "Dat file (*.dat)|*.dat|Tutti i file (*.*)|*.*";
+                dlg.InitialDirectory = Application.StartupPath;
+
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    string filePath = dlg.FileName;
+
+                    var process = new Process();
+                    process.StartInfo.FileName = "reg.exe";
+                    process.StartInfo.Arguments = $"import \"{filePath}\"";
+                    process.StartInfo.CreateNoWindow = true;
+                    process.StartInfo.UseShellExecute = false;
+
+                    try
+                    {
+                        process.Start();
+                        process.WaitForExit();
+
+                        if (process.ExitCode == 0)
+                        {
+                            MessageBox.Show("Settaggi importati correttamente dal file .dat.",
+                                "Importazione completata", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            IstanziaEAvviaFormSelezionati();
+                        }
+                        else
+                        {
+                            MessageBox.Show($"Errore durante l'importazione. Codice uscita: {process.ExitCode}",
+                                "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Si è verificato un errore:\n{ex.Message}",
+                            "Eccezione", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+        public void ImportaSettaggiDaPercorso(string filePath)
+        {
+            var process = new Process();
+            process.StartInfo.FileName = "reg.exe";
+            process.StartInfo.Arguments = $"import \"{filePath}\"";
+            process.StartInfo.CreateNoWindow = true;
+            process.StartInfo.UseShellExecute = false;
+
+            try
+            {
+                process.Start();
+                process.WaitForExit();
+
+                if (process.ExitCode == 0)
+                {
+                    Console.WriteLine("Settaggi importati correttamente dal file .dat.");
+                    IstanziaEAvviaFormSelezionati();
+                }
+                else
+                {
+                    Console.WriteLine($"Errore durante l'importazione. Codice uscita: {process.ExitCode}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Si è verificato un errore:\n{ex.Message}");
+            }
+        }
+
+
+
+        private void IstanziaEAvviaFormSelezionati()
+        {
+            var formList = new List<Form>
+    {
+        new FormPrivacy(this, form1),
+        new FormUtility(this, form1),
+        new FormDefender(this, form1),
+        new FormUpdate(this, form1),
+        new FormPersonalizzazione(this, form1)
+    };
+
+            foreach (Form form in formList)
+            {
+                form.TopLevel = false;
+                form.TopMost = true;
+                form.FormBorderStyle = FormBorderStyle.None;
+                form.Dock = DockStyle.Fill;
+                form.CreateControl();
+                form.Show();
+                var metodo = form.GetType().GetMethod("btnAvviaSelezionati_Click", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                var bottone = form.Controls.Find("btnAvviaSelezionati", true).FirstOrDefault();
+
+                if (metodo != null && bottone != null)
+                {
+                    metodo.Invoke(form, new object[] { bottone, EventArgs.Empty });
+                }
+                form.Close();
+            }
+        }
+
     }
 }

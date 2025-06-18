@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Globalization;
 using System.Reflection;
 using System.Xml;
 
@@ -11,6 +12,8 @@ namespace WinHubX.Forms.Personalizzazione_office
 
         public PersonalizzazioneOffice(Form1 form1, FormOffice formoffice)
         {
+            string savedLanguage = Properties.Settings.Default.Language ?? "it";
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(savedLanguage);
             InitializeComponent();
             this.form1 = form1;
             this.formoffice = formoffice;
@@ -662,8 +665,6 @@ namespace WinHubX.Forms.Personalizzazione_office
                     UseShellExecute = false,
                     CreateNoWindow = true
                 };
-
-                // Avvia il processo e attendi la sua fine
                 using (Process process = Process.Start(startInfo))
                 {
                     progressBar_office.Value = 50;
@@ -718,23 +719,31 @@ namespace WinHubX.Forms.Personalizzazione_office
 
         private void PersonalizzazioneOffice_FormClosing(object sender, FormClosingEventArgs e)
         {
-            // Ottieni il percorso della cartella %TEMP%
             string tempPath = Path.Combine(Environment.GetEnvironmentVariable("TEMP"), "OfficePersonalizzato");
-
-            // Verifica se la cartella esiste
             if (Directory.Exists(tempPath))
             {
                 try
                 {
-                    // Elimina la cartella e tutto il suo contenuto
                     Directory.Delete(tempPath, true);
                 }
                 catch (Exception ex)
                 {
-                    // Gestione degli errori
                     MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
+
+        private void PersonalizzazioneOffice_Load(object sender, EventArgs e)
+        {
+            if (Environment.Is64BitOperatingSystem)
+            {
+                radioButton_x64.Checked = true;
+            }
+            else
+            {
+                radioButton_x32.Checked = true;
+            }
+        }
+
     }
 }

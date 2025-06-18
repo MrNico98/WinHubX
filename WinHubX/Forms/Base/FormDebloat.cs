@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Globalization;
 using System.Text.Json;
 using WinHubX.Forms.DebloatAvanzato;
 
@@ -15,6 +16,8 @@ namespace WinHubX.Forms.Base
         public FormDebloat(Form1 form1)
         {
             InitializeComponent();
+            string savedLanguage = Properties.Settings.Default.Language ?? "it";
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(savedLanguage);
             this.form1 = form1;
             flowLayoutPanel1.AutoScroll = true;
             flowLayoutPanel1.FlowDirection = FlowDirection.LeftToRight;
@@ -25,14 +28,23 @@ namespace WinHubX.Forms.Base
             InizializzaDati();
         }
 
-        private void InizializzaDati()
+        private async void InizializzaDati()
         {
-            Task.Run(async () =>
+            await Task.Run(async () =>
             {
-                Task.WhenAll(CaricaAppNameMappings(), CaricaImmaginiApp()).Wait();
+                try
+                {
+                    await Task.WhenAll(CaricaAppNameMappings(), CaricaImmaginiApp());
+                }
+                catch
+                {
+
+                }
+
                 CaricaAppxPackages();
             });
         }
+
 
         private class ImmagineData
         {
@@ -53,7 +65,7 @@ namespace WinHubX.Forms.Base
                     {
                         foreach (var item in immaginiList)
                         {
-                            string chiave = item.ID ?? item.Nome; // Usa "ID" se presente, altrimenti "Nome"
+                            string chiave = item.ID ?? item.Nome;
                             if (!string.IsNullOrEmpty(chiave) && !string.IsNullOrEmpty(item.ImmagineUrl))
                             {
                                 imageUrls[chiave] = item.ImmagineUrl;
@@ -64,7 +76,7 @@ namespace WinHubX.Forms.Base
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Diagnostics.Debug.WriteLine($"Error: {ex.Message}");
             }
         }
 
@@ -80,10 +92,9 @@ namespace WinHubX.Forms.Base
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Diagnostics.Debug.WriteLine($"Error: {ex.Message}");
             }
         }
-
 
         private void CaricaAppxPackages()
         {
@@ -396,8 +407,6 @@ namespace WinHubX.Forms.Base
         private void btnServizi_Click(object sender, EventArgs e)
         {
             FormServizi formServizi = new FormServizi();
-
-            // Mostra il form
             formServizi.Show();
         }
 

@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Globalization;
 using System.Reflection;
 
 namespace WinHubX.Forms.DebloatAvanzato
@@ -10,6 +11,8 @@ namespace WinHubX.Forms.DebloatAvanzato
         public FormDebloatAvanzato()
         {
             InitializeComponent();
+            string savedLanguage = Properties.Settings.Default.Language ?? "it";
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(savedLanguage);
             LoadAppxPackages();
         }
 
@@ -91,7 +94,7 @@ namespace WinHubX.Forms.DebloatAvanzato
                         {
                             RunCommand(tempExePath, command);
                             progressBar1.Value++;
-                            Application.DoEvents(); // Per aggiornare la UI
+                            Application.DoEvents();
                         }
 
                         RunCommand(tempExePath, @"cmd.exe /c ""reg add ""HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender"" /v ""DisableAntiSpyware"" /t REG_DWORD /d 1 /f""");
