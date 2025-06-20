@@ -2,10 +2,14 @@
   "version": "2.4.3.0",
   "releaseNotes": [
     "IT:",
-    "Inserita logica per ridimensionamento applicazione",
+    "Ampliamento e sistemazione Crea ISO",
+    "Rilevamento automatico dell'architettura per office personalizzato",
+    "Possibilità di importare ed esportare i settaggi di WinHubX",
     "",
     "EN:",
-    "Added logic for application resizing"
+    "Extension and arrangement Create ISO",
+    "Automatic architecture detection for custom office",
+    "Ability to import and export WinHubX settings"
   ],
   "updateUrl": "https://github.com/MrNico98/WinHubX/releases/download/WinHubX-v.2.4.3.0/WinHubX.Full.exe",
   "updateUrlLight": "https://github.com/MrNico98/WinHubX/releases/download/WinHubX-v.2.4.3.0/WinHubX.Light.exe"
