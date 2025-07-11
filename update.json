@@ -1,16 +1,20 @@
 {
-  "version": "2.4.3.0",
+  "version": "2.4.3.1",
   "releaseNotes": [
     "IT:",
-    "Ampliamento e sistemazione Crea ISO",
-    "Rilevamento automatico dell'architettura per office personalizzato",
-    "Possibilità di importare ed esportare i settaggi di WinHubX",
+    "Ottimizzata Interfaccia Download ISO Windows",
+    "Ottimizzata Interfaccia Download Microsoft Office",
+    "Fix Disattivazione Ricerca Online su Start",
+    "Aggiunta Personalizzazione Explorer",
+    "Aggiunto Switch Tema Light/Dark",
     "",
     "EN:",
-    "Extension and arrangement Create ISO",
-    "Automatic architecture detection for custom office",
-    "Ability to import and export WinHubX settings"
+    "Optimized interface Download Windows ISO",
+    "Optimized interface Download Microsoft Office",
+    "Fixed disabling Online Search on Start",
+    "Added Explorer Personalization",
+    "Added Light/Dark Theme Switch",
   ],
-  "updateUrl": "https://github.com/MrNico98/WinHubX/releases/download/WinHubX-v.2.4.3.0/WinHubX.Full.exe",
-  "updateUrlLight": "https://github.com/MrNico98/WinHubX/releases/download/WinHubX-v.2.4.3.0/WinHubX.Light.exe"
+  "updateUrl": "https://github.com/MrNico98/WinHubX/releases/download/WinHubX-v.2.4.3.1/WinHubX.Full.exe",
+  "updateUrlLight": "https://github.com/MrNico98/WinHubX/releases/download/WinHubX-v.2.4.3.1/WinHubX.Light.exe"
 }
