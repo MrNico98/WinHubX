@@ -61,9 +61,9 @@ GuruHitech	Read Article
 ---
 
 ## 💡 Why Choose WinHubX?
-🎁 Completely Free — No ads, no paywalls
-🔄 Regular Updates — Continuously improved by the community
-🧰 Comprehensive Toolkit — Everything you need in one place
+🎁 Completely Free — No ads, no paywalls;
+🔄 Regular Updates — Continuously improved by the community;
+🧰 Comprehensive Toolkit — Everything you need in one place;
 🖥️ User-Friendly — Intuitive interface for all skill levels
 
 ---
