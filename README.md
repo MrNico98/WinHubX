@@ -31,7 +31,7 @@
 
 ## 📊 Technical Overview
 ```mermaid
-bar
+pie showData
     title Language Distribution
     "PowerShell": 87
     "C#": 11.5
