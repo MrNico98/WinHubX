@@ -1,20 +1,14 @@
 {
-  "version": "2.4.3.1",
+  "version": "2.4.3.2",
   "releaseNotes": [
     "IT:",
-    "Ottimizzata Interfaccia Download ISO Windows",
-    "Ottimizzata Interfaccia Download Microsoft Office",
-    "Fix Disattivazione Ricerca Online su Start",
-    "Aggiunta Personalizzazione Explorer",
-    "Aggiunto Switch Tema Light/Dark",
+    "Add stock iso windows in EN",
+    "Add stock office windows in EN",
     "",
     "EN:",
-    "Optimized interface Download Windows ISO",
-    "Optimized interface Download Microsoft Office",
-    "Fixed disabling Online Search on Start",
-    "Added Explorer Personalization",
-    "Added Light/Dark Theme Switch"
+    "Aggiunto iso stock in EN",
+    "Aggiunto office stock in EN"
   ],
-  "updateUrl": "https://github.com/MrNico98/WinHubX/releases/download/WinHubX-v.2.4.3.1/WinHubX.Full.exe",
-  "updateUrlLight": "https://github.com/MrNico98/WinHubX/releases/download/WinHubX-v.2.4.3.1/WinHubX.Light.exe"
+  "updateUrl": "https://github.com/MrNico98/WinHubX/releases/download/WinHubX-v.2.4.3.2/WinHubX.exe",
+  "updateUrlLight": "https://github.com/MrNico98/WinHubX/releases/download/WinHubX-v.2.4.3.2/WinHubX.exe"
 }
