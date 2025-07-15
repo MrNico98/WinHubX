@@ -30,8 +30,12 @@
 ---
 
 ## 📊 Technical Overview
-bar
-    title Language Distribution
+```mermaid
+barChart
+    title Linguaggi utilizzati
+    xAxis Linguaggi
+    yAxis Percentuale
+    series "Utilizzo"
     "PowerShell": 87
     "C#": 11.5
     "Batchfile": 1.5
