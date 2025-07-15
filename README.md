@@ -66,6 +66,8 @@ GuruHitech	Read Article
 🧰 Comprehensive Toolkit — Everything you need in one place
 🖥️ User-Friendly — Intuitive interface for all skill levels
 
+---
+
 <div align="center"> <h3>Join our growing community of Windows enthusiasts!</h3> <img src="https://img.shields.io/github/forks/MrNico98/WinHubX?style=social" alt="Forks"> <img src="https://img.shields.io/github/watchers/MrNico98/WinHubX?style=social" alt="Watchers"> </div>
 Created with ❤️ by MrNico98 and contributors
 The original Windows optimization wizard
