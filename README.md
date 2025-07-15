@@ -29,7 +29,6 @@
 
 ---
 
-```markdown
 ## 📊 Technical Overview
 ```mermaid
 pie showData
