@@ -31,9 +31,9 @@
 
 ## 📊 Technical Overview
 ```mermaid
-pie showData
-    title Code
-    "PowerShell": 87.0
+bar
+    title Language Distribution
+    "PowerShell": 87
     "C#": 11.5
     "Batchfile": 1.5
 ```
@@ -56,15 +56,16 @@ GuruHitech	Read Article
 ---
 
 ## 🚀 Getting Started
-👉 Download the latest release
+👉 [Download the latest release](https://github.com/MrNico98/WinHubX/releases/latest)
 
 ---
 
 ## 💡 Why Choose WinHubX?
-🎁 Completely Free — No ads, no paywalls;
-🔄 Regular Updates — Continuously improved by the community;
-🧰 Comprehensive Toolkit — Everything you need in one place;
-🖥️ User-Friendly — Intuitive interface for all skill levels
+
+- 🎁 **Completely Free** — No ads, no paywalls  
+- 🔄 **Regular Updates** — Continuously improved by the community  
+- 🧰 **Comprehensive Toolkit** — Everything you need in one place  
+- 🖥️ **User-Friendly** — Intuitive interface for all skill levels  
 
 ---
 
