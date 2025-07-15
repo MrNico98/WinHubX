@@ -29,6 +29,7 @@
 
 ---
 
+```markdown
 ## 📊 Technical Overview
 ```mermaid
 pie showData
@@ -38,11 +39,12 @@ pie showData
     "Batchfile": 1.5
 ```
 
-##📜 License
+## 📜 License
 WinHubX is proudly open-source under the GNU GPL v3.0 License - free to use, modify, and share!
+
 ---
 
-##🔒 Security Verified
+## 🔒 Security Verified
 https://img.shields.io/badge/VirusTotal-Clean-green?style=flat&logo=virustotal
 
 ---
