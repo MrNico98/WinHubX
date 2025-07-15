@@ -27,7 +27,7 @@
 ## 📊 Technical Overview
 ```mermaid
 pie showData
-    title Language Distribution
+    title Code
     "PowerShell": 87.0
     "C#": 11.5
     "Batchfile": 1.5
