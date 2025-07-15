@@ -24,37 +24,37 @@
 ✔ **Network Utilities** - Advanced networking tools  
 ✔ **Security Tweaks** - Harden your system against threats  
 
-## 🛠️ Technical Overview
-mermaid
-pie
+## 📊 Technical Overview
+```mermaid
+pie showData
     title Language Distribution
-    "PowerShell" : 87.0
-    "C#" : 11.5
-    "Batchfile" : 1.5
-
-📜 License
+    "PowerShell": 87.0
+    "C#": 11.5
+    "Batchfile": 1.5
+```
+##📜 License
 WinHubX is proudly open-source under the GNU GPL v3.0 License - free to use, modify, and share!
 
-🔒 Security Verified
+##🔒 Security Verified
 https://img.shields.io/badge/VirusTotal-Clean-green?style=flat&logo=virustotal
 
-📰 Featured In
+## 📰 Featured In
 Publication	Link
 YourLifeUpdate	Read Article
 UIBlog	Read Article
 GuruHitech	Read Article
 
-🚀 Getting Started
-Download last release
+## 🚀 Getting Started
+👉 Download the latest release
 
-Why Choose WinHubX?
-Completely Free - No ads, no paywalls
+##💡 Why Choose WinHubX?
+🎁 Completely Free — No ads, no paywalls
 
-Regular Updates - Continuously improved by the community
+🔄 Regular Updates — Continuously improved by the community
 
-Comprehensive Toolkit - Everything you need in one place
+🧰 Comprehensive Toolkit — Everything you need in one place
 
-User-Friendly - Intuitive interface for all skill levels
+🖥️ User-Friendly — Intuitive interface for all skill levels
 
 <div align="center"> <h3>Join our growing community of Windows enthusiasts!</h3> <img src="https://img.shields.io/github/forks/MrNico98/WinHubX?style=social" alt="Forks"> <img src="https://img.shields.io/github/watchers/MrNico98/WinHubX?style=social" alt="Watchers"> </div>
 Created with ❤️ by MrNico98 and contributors
