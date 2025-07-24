@@ -1,14 +1,15 @@
 {
   "version": "2.4.3.2",
-  "releaseNotes": [
-    "IT:",
-    "Add stock iso windows in EN",
-    "Add stock office windows in EN",
-    "",
-    "EN:",
-    "Aggiunto iso stock in EN",
-    "Aggiunto office stock in EN"
-  ],
+  "releaseNotes": {
+    "IT": [
+      "Aggiunto iso stock in EN",
+      "Aggiunto office stock in EN"
+    ],
+    "EN": [
+      "Add stock iso windows in EN",
+      "Add stock office windows in EN"
+    ]
+  },
   "updateUrl": "https://github.com/MrNico98/WinHubX/releases/download/WinHubX-v.2.4.3.2/WinHubX.exe",
   "updateUrlLight": "https://github.com/MrNico98/WinHubX/releases/download/WinHubX-v.2.4.3.2/WinHubX.exe"
 }
