@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using System.Globalization;
-using System.Net;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
@@ -10,12 +9,13 @@ namespace WinHubX.Forms.ReinstallaAPP
     {
         public FormReinstallaAPP()
         {
+            string savedLanguage = Properties.Settings.Default.Language ?? "it";
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(savedLanguage);
             InitializeComponent();
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 14, FontStyle.Bold);
             label1.ForeColor = Color.FromArgb(224, 224, 224);
-            string savedLanguage = Properties.Settings.Default.Language ?? "it";
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo(savedLanguage);
+            ThemeManager.ApplyThemeToControl(this, ThemeManager.IsDarkTheme);
         }
         static void RegisterAppxPackage(string packageName)
         {
@@ -26,7 +26,7 @@ namespace WinHubX.Forms.ReinstallaAPP
             if (!string.IsNullOrEmpty(manifestPath))
             {
                 string registerCommand = $"Add-AppxPackage -DisableDevelopmentMode -Register '{manifestPath}\\AppXManifest.xml'";
-                ExecutePowerShellCommand(registerCommand);
+                _ = ExecutePowerShellCommand(registerCommand);
             }
         }
 
@@ -44,17 +44,17 @@ namespace WinHubX.Forms.ReinstallaAPP
 
             using (Process process = new Process { StartInfo = startInfo })
             {
-                process.Start();
+                _ = process.Start();
                 process.WaitForExit();
             }
             Thread.Sleep(20000);
             using (Process process = new Process { StartInfo = startInfo })
             {
-                process.Start();
+                _ = process.Start();
                 process.WaitForExit();
             }
 
-            MessageBox.Show(LanguageManager.GetTranslation("FormReinstallAPP", "storeinstalling"));
+            _ = MessageBox.Show(LanguageManager.GetTranslation("FormReinstallAPP", "storeinstalling"));
             Thread.Sleep(4000);
         }
 
@@ -71,14 +71,14 @@ namespace WinHubX.Forms.ReinstallaAPP
                 powerShellProcess.StartInfo.RedirectStandardOutput = true;
                 powerShellProcess.StartInfo.RedirectStandardError = true;
 
-                powerShellProcess.Start();
+                _ = powerShellProcess.Start();
 
                 output = powerShellProcess.StandardOutput.ReadToEnd();
                 string error = powerShellProcess.StandardError.ReadToEnd();
 
                 if (!string.IsNullOrEmpty(error))
                 {
-                    MessageBox.Show($"Error: {error}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    _ = MessageBox.Show($"Error: {error}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
                 powerShellProcess.WaitForExit();
@@ -99,8 +99,8 @@ namespace WinHubX.Forms.ReinstallaAPP
             {
                 RunPowerShellCommand1("winget install Microsoft.Edge");
 
-                MessageBox.Show(LanguageManager.GetTranslation("FormReinstallAPP", "presskeyexit"));
-                Console.ReadKey();
+                _ = MessageBox.Show(LanguageManager.GetTranslation("FormReinstallAPP", "presskeyexit"));
+                _ = Console.ReadKey();
             }
             if (App1.CheckedItems.Contains("Windows Defender"))
             {
@@ -151,7 +151,7 @@ namespace WinHubX.Forms.ReinstallaAPP
                         using (Process process = new Process())
                         {
                             process.StartInfo = startInfo;
-                            process.Start();
+                            _ = process.Start();
                             string output = process.StandardOutput.ReadToEnd();
                             string error = process.StandardError.ReadToEnd();
                             if (process.ExitCode != 0)
@@ -182,21 +182,21 @@ namespace WinHubX.Forms.ReinstallaAPP
                         var error = process.StandardError.ReadToEnd();
                         if (!string.IsNullOrEmpty(error))
                         {
-                            MessageBox.Show($"Error: {error}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            _ = MessageBox.Show($"Error: {error}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                         if (!string.IsNullOrEmpty(output))
                         {
-                            MessageBox.Show($"Error: {output}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            _ = MessageBox.Show($"Error: {output}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error: {ex.Message}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    _ = MessageBox.Show($"Error: {ex.Message}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             string messaggio = LanguageManager.GetTranslation("Global", "modifichesuccesso");
-            MessageBox.Show(
+            _ = MessageBox.Show(
                 messaggio,
                 "WinHubX",
                 MessageBoxButtons.OK,
@@ -210,11 +210,11 @@ namespace WinHubX.Forms.ReinstallaAPP
             dataGridViewResults.Columns.Clear();
             if (dataGridViewResults.Columns.Count == 0)
             {
-                dataGridViewResults.Columns.Add("Name", "Name");
-                dataGridViewResults.Columns.Add("Id", "Id");
-                dataGridViewResults.Columns.Add("Version", "Version");
-                dataGridViewResults.Columns.Add("Source", "Source");
-                dataGridViewResults.Columns.Add("Origine", "Origine");
+                _ = dataGridViewResults.Columns.Add("Name", "Name");
+                _ = dataGridViewResults.Columns.Add("Id", "Id");
+                _ = dataGridViewResults.Columns.Add("Version", "Version");
+                _ = dataGridViewResults.Columns.Add("Source", "Source");
+                _ = dataGridViewResults.Columns.Add("Origine", "Origine");
             }
             string[] lines = output.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
 
@@ -229,13 +229,13 @@ namespace WinHubX.Forms.ReinstallaAPP
                     string version = match.Groups[3].Value.Trim();
                     string source = match.Groups[4].Value.Trim();
                     string origine = match.Groups[5].Value.Trim();
-                    dataGridViewResults.Rows.Add(name, id, version, source, origine);
+                    _ = dataGridViewResults.Rows.Add(name, id, version, source, origine);
                 }
             }
 
             if (dataGridViewResults.Rows.Count == 0)
             {
-                MessageBox.Show(
+                _ = MessageBox.Show(
                     LanguageManager.GetTranslation("FormReinstallAPP", "noresults"),
                     "Info",
                     MessageBoxButtons.OK,
@@ -269,7 +269,7 @@ namespace WinHubX.Forms.ReinstallaAPP
                 }
                 string messaggio = LanguageManager.GetTranslation("Global", "modifichesuccesso");
 
-                MessageBox.Show(
+                _ = MessageBox.Show(
                     messaggio,
                     "WinHubX",
                     MessageBoxButtons.OK,
@@ -278,7 +278,7 @@ namespace WinHubX.Forms.ReinstallaAPP
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -303,7 +303,7 @@ namespace WinHubX.Forms.ReinstallaAPP
             }
             else
             {
-                MessageBox.Show(
+                _ = MessageBox.Show(
                     LanguageManager.GetTranslation("FormReinstallAPP", "selectpackage"),
                     "WARNING",
                     MessageBoxButtons.OK,
@@ -336,7 +336,7 @@ namespace WinHubX.Forms.ReinstallaAPP
                     }
                 }
 
-                MessageBox.Show(
+                _ = MessageBox.Show(
                     LanguageManager.GetTranslation("FormReinstallAPP", "updatecompleted"),
                     "Successo",
                     MessageBoxButtons.OK,
@@ -345,7 +345,7 @@ namespace WinHubX.Forms.ReinstallaAPP
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error: {ex.Message}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -361,7 +361,7 @@ namespace WinHubX.Forms.ReinstallaAPP
             }
             else
             {
-                MessageBox.Show(
+                _ = MessageBox.Show(
                     LanguageManager.GetTranslation("FormReinstallAPP", "selectpackage"),
                     "WARNING",
                     MessageBoxButtons.OK,
@@ -386,7 +386,7 @@ namespace WinHubX.Forms.ReinstallaAPP
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error: {ex.Message}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -429,8 +429,8 @@ namespace WinHubX.Forms.ReinstallaAPP
             {
                 label1.Text = LanguageManager.GetTranslation("FormReinstallAPP", "wingetnotfound");
                 panel1.BackColor = Color.Red;
-                Task.Delay(3000);
-                InstallWinGet();
+                _ = Task.Delay(3000);
+                _ = InstallWinGetAsync();
             }
             string windowsAppsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Microsoft\WindowsApps");
             string envPath = Environment.GetEnvironmentVariable("PATH");
@@ -442,7 +442,7 @@ namespace WinHubX.Forms.ReinstallaAPP
             }
         }
 
-        private void InstallWinGet()
+        private async Task InstallWinGetAsync()
         {
             string[] urls =
             {
@@ -458,18 +458,29 @@ namespace WinHubX.Forms.ReinstallaAPP
         "Microsoft.UI.Xaml.2.8.x64.appx"
     };
 
-            using (WebClient webClient = new WebClient())
+            using (HttpClient client = new HttpClient())
             {
                 for (int i = 0; i < urls.Length; i++)
                 {
                     try
                     {
                         label1.Text = $"Scaricando {localFiles[i]}...";
-                        webClient.DownloadFile(urls[i], localFiles[i]);
+                        using (var response = await client.GetAsync(urls[i]))
+                        {
+                            if (response.IsSuccessStatusCode)
+                            {
+                                byte[] fileBytes = await response.Content.ReadAsByteArrayAsync();
+                                await File.WriteAllBytesAsync(localFiles[i], fileBytes);
+                            }
+                            else
+                            {
+                                _ = MessageBox.Show($"Error downloading {localFiles[i]}: {response.StatusCode}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
-                        MessageBox.Show($"Error: {localFiles[i]}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        _ = MessageBox.Show($"Error: {localFiles[i]}\n{ex.Message}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
@@ -480,12 +491,13 @@ namespace WinHubX.Forms.ReinstallaAPP
                 {
                     AddAppxPackage(file);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    MessageBox.Show($"Error: {file}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    _ = MessageBox.Show($"Error: {file}\n{ex.Message}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
+
 
         private void AddAppxPackage(string packagePath)
         {
@@ -502,7 +514,7 @@ namespace WinHubX.Forms.ReinstallaAPP
                 }
             };
 
-            process.Start();
+            _ = process.Start();
             string output = process.StandardOutput.ReadToEnd();
             string error = process.StandardError.ReadToEnd();
             process.WaitForExit();
@@ -514,7 +526,7 @@ namespace WinHubX.Forms.ReinstallaAPP
 
             if (!string.IsNullOrEmpty(error))
             {
-                MessageBox.Show($"Error: {error}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error: {error}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

@@ -1,21 +1,35 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
-    <UseWindowsForms>true</UseWindowsForms>
-    <ImplicitUsings>enable</ImplicitUsings>
-	<ApplicationHighDpiMode>SystemAware</ApplicationHighDpiMode>
-    <AssemblyVersion>2.4.3.0</AssemblyVersion>
-    <FileVersion>2.4.3.0</FileVersion>
-	<ForceDesignerDPIUnaware>true</ForceDesignerDPIUnaware>
-	<ApplicationManifest>app.manifest</ApplicationManifest>
-	<Version>2.0.0</Version>
-	<ApplicationIcon>icoLogoWhite.ico</ApplicationIcon>
-	<Platforms>AnyCPU</Platforms>
-	<PlatformTarget>AnyCPU</PlatformTarget>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<UseWindowsForms>true</UseWindowsForms>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<ApplicationHighDpiMode>SystemAware</ApplicationHighDpiMode>
+		<AssemblyVersion>2.4.3.3</AssemblyVersion>
+		<FileVersion>2.4.3.3</FileVersion>
+		<ForceDesignerDPIUnaware>true</ForceDesignerDPIUnaware>
+		<ApplicationManifest>app.manifest</ApplicationManifest>
+		<Version>2.0.0</Version>
+		<ApplicationIcon>icoLogoWhite.ico</ApplicationIcon>
+		<Platforms>AnyCPU</Platforms>
+		<PlatformTarget>AnyCPU</PlatformTarget>
+		<DebugType>none</DebugType>
+		<DebugSymbols>false</DebugSymbols>
+		<Optimize>true</Optimize>
+		<Deterministic>true</Deterministic>
+		<IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+		<SuppressTrimAnalysisWarnings>true</SuppressTrimAnalysisWarnings>
+		<SatelliteResourceLanguages>it;en</SatelliteResourceLanguages>
+		<PublishSingleFile>true</PublishSingleFile>
+		<TrimMode>partial</TrimMode>
+		<EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+		<IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+		<EnableUnsafeBinaryFormatterSerialization>false</EnableUnsafeBinaryFormatterSerialization>
+		<EventSourceSupport>false</EventSourceSupport>
+		<StartupObject>WinHubX.Program</StartupObject>
+	</PropertyGroup>
 
   <ItemGroup>
     <None Remove="Resources\Immagini\Form1\englisj.jpg" />
@@ -354,11 +368,11 @@
 
   <ItemGroup>
     <PackageReference Include="DiscUtils.Udf" Version="0.16.13" />
-    <PackageReference Include="LibreHardwareMonitorLib" Version="0.9.4-pre348" />
+    <PackageReference Include="LibreHardwareMonitorLib" Version="0.9.4" />
     <PackageReference Include="Microsoft.PowerShell.Native" Version="7.4.0" />
-    <PackageReference Include="System.Management.Automation" Version="7.4.6" />
-    <PackageReference Include="System.ServiceProcess.ServiceController" Version="8.0.1" />
-    <PackageReference Include="TaskScheduler" Version="2.11.0" />
+    <PackageReference Include="System.Management.Automation" Version="7.4.11" />
+    <PackageReference Include="System.ServiceProcess.ServiceController" Version="9.0.7" />
+    <PackageReference Include="TaskScheduler" Version="2.12.2" />
   </ItemGroup>
 
   <ItemGroup>

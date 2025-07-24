@@ -21,6 +21,7 @@ namespace WinHubX.Forms.Settaggi
             LoadCheckboxStates();
             DisabilitaUpdate.MouseMove += new MouseEventHandler(checkedListBox1_MouseMove);
             AbilitaUpdate.MouseMove += new MouseEventHandler(checkedListBox2_MouseMove);
+            ThemeManager.ApplyThemeToControl(this, ThemeManager.IsDarkTheme);
         }
 
         private void checkedListBox1_MouseMove(object sender, MouseEventArgs e)
@@ -204,7 +205,7 @@ namespace WinHubX.Forms.Settaggi
 
                 string messaggio = LanguageManager.GetTranslation("Global", "modifichesuccesso");
 
-                MessageBox.Show(
+                _ = MessageBox.Show(
                     messaggio,
                     "WinHubX",
                     MessageBoxButtons.OK,
@@ -286,7 +287,7 @@ namespace WinHubX.Forms.Settaggi
                 }
                 string messaggio = LanguageManager.GetTranslation("Global", "modifichesuccesso");
 
-                MessageBox.Show(
+                _ = MessageBox.Show(
                     messaggio,
                     "WinHubX",
                     MessageBoxButtons.OK,
@@ -687,7 +688,7 @@ namespace WinHubX.Forms.Settaggi
         {
             string messaggio = LanguageManager.GetTranslation("Global", "modifichesuccesso");
 
-            MessageBox.Show(
+            _ = MessageBox.Show(
                 messaggio,
                 "WinHubX",
                 MessageBoxButtons.OK,

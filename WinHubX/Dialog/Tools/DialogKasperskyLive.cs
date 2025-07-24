@@ -24,6 +24,8 @@ namespace WinHubX.Dialog.Tools
         public DialogKasperskyLive()
         {
             InitializeComponent();
+            ThemeManager.ApplyThemeToControl(this, ThemeManager.IsDarkTheme);
+            LanguageManager.LoadTranslations();
             notifyIcon = new NotifyIcon
             {
                 Icon = SystemIcons.Information,
@@ -49,11 +51,11 @@ namespace WinHubX.Dialog.Tools
                     FileName = "https://devuploads.com/miujf39ew58r",
                     UseShellExecute = true
                 };
-                Process.Start(psi);
+                _ = Process.Start(psi);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Errore nell'aprire l'URL: {ex.Message}");
+                _ = MessageBox.Show($"URL Error: {ex.Message}");
             }
         }
     }

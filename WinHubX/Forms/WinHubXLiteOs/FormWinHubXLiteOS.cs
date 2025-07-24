@@ -26,6 +26,7 @@ namespace WinHubX.Forms
             InitializeComponent();
             this.form1 = form1;
             this.formtools = formtools;
+            ThemeManager.ApplyThemeToControl(this, ThemeManager.IsDarkTheme);
         }
         #region Prepare
 
@@ -109,7 +110,7 @@ if ($existingRestorePoints.Count -eq 0) {
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    _ = MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -120,24 +121,24 @@ if ($existingRestorePoints.Count -eq 0) {
             await VERIFICOOS();
             await Task.Delay(3000);
             progressBar1.Value = 10;
-            await EnableAllPrivileges();
+            EnableAllPrivileges();
             progressBar1.Value = 15;
-            await TerminateAllNonCriticalProcesses();
+            TerminateAllNonCriticalProcesses();
             progressBar1.Value = 20;
-            await StopNonEssentialServices();
+            StopNonEssentialServices();
             progressBar1.Value = 25;
-            await TerminateNonEssentialProcesses();
+            TerminateNonEssentialProcesses();
             progressBar1.Value = 30;
-            await PrepareSystemForModification();
+            PrepareSystemForModification();
             progressBar1.Value = 35;
             progressBar1.Value = 40;
-            await DisableDesktop();
+            DisableDesktop();
             progressBar1.Value = 45;
-            await HideDesktopIcons();
+            HideDesktopIcons();
             progressBar1.Value = 50;
-            await DisableExplorerAutostart();
+            DisableExplorerAutostart();
             progressBar1.Value = 55;
-            await KillExplorer();
+            KillExplorer();
             progressBar1.Value = 60;
             if (windo11)
             {
@@ -148,15 +149,15 @@ if ($existingRestorePoints.Count -eq 0) {
                 await StartProcess10();
             }
             progressBar1.Value = 65;
-            await RestoreDesktopIcons();
+            RestoreDesktopIcons();
             progressBar1.Value = 70;
-            await RestoreDesktop();
+            RestoreDesktop();
             progressBar1.Value = 80;
-            await RestoreExplorerAutostart();
+            RestoreExplorerAutostart();
             progressBar1.Value = 90;
-            await StartExplorer();
+            StartExplorer();
             progressBar1.Value = 100;
-            MessageBox.Show("Succsso");
+            _ = MessageBox.Show("Succsso");
         }
 
         private async Task StartProcess10()
@@ -243,7 +244,7 @@ if ($existingRestorePoints.Count -eq 0) {
 
         [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Auto)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool LookupPrivilegeValue(string lpSystemName, string lpName, out LUID lpLuid);
+        private static extern bool LookupPrivilegeValue(string? lpSystemName, string lpName, out LUID lpLuid);
 
         [DllImport("advapi32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -258,17 +259,17 @@ if ($existingRestorePoints.Count -eq 0) {
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool CloseHandle(IntPtr hObject);
 
-        public async Task HideDesktopIcons()
+        public void HideDesktopIcons()
         {
             string registryKey = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer";
             Registry.SetValue(registryKey, "NoDesktop", 1, RegistryValueKind.DWord);
         }
-        public async Task DisableDesktop()
+        public void DisableDesktop()
         {
             string registryKey = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer";
             Registry.SetValue(registryKey, "NoDesktop", 1, RegistryValueKind.DWord);
         }
-        public async Task DisableExplorerAutostart()
+        public void DisableExplorerAutostart()
         {
             string registryKey = @"HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\Winlogon";
             string valueName = "Shell";
@@ -279,11 +280,11 @@ if ($existingRestorePoints.Count -eq 0) {
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Errore nel modificare il registro: " + ex.Message);
+                _ = MessageBox.Show("Errore nel modificare il registro: " + ex.Message);
             }
         }
 
-        public async Task KillExplorer()
+        public void KillExplorer()
         {
             Process[] processes = Process.GetProcessesByName("explorer");
 
@@ -293,7 +294,7 @@ if ($existingRestorePoints.Count -eq 0) {
             }
         }
 
-        private async Task EnableAllPrivileges()
+        private void EnableAllPrivileges()
         {
             IntPtr hToken = IntPtr.Zero;
 
@@ -310,16 +311,16 @@ if ($existingRestorePoints.Count -eq 0) {
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Errore nell'abilitazione dei privilegi: {ex.Message}", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Errore nell'abilitazione dei privilegi: {ex.Message}", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
                 if (hToken != IntPtr.Zero)
-                    CloseHandle(hToken);
+                    _ = CloseHandle(hToken);
             }
         }
 
-        private async Task TerminateAllNonCriticalProcesses()
+        private void TerminateAllNonCriticalProcesses()
         {
             string[] criticalProcesses = {
         "csrss", "wininit", "winlogon", "System", "smss",
@@ -362,7 +363,7 @@ if ($existingRestorePoints.Count -eq 0) {
             }
         }
 
-        private async Task StopNonEssentialServices()
+        private void StopNonEssentialServices()
         {
             string[] nonEssentialServices = {
         "wuauserv", "BITS", "WinDefend", "Wsearch", "SysMain",
@@ -379,7 +380,7 @@ if ($existingRestorePoints.Count -eq 0) {
             }
         }
 
-        private async Task TerminateNonEssentialProcesses()
+        private void TerminateNonEssentialProcesses()
         {
             string[] essentialProcesses = { "explorer", "csrss", "wininit", "winlogon", "System", "smss" };
             string[] processesToKill = { "dllhost", "RuntimeBroker", "ShellExperienceHost", "SearchUI", "MicrosoftEdge" };
@@ -404,7 +405,7 @@ if ($existingRestorePoints.Count -eq 0) {
             }
         }
 
-        private async Task PrepareSystemForModification()
+        private void PrepareSystemForModification()
         {
             try
             {
@@ -419,7 +420,7 @@ if ($existingRestorePoints.Count -eq 0) {
             catch { }
         }
 
-        public async Task RestoreDesktopIcons()
+        public void RestoreDesktopIcons()
         {
             string registryKey32 = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer";
             string registryKey64 = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer";
@@ -427,7 +428,7 @@ if ($existingRestorePoints.Count -eq 0) {
             Registry.SetValue(registryKey64, "NoDesktop", 0, RegistryValueKind.DWord);
         }
 
-        public async Task RestoreDesktop()
+        public void RestoreDesktop()
         {
             string registryKey32 = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer";
             string registryKey64 = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer";
@@ -435,7 +436,7 @@ if ($existingRestorePoints.Count -eq 0) {
             Registry.SetValue(registryKey64, "NoDesktop", 0, RegistryValueKind.DWord);
         }
 
-        public async Task RestoreExplorerAutostart()
+        public void RestoreExplorerAutostart()
         {
             string registryKey32 = @"HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\Winlogon";
             string registryKey64 = @"HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\Winlogon";
@@ -448,17 +449,17 @@ if ($existingRestorePoints.Count -eq 0) {
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Errore nel modificare il registro: " + ex.Message);
+                _ = MessageBox.Show("Errore nel modificare il registro: " + ex.Message);
             }
         }
 
-        public async Task StartExplorer()
+        public void StartExplorer()
         {
             foreach (var process in Process.GetProcessesByName("explorer"))
             {
                 process.Kill();
             }
-            System.Diagnostics.Process.Start("explorer.exe");
+            _ = System.Diagnostics.Process.Start("explorer.exe");
         }
 
         #endregion
@@ -470,7 +471,7 @@ if ($existingRestorePoints.Count -eq 0) {
         #region Verifico OS
         private async Task VERIFICOOS()
         {
-            progressBar2.Invoke(() => progressBar2.Value = 0);
+            _ = progressBar2.Invoke(() => progressBar2.Value = 0);
 
             await Task.Run(() =>
             {
@@ -502,7 +503,7 @@ if ($existingRestorePoints.Count -eq 0) {
                     windo11 = true;
                 else
                     windo11 = false;
-                progressBar2.Invoke(() => progressBar2.Value += step);
+                _ = progressBar2.Invoke(() => progressBar2.Value += step);
 
                 string ramInfo = GetRAMInfo();
                 Match match = Regex.Match(ramInfo, @"\d+");
@@ -510,19 +511,19 @@ if ($existingRestorePoints.Count -eq 0) {
                 {
                     ramGB = int.Parse(match.Value);
                 }
-                progressBar2.Invoke(() => progressBar2.Value += step);
+                _ = progressBar2.Invoke(() => progressBar2.Value += step);
                 string cpuInfo = GetCPUInfo();
 
-                progressBar2.Invoke(() => progressBar2.Value += step);
+                _ = progressBar2.Invoke(() => progressBar2.Value += step);
 
                 string driveType = GetDriveType();
                 isHDD = driveType.Equals("HDD", StringComparison.OrdinalIgnoreCase);
 
-                progressBar2.Invoke(() => progressBar2.Value += step);
+                _ = progressBar2.Invoke(() => progressBar2.Value += step);
 
                 string userName = Environment.UserName;
 
-                progressBar2.Invoke(() => progressBar2.Value += step);
+                _ = progressBar2.Invoke(() => progressBar2.Value += step);
 
                 string result = "";
                 result += $"🖥️ Sistema Operativo: {osName} - {edition}\n";
@@ -659,7 +660,7 @@ if ($existingRestorePoints.Count -eq 0) {
                     };
 
                     var config = JsonSerializer.Deserialize<WinHubXConfig>(jsonContent, options);
-                    label1.Invoke(() => label1.Text = config.Description);
+                    _ = label1.Invoke(() => label1.Text = config.Description);
                     if (config?.CMD != null)
                     {
                         int totalCommands = config.CMD.Count;
@@ -702,7 +703,7 @@ if ($existingRestorePoints.Count -eq 0) {
                                 AppendToLog($"❌ Errore durante l'esecuzione di \"{cmd.Nome}\"");
                             }
 
-                            progressBar2.Invoke(() => progressBar2.Value++);
+                            _ = progressBar2.Invoke(() => progressBar2.Value++);
                         }
                     }
                     else
@@ -737,7 +738,7 @@ if ($existingRestorePoints.Count -eq 0) {
                     };
 
                     var config = JsonSerializer.Deserialize<WinHubXConfig>(jsonContent, options);
-                    label1.Invoke(() => label1.Text = config.Description);
+                    _ = label1.Invoke(() => label1.Text = config.Description);
                     if (config?.PS != null)
                     {
                         var eseguibili = config.PS.Where(ps =>
@@ -804,7 +805,7 @@ if ($existingRestorePoints.Count -eq 0) {
                                 AppendToLog($"❌ Errore nell'esecuzione di \"{ps.Nome}\"");
                             }
 
-                            progressBar2.Invoke(() => progressBar2.Value++);
+                            _ = progressBar2.Invoke(() => progressBar2.Value++);
                         }
                     }
 
@@ -840,7 +841,7 @@ if ($existingRestorePoints.Count -eq 0) {
                     };
 
                     var config = JsonSerializer.Deserialize<WinHubXConfig>(jsonContent, options);
-                    label1.Invoke(() => label1.Text = config.Description);
+                    _ = label1.Invoke(() => label1.Text = config.Description);
                     if (config?.PSArray != null)
                     {
                         var eseguibili = config.PSArray.Where(ps =>
@@ -907,7 +908,7 @@ if ($existingRestorePoints.Count -eq 0) {
                                 AppendToLog($"❌ Errore nell'esecuzione di \"{ps.Nome}\"");
                             }
 
-                            progressBar2.Invoke(() => progressBar2.Value++);
+                            _ = progressBar2.Invoke(() => progressBar2.Value++);
                         }
                     }
                 }
@@ -938,7 +939,7 @@ if ($existingRestorePoints.Count -eq 0) {
                     };
 
                     var config = JsonSerializer.Deserialize<WinHubXConfig>(jsonContent, options);
-                    label1.Invoke(() => label1.Text = config.Description);
+                    _ = label1.Invoke(() => label1.Text = config.Description);
                     if (config?.CMD != null)
                     {
                         var eseguibili = config.CMD.Where(cmd =>
@@ -998,7 +999,7 @@ if ($existingRestorePoints.Count -eq 0) {
                                 AppendToLog($"❌ Errore durante l'esecuzione di \"{cmd.Nome}\"");
                             }
 
-                            progressBar2.Invoke(() => progressBar2.Value++);
+                            _ = progressBar2.Invoke(() => progressBar2.Value++);
                         }
                     }
                     else
@@ -1042,7 +1043,7 @@ if ($existingRestorePoints.Count -eq 0) {
                         };
 
                         var config = JsonSerializer.Deserialize<WinHubXConfig>(jsonContent, options);
-                        label1.Invoke(() => label1.Text = config.Description);
+                        _ = label1.Invoke(() => label1.Text = config.Description);
                         if (config?.CMDArray != null)
                         {
                             progressBar2.Invoke(() =>
@@ -1098,7 +1099,7 @@ if ($existingRestorePoints.Count -eq 0) {
                                     AppendToLog($"❌ Errore durante l'esecuzione di \"{cmd.Nome}\"");
                                 }
 
-                                progressBar2.Invoke(() => progressBar2.Value++);
+                                _ = progressBar2.Invoke(() => progressBar2.Value++);
                             }
                         }
                         else
@@ -1137,7 +1138,7 @@ if ($existingRestorePoints.Count -eq 0) {
                     };
 
                     var config = JsonSerializer.Deserialize<WinHubXConfig>(jsonContent, options);
-                    label1.Invoke(() => label1.Text = config.Description);
+                    _ = label1.Invoke(() => label1.Text = config.Description);
                     if (config?.CMD != null)
                     {
                         var eseguibili = config.CMD.Where(cmd =>
@@ -1197,7 +1198,7 @@ if ($existingRestorePoints.Count -eq 0) {
                                 AppendToLog($"❌ Errore durante l'esecuzione di \"{cmd.Nome}\"");
                             }
 
-                            progressBar2.Invoke(() => progressBar2.Value++);
+                            _ = progressBar2.Invoke(() => progressBar2.Value++);
                         }
                     }
                     else
@@ -1231,7 +1232,7 @@ if ($existingRestorePoints.Count -eq 0) {
                     };
 
                     var config = JsonSerializer.Deserialize<WinHubXConfig>(jsonContent, options);
-                    label1.Invoke(() => label1.Text = config.Description);
+                    _ = label1.Invoke(() => label1.Text = config.Description);
                     if (config?.PSArray != null)
                     {
                         progressBar2.Invoke(() =>
@@ -1275,7 +1276,7 @@ if ($existingRestorePoints.Count -eq 0) {
                                 AppendToLog($"❌ Errore nell'esecuzione di \"{ps.Nome}\": {ex.Message}");
                             }
 
-                            progressBar2.Invoke(() => progressBar2.Value++);
+                            _ = progressBar2.Invoke(() => progressBar2.Value++);
                         }
                     }
                 }
@@ -1309,11 +1310,11 @@ if ($existingRestorePoints.Count -eq 0) {
                     Verb = "runas"
                 };
 
-                Process.Start(processStartInfo);
+                _ = Process.Start(processStartInfo);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Errore durante il download o l'avvio dello script:\n{ex.Message}", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Errore durante il download o l'avvio dello script:\n{ex.Message}", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -1334,7 +1335,7 @@ if ($existingRestorePoints.Count -eq 0) {
                     };
 
                     var config = JsonSerializer.Deserialize<WinHubXConfig>(jsonContent, options);
-                    label1.Invoke(() => label1.Text = config.Description);
+                    _ = label1.Invoke(() => label1.Text = config.Description);
                     if (config?.CMD != null)
                     {
                         int totalCommands = config.CMD.Count;
@@ -1377,7 +1378,7 @@ if ($existingRestorePoints.Count -eq 0) {
                                 AppendToLog($"❌ Errore durante l'esecuzione di \"{cmd.Nome}\"");
                             }
 
-                            progressBar2.Invoke(() => progressBar2.Value++);
+                            _ = progressBar2.Invoke(() => progressBar2.Value++);
                         }
                     }
                     else
@@ -1412,7 +1413,7 @@ if ($existingRestorePoints.Count -eq 0) {
                     };
 
                     var config = JsonSerializer.Deserialize<WinHubXConfig>(jsonContent, options);
-                    label1.Invoke(() => label1.Text = config.Description);
+                    _ = label1.Invoke(() => label1.Text = config.Description);
                     if (config?.PS != null)
                     {
                         var eseguibili = config.PS.Where(ps =>
@@ -1479,7 +1480,7 @@ if ($existingRestorePoints.Count -eq 0) {
                                 AppendToLog($"❌ Errore nell'esecuzione di \"{ps.Nome}\"");
                             }
 
-                            progressBar2.Invoke(() => progressBar2.Value++);
+                            _ = progressBar2.Invoke(() => progressBar2.Value++);
                         }
                     }
 
@@ -1515,7 +1516,7 @@ if ($existingRestorePoints.Count -eq 0) {
                     };
 
                     var config = JsonSerializer.Deserialize<WinHubXConfig>(jsonContent, options);
-                    label1.Invoke(() => label1.Text = config.Description);
+                    _ = label1.Invoke(() => label1.Text = config.Description);
                     if (config?.PSArray != null)
                     {
                         var eseguibili = config.PSArray.Where(ps =>
@@ -1582,7 +1583,7 @@ if ($existingRestorePoints.Count -eq 0) {
                                 AppendToLog($"❌ Errore nell'esecuzione di \"{ps.Nome}\"");
                             }
 
-                            progressBar2.Invoke(() => progressBar2.Value++);
+                            _ = progressBar2.Invoke(() => progressBar2.Value++);
                         }
                     }
                 }
@@ -1613,7 +1614,7 @@ if ($existingRestorePoints.Count -eq 0) {
                     };
 
                     var config = JsonSerializer.Deserialize<WinHubXConfig>(jsonContent, options);
-                    label1.Invoke(() => label1.Text = config.Description);
+                    _ = label1.Invoke(() => label1.Text = config.Description);
                     if (config?.CMD != null)
                     {
                         var eseguibili = config.CMD.Where(cmd =>
@@ -1673,7 +1674,7 @@ if ($existingRestorePoints.Count -eq 0) {
                                 AppendToLog($"❌ Errore durante l'esecuzione di \"{cmd.Nome}\"");
                             }
 
-                            progressBar2.Invoke(() => progressBar2.Value++);
+                            _ = progressBar2.Invoke(() => progressBar2.Value++);
                         }
                     }
                     else
@@ -1717,7 +1718,7 @@ if ($existingRestorePoints.Count -eq 0) {
                         };
 
                         var config = JsonSerializer.Deserialize<WinHubXConfig>(jsonContent, options);
-                        label1.Invoke(() => label1.Text = config.Description);
+                        _ = label1.Invoke(() => label1.Text = config.Description);
                         if (config?.CMDArray != null)
                         {
                             progressBar2.Invoke(() =>
@@ -1773,7 +1774,7 @@ if ($existingRestorePoints.Count -eq 0) {
                                     AppendToLog($"❌ Errore durante l'esecuzione di \"{cmd.Nome}\"");
                                 }
 
-                                progressBar2.Invoke(() => progressBar2.Value++);
+                                _ = progressBar2.Invoke(() => progressBar2.Value++);
                             }
                         }
                         else
@@ -1812,7 +1813,7 @@ if ($existingRestorePoints.Count -eq 0) {
                     };
 
                     var config = JsonSerializer.Deserialize<WinHubXConfig>(jsonContent, options);
-                    label1.Invoke(() => label1.Text = config.Description);
+                    _ = label1.Invoke(() => label1.Text = config.Description);
                     if (config?.CMD != null)
                     {
                         var eseguibili = config.CMD.Where(cmd =>
@@ -1872,7 +1873,7 @@ if ($existingRestorePoints.Count -eq 0) {
                                 AppendToLog($"❌ Errore durante l'esecuzione di \"{cmd.Nome}\"");
                             }
 
-                            progressBar2.Invoke(() => progressBar2.Value++);
+                            _ = progressBar2.Invoke(() => progressBar2.Value++);
                         }
                     }
                     else
@@ -1909,11 +1910,11 @@ if ($existingRestorePoints.Count -eq 0) {
                     Verb = "runas"
                 };
 
-                Process.Start(processStartInfo);
+                _ = Process.Start(processStartInfo);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Errore durante il download o l'avvio dello script:\n{ex.Message}", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Errore durante il download o l'avvio dello script:\n{ex.Message}", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -1939,7 +1940,7 @@ if ($existingRestorePoints.Count -eq 0) {
             string url2 = "https://github.com/MrNico98/WinHubX-Resource/releases/download/WinHubX-Risorse/lower-ram-usage.reg";
             if (!Directory.Exists(downloadPath))
             {
-                Directory.CreateDirectory(downloadPath);
+                _ = Directory.CreateDirectory(downloadPath);
             }
             string filePath1 = Path.Combine(downloadPath, "PowerRun.exe");
             using (HttpClient client = new HttpClient())
@@ -1992,46 +1993,46 @@ if ($existingRestorePoints.Count -eq 0) {
     }
     public class WinHubXConfig
     {
-        public string Content { get; set; }
-        public string Description { get; set; }
-        public string Order { get; set; }
-        public string Registry { get; set; }
-        public List<CMDCommand> CMD { get; set; }
-        public List<CMDCommandArray> CMDArray { get; set; }
-        public List<PowerShellCommand> PS { get; set; }
-        public List<PowerShellCommandArray> PSArray { get; set; }
+        public required string Content { get; set; }
+        public required string Description { get; set; }
+        public required string Order { get; set; }
+        public required string Registry { get; set; }
+        public required List<CMDCommand> CMD { get; set; }
+        public required List<CMDCommandArray> CMDArray { get; set; }
+        public required List<PowerShellCommand> PS { get; set; }
+        public required List<PowerShellCommandArray> PSArray { get; set; }
     }
     public class CMDCommandArray
     {
-        public string Nome { get; set; }
-        public List<string> Command { get; set; }
+        public required string Nome { get; set; }
+        public required List<string> Command { get; set; }
     }
 
     public class PowerShellCommandArray
     {
-        public string Nome { get; set; }
-        public List<string> Command { get; set; }
-        public List<string> Command23h2 { get; set; }
-        public List<string> Command24h2 { get; set; }
+        public required string Nome { get; set; }
+        public required List<string> Command { get; set; }
+        public required List<string> Command23h2 { get; set; }
+        public required List<string> Command24h2 { get; set; }
     }
 
     public class CMDCommand
     {
-        public string Nome { get; set; }
-        public string Command { get; set; }
-        public string Command1 { get; set; }
+        public required string Nome { get; set; }
+        public required string Command { get; set; }
+        public required string Command1 { get; set; }
 
         [JsonPropertyName("hdd")]
-        public string _hdd { get; set; }
+        public required string _hdd { get; set; }
     }
 
     public class PowerShellCommand
     {
-        public string Nome { get; set; }
-        public string Command { get; set; }
+        public required string Nome { get; set; }
+        public required string Command { get; set; }
         [JsonPropertyName("4ram")]
-        public string _4ram { get; set; }
+        public required string _4ram { get; set; }
         [JsonPropertyName("hdd")]
-        public string _hdd { get; set; }
+        public required string _hdd { get; set; }
     }
 }

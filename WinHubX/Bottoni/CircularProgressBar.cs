@@ -59,27 +59,19 @@ namespace WinHubX.Bottoni
             Graphics g = e.Graphics;
             g.SmoothingMode = SmoothingMode.AntiAlias;
             g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
-
-            // Dimensioni per la progress bar e per il fondo
             int margin = 20;
             int circleSize = Math.Min(Width, Height) - margin * 2;
             Rectangle rect = new Rectangle((Width - circleSize) / 2, (Height - circleSize) / 2, circleSize, circleSize);
             float progressAngle = 360.0f * (_value - _minimum) / (_maximum - _minimum);
-
-            // Background Circle
             using (LinearGradientBrush brushBackground = new LinearGradientBrush(rect, Color.FromArgb(230, 230, 230), Color.FromArgb(200, 200, 200), 45f))
             {
                 g.FillEllipse(brushBackground, rect);
             }
-
-            // Progress Circle
             using (LinearGradientBrush brushProgress = new LinearGradientBrush(rect, Color.FromArgb(0, 150, 136), Color.FromArgb(0, 188, 212), 45f))
             using (Pen penProgress = new Pen(brushProgress, 12))
             {
                 g.DrawArc(penProgress, rect, -90, progressAngle);
             }
-
-            // Shadow
             using (GraphicsPath path = new GraphicsPath())
             {
                 path.AddEllipse(rect);
@@ -90,8 +82,6 @@ namespace WinHubX.Bottoni
                     g.FillEllipse(brushShadow, rect);
                 }
             }
-
-            // Text Center
             string text = $"{Value}%";
             using (Font font = new Font("Segoe UI", 20f, FontStyle.Bold))
             using (Brush brushText = new SolidBrush(Color.FromArgb(0, 150, 136)))
@@ -107,7 +97,7 @@ namespace WinHubX.Bottoni
         {
             DoubleBuffered = true;
             SetStyle(ControlStyles.ResizeRedraw | ControlStyles.OptimizedDoubleBuffer, true);
-            Size = new Size(150, 150);  // Default size, can be changed in the designer or programmatically
+            Size = new Size(150, 150);
         }
     }
 }

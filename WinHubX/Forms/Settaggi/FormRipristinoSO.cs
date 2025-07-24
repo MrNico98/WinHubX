@@ -24,6 +24,7 @@ namespace WinHubX.Forms.Settaggi
             dateTimePicker1.Format = DateTimePickerFormat.Time;
             dateTimePicker1.ShowUpDown = true;
             dateTimePicker1.Value = DateTime.Today.AddMinutes(30);
+            ThemeManager.ApplyThemeToControl(this, ThemeManager.IsDarkTheme);
         }
 
         private void btnBack_Click(object sender, EventArgs e)
@@ -111,7 +112,7 @@ namespace WinHubX.Forms.Settaggi
             UpdateProgress(++currentStep, totalSteps, cancellationToken);
 
             UpdateLabel(LanguageManager.GetTranslation("FormRipristinoSO", "ripristinoCompletato"));
-            MessageBox.Show(
+            _ = MessageBox.Show(
                 LanguageManager.GetTranslation("FormRipristinoSO", "msgRipristinoCompletato"),
                 "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -159,7 +160,7 @@ namespace WinHubX.Forms.Settaggi
                         process.OutputDataReceived += (sender, e) => AppendToRichTextBox2(e.Data);
                         process.ErrorDataReceived += (sender, e) => AppendToRichTextBox2($"[ERRORE] {e.Data}");
 
-                        process.Start();
+                        _ = process.Start();
                         process.BeginOutputReadLine();
                         process.BeginErrorReadLine();
 
@@ -223,7 +224,7 @@ namespace WinHubX.Forms.Settaggi
 
         private async Task RunStressTestsContinuously(int testDurationMinutes, CancellationToken token)
         {
-            await VerifyDiskStatusAsync();
+            VerifyDiskStatus();
 
             Task cpuTestTask = StressTestCPUAsync(token);
             Task ramTestTask = TestRAMAsync(token);
@@ -277,9 +278,9 @@ namespace WinHubX.Forms.Settaggi
                             {
                                 result += Math.Sqrt(j) * Math.Sin(j);
                                 if (j % 1_000_000 == 0 && token.IsCancellationRequested)
-                                    return; 
+                                    return;
                             }
-                            Thread.Yield();
+                            _ = Thread.Yield();
                         }
                     }, token));
                 }
@@ -295,7 +296,7 @@ namespace WinHubX.Forms.Settaggi
 
         private async Task MonitorCPUUsageAsync(CancellationToken token)
         {
-            const int thermalThreshold = 90; 
+            const int thermalThreshold = 90;
 
             while (!token.IsCancellationRequested)
             {
@@ -323,7 +324,7 @@ namespace WinHubX.Forms.Settaggi
         private static float GetCPUUsage()
         {
             using PerformanceCounter cpuCounter = new("Processor", "% Processor Time", "_Total");
-            cpuCounter.NextValue();
+            _ = cpuCounter.NextValue();
             Task.Delay(500).Wait();
             return cpuCounter.NextValue();
         }
@@ -340,7 +341,7 @@ namespace WinHubX.Forms.Settaggi
                 }
             }
             catch { }
-            return -1; 
+            return -1;
         }
         public async Task TestRAMAsync(CancellationToken token)
         {
@@ -349,8 +350,8 @@ namespace WinHubX.Forms.Settaggi
 
             try
             {
-                int blockSize = 1024 * 1024 * 50; 
-                long maxRam = GetTotalRAM() * 80 / 100; 
+                int blockSize = 1024 * 1024 * 50;
+                long maxRam = GetTotalRAM() * 80 / 100;
                 long allocatedRam = 0;
 
                 LogMessage($"Allocazione fino a {maxRam / (1024 * 1024)} MB di RAM...");
@@ -402,7 +403,7 @@ namespace WinHubX.Forms.Settaggi
 
             return 8L * 1024 * 1024 * 1024;
         }
-        public async Task VerifyDiskStatusAsync()
+        public void VerifyDiskStatus()
         {
             UpdateLabel("Verifica stato del disco...");
             LogMessage("Inizio controllo avanzato del disco...");
@@ -563,10 +564,7 @@ namespace WinHubX.Forms.Settaggi
         private void btnStop_Click(object sender, EventArgs e)
         {
             button1.Visible = true;
-            if (cancellationTokenSource != null)
-            {
-                cancellationTokenSource.Cancel();
-            }
+            cancellationTokenSource?.Cancel();
             if (cancellationTokenSource != null)
             {
                 cancellationTokenSource.Cancel();

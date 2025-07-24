@@ -44,7 +44,6 @@ namespace WinHubX.Forms.Base
             label3 = new Label();
             btn_pulisciram = new Button();
             btn_puliscicpu = new Button();
-            panel1 = new Panel();
             radioButton_taskbar = new RadioButton();
             radioButton_notifica = new RadioButton();
             CartellaTemp = new CircularProgressBar();
@@ -53,9 +52,10 @@ namespace WinHubX.Forms.Base
             btnPulisciTemp = new Button();
             tempMonitorTimer = new System.Windows.Forms.Timer(components);
             label5 = new Label();
+            panel10 = new Panel();
             ((System.ComponentModel.ISupportInitialize)pic_termcpu).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pic_termgpu).BeginInit();
-            panel1.SuspendLayout();
+            panel10.SuspendLayout();
             SuspendLayout();
             // 
             // pic_termcpu
@@ -149,13 +149,6 @@ namespace WinHubX.Forms.Base
             btn_puliscicpu.UseVisualStyleBackColor = false;
             btn_puliscicpu.Click += btn_puliscicpu_Click;
             // 
-            // panel1
-            // 
-            resources.ApplyResources(panel1, "panel1");
-            panel1.Controls.Add(radioButton_taskbar);
-            panel1.Controls.Add(radioButton_notifica);
-            panel1.Name = "panel1";
-            // 
             // radioButton_taskbar
             // 
             resources.ApplyResources(radioButton_taskbar, "radioButton_taskbar");
@@ -167,8 +160,9 @@ namespace WinHubX.Forms.Base
             // 
             // radioButton_notifica
             // 
-            resources.ApplyResources(radioButton_notifica, "radioButton_notifica");
+            radioButton_notifica.Cursor = Cursors.Hand;
             radioButton_notifica.ForeColor = Color.White;
+            resources.ApplyResources(radioButton_notifica, "radioButton_notifica");
             radioButton_notifica.Name = "radioButton_notifica";
             radioButton_notifica.TabStop = true;
             radioButton_notifica.UseVisualStyleBackColor = true;
@@ -213,17 +207,24 @@ namespace WinHubX.Forms.Base
             label5.ForeColor = Color.FromArgb(224, 224, 224);
             label5.Name = "label5";
             // 
+            // panel10
+            // 
+            resources.ApplyResources(panel10, "panel10");
+            panel10.Controls.Add(radioButton_notifica);
+            panel10.Controls.Add(radioButton_taskbar);
+            panel10.Name = "panel10";
+            // 
             // FormMonitoraggio
             // 
             resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.FromArgb(37, 38, 39);
+            Controls.Add(panel10);
             Controls.Add(label5);
             Controls.Add(btnPulisciTemp);
             Controls.Add(comboBox_gb);
             Controls.Add(label4);
             Controls.Add(CartellaTemp);
-            Controls.Add(panel1);
             Controls.Add(btn_puliscicpu);
             Controls.Add(btn_pulisciram);
             Controls.Add(label3);
@@ -242,8 +243,8 @@ namespace WinHubX.Forms.Base
             Load += FormMonitoraggio_Load;
             ((System.ComponentModel.ISupportInitialize)pic_termcpu).EndInit();
             ((System.ComponentModel.ISupportInitialize)pic_termgpu).EndInit();
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
+            panel10.ResumeLayout(false);
+            panel10.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -262,7 +263,6 @@ namespace WinHubX.Forms.Base
         private Label label3;
         private Button btn_pulisciram;
         private Button btn_puliscicpu;
-        private Panel panel1;
         private RadioButton radioButton_taskbar;
         private RadioButton radioButton_notifica;
         private CircularProgressBar CartellaTemp;
@@ -271,5 +271,6 @@ namespace WinHubX.Forms.Base
         private Button btnPulisciTemp;
         private System.Windows.Forms.Timer tempMonitorTimer;
         private Label label5;
+        private Panel panel10;
     }
 }

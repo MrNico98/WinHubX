@@ -21,10 +21,113 @@ namespace WinHubX.Forms.Personalizzazione_office
             radiobutton_office365.Checked = false;
             this.ActiveControl = progressBar_office;
             ExtractFolderToTemp();
+            ThemeManager.ApplyThemeToControl(this, ThemeManager.IsDarkTheme);
         }
 
         private void btn_avviainstallazione_Click(object sender, EventArgs e)
         {
+            if (radiobutton_office2019.Checked)
+            {
+                if (radioButton_x64.Checked)
+                {
+                    string xmlFilePath = Path.Combine(GetTempFolderPath(), "Configurazione2019x64.xml");
+                    if (radioButton_EN.Checked)
+                    {
+                        ModifyElementFromXml(xmlFilePath, "it-it", "en-gb");
+                    }
+                    if (checkBox_visio.Checked)
+                    {
+                        AddElementToXml(xmlFilePath, CreateVisioXml19());
+                    }
+                    if (checkBox_project.Checked)
+                    {
+                        AddElementToXml(xmlFilePath, CreateProjectXml19());
+                    }
+                    if (checkBox_word.Checked)
+                    {
+                        RemoveElementFromXml(xmlFilePath, "ExcludeApp", "Word");
+                    }
+                    if (checkBox_excel.Checked)
+                    {
+                        RemoveElementFromXml(xmlFilePath, "ExcludeApp", "Excel");
+                    }
+                    if (checkBox_powerpoint.Checked)
+                    {
+                        RemoveElementFromXml(xmlFilePath, "ExcludeApp", "PowerPoint");
+                    }
+                    if (checkBox_outlook.Checked)
+                    {
+                        RemoveElementFromXml(xmlFilePath, "ExcludeApp", "Outlook");
+                    }
+                    if (checkBox_onenote.Checked)
+                    {
+                        RemoveElementFromXml(xmlFilePath, "ExcludeApp", "OneNote");
+                    }
+                    if (checkBox_onedrive.Checked)
+                    {
+                        RemoveElementFromXml(xmlFilePath, "ExcludeApp", "OneDrive");
+                    }
+                    if (checkBox_publisher.Checked)
+                    {
+                        RemoveElementFromXml(xmlFilePath, "ExcludeApp", "Publisher");
+                    }
+                    if (checkBox_access.Checked)
+                    {
+                        RemoveElementFromXml(xmlFilePath, "ExcludeApp", "Access");
+                    }
+                    StartInstallation(xmlFilePath);
+                }
+                else if (radioButton_x32.Checked)
+                {
+                    string xmlFilePath = @"C:\Configurazione2019x32.xml";
+                    ExtractAndSaveResource("Configurazione2019x32.xml", xmlFilePath);
+                    if (radioButton_EN.Checked)
+                    {
+                        ModifyElementFromXml(xmlFilePath, "it-it", "en-gb");
+                    }
+                    if (checkBox_visio.Checked)
+                    {
+                        AddElementToXml(xmlFilePath, CreateVisioXml());
+                    }
+                    if (checkBox_project.Checked)
+                    {
+                        AddElementToXml(xmlFilePath, CreateProjectXml());
+                    }
+                    if (checkBox_word.Checked)
+                    {
+                        RemoveElementFromXml(xmlFilePath, "ExcludeApp", "Word");
+                    }
+                    if (checkBox_excel.Checked)
+                    {
+                        RemoveElementFromXml(xmlFilePath, "ExcludeApp", "Excel");
+                    }
+                    if (checkBox_powerpoint.Checked)
+                    {
+                        RemoveElementFromXml(xmlFilePath, "ExcludeApp", "PowerPoint");
+                    }
+                    if (checkBox_outlook.Checked)
+                    {
+                        RemoveElementFromXml(xmlFilePath, "ExcludeApp", "Outlook");
+                    }
+                    if (checkBox_onenote.Checked)
+                    {
+                        RemoveElementFromXml(xmlFilePath, "ExcludeApp", "OneNote");
+                    }
+                    if (checkBox_onedrive.Checked)
+                    {
+                        RemoveElementFromXml(xmlFilePath, "ExcludeApp", "OneDrive");
+                    }
+                    if (checkBox_publisher.Checked)
+                    {
+                        RemoveElementFromXml(xmlFilePath, "ExcludeApp", "Publisher");
+                    }
+                    if (checkBox_access.Checked)
+                    {
+                        RemoveElementFromXml(xmlFilePath, "ExcludeApp", "Access");
+                    }
+                    StartInstallation(xmlFilePath);
+                }
+            }
             if (radiobutton_office2021.Checked)
             {
                 if (radioButton_x64.Checked)
@@ -344,7 +447,7 @@ namespace WinHubX.Forms.Personalizzazione_office
 
                 if (!Directory.Exists(tempFolder))
                 {
-                    Directory.CreateDirectory(tempFolder);
+                    _ = Directory.CreateDirectory(tempFolder);
                 }
                 ExtractAndSaveResource("Configurazione2021x64.xml", Path.Combine(tempFolder, "Configurazione2021x64.xml"));
                 ExtractAndSaveResource("Configurazione2021x32.xml", Path.Combine(tempFolder, "Configurazione2021x32.xml"));
@@ -356,7 +459,7 @@ namespace WinHubX.Forms.Personalizzazione_office
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error: {ex.Message}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -395,18 +498,18 @@ namespace WinHubX.Forms.Personalizzazione_office
                     XmlDocumentFragment fragment = xmlDoc.CreateDocumentFragment();
                     fragment.InnerXml = xmlToAdd;
                     XmlNode parentNode = proPlusProductNode.ParentNode;
-                    parentNode.InsertAfter(fragment, proPlusProductNode);
+                    _ = parentNode.InsertAfter(fragment, proPlusProductNode);
                     proPlusProductNode = fragment.LastChild;
                     xmlDoc.Save(xmlFilePath);
                 }
                 else
                 {
-                    MessageBox.Show($"Non è stato trovato alcun nodo Product con ID='ProPlus2021Volume' nel file XML.", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    _ = MessageBox.Show($"Non è stato trovato alcun nodo Product con ID='ProPlus2021Volume' nel file XML.", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error: {ex.Message}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -423,18 +526,18 @@ namespace WinHubX.Forms.Personalizzazione_office
                     XmlDocumentFragment fragment = xmlDoc.CreateDocumentFragment();
                     fragment.InnerXml = xmlToAdd;
                     XmlNode parentNode = proPlusProductNode.ParentNode;
-                    parentNode.InsertAfter(fragment, proPlusProductNode);
+                    _ = parentNode.InsertAfter(fragment, proPlusProductNode);
                     proPlusProductNode = fragment.LastChild;
                     xmlDoc.Save(xmlFilePath);
                 }
                 else
                 {
-                    MessageBox.Show($"Non è stato trovato alcun nodo Product con ID='O365BusinessRetail' nel file XML.", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    _ = MessageBox.Show($"Non è stato trovato alcun nodo Product con ID='O365BusinessRetail' nel file XML.", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -452,18 +555,18 @@ namespace WinHubX.Forms.Personalizzazione_office
                     XmlDocumentFragment fragment = xmlDoc.CreateDocumentFragment();
                     fragment.InnerXml = xmlToAdd;
                     XmlNode parentNode = proPlusProductNode.ParentNode;
-                    parentNode.InsertAfter(fragment, proPlusProductNode);
+                    _ = parentNode.InsertAfter(fragment, proPlusProductNode);
                     proPlusProductNode = fragment.LastChild;
                     xmlDoc.Save(xmlFilePath);
                 }
                 else
                 {
-                    MessageBox.Show($"Non è stato trovato alcun nodo Product con ID='ProPlus2024Volume' nel file XML.", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    _ = MessageBox.Show($"Non è stato trovato alcun nodo Product con ID='ProPlus2024Volume' nel file XML.", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error: {ex.Message}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -473,6 +576,27 @@ namespace WinHubX.Forms.Personalizzazione_office
                 <Product ID=""VisioPro2024Volume"" PIDKEY=""B7TN8-FJ8V3-7QYCP-HQPMV-YY89G"">
                     <Language ID=""it-it"" />
                     <ExcludeApp ID=""Access"" />
+                    <ExcludeApp ID=""Excel"" />
+                    <ExcludeApp ID=""Lync"" />
+                    <ExcludeApp ID=""OneDrive"" />
+                    <ExcludeApp ID=""OneNote"" />
+                    <ExcludeApp ID=""Outlook"" />
+                    <ExcludeApp ID=""PowerPoint"" />
+                    <ExcludeApp ID=""Publisher"" />
+                    <ExcludeApp ID=""Word"" />
+                </Product>
+            ";
+
+            return visioXml;
+        }
+
+        private string CreateVisioXml19()
+        {
+            string visioXml = @"
+                <Product ID=""VisioPro2019Volume"" PIDKEY=""9BGNQ-K37YR-RQHF2-38RQ3-7VCBB"">
+                    <Language ID=""it-it"" />
+                    <ExcludeApp ID=""Access"" />
+                    <ExcludeApp ID=""Groove"" />
                     <ExcludeApp ID=""Excel"" />
                     <ExcludeApp ID=""Lync"" />
                     <ExcludeApp ID=""OneDrive"" />
@@ -505,6 +629,26 @@ namespace WinHubX.Forms.Personalizzazione_office
             ";
 
             return visioXml;
+        }
+
+        private string CreateProjectXml19()
+        {
+            string projectXml = @"
+                <Product ID=""ProjectPro2019Volume"" PIDKEY=""B4NPR-3FKK7-T2MBV-FRQ4W-PKD2B"">
+                    <Language ID=""it-it"" />
+                    <ExcludeApp ID=""Access"" />
+                    <ExcludeApp ID=""Excel"" />
+                    <ExcludeApp ID=""Lync"" />
+                    <ExcludeApp ID=""OneDrive"" />
+                    <ExcludeApp ID=""OneNote"" />
+                    <ExcludeApp ID=""Outlook"" />
+                    <ExcludeApp ID=""PowerPoint"" />
+                    <ExcludeApp ID=""Publisher"" />
+                    <ExcludeApp ID=""Word"" />
+                </Product>
+            ";
+
+            return projectXml;
         }
 
         private string CreateProjectXml()
@@ -601,7 +745,7 @@ namespace WinHubX.Forms.Personalizzazione_office
                 {
                     if (resourceStream == null)
                     {
-                        MessageBox.Show("Impossibile trovare la risorsa specificata.", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        _ = MessageBox.Show("Impossibile trovare la risorsa specificata.", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                     using (FileStream fileStream = new FileStream(destinationPath, FileMode.Create))
@@ -613,7 +757,7 @@ namespace WinHubX.Forms.Personalizzazione_office
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error: {ex.Message}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -628,14 +772,14 @@ namespace WinHubX.Forms.Personalizzazione_office
 
                 foreach (XmlNode node in elementsToRemove)
                 {
-                    node.ParentNode.RemoveChild(node);
+                    _ = node.ParentNode.RemoveChild(node);
                 }
 
                 xmlDoc.Save(xmlFilePath);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error: {ex.Message}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -683,7 +827,7 @@ namespace WinHubX.Forms.Personalizzazione_office
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -699,6 +843,7 @@ namespace WinHubX.Forms.Personalizzazione_office
                 FormBorderStyle = FormBorderStyle.None
             };
             form1.PnlFormLoader.Controls.Add(formoffice);
+            ThemeManager.ApplyThemeToControl(formoffice, ThemeManager.IsDarkTheme);
             formoffice.Show();
         }
 
@@ -728,7 +873,7 @@ namespace WinHubX.Forms.Personalizzazione_office
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    _ = MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

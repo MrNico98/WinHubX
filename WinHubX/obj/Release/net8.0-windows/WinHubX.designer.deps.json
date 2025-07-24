@@ -155,6 +155,7 @@
           }
         }
       },
+      "Microsoft.NET.ILLink.Tasks/8.0.18": {},
       "Microsoft.PowerShell.CoreCLR.Eventing/7.4.6": {
         "dependencies": {
           "System.Diagnostics.EventLog": "8.0.1"
@@ -794,38 +795,8 @@
           }
         },
         "resources": {
-          "lib/net8.0-windows7.0/de/Microsoft.Win32.TaskScheduler.resources.dll": {
-            "locale": "de"
-          },
-          "lib/net8.0-windows7.0/es/Microsoft.Win32.TaskScheduler.resources.dll": {
-            "locale": "es"
-          },
-          "lib/net8.0-windows7.0/fr/Microsoft.Win32.TaskScheduler.resources.dll": {
-            "locale": "fr"
-          },
           "lib/net8.0-windows7.0/it/Microsoft.Win32.TaskScheduler.resources.dll": {
             "locale": "it"
-          },
-          "lib/net8.0-windows7.0/ja/Microsoft.Win32.TaskScheduler.resources.dll": {
-            "locale": "ja"
-          },
-          "lib/net8.0-windows7.0/pl/Microsoft.Win32.TaskScheduler.resources.dll": {
-            "locale": "pl"
-          },
-          "lib/net8.0-windows7.0/ru/Microsoft.Win32.TaskScheduler.resources.dll": {
-            "locale": "ru"
-          },
-          "lib/net8.0-windows7.0/sv/Microsoft.Win32.TaskScheduler.resources.dll": {
-            "locale": "sv"
-          },
-          "lib/net8.0-windows7.0/tr/Microsoft.Win32.TaskScheduler.resources.dll": {
-            "locale": "tr"
-          },
-          "lib/net8.0-windows7.0/zh-CN/Microsoft.Win32.TaskScheduler.resources.dll": {
-            "locale": "zh-CN"
-          },
-          "lib/net8.0-windows7.0/zh-Hant/Microsoft.Win32.TaskScheduler.resources.dll": {
-            "locale": "zh-Hant"
           }
         }
       }
@@ -901,6 +872,13 @@
       "sha512": "sha512-uwMyWN33+iQ8Wm/n1yoPXgFoiYNd0HzJyoqSVhaQZyJfaQrJR3udgcIHjqa1qbc3lS6kvfuUMN4TrF4U4refCQ==",
       "path": "microsoft.management.infrastructure.runtime.win/3.0.0",
       "hashPath": "microsoft.management.infrastructure.runtime.win.3.0.0.nupkg.sha512"
+    },
+    "Microsoft.NET.ILLink.Tasks/8.0.18": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-OiXqr2YIBEV9dsAWEtasK470ALyJ0VxJ9k4MotOxlWV6HeEgrJKYMW4HHj1OCCXvqE0/A25wEKPkpfiBARgDZA==",
+      "path": "microsoft.net.illink.tasks/8.0.18",
+      "hashPath": "microsoft.net.illink.tasks.8.0.18.nupkg.sha512"
     },
     "Microsoft.PowerShell.CoreCLR.Eventing/7.4.6": {
       "type": "package",

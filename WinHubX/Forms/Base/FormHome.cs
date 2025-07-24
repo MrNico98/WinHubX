@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using System.Globalization;
-using WinHubX.Dialog;
 
 namespace WinHubX
 {
@@ -8,28 +7,12 @@ namespace WinHubX
     {
         public FormHome()
         {
-            InitializeComponent();
             string savedLanguage = Properties.Settings.Default.Language ?? "it";
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(savedLanguage);
-        }
-
-        private void btnChangelog_Click(object sender, EventArgs e)
-        {
-            infoWHXChangelog(sender, e);
-        }
-        public static void infoWHXChangelog(object sender, EventArgs e)
-        {
-            #region descrizione WinHubX 
-            string description = LanguageManager.GetTranslation("FormHome", "Changelog");
-            #endregion
-
-            InfoDialog infoWHXChangelog = new InfoDialog(description)
-            {
-                TopMost = true,
-                FormBorderStyle = FormBorderStyle.None,
-                StartPosition = FormStartPosition.CenterScreen
-            };
-            infoWHXChangelog.Show();
+            InitializeComponent();
+            this.ActiveControl = label1;
+            ThemeManager.ApplyThemeToControl(this, ThemeManager.IsDarkTheme);
+            versioneapp.Text = "v." + AppConfig.CurrentVersion;
         }
 
         private void tgWinHubX_Click(object sender, EventArgs e)
@@ -41,11 +24,11 @@ namespace WinHubX
                     FileName = "https://telegram.me/WinHubXbot",
                     UseShellExecute = true
                 };
-                Process.Start(psi);
+                _ = Process.Start(psi);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error: {ex.Message}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -58,11 +41,11 @@ namespace WinHubX
                     FileName = "https://ko-fi.com/winhubx",
                     UseShellExecute = true
                 };
-                Process.Start(psi);
+                _ = Process.Start(psi);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error: {ex.Message}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

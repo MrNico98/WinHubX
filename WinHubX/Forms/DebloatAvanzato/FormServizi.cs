@@ -6,12 +6,12 @@ namespace WinHubX.Forms.DebloatAvanzato
 {
     public partial class FormServizi : Form
     {
-        private int totalSteps = 0;
         public FormServizi()
         {
             string savedLanguage = Properties.Settings.Default.Language ?? "it";
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(savedLanguage);
             InitializeComponent();
+            ThemeManager.ApplyThemeToControl(this, ThemeManager.IsDarkTheme);
         }
 
         private async void FormServizi_Load(object sender, EventArgs e)
@@ -28,14 +28,14 @@ namespace WinHubX.Forms.DebloatAvanzato
                     for (int i = 0; i < serviziRoot.service.Count; i++)
                     {
                         var servizio = serviziRoot.service[i];
-                        DisabilitaServizi.Items.Add(servizio.Name);
+                        _ = DisabilitaServizi.Items.Add(servizio.Name);
                         DisabilitaServizi.SetItemChecked(i, true);
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error: {ex.Message}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -114,7 +114,7 @@ namespace WinHubX.Forms.DebloatAvanzato
                                 }
                             });
 
-                            richTextBox1.Invoke((MethodInvoker)(() =>
+                            _ = richTextBox1.Invoke((MethodInvoker)(() =>
                             {
                                 richTextBox1.AppendText($"{stato}\n");
                                 richTextBox1.ScrollToCaret();
@@ -126,7 +126,7 @@ namespace WinHubX.Forms.DebloatAvanzato
             }
             catch (Exception)
             {
-                richTextBox1.Invoke((MethodInvoker)(() =>
+                _ = richTextBox1.Invoke((MethodInvoker)(() =>
                 {
                     richTextBox1.AppendText($"❌ Error");
                 }));
@@ -137,13 +137,13 @@ namespace WinHubX.Forms.DebloatAvanzato
 
     public class Servizio
     {
-        public string Name { get; set; }
-        public string StartupType { get; set; }
-        public string OriginalType { get; set; }
+        public required string Name { get; set; }
+        public required string StartupType { get; set; }
+        public required string OriginalType { get; set; }
     }
 
     public class ServiziRoot
     {
-        public List<Servizio> service { get; set; }
+        public required List<Servizio> service { get; set; }
     }
 }

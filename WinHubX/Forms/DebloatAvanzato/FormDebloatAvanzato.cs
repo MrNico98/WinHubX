@@ -10,10 +10,11 @@ namespace WinHubX.Forms.DebloatAvanzato
 
         public FormDebloatAvanzato()
         {
-            InitializeComponent();
             string savedLanguage = Properties.Settings.Default.Language ?? "it";
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(savedLanguage);
+            InitializeComponent();
             LoadAppxPackages();
+            ThemeManager.ApplyThemeToControl(this, ThemeManager.IsDarkTheme);
         }
 
         private void LoadAppxPackages()
@@ -24,7 +25,7 @@ namespace WinHubX.Forms.DebloatAvanzato
             process.StartInfo.RedirectStandardOutput = true;
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.CreateNoWindow = true;
-            process.Start();
+            _ = process.Start();
 
             string output = process.StandardOutput.ReadToEnd();
             process.WaitForExit();
@@ -58,7 +59,7 @@ namespace WinHubX.Forms.DebloatAvanzato
 
                 using (Process process = new Process { StartInfo = psi })
                 {
-                    process.Start();
+                    _ = process.Start();
                     await process.WaitForExitAsync();
                 }
 
@@ -143,7 +144,7 @@ namespace WinHubX.Forms.DebloatAvanzato
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        _ = MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
                 else
@@ -155,7 +156,7 @@ namespace WinHubX.Forms.DebloatAvanzato
             {
 
             }
-            MessageBox.Show("Success", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            _ = MessageBox.Show("Success", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Information);
             LoadAppxPackages();
         }
 
@@ -167,7 +168,7 @@ namespace WinHubX.Forms.DebloatAvanzato
                 if (stream == null)
                     throw new InvalidOperationException("Error: " + resourcePath);
                 byte[] buffer = new byte[stream.Length];
-                stream.Read(buffer, 0, buffer.Length);
+                _ = stream.Read(buffer, 0, buffer.Length);
                 return buffer;
             }
         }
@@ -199,7 +200,7 @@ namespace WinHubX.Forms.DebloatAvanzato
             {
                 if (packageName.ToLower().Contains(searchText))
                 {
-                    checkedListBox1.Items.Add(packageName);
+                    _ = checkedListBox1.Items.Add(packageName);
                 }
             }
         }

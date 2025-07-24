@@ -6,10 +6,11 @@ namespace WinHubX.Forms.Base
     {
         public ProgressForm()
         {
-            InitializeComponent();
-            SetMarquee();
             string savedLanguage = Properties.Settings.Default.Language ?? "it";
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(savedLanguage);
+            InitializeComponent();
+            SetMarquee();
+            ThemeManager.ApplyThemeToControl(this, ThemeManager.IsDarkTheme);
         }
         public void SetMarquee()
         {

@@ -1,1 +1,18 @@
-{"ShowEmptyProjects":false,"CustomColumnOrderings":{"name":0,"type":1,"neutral-value":2,"neutral-comment":3},"ShowValidationErrors":true,"SelectedResourceGroupsByProjectFilePath":{"C:\\Users\\utente\\Downloads\\WinHubX-main - Copia\\WinHubX\\WinHubX.csproj":["C:\\Users\\utente\\Downloads\\WinHubX-main - Copia\\WinHubX\\Properties\\Resources.resx"]},"VisibleColumnKeys":["name","neutral-value","neutral-comment","type"]}
+{
+  "ShowEmptyProjects": false,
+  "SelectedGroups": [],
+  "ExpandedProjects": [],
+  "EnableSpellChecker": true,
+  "ColumnOrder": [
+    "name",
+    "type",
+    "neutral-value",
+    "neutral-comment"
+  ],
+  "VisibleColumnKeys": [
+    "name",
+    "neutral-comment",
+    "type",
+    "neutral-value"
+  ]
+}

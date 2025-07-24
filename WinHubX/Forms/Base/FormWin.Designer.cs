@@ -29,87 +29,22 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormWin));
-            btnWin7 = new Button();
-            btnWin8dot1 = new Button();
-            btnWin11 = new Button();
-            btnWin10 = new Button();
-            btnWinLive = new Button();
-            btnWin12 = new Button();
-            lblInfoWin12 = new Label();
             btnAttivaWin = new Button();
             btnCambioEdizione = new Button();
+            comboBox1 = new ComboBox();
+            label5 = new Label();
+            labelVersione = new Label();
+            comboBoxVersione = new ComboBox();
+            comboBoxArchitettura = new ComboBox();
+            labelArchitettura = new Label();
+            richTextBoxDescription = new RichTextBox();
+            btnDownload = new Button();
+            richTextBoxInfo = new RichTextBox();
+            pictureBox4 = new PictureBox();
+            comboBox_SelezionaLingua = new ComboBox();
+            lblSelezionaLingua = new Label();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             SuspendLayout();
-            // 
-            // btnWin7
-            // 
-            resources.ApplyResources(btnWin7, "btnWin7");
-            btnWin7.Cursor = Cursors.Hand;
-            btnWin7.FlatAppearance.BorderSize = 0;
-            btnWin7.ForeColor = Color.White;
-            btnWin7.Image = Properties.Resources.pngWin7;
-            btnWin7.Name = "btnWin7";
-            btnWin7.UseVisualStyleBackColor = true;
-            btnWin7.Click += btnWin7_Click;
-            // 
-            // btnWin8dot1
-            // 
-            resources.ApplyResources(btnWin8dot1, "btnWin8dot1");
-            btnWin8dot1.Cursor = Cursors.Hand;
-            btnWin8dot1.FlatAppearance.BorderSize = 0;
-            btnWin8dot1.ForeColor = Color.White;
-            btnWin8dot1.Image = Properties.Resources.pngWin8dot1;
-            btnWin8dot1.Name = "btnWin8dot1";
-            btnWin8dot1.UseVisualStyleBackColor = true;
-            btnWin8dot1.Click += btnWin8dot1_Click;
-            // 
-            // btnWin11
-            // 
-            resources.ApplyResources(btnWin11, "btnWin11");
-            btnWin11.Cursor = Cursors.Hand;
-            btnWin11.FlatAppearance.BorderSize = 0;
-            btnWin11.ForeColor = Color.White;
-            btnWin11.Image = Properties.Resources.pngWindows11;
-            btnWin11.Name = "btnWin11";
-            btnWin11.UseVisualStyleBackColor = true;
-            btnWin11.Click += btnWin11_Click;
-            // 
-            // btnWin10
-            // 
-            resources.ApplyResources(btnWin10, "btnWin10");
-            btnWin10.Cursor = Cursors.Hand;
-            btnWin10.FlatAppearance.BorderSize = 0;
-            btnWin10.ForeColor = Color.White;
-            btnWin10.Image = Properties.Resources.pngWin10;
-            btnWin10.Name = "btnWin10";
-            btnWin10.UseVisualStyleBackColor = true;
-            btnWin10.Click += btnWin10_Click;
-            // 
-            // btnWinLive
-            // 
-            resources.ApplyResources(btnWinLive, "btnWinLive");
-            btnWinLive.Cursor = Cursors.Hand;
-            btnWinLive.FlatAppearance.BorderSize = 0;
-            btnWinLive.ForeColor = Color.White;
-            btnWinLive.Image = Properties.Resources.pngWinLive;
-            btnWinLive.Name = "btnWinLive";
-            btnWinLive.UseVisualStyleBackColor = true;
-            btnWinLive.Click += btnWinLive_Click;
-            // 
-            // btnWin12
-            // 
-            resources.ApplyResources(btnWin12, "btnWin12");
-            btnWin12.Cursor = Cursors.Hand;
-            btnWin12.FlatAppearance.BorderSize = 0;
-            btnWin12.ForeColor = Color.White;
-            btnWin12.Image = Properties.Resources.pngWinWhat;
-            btnWin12.Name = "btnWin12";
-            btnWin12.UseVisualStyleBackColor = true;
-            // 
-            // lblInfoWin12
-            // 
-            resources.ApplyResources(lblInfoWin12, "lblInfoWin12");
-            lblInfoWin12.ForeColor = Color.Coral;
-            lblInfoWin12.Name = "lblInfoWin12";
             // 
             // btnAttivaWin
             // 
@@ -133,35 +68,142 @@
             btnCambioEdizione.UseVisualStyleBackColor = true;
             btnCambioEdizione.Click += btnCambioEdizione_Click;
             // 
+            // comboBox1
+            // 
+            comboBox1.Cursor = Cursors.Hand;
+            comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
+            resources.ApplyResources(comboBox1, "comboBox1");
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Items.AddRange(new object[] { resources.GetString("comboBox1.Items"), resources.GetString("comboBox1.Items1"), resources.GetString("comboBox1.Items2"), resources.GetString("comboBox1.Items3"), resources.GetString("comboBox1.Items4"), resources.GetString("comboBox1.Items5") });
+            comboBox1.Name = "comboBox1";
+            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
+            // 
+            // label5
+            // 
+            resources.ApplyResources(label5, "label5");
+            label5.ForeColor = Color.Coral;
+            label5.Name = "label5";
+            // 
+            // labelVersione
+            // 
+            resources.ApplyResources(labelVersione, "labelVersione");
+            labelVersione.ForeColor = Color.Coral;
+            labelVersione.Name = "labelVersione";
+            // 
+            // comboBoxVersione
+            // 
+            comboBoxVersione.Cursor = Cursors.Hand;
+            comboBoxVersione.DropDownStyle = ComboBoxStyle.DropDownList;
+            resources.ApplyResources(comboBoxVersione, "comboBoxVersione");
+            comboBoxVersione.FormattingEnabled = true;
+            comboBoxVersione.Items.AddRange(new object[] { resources.GetString("comboBoxVersione.Items"), resources.GetString("comboBoxVersione.Items1") });
+            comboBoxVersione.Name = "comboBoxVersione";
+            comboBoxVersione.SelectedIndexChanged += comboBoxVersione_SelectedIndexChanged;
+            // 
+            // comboBoxArchitettura
+            // 
+            comboBoxArchitettura.Cursor = Cursors.Hand;
+            comboBoxArchitettura.DropDownStyle = ComboBoxStyle.DropDownList;
+            resources.ApplyResources(comboBoxArchitettura, "comboBoxArchitettura");
+            comboBoxArchitettura.FormattingEnabled = true;
+            comboBoxArchitettura.Name = "comboBoxArchitettura";
+            comboBoxArchitettura.SelectedIndexChanged += comboBoxArchitettura_SelectedIndexChanged;
+            // 
+            // labelArchitettura
+            // 
+            resources.ApplyResources(labelArchitettura, "labelArchitettura");
+            labelArchitettura.ForeColor = Color.Coral;
+            labelArchitettura.Name = "labelArchitettura";
+            // 
+            // richTextBoxDescription
+            // 
+            richTextBoxDescription.BackColor = Color.FromArgb(37, 38, 39);
+            richTextBoxDescription.BorderStyle = BorderStyle.None;
+            richTextBoxDescription.ForeColor = Color.White;
+            resources.ApplyResources(richTextBoxDescription, "richTextBoxDescription");
+            richTextBoxDescription.Name = "richTextBoxDescription";
+            // 
+            // btnDownload
+            // 
+            resources.ApplyResources(btnDownload, "btnDownload");
+            btnDownload.Cursor = Cursors.Hand;
+            btnDownload.FlatAppearance.BorderSize = 0;
+            btnDownload.ForeColor = Color.White;
+            btnDownload.Image = Properties.Resources.pngDownloadWindows;
+            btnDownload.Name = "btnDownload";
+            btnDownload.UseVisualStyleBackColor = true;
+            btnDownload.Click += buttonDownload_Click;
+            // 
+            // richTextBoxInfo
+            // 
+            richTextBoxInfo.BackColor = Color.FromArgb(37, 38, 39);
+            richTextBoxInfo.BorderStyle = BorderStyle.None;
+            richTextBoxInfo.ForeColor = Color.White;
+            resources.ApplyResources(richTextBoxInfo, "richTextBoxInfo");
+            richTextBoxInfo.Name = "richTextBoxInfo";
+            // 
+            // pictureBox4
+            // 
+            resources.ApplyResources(pictureBox4, "pictureBox4");
+            pictureBox4.Name = "pictureBox4";
+            pictureBox4.TabStop = false;
+            // 
+            // comboBox_SelezionaLingua
+            // 
+            comboBox_SelezionaLingua.Cursor = Cursors.Hand;
+            comboBox_SelezionaLingua.DropDownStyle = ComboBoxStyle.DropDownList;
+            resources.ApplyResources(comboBox_SelezionaLingua, "comboBox_SelezionaLingua");
+            comboBox_SelezionaLingua.FormattingEnabled = true;
+            comboBox_SelezionaLingua.Items.AddRange(new object[] { resources.GetString("comboBox_SelezionaLingua.Items"), resources.GetString("comboBox_SelezionaLingua.Items1") });
+            comboBox_SelezionaLingua.Name = "comboBox_SelezionaLingua";
+            comboBox_SelezionaLingua.SelectedIndexChanged += comboBox_SelezionaLingua_SelectedIndexChanged;
+            // 
+            // lblSelezionaLingua
+            // 
+            resources.ApplyResources(lblSelezionaLingua, "lblSelezionaLingua");
+            lblSelezionaLingua.ForeColor = Color.Coral;
+            lblSelezionaLingua.Name = "lblSelezionaLingua";
+            // 
             // FormWin
             // 
             resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.FromArgb(37, 38, 39);
+            Controls.Add(comboBox_SelezionaLingua);
+            Controls.Add(lblSelezionaLingua);
+            Controls.Add(pictureBox4);
+            Controls.Add(richTextBoxInfo);
+            Controls.Add(btnDownload);
+            Controls.Add(richTextBoxDescription);
+            Controls.Add(comboBoxArchitettura);
+            Controls.Add(labelArchitettura);
+            Controls.Add(comboBoxVersione);
+            Controls.Add(labelVersione);
+            Controls.Add(label5);
+            Controls.Add(comboBox1);
             Controls.Add(btnCambioEdizione);
             Controls.Add(btnAttivaWin);
-            Controls.Add(lblInfoWin12);
-            Controls.Add(btnWin12);
-            Controls.Add(btnWinLive);
-            Controls.Add(btnWin11);
-            Controls.Add(btnWin10);
-            Controls.Add(btnWin8dot1);
-            Controls.Add(btnWin7);
             FormBorderStyle = FormBorderStyle.None;
             Name = "FormWin";
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-        private Button btnWin7;
-        private Button btnWin8dot1;
-        private Button btnWin11;
-        private Button btnWin10;
-        private Button btnWinLive;
-        private Button btnWin12;
-        private Label lblInfoWin12;
         private Button btnAttivaWin;
         private Button btnCambioEdizione;
+        private ComboBox comboBox1;
+        private Label label5;
+        private Label labelVersione;
+        private ComboBox comboBoxVersione;
+        private ComboBox comboBoxArchitettura;
+        private Label labelArchitettura;
+        private RichTextBox richTextBoxDescription;
+        private Button btnDownload;
+        private RichTextBox richTextBoxInfo;
+        private PictureBox pictureBox4;
+        private ComboBox comboBox_SelezionaLingua;
+        private Label lblSelezionaLingua;
     }
 }

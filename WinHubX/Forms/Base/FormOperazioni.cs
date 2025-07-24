@@ -6,9 +6,10 @@ namespace WinHubX.Forms.Base
     {
         public FormOperazioni()
         {
-            InitializeComponent();
             string savedLanguage = Properties.Settings.Default.Language ?? "it";
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(savedLanguage);
+            InitializeComponent();
+            ThemeManager.ApplyThemeToControl(this, ThemeManager.IsDarkTheme);
         }
 
         private string lastLogType = "";
@@ -25,8 +26,6 @@ namespace WinHubX.Forms.Base
 
             if (progress.HasValue)
                 progressBar.Value = Math.Min(progress.Value, 100);
-
-            // Evita di loggare progressi ripetitivi
             if (message.StartsWith("Download"))
             {
                 if (lastLogType != "Downloading")

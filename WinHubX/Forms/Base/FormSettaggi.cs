@@ -12,19 +12,19 @@ namespace WinHubX.Forms.Base
     public partial class FormSettaggi : Form
     {
         private Form1 form1;
-        private string wsa11x64;
-        private string wsa11arm64;
-        private string wsa10x64;
-        private bool isSSD = false;
-        private FormPersonalizzazione formPersonalizzazione;
+        private string? wsa11x64;
+        private string? wsa11arm64;
+        private string? wsa10x64;
+        private FormPersonalizzazione? formPersonalizzazione;
         public FormSettaggi(Form1 form1)
         {
-            InitializeComponent();
             string savedLanguage = Properties.Settings.Default.Language ?? "it";
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(savedLanguage);
+            InitializeComponent();
             this.form1 = form1;
             LoadJsonLinks();
             LoadPcSpec();
+            ThemeManager.ApplyThemeToControl(this, ThemeManager.IsDarkTheme);
         }
         private void EnsureFormPersonalizzazioneIsCreated()
         {
@@ -34,7 +34,7 @@ namespace WinHubX.Forms.Base
             }
         }
 
-        private async void LoadPcSpec()
+        private void LoadPcSpec()
         {
             try
             {
@@ -56,7 +56,7 @@ namespace WinHubX.Forms.Base
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -211,7 +211,7 @@ namespace WinHubX.Forms.Base
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -242,7 +242,7 @@ namespace WinHubX.Forms.Base
 
             if (string.IsNullOrEmpty(downloadUrl))
             {
-                MessageBox.Show(LanguageManager.GetTranslation("FormSettaggi", "downloadlinknotfound"), "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show(LanguageManager.GetTranslation("FormSettaggi", "downloadlinknotfound"), "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -258,7 +258,7 @@ namespace WinHubX.Forms.Base
                 using (HttpClient client = new HttpClient { Timeout = TimeSpan.FromMinutes(30) })
                 using (var response = await client.GetAsync(downloadUrl, HttpCompletionOption.ResponseHeadersRead))
                 {
-                    response.EnsureSuccessStatusCode();
+                    _ = response.EnsureSuccessStatusCode();
                     var totalBytes = response.Content.Headers.ContentLength ?? -1L;
                     var canReportProgress = totalBytes != -1;
 
@@ -294,7 +294,7 @@ namespace WinHubX.Forms.Base
                 }
                 else
                 {
-                    MessageBox.Show(LanguageManager.GetTranslation("FormSettaggi", "runbatnotfound"), "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    _ = MessageBox.Show(LanguageManager.GetTranslation("FormSettaggi", "runbatnotfound"), "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
                 progressForm.CompleteOperation();
@@ -302,7 +302,7 @@ namespace WinHubX.Forms.Base
             catch (Exception ex)
             {
                 progressForm.SetStatus($"Errore: {ex.Message}");
-                MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -314,7 +314,7 @@ namespace WinHubX.Forms.Base
                 FormBorderStyle = FormBorderStyle.None,
                 StartPosition = FormStartPosition.CenterScreen
             };
-            pacManDialog.ShowDialog();
+            _ = pacManDialog.ShowDialog();
         }
 
 
@@ -357,7 +357,7 @@ namespace WinHubX.Forms.Base
                     throw new InvalidOperationException($"Error: {resourcePath}");
                 }
                 byte[] buffer = new byte[stream.Length];
-                stream.Read(buffer, 0, buffer.Length);
+                _ = stream.Read(buffer, 0, buffer.Length);
                 return buffer;
             }
         }
@@ -375,7 +375,7 @@ namespace WinHubX.Forms.Base
 
             using (Process process = new Process { StartInfo = startInfo })
             {
-                process.Start();
+                _ = process.Start();
                 string output = process.StandardOutput.ReadToEnd();
             }
         }
@@ -421,12 +421,12 @@ namespace WinHubX.Forms.Base
 
                     try
                     {
-                        process.Start();
+                        _ = process.Start();
                         process.WaitForExit();
 
                         if (process.ExitCode == 0)
                         {
-                            MessageBox.Show(
+                            _ = MessageBox.Show(
                                 string.Format(LanguageManager.GetTranslation("FormSettaggi", "exportsuccess"), exportPath),
                                 LanguageManager.GetTranslation("FormSettaggi", "exportdone"),
                                 MessageBoxButtons.OK,
@@ -435,7 +435,7 @@ namespace WinHubX.Forms.Base
                         }
                         else
                         {
-                            MessageBox.Show(
+                            _ = MessageBox.Show(
                                 string.Format(LanguageManager.GetTranslation("FormSettaggi", "exporterrorcode"), process.ExitCode),
                                 LanguageManager.GetTranslation("FormSettaggi", "error"),
                                 MessageBoxButtons.OK,
@@ -445,7 +445,7 @@ namespace WinHubX.Forms.Base
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(
+                        _ = MessageBox.Show(
                             string.Format(LanguageManager.GetTranslation("FormSettaggi", "exportexception"), ex.Message),
                             LanguageManager.GetTranslation("FormSettaggi", "exception"),
                             MessageBoxButtons.OK,
@@ -476,24 +476,24 @@ namespace WinHubX.Forms.Base
 
                     try
                     {
-                        process.Start();
+                        _ = process.Start();
                         process.WaitForExit();
 
                         if (process.ExitCode == 0)
                         {
-                            MessageBox.Show("Settaggi importati correttamente dal file .dat.",
+                            _ = MessageBox.Show("Settaggi importati correttamente dal file .dat.",
                                 "Importazione completata", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             IstanziaEAvviaFormSelezionati();
                         }
                         else
                         {
-                            MessageBox.Show($"Errore durante l'importazione. Codice uscita: {process.ExitCode}",
+                            _ = MessageBox.Show($"Errore durante l'importazione. Codice uscita: {process.ExitCode}",
                                 "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show($"Si è verificato un errore:\n{ex.Message}",
+                        _ = MessageBox.Show($"Si è verificato un errore:\n{ex.Message}",
                             "Eccezione", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
@@ -509,7 +509,7 @@ namespace WinHubX.Forms.Base
 
             try
             {
-                process.Start();
+                _ = process.Start();
                 process.WaitForExit();
 
                 if (process.ExitCode == 0)
@@ -554,7 +554,7 @@ namespace WinHubX.Forms.Base
 
                 if (metodo != null && bottone != null)
                 {
-                    metodo.Invoke(form, new object[] { bottone, EventArgs.Empty });
+                    _ = metodo.Invoke(form, new object[] { bottone, EventArgs.Empty });
                 }
                 form.Close();
             }

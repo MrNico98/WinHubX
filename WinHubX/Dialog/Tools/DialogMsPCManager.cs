@@ -26,6 +26,8 @@ namespace WinHubX.Dialog.Tools
         public DialogMsPCManager()
         {
             InitializeComponent();
+            ThemeManager.ApplyThemeToControl(this, ThemeManager.IsDarkTheme);
+            LanguageManager.LoadTranslations();
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -33,43 +35,50 @@ namespace WinHubX.Dialog.Tools
             this.Close();
         }
 
-        private void btnDownload_Click(object sender, EventArgs e)
+        private async void btnDownload_Click(object sender, EventArgs e)
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
             string configUrl = "https://aimodsitalia.store/ConfigWinHubX/configWinHubX.json";
             string tempFilePath = Path.Combine(Path.GetTempPath(), "microsoft-pc-manager.msixbundle");
 
-            using (WebClient client = new WebClient())
+            using (HttpClient client = new HttpClient())
             {
                 try
                 {
                     // Scarica il JSON di configurazione
-                    string json = client.DownloadString(configUrl);
+                    string json = await client.GetStringAsync(configUrl);
 
                     // Analizza il JSON per ottenere l'URL di Microsoft PC Manager
                     JObject configData = JObject.Parse(json);
-                    string pcManagerUrl = configData["Dialog"]["managersetupmicrosoft"].ToString();
+                    string pcManagerUrl = configData["Dialog"]?["managersetupmicrosoft"]?.ToString() ?? "";
+
+                    if (string.IsNullOrWhiteSpace(pcManagerUrl))
+                        throw new Exception("URL non trovato nel JSON!");
 
                     // Scarica il file msixbundle
-                    client.DownloadFile(pcManagerUrl, tempFilePath);
+                    byte[] fileBytes = await client.GetByteArrayAsync(pcManagerUrl);
+                    await File.WriteAllBytesAsync(tempFilePath, fileBytes);
 
                     // Esegui l'installazione del pacchetto msixbundle
-                    Process installProcess = new Process();
-                    installProcess.StartInfo.FileName = "powershell";
-                    installProcess.StartInfo.Arguments = $"-Command \"Add-AppxPackage -Path '{tempFilePath}'\"";
-                    installProcess.StartInfo.UseShellExecute = false;
-                    installProcess.StartInfo.CreateNoWindow = true;
-                    installProcess.Start();
+                    using (Process installProcess = new Process())
+                    {
+                        installProcess.StartInfo.FileName = "powershell";
+                        installProcess.StartInfo.Arguments = $"-Command \"Add-AppxPackage -Path '{tempFilePath}'\"";
+                        installProcess.StartInfo.UseShellExecute = false;
+                        installProcess.StartInfo.CreateNoWindow = true;
+                        _ = installProcess.Start();
+                        await installProcess.WaitForExitAsync();
+                    }
 
-                    installProcess.WaitForExit();
-                    MessageBox.Show("Installazione completata!");
+                    _ = MessageBox.Show("Installazione completata!");
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Errore durante il download o l'installazione: " + ex.Message);
+                    _ = MessageBox.Show($"Errore: {ex.Message}");
                 }
             }
         }
+
     }
 }

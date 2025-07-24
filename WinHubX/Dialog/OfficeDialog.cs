@@ -28,6 +28,8 @@ namespace WinHubX.Dialog
         public OfficeDialog()
         {
             InitializeComponent();
+            ThemeManager.ApplyThemeToControl(this, ThemeManager.IsDarkTheme);
+            LanguageManager.LoadTranslations();
             notifyIcon = new NotifyIcon
             {
                 Icon = SystemIcons.Information,
@@ -91,11 +93,11 @@ namespace WinHubX.Dialog
                         FileName = dlLink32,
                         UseShellExecute = true
                     };
-                    Process.Start(psi);
+                    _ = Process.Start(psi);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Errore nell'aprire l'URL: {ex.Message}");
+                    _ = MessageBox.Show($"Errore nell'aprire l'URL: {ex.Message}");
                 }
             }
         }
@@ -117,11 +119,11 @@ namespace WinHubX.Dialog
                         FileName = dlLink64,
                         UseShellExecute = true
                     };
-                    Process.Start(psi);
+                    _ = Process.Start(psi);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Errore nell'aprire l'URL: {ex.Message}");
+                    _ = MessageBox.Show($"Errore nell'aprire l'URL: {ex.Message}");
                 }
             }
         }

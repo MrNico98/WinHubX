@@ -118,641 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="lblHashInfo.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="lblHashInfo.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="lblHashInfo.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 10.199999pt</value>
-  </data>
-  <data name="lblHashInfo.Location" type="System.Drawing.Point, System.Drawing">
-    <value>233, 45</value>
-  </data>
-  <data name="lblHashInfo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>379, 17</value>
-  </data>
-  <data name="lblHashInfo.TabIndex" type="System.Int32, mscorlib">
-    <value>64</value>
-  </data>
-  <data name="lblHashInfo.Text" xml:space="preserve">
-    <value>usa il tasto destro sui bottoni per copiare il codice SHA256!</value>
-  </data>
-  <data name="&gt;&gt;lblHashInfo.Name" xml:space="preserve">
-    <value>lblHashInfo</value>
-  </data>
-  <data name="&gt;&gt;lblHashInfo.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblHashInfo.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lblHashInfo.ZOrder" xml:space="preserve">
-    <value>17</value>
-  </data>
-  <data name="pictureBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="pictureBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>847, 9</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="pictureBox1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="pictureBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 53</value>
-  </data>
-  <data name="pictureBox1.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
-    <value>StretchImage</value>
-  </data>
-  <data name="pictureBox1.TabIndex" type="System.Int32, mscorlib">
-    <value>63</value>
-  </data>
-  <data name="&gt;&gt;pictureBox1.Name" xml:space="preserve">
-    <value>pictureBox1</value>
-  </data>
-  <data name="&gt;&gt;pictureBox1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;pictureBox1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;pictureBox1.ZOrder" xml:space="preserve">
-    <value>18</value>
-  </data>
-  <data name="pictureBox2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="pictureBox2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>793, 9</value>
-  </data>
-  <data name="pictureBox2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="pictureBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>48, 53</value>
-  </data>
-  <data name="pictureBox2.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
-    <value>StretchImage</value>
-  </data>
-  <data name="pictureBox2.TabIndex" type="System.Int32, mscorlib">
-    <value>65</value>
-  </data>
-  <data name="&gt;&gt;pictureBox2.Name" xml:space="preserve">
-    <value>pictureBox2</value>
-  </data>
-  <data name="&gt;&gt;pictureBox2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;pictureBox2.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;pictureBox2.ZOrder" xml:space="preserve">
-    <value>16</value>
-  </data>
-  <data name="lblOffice2019.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top</value>
-  </data>
-  <data name="lblOffice2019.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lblOffice2019.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 25.8pt, style=Bold</value>
-  </data>
-  <data name="lblOffice2019.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
-  </data>
-  <data name="lblOffice2019.Location" type="System.Drawing.Point, System.Drawing">
-    <value>32, 93</value>
-  </data>
-  <data name="lblOffice2019.Size" type="System.Drawing.Size, System.Drawing">
-    <value>185, 78</value>
-  </data>
-  <data name="lblOffice2019.TabIndex" type="System.Int32, mscorlib">
-    <value>66</value>
-  </data>
-  <data name="lblOffice2019.Text" xml:space="preserve">
-    <value>       Office
-       2019</value>
-  </data>
-  <data name="lblOffice2019.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="&gt;&gt;lblOffice2019.Name" xml:space="preserve">
-    <value>lblOffice2019</value>
-  </data>
-  <data name="&gt;&gt;lblOffice2019.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblOffice2019.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lblOffice2019.ZOrder" xml:space="preserve">
-    <value>15</value>
-  </data>
-  <data name="btn2019Online.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top</value>
-  </data>
-  <data name="btn2019Online.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="btn2019Online.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 19.800001pt, style=Bold</value>
-  </data>
-  <data name="btn2019Online.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
-  </data>
-  <data name="btn2019Online.Location" type="System.Drawing.Point, System.Drawing">
-    <value>32, 180</value>
-  </data>
-  <data name="btn2019Online.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="btn2019Online.Size" type="System.Drawing.Size, System.Drawing">
-    <value>185, 63</value>
-  </data>
-  <data name="btn2019Online.TabIndex" type="System.Int32, mscorlib">
-    <value>67</value>
-  </data>
-  <data name="btn2019Online.Text" xml:space="preserve">
-    <value>   Online</value>
-  </data>
-  <data name="btn2019Online.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>ImageBeforeText</value>
-  </data>
-  <data name="&gt;&gt;btn2019Online.Name" xml:space="preserve">
-    <value>btn2019Online</value>
-  </data>
-  <data name="&gt;&gt;btn2019Online.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btn2019Online.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;btn2019Online.ZOrder" xml:space="preserve">
-    <value>14</value>
-  </data>
-  <data name="btn2019Offline.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top</value>
-  </data>
-  <data name="btn2019Offline.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="btn2019Offline.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 19.800001pt, style=Bold</value>
-  </data>
-  <data name="btn2019Offline.Location" type="System.Drawing.Point, System.Drawing">
-    <value>32, 238</value>
-  </data>
-  <data name="btn2019Offline.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="btn2019Offline.Size" type="System.Drawing.Size, System.Drawing">
-    <value>185, 63</value>
-  </data>
-  <data name="btn2019Offline.TabIndex" type="System.Int32, mscorlib">
-    <value>68</value>
-  </data>
-  <data name="btn2019Offline.Text" xml:space="preserve">
-    <value>   Offline</value>
-  </data>
-  <data name="btn2019Offline.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>ImageBeforeText</value>
-  </data>
-  <data name="&gt;&gt;btn2019Offline.Name" xml:space="preserve">
-    <value>btn2019Offline</value>
-  </data>
-  <data name="&gt;&gt;btn2019Offline.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btn2019Offline.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;btn2019Offline.ZOrder" xml:space="preserve">
-    <value>13</value>
-  </data>
-  <data name="btn2021Offline.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top</value>
-  </data>
-  <data name="btn2021Offline.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="btn2021Offline.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 19.800001pt, style=Bold</value>
-  </data>
-  <data name="btn2021Offline.Location" type="System.Drawing.Point, System.Drawing">
-    <value>249, 243</value>
-  </data>
-  <data name="btn2021Offline.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="btn2021Offline.Size" type="System.Drawing.Size, System.Drawing">
-    <value>185, 63</value>
-  </data>
-  <data name="btn2021Offline.TabIndex" type="System.Int32, mscorlib">
-    <value>71</value>
-  </data>
-  <data name="btn2021Offline.Text" xml:space="preserve">
-    <value>   Offline</value>
-  </data>
-  <data name="btn2021Offline.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>ImageBeforeText</value>
-  </data>
-  <data name="&gt;&gt;btn2021Offline.Name" xml:space="preserve">
-    <value>btn2021Offline</value>
-  </data>
-  <data name="&gt;&gt;btn2021Offline.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btn2021Offline.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;btn2021Offline.ZOrder" xml:space="preserve">
-    <value>10</value>
-  </data>
-  <data name="btn2021Online.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top</value>
-  </data>
-  <data name="btn2021Online.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="btn2021Online.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 19.800001pt, style=Bold</value>
-  </data>
-  <data name="btn2021Online.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
-  </data>
-  <data name="btn2021Online.Location" type="System.Drawing.Point, System.Drawing">
-    <value>249, 180</value>
-  </data>
-  <data name="btn2021Online.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="btn2021Online.Size" type="System.Drawing.Size, System.Drawing">
-    <value>185, 63</value>
-  </data>
-  <data name="btn2021Online.TabIndex" type="System.Int32, mscorlib">
-    <value>70</value>
-  </data>
-  <data name="btn2021Online.Text" xml:space="preserve">
-    <value>   Online</value>
-  </data>
-  <data name="btn2021Online.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>ImageBeforeText</value>
-  </data>
-  <data name="&gt;&gt;btn2021Online.Name" xml:space="preserve">
-    <value>btn2021Online</value>
-  </data>
-  <data name="&gt;&gt;btn2021Online.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btn2021Online.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;btn2021Online.ZOrder" xml:space="preserve">
-    <value>11</value>
-  </data>
-  <data name="lblOffice2021.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top</value>
-  </data>
-  <data name="lblOffice2021.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lblOffice2021.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 25.8pt, style=Bold</value>
-  </data>
-  <data name="lblOffice2021.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
-  </data>
-  <data name="lblOffice2021.Location" type="System.Drawing.Point, System.Drawing">
-    <value>249, 93</value>
-  </data>
-  <data name="lblOffice2021.Size" type="System.Drawing.Size, System.Drawing">
-    <value>185, 78</value>
-  </data>
-  <data name="lblOffice2021.TabIndex" type="System.Int32, mscorlib">
-    <value>69</value>
-  </data>
-  <data name="lblOffice2021.Text" xml:space="preserve">
-    <value>       Office
-       2021</value>
-  </data>
-  <data name="lblOffice2021.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="&gt;&gt;lblOffice2021.Name" xml:space="preserve">
-    <value>lblOffice2021</value>
-  </data>
-  <data name="&gt;&gt;lblOffice2021.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblOffice2021.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lblOffice2021.ZOrder" xml:space="preserve">
-    <value>12</value>
-  </data>
-  <data name="btn2024Offline.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top</value>
-  </data>
-  <data name="btn2024Offline.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="btn2024Offline.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 19.800001pt, style=Bold</value>
-  </data>
-  <data name="btn2024Offline.Location" type="System.Drawing.Point, System.Drawing">
-    <value>684, 243</value>
-  </data>
-  <data name="btn2024Offline.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="btn2024Offline.Size" type="System.Drawing.Size, System.Drawing">
-    <value>185, 58</value>
-  </data>
-  <data name="btn2024Offline.TabIndex" type="System.Int32, mscorlib">
-    <value>77</value>
-  </data>
-  <data name="btn2024Offline.Text" xml:space="preserve">
-    <value>   Offline</value>
-  </data>
-  <data name="btn2024Offline.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>ImageBeforeText</value>
-  </data>
-  <data name="&gt;&gt;btn2024Offline.Name" xml:space="preserve">
-    <value>btn2024Offline</value>
-  </data>
-  <data name="&gt;&gt;btn2024Offline.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btn2024Offline.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;btn2024Offline.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="btn2024Online.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top</value>
-  </data>
-  <data name="btn2024Online.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="btn2024Online.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 19.800001pt, style=Bold</value>
-  </data>
-  <data name="btn2024Online.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
-  </data>
-  <data name="btn2024Online.Location" type="System.Drawing.Point, System.Drawing">
-    <value>684, 185</value>
-  </data>
-  <data name="btn2024Online.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="btn2024Online.Size" type="System.Drawing.Size, System.Drawing">
-    <value>185, 59</value>
-  </data>
-  <data name="btn2024Online.TabIndex" type="System.Int32, mscorlib">
-    <value>76</value>
-  </data>
-  <data name="btn2024Online.Text" xml:space="preserve">
-    <value>   Online</value>
-  </data>
-  <data name="btn2024Online.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>ImageBeforeText</value>
-  </data>
-  <data name="&gt;&gt;btn2024Online.Name" xml:space="preserve">
-    <value>btn2024Online</value>
-  </data>
-  <data name="&gt;&gt;btn2024Online.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btn2024Online.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;btn2024Online.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="lblOffice2024.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top</value>
-  </data>
-  <data name="lblOffice2024.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lblOffice2024.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 25.8pt, style=Bold</value>
-  </data>
-  <data name="lblOffice2024.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABGdBTUEAALGPC/xhBQAACjhJREFUeF7d
-        m3lwVeUZxt9z780N2S65ScglCySBQEKAsAVIMEAIm4QdhCCooMiiIAoCyiaguLArCLIjqCDKUjaRmz03
-        C63Txc60U5TWpbV1tLW22NplOk/nO+fcm3NfEjw55wRqn5nnL/K93/c+5/e9H8wEotukeRJ9MlsizJII
-        90qEuyUC/5n/Sy2VqO5Rm4QFEuEhiTBHIjwgEe6TCNMlQrFE+MdRwj9fo4/52u+9VtslPGmTsMwmYYlN
-        wiM2wsMSYa5EEDTMlAj3SIRpEuHvB4PNa32vtNFhw7MOG5622/CUXcJKm4QnbBIet0lYpNIwX6XBfyXu
-        txP+tqdJ/4vv8T+pV5wO7HQ6sD3Ejs0OG15w2LDBbsNauwQtDYtVGsSVEDSIKyFouL5Tn7GDQvnet1UH
-        Qp3v7wt1Yq8zBHucIdjldOAlpx1bHXbINNiDaViuXgk/DfMkwoMS4a/bDPk//Dy3VIfCQnEwLBQHQp3Y
-        H+rEPjWE3U4HdmhoeF69EjINNoWGpTYJj9kkLFRp+HqjOfOztaiORoTjSHg4Xg0Pw+GwUMhB+ENgNLzo
-        tGOLwx64EuvtNqyxS1ihGZCLbIQ/bzBvfk7LdSwyCm9ERuL1iAi8FhGBo+EiiDAcDg9TQghzNknDthA7
-        NjlseE5DwyrNgPxqHZn2H9fQSn5mS3TSFX3tRJQLb0a5cDwyCsciI+Ug5BAaoSEQQoCGxgekoEEMSEHD
-        n1aRJeZnN61T0W6cdLnxtisab0W5oATREIJCQ7hMgxJCMA38SgQNSM1z+eVyssT8/IZ11h2HH7hjcSY6
-        BqejY6AEEY23XNGBEPw0BK6ETENYgIbgAakEwQekn4YvlpAl5n00WxdjPbgQE4/zMXE4FxOHs+5YOYiG
-        EBpokK9EIzQ0XIlWCg2tGqdhM1G8f9/PFxKscHA3zdS7cW1xKa4t3on14GJsvByENgSFBjdOtVZDYDQE
-        DUgNDdrncp8z5DrfV+gP8wlWmNfVrZK4xGXe+ARcjkuACEIJQUODWwnijDv4SgTRoBmQIgjtgOT7cX02
-        m2CFeV3dKvMkoTQ+Ed74xEAIl2IbaDjfBA2BK+FqrRmQCg18j5vpdzMJVpjX1a1yTzL8IZTIQQgatFci
-        mAY5BEaDuBLriGy8th79dgbBCvO6ulXZtj0q2iaj3JMkB9EQgp8GjxzEhUZoON3a/WNer7n6tJhghXld
-        3apOSEFVIARGQxs1BDYgBQ28jlF9MplghXld3fIlpMAfgkyDR6GhtAkaxJXgNczo4wkEK8zr6lZtYipq
-        ElKhBKGG0AgNmhC+5jXM6KOxBCvM6+pWfVIa6hLTUJPoD8FPQ7JMgxyChga+3qx+U0Swwryubl1JTkd9
-        Ugc5BC0NgSuhGZCCBr7erH49gmCFeV3dqk/JwpV2nXElqQPqE5umwX8l+HqzulZIsMK8rm7VdeiJ+tRu
-        qG+fiSvJHW+gIWhAtk02vlET+rCAYIV5Xd2q69QPdR17oz6tO2QakjsFaKhthAa+3qw+HESwwryubtVm
-        5qOucy7q0nNQL9PQFfXtM5QQ1AGp0KCEwNeb1Qf5BCvM6+pWbddC1HYZhNqMPNSlCxp6qTR0gRiQIgjt
-        leDrzepqHsEK87q6VZN9J2q6DUNtVgFkGjr1R13HPqhP6yHTcIXRwNeb1dVcghXmdXXL12scarKLUNNt
-        OGq7DtHQ0Bd1HXopAzJFDEjlueTrzYo3YtS8rm75cibD13s8fD1Ho6b7SNR0HYrarMGozbxDpUEMyGxl
-        QLbrbHyjJsQbMWpeV7eq+92N6r5T4OszEb5eY1GTPUqhIWsIajMHoi5DGZD+55KvNyveiFHzurpVlXsf
-        qvvPQHXfYvj6KDTUaGnoMhi1GQPgfy75erPijRg1r6tbVfmzUZU3C9W590CmIWcKfL21NGgGZOdc4xs1
-        Id6IUfO6ulU5aD6q8h9E1YD7odAwHdV9p8LXZxLkAdmjCDXdR8D/XPL1ZsUbMWpeV7cqCx5B5aCHUDlw
-        LqoGCBpmorq/oGEaqnPugq/3BPh6joH/ueTrzYo3YtS8rm5VFC5BRcEiVA5egMqB8zQ03HsjDdlFxjdq
-        QrwRo+Z1dat82BOoGLoUFUMeQ2XBQg0ND6g0zJBp8D+XfL1Z8UaMmtfVrfIRq1E+/ElUDF2GBhoebqAh
-        b5ZCg/pc8vVmxRsxal5Xt8pGrUP5yDUoH74S5cOWo6LwcVQMeRSVgwUN81GZP0ehQX0u+Xqz4o0YNa+r
-        W2Wjn0VZ0dMou3MtykesUmkQV2IxKuQBKWiYi6o7lOeSrzcr3ohR87q6VTr2BZSNeQ5lRc+ggYYVjIYF
-        Mg1V+XOMb9SEeCNGzevqVun4LSgdtwmlY55H2egNKCtaj7KRTyk0BAbkYvifS77erHgjRs3r6lbJxBdR
-        OmErSsdthkKDuBKChrUoHykG5IqgAcnXmxVvxKh5Xd0qmfwySia9hJIJ26HQsBGl4koIGkatR7lMgxiQ
-        Cg18vVnxRoya19Ut75Q9KJm8CyWTdkCmYbygYZNCg39AChpGrDa+yU3EGzFqXle3vFP3wztlL7x37YZM
-        w0RBwzaUjhdXwk/DM8Y3+A7xRoya19Utb/FBeIv3wzt1H7xTXtHQIK7EVlSM25bO11gp3ohR87q6dXna
-        YXinHYK3+AAUGvagRNAwacfv+c+2hHgjRs3rNkve6UeuKyEoNPA/b0nxRoya17Vc33QZ/sVfOhfgq/RB
-        +LJDPj5Py8NnKf3wafscfJTcG9cSe+JqQjf80pOFn8dn4r3YdPjcqShztcc7kYk4E+HBibA4HHW6ccDp
-        wu6QCGy3h93QiFETUQg/s2X6JnPot9czCqE3gPfjM/GjQADtAgG8qQlgl/UBuPi5LZNo3mgApa5kXNQE
-        cMTpxv6WCSCRn9sqSc0PIOOGAE5HeHBcE8DLIRHYZm0ACfzgVslhNIBqdypKXMm4wALY54xqiQBi+MGt
-        koOIujc3gB+yAE6pAbyqBrAzJAJbLQrgRB/nZiKK4Ae3SuL3/5KIaLDeAH520wCisdfiAIgoo0VfASIK
-        I6KORNSLiIZ/ZwBtMnAltiOq3KnwygEk4GS4B8daIAD1THFiVvFDW61W6qDJIqKc97oOPN5UAD+NCw7g
-        vNUB5NG/iWiY2nx79ZreEonrEElE7cRcIKK8pgKoj+2IyuhUXGYBHNYEsKUZAcQ6aTwRDSGiXCLqSURd
-        iMhDRE5+yFshOxFFE1EaEWUTUb4/gF94svATFsA5NYA31AD2OKOwQw6g1Q2N+v2rXPkrjyCiAUTUR90n
-        k4hSVOTFtTT0+8lWSqAXS0SdVBwLtQFURKewAGJxSBMAb5qIikQNIuqvfuVuRCT+NSr+ktOaSP7PkyL8
-        Fr/vzZE4jDhYW/UL5cyLT5pfpwngbGQC3g734HVNAKLhDwbQt+wr91DRFl+5jfq0iel+27+0HolDhhNR
-        svrlcs8lZ156lwVgJxqrfmX/XeZfWQxbS7/yfwFogOWxTdrqZwAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="lblOffice2024.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
-  </data>
-  <data name="lblOffice2024.Location" type="System.Drawing.Point, System.Drawing">
-    <value>684, 93</value>
-  </data>
-  <data name="lblOffice2024.Size" type="System.Drawing.Size, System.Drawing">
-    <value>185, 78</value>
-  </data>
-  <data name="lblOffice2024.TabIndex" type="System.Int32, mscorlib">
-    <value>75</value>
-  </data>
-  <data name="lblOffice2024.Text" xml:space="preserve">
-    <value>       Office
-       2024</value>
-  </data>
-  <data name="lblOffice2024.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="&gt;&gt;lblOffice2024.Name" xml:space="preserve">
-    <value>lblOffice2024</value>
-  </data>
-  <data name="&gt;&gt;lblOffice2024.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblOffice2024.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lblOffice2024.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="btn365Offline.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top</value>
-  </data>
-  <data name="btn365Offline.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="btn365Offline.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 19.800001pt, style=Bold</value>
-  </data>
-  <data name="btn365Offline.Location" type="System.Drawing.Point, System.Drawing">
-    <value>467, 243</value>
-  </data>
-  <data name="btn365Offline.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="btn365Offline.Size" type="System.Drawing.Size, System.Drawing">
-    <value>185, 63</value>
-  </data>
-  <data name="btn365Offline.TabIndex" type="System.Int32, mscorlib">
-    <value>74</value>
-  </data>
-  <data name="btn365Offline.Text" xml:space="preserve">
-    <value>   Offline</value>
-  </data>
-  <data name="btn365Offline.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>ImageBeforeText</value>
-  </data>
-  <data name="&gt;&gt;btn365Offline.Name" xml:space="preserve">
-    <value>btn365Offline</value>
-  </data>
-  <data name="&gt;&gt;btn365Offline.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btn365Offline.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;btn365Offline.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="btn365Online.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top</value>
-  </data>
-  <data name="btn365Online.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="btn365Online.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 19.800001pt, style=Bold</value>
-  </data>
-  <data name="btn365Online.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
-  </data>
-  <data name="btn365Online.Location" type="System.Drawing.Point, System.Drawing">
-    <value>467, 185</value>
-  </data>
-  <data name="btn365Online.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="btn365Online.Size" type="System.Drawing.Size, System.Drawing">
-    <value>185, 58</value>
-  </data>
-  <data name="btn365Online.TabIndex" type="System.Int32, mscorlib">
-    <value>73</value>
-  </data>
-  <data name="btn365Online.Text" xml:space="preserve">
-    <value>   Online</value>
-  </data>
-  <data name="btn365Online.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>ImageBeforeText</value>
-  </data>
-  <data name="&gt;&gt;btn365Online.Name" xml:space="preserve">
-    <value>btn365Online</value>
-  </data>
-  <data name="&gt;&gt;btn365Online.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btn365Online.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;btn365Online.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="lblOffice365.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top</value>
-  </data>
-  <data name="lblOffice365.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lblOffice365.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 25.8pt, style=Bold</value>
-  </data>
-  <data name="lblOffice365.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
-  </data>
-  <data name="lblOffice365.Location" type="System.Drawing.Point, System.Drawing">
-    <value>467, 93</value>
-  </data>
-  <data name="lblOffice365.Size" type="System.Drawing.Size, System.Drawing">
-    <value>185, 78</value>
-  </data>
-  <data name="lblOffice365.TabIndex" type="System.Int32, mscorlib">
-    <value>72</value>
-  </data>
-  <data name="lblOffice365.Text" xml:space="preserve">
-    <value>       Office
-       365</value>
-  </data>
-  <data name="lblOffice365.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="&gt;&gt;lblOffice365.Name" xml:space="preserve">
-    <value>lblOffice365</value>
-  </data>
-  <data name="&gt;&gt;lblOffice365.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblOffice365.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lblOffice365.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
   <data name="btnAttivaOffice.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom</value>
+    <value>Bottom, Right</value>
   </data>
   <data name="btnAttivaOffice.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="btnAttivaOffice.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 19.800001pt, style=Bold</value>
   </data>
@@ -760,19 +132,21 @@
     <value>MiddleLeft</value>
   </data>
   <data name="btnAttivaOffice.Location" type="System.Drawing.Point, System.Drawing">
-    <value>490, 325</value>
+    <value>622, 316</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="btnAttivaOffice.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 2, 3, 2</value>
   </data>
   <data name="btnAttivaOffice.Size" type="System.Drawing.Size, System.Drawing">
-    <value>274, 53</value>
+    <value>267, 53</value>
   </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="btnAttivaOffice.TabIndex" type="System.Int32, mscorlib">
     <value>79</value>
   </data>
   <data name="btnAttivaOffice.Text" xml:space="preserve">
-    <value>   Attiva Office</value>
+    <value> Attiva Office</value>
   </data>
   <data name="btnAttivaOffice.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
     <value>ImageBeforeText</value>
@@ -787,10 +161,10 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnAttivaOffice.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>13</value>
   </data>
   <data name="btnScrubber.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom</value>
+    <value>Bottom, Left</value>
   </data>
   <data name="btnScrubber.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -802,7 +176,7 @@
     <value>MiddleLeft</value>
   </data>
   <data name="btnScrubber.Location" type="System.Drawing.Point, System.Drawing">
-    <value>112, 325</value>
+    <value>31, 316</value>
   </data>
   <data name="btnScrubber.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 2, 3, 2</value>
@@ -814,7 +188,7 @@
     <value>80</value>
   </data>
   <data name="btnScrubber.Text" xml:space="preserve">
-    <value>   Disinstalla Office</value>
+    <value> Disinstalla Office</value>
   </data>
   <data name="btnScrubber.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
     <value>ImageBeforeText</value>
@@ -829,89 +203,10 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnScrubber.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="pictureBox3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="pictureBox3.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        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
-</value>
-  </data>
-  <data name="pictureBox3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>734, 9</value>
-  </data>
-  <data name="pictureBox3.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="pictureBox3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>53, 53</value>
-  </data>
-  <data name="pictureBox3.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
-    <value>StretchImage</value>
-  </data>
-  <data name="pictureBox3.TabIndex" type="System.Int32, mscorlib">
-    <value>81</value>
-  </data>
-  <data name="&gt;&gt;pictureBox3.Name" xml:space="preserve">
-    <value>pictureBox3</value>
-  </data>
-  <data name="&gt;&gt;pictureBox3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;pictureBox3.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;pictureBox3.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>12</value>
   </data>
   <data name="btnPersonalizzaOffice.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom</value>
+    <value>Bottom, Right</value>
   </data>
   <data name="btnPersonalizzaOffice.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -923,19 +218,19 @@
     <value>MiddleLeft</value>
   </data>
   <data name="btnPersonalizzaOffice.Location" type="System.Drawing.Point, System.Drawing">
-    <value>215, 394</value>
+    <value>453, 394</value>
   </data>
   <data name="btnPersonalizzaOffice.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 2, 3, 2</value>
   </data>
   <data name="btnPersonalizzaOffice.Size" type="System.Drawing.Size, System.Drawing">
-    <value>457, 53</value>
+    <value>436, 53</value>
   </data>
   <data name="btnPersonalizzaOffice.TabIndex" type="System.Int32, mscorlib">
     <value>82</value>
   </data>
   <data name="btnPersonalizzaOffice.Text" xml:space="preserve">
-    <value>   Crea Office Personalizzato</value>
+    <value> Crea Office Personalizzato</value>
   </data>
   <data name="btnPersonalizzaOffice.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
     <value>ImageBeforeText</value>
@@ -950,6 +245,399 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnPersonalizzaOffice.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="comboBoxInstallazione.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>System</value>
+  </data>
+  <data name="comboBoxInstallazione.Items" xml:space="preserve">
+    <value>x64 - Online</value>
+  </data>
+  <data name="comboBoxInstallazione.Items1" xml:space="preserve">
+    <value>x64 - Offline</value>
+  </data>
+  <data name="comboBoxInstallazione.Items2" xml:space="preserve">
+    <value>x32 - Online</value>
+  </data>
+  <data name="comboBoxInstallazione.Items3" xml:space="preserve">
+    <value>x32 - Offline</value>
+  </data>
+  <data name="comboBoxInstallazione.Location" type="System.Drawing.Point, System.Drawing">
+    <value>253, 62</value>
+  </data>
+  <data name="comboBoxInstallazione.Size" type="System.Drawing.Size, System.Drawing">
+    <value>113, 23</value>
+  </data>
+  <data name="comboBoxInstallazione.TabIndex" type="System.Int32, mscorlib">
+    <value>94</value>
+  </data>
+  <data name="comboBoxInstallazione.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;comboBoxInstallazione.Name" xml:space="preserve">
+    <value>comboBoxInstallazione</value>
+  </data>
+  <data name="&gt;&gt;comboBoxInstallazione.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;comboBoxInstallazione.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;comboBoxInstallazione.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="labelTipoInstallazione.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="labelTipoInstallazione.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 13.8pt, style=Italic</value>
+  </data>
+  <data name="labelTipoInstallazione.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="labelTipoInstallazione.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 62</value>
+  </data>
+  <data name="labelTipoInstallazione.Size" type="System.Drawing.Size, System.Drawing">
+    <value>235, 24</value>
+  </data>
+  <data name="labelTipoInstallazione.TabIndex" type="System.Int32, mscorlib">
+    <value>93</value>
+  </data>
+  <data name="labelTipoInstallazione.Text" xml:space="preserve">
+    <value>Seleziona tipo installazione</value>
+  </data>
+  <data name="labelTipoInstallazione.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>BottomCenter</value>
+  </data>
+  <data name="labelTipoInstallazione.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;labelTipoInstallazione.Name" xml:space="preserve">
+    <value>labelTipoInstallazione</value>
+  </data>
+  <data name="&gt;&gt;labelTipoInstallazione.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;labelTipoInstallazione.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;labelTipoInstallazione.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="labelversione.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="labelversione.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 13.8pt, style=Italic</value>
+  </data>
+  <data name="labelversione.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="labelversione.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 5</value>
+  </data>
+  <data name="labelversione.Size" type="System.Drawing.Size, System.Drawing">
+    <value>223, 24</value>
+  </data>
+  <data name="labelversione.TabIndex" type="System.Int32, mscorlib">
+    <value>90</value>
+  </data>
+  <data name="labelversione.Text" xml:space="preserve">
+    <value>Seleziona versione Office</value>
+  </data>
+  <data name="labelversione.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>BottomCenter</value>
+  </data>
+  <data name="&gt;&gt;labelversione.Name" xml:space="preserve">
+    <value>labelversione</value>
+  </data>
+  <data name="&gt;&gt;labelversione.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;labelversione.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;labelversione.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="comboBoxVerOffice.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>System</value>
+  </data>
+  <data name="comboBoxVerOffice.Items" xml:space="preserve">
+    <value>Office 2019</value>
+  </data>
+  <data name="comboBoxVerOffice.Items1" xml:space="preserve">
+    <value>Office 2021</value>
+  </data>
+  <data name="comboBoxVerOffice.Items2" xml:space="preserve">
+    <value>Office 2024</value>
+  </data>
+  <data name="comboBoxVerOffice.Items3" xml:space="preserve">
+    <value>Office 365</value>
+  </data>
+  <data name="comboBoxVerOffice.Location" type="System.Drawing.Point, System.Drawing">
+    <value>253, 6</value>
+  </data>
+  <data name="comboBoxVerOffice.Size" type="System.Drawing.Size, System.Drawing">
+    <value>113, 23</value>
+  </data>
+  <data name="comboBoxVerOffice.TabIndex" type="System.Int32, mscorlib">
+    <value>89</value>
+  </data>
+  <data name="&gt;&gt;comboBoxVerOffice.Name" xml:space="preserve">
+    <value>comboBoxVerOffice</value>
+  </data>
+  <data name="&gt;&gt;comboBoxVerOffice.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;comboBoxVerOffice.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;comboBoxVerOffice.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="pictureBox4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>372, 5</value>
+  </data>
+  <data name="pictureBox4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>59, 43</value>
+  </data>
+  <data name="pictureBox4.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
+    <value>Zoom</value>
+  </data>
+  <data name="pictureBox4.TabIndex" type="System.Int32, mscorlib">
+    <value>95</value>
+  </data>
+  <data name="&gt;&gt;pictureBox4.Name" xml:space="preserve">
+    <value>pictureBox4</value>
+  </data>
+  <data name="&gt;&gt;pictureBox4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pictureBox4.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;pictureBox4.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="richTextBoxInfo.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Right</value>
+  </data>
+  <data name="richTextBoxInfo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>453, 12</value>
+  </data>
+  <data name="richTextBoxInfo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>436, 290</value>
+  </data>
+  <data name="richTextBoxInfo.TabIndex" type="System.Int32, mscorlib">
+    <value>97</value>
+  </data>
+  <data name="richTextBoxInfo.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;richTextBoxInfo.Name" xml:space="preserve">
+    <value>richTextBoxInfo</value>
+  </data>
+  <data name="&gt;&gt;richTextBoxInfo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;richTextBoxInfo.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;richTextBoxInfo.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="richTextBoxDescription.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left</value>
+  </data>
+  <data name="richTextBoxDescription.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 105</value>
+  </data>
+  <data name="richTextBoxDescription.Size" type="System.Drawing.Size, System.Drawing">
+    <value>435, 197</value>
+  </data>
+  <data name="richTextBoxDescription.TabIndex" type="System.Int32, mscorlib">
+    <value>96</value>
+  </data>
+  <data name="richTextBoxDescription.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;richTextBoxDescription.Name" xml:space="preserve">
+    <value>richTextBoxDescription</value>
+  </data>
+  <data name="&gt;&gt;richTextBoxDescription.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;richTextBoxDescription.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;richTextBoxDescription.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="btnDownload.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom</value>
+  </data>
+  <data name="btnDownload.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="btnDownload.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 19.800001pt, style=Bold</value>
+  </data>
+  <data name="btnDownload.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="btnDownload.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnDownload.Location" type="System.Drawing.Point, System.Drawing">
+    <value>388, 307</value>
+  </data>
+  <data name="btnDownload.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="btnDownload.Size" type="System.Drawing.Size, System.Drawing">
+    <value>185, 62</value>
+  </data>
+  <data name="btnDownload.TabIndex" type="System.Int32, mscorlib">
+    <value>98</value>
+  </data>
+  <data name="btnDownload.Text" xml:space="preserve">
+    <value> Scarica</value>
+  </data>
+  <data name="btnDownload.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
+    <value>ImageBeforeText</value>
+  </data>
+  <data name="btnDownload.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;btnDownload.Name" xml:space="preserve">
+    <value>btnDownload</value>
+  </data>
+  <data name="&gt;&gt;btnDownload.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnDownload.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;btnDownload.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="comboBox_Lingua.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>System</value>
+  </data>
+  <data name="comboBox_Lingua.Items" xml:space="preserve">
+    <value>IT</value>
+  </data>
+  <data name="comboBox_Lingua.Items1" xml:space="preserve">
+    <value>EN</value>
+  </data>
+  <data name="comboBox_Lingua.Location" type="System.Drawing.Point, System.Drawing">
+    <value>253, 34</value>
+  </data>
+  <data name="comboBox_Lingua.Size" type="System.Drawing.Size, System.Drawing">
+    <value>113, 23</value>
+  </data>
+  <data name="comboBox_Lingua.TabIndex" type="System.Int32, mscorlib">
+    <value>100</value>
+  </data>
+  <data name="comboBox_Lingua.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;comboBox_Lingua.Name" xml:space="preserve">
+    <value>comboBox_Lingua</value>
+  </data>
+  <data name="&gt;&gt;comboBox_Lingua.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;comboBox_Lingua.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;comboBox_Lingua.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="lblSelezionLingua.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblSelezionLingua.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 13.8pt, style=Italic</value>
+  </data>
+  <data name="lblSelezionLingua.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblSelezionLingua.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 34</value>
+  </data>
+  <data name="lblSelezionLingua.Size" type="System.Drawing.Size, System.Drawing">
+    <value>149, 24</value>
+  </data>
+  <data name="lblSelezionLingua.TabIndex" type="System.Int32, mscorlib">
+    <value>99</value>
+  </data>
+  <data name="lblSelezionLingua.Text" xml:space="preserve">
+    <value>Seleziona lingua</value>
+  </data>
+  <data name="lblSelezionLingua.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>BottomCenter</value>
+  </data>
+  <data name="lblSelezionLingua.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;lblSelezionLingua.Name" xml:space="preserve">
+    <value>lblSelezionLingua</value>
+  </data>
+  <data name="&gt;&gt;lblSelezionLingua.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblSelezionLingua.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;lblSelezionLingua.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="btnAggRimAppOffice.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="btnAggRimAppOffice.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="btnAggRimAppOffice.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 19.800001pt, style=Bold</value>
+  </data>
+  <data name="btnAggRimAppOffice.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="btnAggRimAppOffice.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnAggRimAppOffice.Location" type="System.Drawing.Point, System.Drawing">
+    <value>31, 394</value>
+  </data>
+  <data name="btnAggRimAppOffice.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="btnAggRimAppOffice.Size" type="System.Drawing.Size, System.Drawing">
+    <value>359, 53</value>
+  </data>
+  <data name="btnAggRimAppOffice.TabIndex" type="System.Int32, mscorlib">
+    <value>101</value>
+  </data>
+  <data name="btnAggRimAppOffice.Text" xml:space="preserve">
+    <value>Aggiungi\Rimuovi app</value>
+  </data>
+  <data name="btnAggRimAppOffice.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
+    <value>ImageBeforeText</value>
+  </data>
+  <data name="&gt;&gt;btnAggRimAppOffice.Name" xml:space="preserve">
+    <value>btnAggRimAppOffice</value>
+  </data>
+  <data name="&gt;&gt;btnAggRimAppOffice.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnAggRimAppOffice.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;btnAggRimAppOffice.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">

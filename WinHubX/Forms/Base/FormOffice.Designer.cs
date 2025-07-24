@@ -29,164 +29,22 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormOffice));
-            lblHashInfo = new Label();
-            pictureBox1 = new PictureBox();
-            pictureBox2 = new PictureBox();
-            lblOffice2019 = new Label();
-            btn2019Online = new Button();
-            btn2019Offline = new Button();
-            btn2021Offline = new Button();
-            btn2021Online = new Button();
-            lblOffice2021 = new Label();
-            btn2024Offline = new Button();
-            btn2024Online = new Button();
-            lblOffice2024 = new Label();
-            btn365Offline = new Button();
-            btn365Online = new Button();
-            lblOffice365 = new Label();
             btnAttivaOffice = new Button();
             btnScrubber = new Button();
-            pictureBox3 = new PictureBox();
             btnPersonalizzaOffice = new Button();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
+            comboBoxInstallazione = new ComboBox();
+            labelTipoInstallazione = new Label();
+            labelversione = new Label();
+            comboBoxVerOffice = new ComboBox();
+            pictureBox4 = new PictureBox();
+            richTextBoxInfo = new RichTextBox();
+            richTextBoxDescription = new RichTextBox();
+            btnDownload = new Button();
+            comboBox_Lingua = new ComboBox();
+            lblSelezionLingua = new Label();
+            btnAggRimAppOffice = new Button();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             SuspendLayout();
-            // 
-            // lblHashInfo
-            // 
-            resources.ApplyResources(lblHashInfo, "lblHashInfo");
-            lblHashInfo.ForeColor = Color.Coral;
-            lblHashInfo.Name = "lblHashInfo";
-            // 
-            // pictureBox1
-            // 
-            resources.ApplyResources(pictureBox1, "pictureBox1");
-            pictureBox1.Image = Properties.Resources.pngOffice;
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.TabStop = false;
-            // 
-            // pictureBox2
-            // 
-            resources.ApplyResources(pictureBox2, "pictureBox2");
-            pictureBox2.Image = Properties.Resources.png365;
-            pictureBox2.Name = "pictureBox2";
-            pictureBox2.TabStop = false;
-            // 
-            // lblOffice2019
-            // 
-            resources.ApplyResources(lblOffice2019, "lblOffice2019");
-            lblOffice2019.ForeColor = Color.White;
-            lblOffice2019.Image = Properties.Resources.pngOffice;
-            lblOffice2019.Name = "lblOffice2019";
-            // 
-            // btn2019Online
-            // 
-            resources.ApplyResources(btn2019Online, "btn2019Online");
-            btn2019Online.Cursor = Cursors.Hand;
-            btn2019Online.FlatAppearance.BorderSize = 0;
-            btn2019Online.ForeColor = Color.White;
-            btn2019Online.Image = Properties.Resources.pngOnline;
-            btn2019Online.Name = "btn2019Online";
-            btn2019Online.UseVisualStyleBackColor = true;
-            btn2019Online.MouseUp += btn2019Online_MouseUp;
-            // 
-            // btn2019Offline
-            // 
-            resources.ApplyResources(btn2019Offline, "btn2019Offline");
-            btn2019Offline.Cursor = Cursors.Hand;
-            btn2019Offline.FlatAppearance.BorderSize = 0;
-            btn2019Offline.ForeColor = Color.White;
-            btn2019Offline.Image = Properties.Resources.pngOffline;
-            btn2019Offline.Name = "btn2019Offline";
-            btn2019Offline.UseVisualStyleBackColor = true;
-            btn2019Offline.MouseUp += btn2019Offline_MouseUp;
-            // 
-            // btn2021Offline
-            // 
-            resources.ApplyResources(btn2021Offline, "btn2021Offline");
-            btn2021Offline.Cursor = Cursors.Hand;
-            btn2021Offline.FlatAppearance.BorderSize = 0;
-            btn2021Offline.ForeColor = Color.White;
-            btn2021Offline.Image = Properties.Resources.pngOffline;
-            btn2021Offline.Name = "btn2021Offline";
-            btn2021Offline.UseVisualStyleBackColor = true;
-            btn2021Offline.MouseUp += btn2021Offline_MouseUp;
-            // 
-            // btn2021Online
-            // 
-            resources.ApplyResources(btn2021Online, "btn2021Online");
-            btn2021Online.Cursor = Cursors.Hand;
-            btn2021Online.FlatAppearance.BorderSize = 0;
-            btn2021Online.ForeColor = Color.White;
-            btn2021Online.Image = Properties.Resources.pngOnline;
-            btn2021Online.Name = "btn2021Online";
-            btn2021Online.UseVisualStyleBackColor = true;
-            btn2021Online.MouseUp += btn2021Online_MouseUp;
-            // 
-            // lblOffice2021
-            // 
-            resources.ApplyResources(lblOffice2021, "lblOffice2021");
-            lblOffice2021.ForeColor = Color.White;
-            lblOffice2021.Image = Properties.Resources.pngOffice;
-            lblOffice2021.Name = "lblOffice2021";
-            // 
-            // btn2024Offline
-            // 
-            resources.ApplyResources(btn2024Offline, "btn2024Offline");
-            btn2024Offline.Cursor = Cursors.Hand;
-            btn2024Offline.FlatAppearance.BorderSize = 0;
-            btn2024Offline.ForeColor = Color.White;
-            btn2024Offline.Image = Properties.Resources.pngOffline;
-            btn2024Offline.Name = "btn2024Offline";
-            btn2024Offline.UseVisualStyleBackColor = true;
-            btn2024Offline.MouseUp += btn2024Offline_MouseUp;
-            // 
-            // btn2024Online
-            // 
-            resources.ApplyResources(btn2024Online, "btn2024Online");
-            btn2024Online.Cursor = Cursors.Hand;
-            btn2024Online.FlatAppearance.BorderSize = 0;
-            btn2024Online.ForeColor = Color.White;
-            btn2024Online.Image = Properties.Resources.pngOnline;
-            btn2024Online.Name = "btn2024Online";
-            btn2024Online.UseVisualStyleBackColor = true;
-            btn2024Online.MouseUp += btn2024Online_MouseUp;
-            // 
-            // lblOffice2024
-            // 
-            resources.ApplyResources(lblOffice2024, "lblOffice2024");
-            lblOffice2024.ForeColor = Color.White;
-            lblOffice2024.Name = "lblOffice2024";
-            // 
-            // btn365Offline
-            // 
-            resources.ApplyResources(btn365Offline, "btn365Offline");
-            btn365Offline.Cursor = Cursors.Hand;
-            btn365Offline.FlatAppearance.BorderSize = 0;
-            btn365Offline.ForeColor = Color.White;
-            btn365Offline.Image = Properties.Resources.pngOffline;
-            btn365Offline.Name = "btn365Offline";
-            btn365Offline.UseVisualStyleBackColor = true;
-            btn365Offline.MouseUp += btn365Offline_MouseUp;
-            // 
-            // btn365Online
-            // 
-            resources.ApplyResources(btn365Online, "btn365Online");
-            btn365Online.Cursor = Cursors.Hand;
-            btn365Online.FlatAppearance.BorderSize = 0;
-            btn365Online.ForeColor = Color.White;
-            btn365Online.Image = Properties.Resources.pngOnline;
-            btn365Online.Name = "btn365Online";
-            btn365Online.UseVisualStyleBackColor = true;
-            btn365Online.MouseUp += btn365Online_MouseUp;
-            // 
-            // lblOffice365
-            // 
-            resources.ApplyResources(lblOffice365, "lblOffice365");
-            lblOffice365.ForeColor = Color.White;
-            lblOffice365.Image = Properties.Resources.png365;
-            lblOffice365.Name = "lblOffice365";
             // 
             // btnAttivaOffice
             // 
@@ -210,12 +68,6 @@
             btnScrubber.UseVisualStyleBackColor = true;
             btnScrubber.Click += btnScrubber_Click;
             // 
-            // pictureBox3
-            // 
-            resources.ApplyResources(pictureBox3, "pictureBox3");
-            pictureBox3.Name = "pictureBox3";
-            pictureBox3.TabStop = false;
-            // 
             // btnPersonalizzaOffice
             // 
             resources.ApplyResources(btnPersonalizzaOffice, "btnPersonalizzaOffice");
@@ -227,60 +79,139 @@
             btnPersonalizzaOffice.UseVisualStyleBackColor = true;
             btnPersonalizzaOffice.Click += btnPersonalizzaOffice_Click;
             // 
+            // comboBoxInstallazione
+            // 
+            comboBoxInstallazione.Cursor = Cursors.Hand;
+            comboBoxInstallazione.DropDownStyle = ComboBoxStyle.DropDownList;
+            resources.ApplyResources(comboBoxInstallazione, "comboBoxInstallazione");
+            comboBoxInstallazione.FormattingEnabled = true;
+            comboBoxInstallazione.Items.AddRange(new object[] { resources.GetString("comboBoxInstallazione.Items"), resources.GetString("comboBoxInstallazione.Items1"), resources.GetString("comboBoxInstallazione.Items2"), resources.GetString("comboBoxInstallazione.Items3") });
+            comboBoxInstallazione.Name = "comboBoxInstallazione";
+            comboBoxInstallazione.SelectedIndexChanged += comboBoxInstallazione_SelectedIndexChanged;
+            // 
+            // labelTipoInstallazione
+            // 
+            resources.ApplyResources(labelTipoInstallazione, "labelTipoInstallazione");
+            labelTipoInstallazione.ForeColor = Color.Coral;
+            labelTipoInstallazione.Name = "labelTipoInstallazione";
+            // 
+            // labelversione
+            // 
+            resources.ApplyResources(labelversione, "labelversione");
+            labelversione.ForeColor = Color.Coral;
+            labelversione.Name = "labelversione";
+            // 
+            // comboBoxVerOffice
+            // 
+            comboBoxVerOffice.BackColor = Color.White;
+            comboBoxVerOffice.Cursor = Cursors.Hand;
+            comboBoxVerOffice.DropDownStyle = ComboBoxStyle.DropDownList;
+            resources.ApplyResources(comboBoxVerOffice, "comboBoxVerOffice");
+            comboBoxVerOffice.FormattingEnabled = true;
+            comboBoxVerOffice.Items.AddRange(new object[] { resources.GetString("comboBoxVerOffice.Items"), resources.GetString("comboBoxVerOffice.Items1"), resources.GetString("comboBoxVerOffice.Items2"), resources.GetString("comboBoxVerOffice.Items3") });
+            comboBoxVerOffice.Name = "comboBoxVerOffice";
+            comboBoxVerOffice.SelectedIndexChanged += comboBoxVerOffice_SelectedIndexChanged;
+            // 
+            // pictureBox4
+            // 
+            resources.ApplyResources(pictureBox4, "pictureBox4");
+            pictureBox4.Name = "pictureBox4";
+            pictureBox4.TabStop = false;
+            // 
+            // richTextBoxInfo
+            // 
+            resources.ApplyResources(richTextBoxInfo, "richTextBoxInfo");
+            richTextBoxInfo.BackColor = Color.FromArgb(37, 38, 39);
+            richTextBoxInfo.BorderStyle = BorderStyle.None;
+            richTextBoxInfo.ForeColor = Color.White;
+            richTextBoxInfo.Name = "richTextBoxInfo";
+            // 
+            // richTextBoxDescription
+            // 
+            resources.ApplyResources(richTextBoxDescription, "richTextBoxDescription");
+            richTextBoxDescription.BackColor = Color.FromArgb(37, 38, 39);
+            richTextBoxDescription.BorderStyle = BorderStyle.None;
+            richTextBoxDescription.ForeColor = Color.White;
+            richTextBoxDescription.Name = "richTextBoxDescription";
+            // 
+            // btnDownload
+            // 
+            resources.ApplyResources(btnDownload, "btnDownload");
+            btnDownload.Cursor = Cursors.Hand;
+            btnDownload.FlatAppearance.BorderSize = 0;
+            btnDownload.ForeColor = Color.White;
+            btnDownload.Image = Properties.Resources.pngDownloadOffice;
+            btnDownload.Name = "btnDownload";
+            btnDownload.UseVisualStyleBackColor = true;
+            btnDownload.Click += btnDownload_Click;
+            // 
+            // comboBox_Lingua
+            // 
+            comboBox_Lingua.Cursor = Cursors.Hand;
+            comboBox_Lingua.DropDownStyle = ComboBoxStyle.DropDownList;
+            resources.ApplyResources(comboBox_Lingua, "comboBox_Lingua");
+            comboBox_Lingua.FormattingEnabled = true;
+            comboBox_Lingua.Items.AddRange(new object[] { resources.GetString("comboBox_Lingua.Items"), resources.GetString("comboBox_Lingua.Items1") });
+            comboBox_Lingua.Name = "comboBox_Lingua";
+            comboBox_Lingua.SelectedIndexChanged += comboBox_Lingua_SelectedIndexChanged;
+            // 
+            // lblSelezionLingua
+            // 
+            resources.ApplyResources(lblSelezionLingua, "lblSelezionLingua");
+            lblSelezionLingua.ForeColor = Color.Coral;
+            lblSelezionLingua.Name = "lblSelezionLingua";
+            // 
+            // btnAggRimAppOffice
+            // 
+            resources.ApplyResources(btnAggRimAppOffice, "btnAggRimAppOffice");
+            btnAggRimAppOffice.Cursor = Cursors.Hand;
+            btnAggRimAppOffice.FlatAppearance.BorderSize = 0;
+            btnAggRimAppOffice.ForeColor = Color.White;
+            btnAggRimAppOffice.Image = Properties.Resources.pngAggiungiRimuoviOffice;
+            btnAggRimAppOffice.Name = "btnAggRimAppOffice";
+            btnAggRimAppOffice.UseVisualStyleBackColor = true;
+            btnAggRimAppOffice.Click += btnAggRimAppOffice_Click;
+            // 
             // FormOffice
             // 
             resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.FromArgb(37, 38, 39);
+            Controls.Add(btnAggRimAppOffice);
+            Controls.Add(comboBox_Lingua);
+            Controls.Add(lblSelezionLingua);
+            Controls.Add(btnDownload);
+            Controls.Add(richTextBoxInfo);
+            Controls.Add(richTextBoxDescription);
+            Controls.Add(pictureBox4);
+            Controls.Add(comboBoxInstallazione);
+            Controls.Add(labelTipoInstallazione);
+            Controls.Add(labelversione);
+            Controls.Add(comboBoxVerOffice);
             Controls.Add(btnPersonalizzaOffice);
-            Controls.Add(pictureBox3);
             Controls.Add(btnScrubber);
             Controls.Add(btnAttivaOffice);
-            Controls.Add(btn2024Offline);
-            Controls.Add(btn2024Online);
-            Controls.Add(lblOffice2024);
-            Controls.Add(btn365Offline);
-            Controls.Add(btn365Online);
-            Controls.Add(lblOffice365);
-            Controls.Add(btn2021Offline);
-            Controls.Add(btn2021Online);
-            Controls.Add(lblOffice2021);
-            Controls.Add(btn2019Offline);
-            Controls.Add(btn2019Online);
-            Controls.Add(lblOffice2019);
-            Controls.Add(pictureBox2);
-            Controls.Add(lblHashInfo);
-            Controls.Add(pictureBox1);
             FormBorderStyle = FormBorderStyle.None;
             Name = "FormOffice";
-            Load += FormOffice_Load;
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-
-        private Label lblHashInfo;
-        private PictureBox pictureBox1;
-        private PictureBox pictureBox2;
-        private Label lblOffice2019;
-        private Button btn2019Online;
-        private Button btn2019Offline;
-        private Button btn2021Offline;
-        private Button btn2021Online;
-        private Label lblOffice2021;
-        private Button btn2024Offline;
-        private Button btn2024Online;
-        private Label lblOffice2024;
-        private Button btn365Offline;
-        private Button btn365Online;
-        private Label lblOffice365;
         private Button btnAttivaOffice;
         private Button btnScrubber;
-        private PictureBox pictureBox3;
         private Button btnPersonalizzaOffice;
+        private ComboBox comboBoxInstallazione;
+        private Label labelTipoInstallazione;
+        private Label labelversione;
+        private ComboBox comboBoxVerOffice;
+        private PictureBox pictureBox4;
+        private RichTextBox richTextBoxInfo;
+        private RichTextBox richTextBoxDescription;
+        private Button btnDownload;
+        private ComboBox comboBox_Lingua;
+        private Label lblSelezionLingua;
+        private Button btnAggRimAppOffice;
     }
 }

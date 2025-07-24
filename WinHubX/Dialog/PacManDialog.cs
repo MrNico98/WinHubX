@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 using System.IO.Compression;
-using System.Net;
 
 namespace WinHubX.Dialog
 {
@@ -24,14 +23,15 @@ namespace WinHubX.Dialog
             }
         }
 
-        private string dlLink32;
-        private string dlLink64;
+
         private NotifyIcon notifyIcon;
 
 
         public PacManDialog()
         {
             InitializeComponent();
+            ThemeManager.ApplyThemeToControl(this, ThemeManager.IsDarkTheme);
+            LanguageManager.LoadTranslations();
             notifyIcon = new NotifyIcon
             {
                 Icon = SystemIcons.Information,
@@ -65,19 +65,14 @@ namespace WinHubX.Dialog
             infoLabel.BackColor = lblPacMan.BackColor;
             infoLabel.TextAlign = ContentAlignment.MiddleRight;
             infoLabel.ImageAlign = ContentAlignment.MiddleLeft;
-
-            this.dlLink32 = link32;
-            this.dlLink64 = link64;
-
             this.Controls.Add(infoLabel);
             infoLabel.BringToFront();
         }
 
-        private void btnInstallaPacMan_Click(object sender, EventArgs e)
+        private async void btnInstallaPacMan_Click(object sender, EventArgs e)
         {
             try
             {
-                // Percorsi per il download e l'estrazione
                 string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
                 string zipFilePath = Path.Combine(desktopPath, "pacman-main.zip");
                 string extractPath = desktopPath;
@@ -86,40 +81,50 @@ namespace WinHubX.Dialog
 
                 if (!Directory.Exists(destinationDirectory))
                 {
-                    // Scarica il JSON
-                    using (WebClient client = new WebClient())
+                    using (HttpClient client = new HttpClient())
                     {
-                        string json = client.DownloadString("https://aimodsitalia.store/ConfigWinHubX/configWinHubX.json");
+                        // Scarica il JSON
+                        string json = await client.GetStringAsync("https://aimodsitalia.store/ConfigWinHubX/configWinHubX.json");
 
-                        // Deserializza il JSON per ottenere il link di download
                         JObject jsonObject = JObject.Parse(json);
-                        string downloadLink = jsonObject["PacMan"]["DownloadFile"].ToString();
+                        string downloadLink = jsonObject["PacMan"]?["DownloadFile"]?.ToString() ?? throw new Exception("Download link non trovato nel JSON.");
 
-                        // Scarica il file zip
-                        client.DownloadFile(downloadLink, zipFilePath);
+                        // Scarica il file ZIP
+                        using (var response = await client.GetAsync(downloadLink))
+                        {
+                            _ = response.EnsureSuccessStatusCode();
+                            using (var stream = await response.Content.ReadAsStreamAsync())
+                            using (var fileStream = new FileStream(zipFilePath, FileMode.Create, FileAccess.Write))
+                            {
+                                await stream.CopyToAsync(fileStream);
+                            }
+                        }
                     }
 
-                    // Estrai e sposta il contenuto
+                    // Estrai il contenuto ZIP
                     ZipFile.ExtractToDirectory(zipFilePath, extractPath, true);
+
+                    // Sposta nella destinazione finale
                     Directory.Move(sourceDirectory, destinationDirectory);
 
                     // Pulisci i file temporanei
                     Directory.Delete(Path.Combine(desktopPath, "pacman-main"), true);
                     File.Delete(zipFilePath);
 
-                    // Avvia l'applicazione
-                    Process.Start(Path.Combine(destinationDirectory, "WSA-pacman.exe"));
+                    // Avvia PacMan
+                    _ = Process.Start(Path.Combine(destinationDirectory, "WSA-pacman.exe"));
                 }
                 else
                 {
-                    MessageBox.Show("PacMan è presente sul Desktop.");
-                    Process.Start(Path.Combine(destinationDirectory, "WSA-pacman.exe"));
+                    _ = MessageBox.Show("PacMan è presente sul Desktop.");
+                    _ = Process.Start(Path.Combine(destinationDirectory, "WSA-pacman.exe"));
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("An error occurred: " + ex.Message);
+                _ = MessageBox.Show("Errore: " + ex.Message);
             }
         }
+
     }
 }

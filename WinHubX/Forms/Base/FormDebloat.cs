@@ -15,9 +15,9 @@ namespace WinHubX.Forms.Base
 
         public FormDebloat(Form1 form1)
         {
-            InitializeComponent();
             string savedLanguage = Properties.Settings.Default.Language ?? "it";
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(savedLanguage);
+            InitializeComponent();
             this.form1 = form1;
             flowLayoutPanel1.AutoScroll = true;
             flowLayoutPanel1.FlowDirection = FlowDirection.LeftToRight;
@@ -26,6 +26,7 @@ namespace WinHubX.Forms.Base
             flowLayoutPanel1.HorizontalScroll.Visible = false;
             flowLayoutPanel1.AutoScrollMinSize = new Size(0, 0);
             InizializzaDati();
+            ThemeManager.ApplyThemeToControl(this, ThemeManager.IsDarkTheme);
         }
 
         private async void InizializzaDati()
@@ -48,9 +49,9 @@ namespace WinHubX.Forms.Base
 
         private class ImmagineData
         {
-            public string Nome { get; set; }
-            public string ID { get; set; }
-            public string ImmagineUrl { get; set; }
+            public required string Nome { get; set; }
+            public required string ID { get; set; }
+            public required string ImmagineUrl { get; set; }
         }
         private async Task CaricaImmaginiApp()
         {
@@ -111,7 +112,7 @@ namespace WinHubX.Forms.Base
 
                 using (Process process = new Process { StartInfo = psi })
                 {
-                    process.Start();
+                    _ = process.Start();
                     string output = process.StandardOutput.ReadToEnd();
                     process.WaitForExit();
 
@@ -125,14 +126,13 @@ namespace WinHubX.Forms.Base
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void AggiornaUI(List<string> filteredApps)
         {
             flowLayoutPanel1.Controls.Clear();
-
             foreach (string appName in filteredApps)
             {
                 AggiungiElemento(appName);
@@ -142,7 +142,7 @@ namespace WinHubX.Forms.Base
         private void AggiungiElemento(string nomeTecnico)
         {
             string nomeLeggibile = OttieniNomeLeggibile(nomeTecnico);
-            string imgUrl = imageUrls.ContainsKey(nomeLeggibile) ? imageUrls[nomeLeggibile] : null;
+            string? imgUrl = imageUrls.ContainsKey(nomeLeggibile) ? imageUrls[nomeLeggibile] : null;
             if (string.IsNullOrEmpty(imgUrl) && imageUrls.ContainsKey("Generale"))
             {
                 imgUrl = imageUrls["Generale"];
@@ -158,7 +158,7 @@ namespace WinHubX.Forms.Base
                 Padding = new Padding(5),
                 BorderStyle = BorderStyle.FixedSingle,
                 Margin = new Padding(3),
-                BackColor = Color.FromArgb(37, 38, 39)
+                BackColor = ThemeManager.GetBackColor(ThemeManager.IsDarkTheme)
             };
 
             PictureBox pictureBox = new PictureBox
@@ -191,7 +191,7 @@ namespace WinHubX.Forms.Base
                 Left = 40,
                 Top = (panelHeight - 30) / 2,
                 TextAlign = ContentAlignment.MiddleLeft,
-                ForeColor = Color.White,
+                ForeColor = ThemeManager.GetForeColor(ThemeManager.IsDarkTheme),
                 Font = new Font("Arial", 9, FontStyle.Bold),
                 Padding = new Padding(0, 5, 0, 0)
             };
@@ -287,13 +287,13 @@ namespace WinHubX.Forms.Base
 
                 using (Process process = new Process { StartInfo = psi })
                 {
-                    process.Start();
+                    _ = process.Start();
                     process.WaitForExit();
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -314,13 +314,13 @@ namespace WinHubX.Forms.Base
 
                 using (Process process = new Process { StartInfo = psi })
                 {
-                    process.Start();
+                    _ = process.Start();
                     process.WaitForExit();
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {nomeApp}: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error: {nomeApp}: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -342,7 +342,7 @@ namespace WinHubX.Forms.Base
                     ExecutePowerShellCommand(powerShellCommand);
                     string messaggio = LanguageManager.GetTranslation("Global", "modifichesuccesso");
 
-                    MessageBox.Show(
+                    _ = MessageBox.Show(
                         messaggio,
                         "WinHubX",
                         MessageBoxButtons.OK,
@@ -393,8 +393,8 @@ namespace WinHubX.Forms.Base
                 if (process != null)
                 {
                     process.WaitForExit();
-                    string output = process.StandardOutput.ReadToEnd();
-                    string errors = process.StandardError.ReadToEnd();
+                    _ = process.StandardOutput.ReadToEnd();
+                    _ = process.StandardError.ReadToEnd();
                 }
             }
         }
@@ -453,7 +453,7 @@ namespace WinHubX.Forms.Base
         {
             string messaggio = LanguageManager.GetTranslation("Global", "modifichesuccesso");
 
-            MessageBox.Show(
+            _ = MessageBox.Show(
                 messaggio,
                 "WinHubX",
                 MessageBoxButtons.OK,

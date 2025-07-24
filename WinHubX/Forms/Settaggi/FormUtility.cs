@@ -21,6 +21,7 @@ namespace WinHubX.Forms.Settaggi
             LoadCheckboxStates();
             DisabilitaUtility.MouseMove += new MouseEventHandler(checkedListBox1_MouseMove);
             AbilitaUtility.MouseMove += new MouseEventHandler(checkedListBox2_MouseMove);
+            ThemeManager.ApplyThemeToControl(this, ThemeManager.IsDarkTheme);
         }
 
         private void checkedListBox1_MouseMove(object sender, MouseEventArgs e)
@@ -333,7 +334,7 @@ namespace WinHubX.Forms.Settaggi
 
         private static void RestartExplorer()
         {
-            System.Diagnostics.Process.Start("explorer.exe");
+            _ = System.Diagnostics.Process.Start("explorer.exe");
         }
 
         private void DisableScheduledTask(string taskPath)
@@ -353,7 +354,7 @@ namespace WinHubX.Forms.Settaggi
             }
         }
 
-        private void SetRegistryValue(string path, string name, object value, RegistryView view = RegistryView.Default)
+        private void SetRegistryValue(string path, string name, object? value, RegistryView view = RegistryView.Default)
         {
             RegistryKey baseKey = view == RegistryView.Registry64 ? RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, view) : Registry.LocalMachine;
 
@@ -1019,7 +1020,7 @@ namespace WinHubX.Forms.Settaggi
                 {
                     SetRegistryValue(@"SYSTEM\CurrentControlSet\Control\Session Manager\Power", "HibernateEnabled", 0);
                     SetRegistryValue(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FlyoutMenuSettings", "ShowHibernateOption", 0);
-                    System.Diagnostics.Process.Start("cmd.exe", "/C powercfg /hibernate off");
+                    _ = System.Diagnostics.Process.Start("cmd.exe", "/C powercfg /hibernate off");
                 }
                 catch (Exception)
                 {
@@ -1153,7 +1154,7 @@ namespace WinHubX.Forms.Settaggi
                 {
                     SetRegistryValue(@"SYSTEM\CurrentControlSet\Services\SysMain", "Start", 2, RegistryView.Registry32);
                     SetRegistryValue(@"SYSTEM\CurrentControlSet\Services\SysMain", "Start", 2, RegistryView.Registry64);
-                    System.Diagnostics.Process.Start("cmd.exe", "/C sc start SysMain");
+                    _ = System.Diagnostics.Process.Start("cmd.exe", "/C sc start SysMain");
                 }
                 catch (Exception)
                 {
@@ -1175,7 +1176,7 @@ namespace WinHubX.Forms.Settaggi
                     SetRegistryValue(@"SYSTEM\CurrentControlSet\Control\Session Manager\Power", "HibernateEnabled", 1, RegistryView.Registry64);
                     SetRegistryValue(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FlyoutMenuSettings", "ShowHibernateOption", 1, RegistryView.Registry32);
                     SetRegistryValue(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FlyoutMenuSettings", "ShowHibernateOption", 1, RegistryView.Registry64);
-                    System.Diagnostics.Process.Start("cmd.exe", "/C powercfg /hibernate on");
+                    _ = System.Diagnostics.Process.Start("cmd.exe", "/C powercfg /hibernate on");
                 }
                 catch (Exception)
                 {
@@ -1712,7 +1713,7 @@ namespace WinHubX.Forms.Settaggi
             RestartExplorer();
             string messaggio = LanguageManager.GetTranslation("Global", "modifichesuccesso");
 
-            MessageBox.Show(
+            _ = MessageBox.Show(
                 messaggio,
                 "WinHubX",
                 MessageBoxButtons.OK,

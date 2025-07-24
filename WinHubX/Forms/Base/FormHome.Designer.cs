@@ -30,13 +30,13 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormHome));
             imgHomeLogo = new PictureBox();
-            btnChangelog = new Button();
             btnKofi = new Button();
             tgWinHubX = new Button();
             label3 = new Label();
             lblInfoOffice2024 = new Label();
             label1 = new Label();
             lblInfoWinAIO64 = new Label();
+            versioneapp = new Label();
             ((System.ComponentModel.ISupportInitialize)imgHomeLogo).BeginInit();
             SuspendLayout();
             // 
@@ -46,16 +46,6 @@
             imgHomeLogo.Image = Properties.Resources.homeLogo;
             imgHomeLogo.Name = "imgHomeLogo";
             imgHomeLogo.TabStop = false;
-            // 
-            // btnChangelog
-            // 
-            resources.ApplyResources(btnChangelog, "btnChangelog");
-            btnChangelog.Cursor = Cursors.Hand;
-            btnChangelog.FlatAppearance.BorderSize = 0;
-            btnChangelog.ForeColor = Color.Coral;
-            btnChangelog.Name = "btnChangelog";
-            btnChangelog.UseVisualStyleBackColor = true;
-            btnChangelog.Click += btnChangelog_Click;
             // 
             // btnKofi
             // 
@@ -72,6 +62,7 @@
             // 
             resources.ApplyResources(tgWinHubX, "tgWinHubX");
             tgWinHubX.Cursor = Cursors.Hand;
+            tgWinHubX.FlatAppearance.BorderSize = 0;
             tgWinHubX.ForeColor = Color.FromArgb(37, 38, 39);
             tgWinHubX.Image = Properties.Resources.pngTelegram;
             tgWinHubX.Name = "tgWinHubX";
@@ -102,17 +93,23 @@
             lblInfoWinAIO64.ForeColor = Color.White;
             lblInfoWinAIO64.Name = "lblInfoWinAIO64";
             // 
+            // versioneapp
+            // 
+            resources.ApplyResources(versioneapp, "versioneapp");
+            versioneapp.ForeColor = Color.Coral;
+            versioneapp.Name = "versioneapp";
+            // 
             // FormHome
             // 
             resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.FromArgb(37, 38, 39);
+            Controls.Add(versioneapp);
             Controls.Add(label1);
             Controls.Add(lblInfoOffice2024);
             Controls.Add(tgWinHubX);
             Controls.Add(label3);
             Controls.Add(btnKofi);
-            Controls.Add(btnChangelog);
             Controls.Add(lblInfoWinAIO64);
             Controls.Add(imgHomeLogo);
             FormBorderStyle = FormBorderStyle.None;
@@ -125,12 +122,12 @@
         #endregion
 
         private PictureBox imgHomeLogo;
-        private Button btnChangelog;
         private Button btnKofi;
         private Button tgWinHubX;
         private Label label3;
         private Label lblInfoOffice2024;
         private Label label1;
         private Label lblInfoWinAIO64;
+        public Label versioneapp;
     }
 }

@@ -9,11 +9,12 @@ namespace WinHubX
         Form1 form1;
         public FormTools(Form1 form1)
         {
+            string savedLanguage = Properties.Settings.Default.Language ?? "it";
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(savedLanguage);
             InitializeComponent();
             this.form1 = form1;
             SetTooltips();
-            string savedLanguage = Properties.Settings.Default.Language ?? "it";
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo(savedLanguage);
+            ThemeManager.ApplyThemeToControl(this, ThemeManager.IsDarkTheme);
         }
         private void SetTooltips()
         {
@@ -37,7 +38,7 @@ namespace WinHubX
                 FormBorderStyle = FormBorderStyle.None,
                 StartPosition = FormStartPosition.CenterScreen
             };
-            dialogWinC.ShowDialog();
+            _ = dialogWinC.ShowDialog();
         }
 
         private void btnWimTK_Click(object sender, EventArgs e)
@@ -48,7 +49,7 @@ namespace WinHubX
                 FormBorderStyle = FormBorderStyle.None,
                 StartPosition = FormStartPosition.CenterScreen
             };
-            dialogWIMTK.ShowDialog();
+            _ = dialogWIMTK.ShowDialog();
         }
 
         private void btnDaRT_Click(object sender, EventArgs e)
@@ -59,7 +60,7 @@ namespace WinHubX
                 FormBorderStyle = FormBorderStyle.None,
                 StartPosition = FormStartPosition.CenterScreen
             };
-            dialogDaRT.ShowDialog();
+            _ = dialogDaRT.ShowDialog();
         }
 
         private void btnWinHubXLiteOS_Click(object sender, EventArgs e)
@@ -80,7 +81,7 @@ namespace WinHubX
                 FormBorderStyle = FormBorderStyle.None,
                 StartPosition = FormStartPosition.CenterScreen
             };
-            dialogMsPCManager.ShowDialog();
+            _ = dialogMsPCManager.ShowDialog();
         }
 
         private void btnRSTDriver_Click(object sender, EventArgs e)
@@ -91,7 +92,7 @@ namespace WinHubX
                 FormBorderStyle = FormBorderStyle.None,
                 StartPosition = FormStartPosition.CenterScreen
             };
-            dialogRSTDriver.ShowDialog();
+            _ = dialogRSTDriver.ShowDialog();
         }
     }
 }

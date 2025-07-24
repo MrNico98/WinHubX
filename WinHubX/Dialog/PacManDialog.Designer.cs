@@ -28,50 +28,36 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PacManDialog));
             label1 = new Label();
             btnInstallaPacMan = new Button();
             SuspendLayout();
             // 
             // label1
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Italic, GraphicsUnit.Point, 0);
+            resources.ApplyResources(label1, "label1");
             label1.ForeColor = Color.Coral;
-            label1.Location = new Point(30, 9);
             label1.Name = "label1";
-            label1.Size = new Size(328, 20);
-            label1.TabIndex = 51;
-            label1.Text = "Scaricare PacMan per avviare gli apk esterni?";
-            label1.TextAlign = ContentAlignment.BottomCenter;
             // 
             // btnInstallaPacMan
             // 
+            resources.ApplyResources(btnInstallaPacMan, "btnInstallaPacMan");
             btnInstallaPacMan.Cursor = Cursors.Hand;
             btnInstallaPacMan.FlatAppearance.BorderSize = 0;
-            btnInstallaPacMan.FlatStyle = FlatStyle.Flat;
-            btnInstallaPacMan.Font = new Font("Microsoft Sans Serif", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnInstallaPacMan.ForeColor = Color.White;
-            btnInstallaPacMan.Location = new Point(54, 59);
-            btnInstallaPacMan.Margin = new Padding(3, 2, 3, 2);
             btnInstallaPacMan.Name = "btnInstallaPacMan";
-            btnInstallaPacMan.Size = new Size(283, 73);
-            btnInstallaPacMan.TabIndex = 77;
-            btnInstallaPacMan.Text = "Installa PacMan";
-            btnInstallaPacMan.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnInstallaPacMan.UseVisualStyleBackColor = true;
             btnInstallaPacMan.Click += btnInstallaPacMan_Click;
             // 
             // PacManDialog
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(37, 38, 39);
-            ClientSize = new Size(422, 216);
             Controls.Add(btnInstallaPacMan);
             Controls.Add(label1);
             FormBorderStyle = FormBorderStyle.None;
             Name = "PacManDialog";
-            Text = "PacMan";
             ResumeLayout(false);
             PerformLayout();
         }
@@ -80,6 +66,5 @@
 
         private Label label1;
         private Button btnInstallaPacMan;
-        private Button btnClose;
     }
 }

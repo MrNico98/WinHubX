@@ -26,6 +26,8 @@ namespace WinHubX.Dialog.Tools
         public DialogWIMToolKit()
         {
             InitializeComponent();
+            ThemeManager.ApplyThemeToControl(this, ThemeManager.IsDarkTheme);
+            LanguageManager.LoadTranslations();
             notifyIcon = new NotifyIcon
             {
                 Icon = SystemIcons.Information,
@@ -46,31 +48,39 @@ namespace WinHubX.Dialog.Tools
             // URL del JSON di configurazione online
             string configUrl = "https://aimodsitalia.store/ConfigWinHubX/configWinHubX.json";
 
-            using (WebClient client = new WebClient())
+            try
             {
-                try
+                // Crea un'istanza di HttpClient
+                using (HttpClient client = new HttpClient())
                 {
                     // Scarica il JSON di configurazione
-                    string json = client.DownloadString(configUrl);
+                    string json = await client.GetStringAsync(configUrl);
 
                     // Analizza il JSON per ottenere l'URL di WimToolkit
                     JObject configData = JObject.Parse(json);
-                    string wimToolkitUrl = configData["Dialog"]["WimToolkit"].ToString();
+                    string? wimToolkitUrl = configData["Dialog"]["WimToolkit"]?.ToString();
+
+                    // Verifica se il link è presente
+                    if (string.IsNullOrEmpty(wimToolkitUrl))
+                    {
+                        _ = MessageBox.Show("WimToolkit URL non trovato.");
+                        return;
+                    }
 
                     // Scarica lo script dal URL di WimToolkit
-                    string script = client.DownloadString(wimToolkitUrl);
+                    string script = await client.GetStringAsync(wimToolkitUrl);
 
                     // Salva lo script in un file temporaneo
-                    string tempScriptPath = Path.GetTempPath() + "WIMtoolkitDowload.ps1";
+                    string tempScriptPath = Path.Combine(Path.GetTempPath(), "WIMtoolkitDownload.ps1");
                     File.WriteAllText(tempScriptPath, script);
 
                     // Esegui lo script PowerShell in modo asincrono
                     await Task.Run(() => ExecutePowerShellScript(tempScriptPath));
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Errore durante il download o l'esecuzione dello script: " + ex.Message);
-                }
+            }
+            catch (Exception ex)
+            {
+                _ = MessageBox.Show("Error: " + ex.Message);
             }
         }
 
@@ -94,7 +104,7 @@ namespace WinHubX.Dialog.Tools
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Errore durante l'esecuzione dello script PowerShell: " + ex.Message);
+                _ = MessageBox.Show("Error:" + ex.Message);
             }
         }
     }

@@ -123,6 +123,16 @@ namespace WinHubX.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap pngAggiungiRimuoviOffice {
+            get {
+                object obj = ResourceManager.GetObject("pngAggiungiRimuoviOffice", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap pngArchitettura {
             get {
                 object obj = ResourceManager.GetObject("pngArchitettura", resourceCulture);
@@ -276,6 +286,26 @@ namespace WinHubX.Properties {
         internal static System.Drawing.Bitmap pngDomanda {
             get {
                 object obj = ResourceManager.GetObject("pngDomanda", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap pngDownloadOffice {
+            get {
+                object obj = ResourceManager.GetObject("pngDownloadOffice", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap pngDownloadWindows {
+            get {
+                object obj = ResourceManager.GetObject("pngDownloadWindows", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

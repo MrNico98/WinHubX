@@ -117,40 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="btnAttivaWin.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="btnWin11.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABGdBTUEAALGPC/xhBQAAAT1JREFUeF7t
-        1KERA0EQA8EL24E6nzdv8Xngm6omK77nfL7PK8y9MoeKuVfmUDH3yhwq5l6ZQ8XcK3OomHtlDhVzr8yh
-        Yu6VOVTMvTKHirlX5lAx98ocKuZemUPF3CtzqJh7ZQ4Vc6/MoWLulTlUzL0yh4q5V+ZQMffKHCrmXplD
-        xdwrc6iYe2UOFXOvzKFi7pU5VMy9MoeKuVfmUDH3yhwq5l6ZQ8XcK3OomHvldrv9eT6FirlX5lAx98oc
-        KuZemUPF3CtzqJh7ZQ4Vc6/MoWLulTlUzL0yh4q5V+ZQMffKHCrmXplDxdwrc6iYe2UOFXOvzKFi7pU5
-        VMy9MoeKuVfmUDH3yhwq5l6ZQ8XcK3OomHtlDhVzr8yhYu6VOVTMvTKHirlX5lAx98ocKuZemUPF3Ctz
-        qJh7ZQ4Vc4/8AEClQJE+wMG9AAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="btnAttivaWin.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABGdBTUEAALGPC/xhBQAAA2lJREFUeF7t
-        mU1rE1EUhiOiELWrCk1s0IUgZCn+Brv0J4grwX/QWMGPVUHFqIkiYqFk0hahaKX4gYkhH7V+dNFaS3FT
-        BEHERFNduHDRkZtmbu68JzOTqTPJzOQeeKDtuTnnvO89maY0FLIbox9V1+G9lkdIzmlsBxZwA95LGiAN
-        IDmnsR1YwA14L2mANIDknMZ2YAE34L2kAdIAknMa24EF3ID3kgZIA0jOaWwHFnAD3ksaIA0gOaexHVjA
-        DXgvaYA0gOScxnZgATfgvaQB0gCScxrbgQXcgPeSBnjQgMT6MdfR4uzSPpJzmm7Fw7W1vfnyomoEng9U
-        aCJz5cVfmGMhGLGFOe8Fvocs4DfcJoc0TCoJ2+DJZwAWMIGJ6VS8BjtfKBRi2718asCu0VV1bGJWvTo5
-        re5OfCB5M8Zn37WeCX4zIJ3NmoLnjfCdAWdS80SsESnF2ojWc8MHBpy7+4SItMLKBF8ZgOI6ZU9ihQ7T
-        xDcGoKh2TMyk1Ho5qm5WouqPckxNZxWeI8M0CYQBTLAZ1dIROkwTnzwEV4loxr2pB0SsGTjQ41fCR2Mv
-        G3AzM0XEs/VGgZ0gDsTFN3p52IBbCoq3XvuN/AnDc6wmE/+86BMD2K8yUfzPEhUlsvDyEvtjiJhVr0T5
-        Q+/+0zf6obxoQPj8Mrl5o1sVYWc0oe1gZ8hQXjMARdsxQDPB7DwZKmgGWEGG8oIBDYGK8hcFX7x2vUF/
-        GCBw+UaSiA+cASgabz2ltD7OMlghFLMTyFBeMUATjrc+PjnDC2mf93dK26G6ZUA6m91C0YwrBuuu3TqC
-        ouxAhuqyATpxbMU14bczGUvhDBRkB6zVUwOM1j2tKLXtoWgRXP+l7HF1LjlChLYDa/GhemkAbgQfqDGU
-        vkB47D0RxcTXiofIzxGspRuq0asHBhgK1wIKfMrFifi55En+/Z2p0/xrtikDF97SIRDeq0sGaJFSlC/N
-        dd/QJUzi24uh/XrxrdX/XggdwPOBiVo+PCze/PqjOHnf42sCFfWFyLwolomvFmL9IZ7FZjlaNVp9PBuo
-        qFcif/DmRfG114PD+JpAxe/CwEFN7OdnR+F9H/HBv7f/I+qVoVN4+19zh/tj9UXh7VYfzwcuzMTXioNx
-        PB+4QAPE7/FsIEMU3HfiWagrIf6RN0ji/wHVGwhZE1HnEQAAAABJRU5ErkJggg==
-</value>
-  </data>
   <data name="btnAttivaWin.Location" type="System.Drawing.Point, System.Drawing">
-    <value>524, 364</value>
+    <value>508, 381</value>
   </data>
   <data name="btnAttivaWin.Size" type="System.Drawing.Size, System.Drawing">
     <value>381, 66</value>
@@ -158,27 +131,97 @@
   <data name="btnAttivaWin.Text" xml:space="preserve">
     <value>Activate Windows</value>
   </data>
-  <data name="btnCambioEdizione.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABGdBTUEAALGPC/xhBQAAAqZJREFUeF7t
-        mL1uE0EURiPR8RAUFIgHoEGBsJYcb56Dgp6OPAU/6w4Jgx2JgofgBZCATRBIiTc9HS0SLLob+cZ7ZkOY
-        9czYTOaTTjWje+c7dlxka8s2T45q7+iuTyPjzDXW4QAf6K4kIAkwzlxjHQ7wge5KApIA48w11uEAH+iu
-        JCAJMM5cYx0O8IHuSgKSAOPMNdbhAB/oriQgCTDOXGMdDvCB7koCkgDjzDXW4QAf6K4kIAkwzlxjHQ7w
-        ge5KAjZQwP7XW95Z5NGH68aZa0Jn8KL8NSjKHuYjSD47fZ/PqloE/L8S+DdkQfbqpN47OFUBjYSOe+e7
-        NvE3gAMsoYBOCborQgHCpRJ0V6QCBApoSdBdEQsQKEAl6K7IBQgU0EjQXWsUMJrO38rfqi9YmjSPWIeA
-        fFp952N9wMJdBBfAR/qEZUlWlL+DCuADfcPCpHlUKAH5rPrBBw5fHz9WO8vhgBVhcS3f7AokgOWX6prh
-        gBVg8aa8nOmuAAJ2J+1f++Fk/rBVmOGAnrC4lhd0VwABVp++hAN6wOKt8oLuilCA7PhreUF3RSZg76Ay
-        BPBOg+4KLKBV9KJwgCWXlhd0VwAB1uEAH+iuDRBgfEM4wCHX9s+/IWe71iyg8/eBAxxi/jiuUQDLXykB
-        LK7lJRzgkOXyWVH+XIsAFm+Vl3CAIx48/9z+9JtdgQWwuFFewgGOML7+za6AAli8s7yEAxzA8llxeOds
-        VyABLH5heYfJxkfvWLz16YcKi/eFJfrC93nPYvHw5Tej1L/AAqvAtwWJ/O+ND1mwOzmu8+m8zqdVPXpz
-        Ug/Gh8YdF/BNwcMHCTvjcof3og4FCPeLj9u8F3UoQLhblLd5L+p0/SZsP/tyg/eiDgUI956WN3kv6lCA
-        wDvR58oLkMQu4A8mj0WuEZ3BPQAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="btnCambioEdizione.Location" type="System.Drawing.Point, System.Drawing">
-    <value>74, 364</value>
+  <data name="btnCambioEdizione.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
   </data>
   <data name="btnCambioEdizione.Text" xml:space="preserve">
     <value>Change Edition</value>
+  </data>
+  <data name="comboBox1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>268, 4</value>
+  </data>
+  <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 0</value>
+  </data>
+  <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>211, 24</value>
+  </data>
+  <data name="label5.Text" xml:space="preserve">
+    <value>Select Windows version</value>
+  </data>
+  <data name="labelVersione.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 82</value>
+  </data>
+  <data name="labelVersione.Size" type="System.Drawing.Size, System.Drawing">
+    <value>206, 24</value>
+  </data>
+  <data name="labelVersione.Text" xml:space="preserve">
+    <value>Select Windows edition</value>
+  </data>
+  <data name="comboBoxVersione.Location" type="System.Drawing.Point, System.Drawing">
+    <value>268, 82</value>
+  </data>
+  <data name="comboBoxArchitettura.Location" type="System.Drawing.Point, System.Drawing">
+    <value>268, 30</value>
+  </data>
+  <data name="labelArchitettura.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 26</value>
+  </data>
+  <data name="labelArchitettura.Size" type="System.Drawing.Size, System.Drawing">
+    <value>248, 24</value>
+  </data>
+  <data name="labelArchitettura.Text" xml:space="preserve">
+    <value>Select Windows architecture</value>
+  </data>
+  <data name="richTextBoxDescription.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left</value>
+  </data>
+  <data name="richTextBoxDescription.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 111</value>
+  </data>
+  <data name="richTextBoxDescription.Size" type="System.Drawing.Size, System.Drawing">
+    <value>463, 198</value>
+  </data>
+  <data name="btnDownload.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom</value>
+  </data>
+  <data name="btnDownload.Location" type="System.Drawing.Point, System.Drawing">
+    <value>316, 314</value>
+  </data>
+  <data name="btnDownload.Size" type="System.Drawing.Size, System.Drawing">
+    <value>258, 66</value>
+  </data>
+  <data name="btnDownload.Text" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="richTextBoxInfo.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Right</value>
+  </data>
+  <data name="richTextBoxInfo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>463, 82</value>
+  </data>
+  <data name="richTextBoxInfo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>426, 227</value>
+  </data>
+  <data name="pictureBox4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>451, 4</value>
+  </data>
+  <data name="comboBox_SelezionaLingua.Items" xml:space="preserve">
+    <value>IT</value>
+  </data>
+  <data name="comboBox_SelezionaLingua.Items1" xml:space="preserve">
+    <value>EN</value>
+  </data>
+  <data name="comboBox_SelezionaLingua.Location" type="System.Drawing.Point, System.Drawing">
+    <value>268, 56</value>
+  </data>
+  <data name="lblSelezionaLingua.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 53</value>
+  </data>
+  <data name="lblSelezionaLingua.Size" type="System.Drawing.Size, System.Drawing">
+    <value>146, 24</value>
+  </data>
+  <data name="lblSelezionaLingua.Text" xml:space="preserve">
+    <value>Select language</value>
   </data>
 </root>

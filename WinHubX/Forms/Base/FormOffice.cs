@@ -1,9 +1,9 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO.Compression;
 using System.Net;
-using WinHubX.Dialog;
 using WinHubX.Forms.Personalizzazione_office;
 
 namespace WinHubX
@@ -12,247 +12,23 @@ namespace WinHubX
     {
         private Form1 form1;
         private NotifyIcon notifyIcon;
-        private string link32_2019, link64_2019, fileName_2019, sha256_2019;
-        private string link32_2021, link64_2021, fileName_2021, sha256_2021;
-        private string link32_2024, link64_2024, fileName_2024, sha256_2024;
-        private string link32_365, link64_365, fileName_365, sha256_365;
+        private string selectedInstallationType;
+        private string selectedOfficeVersion;
+        private string selectedLanguage;
 
         public FormOffice(Form1 form1)
         {
-            InitializeComponent();
             string savedLanguage = Properties.Settings.Default.Language ?? "it";
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(savedLanguage);
+            InitializeComponent();
             notifyIcon = new NotifyIcon
             {
                 Icon = SystemIcons.Information,
                 Visible = false
             };
             this.form1 = form1;
+            ThemeManager.ApplyThemeToControl(this, ThemeManager.IsDarkTheme);
         }
-
-        #region Link
-        private async Task LoadOfficeLinks()
-        {
-            string jsonUrl = "https://aimodsitalia.store/ConfigWinHubX/configWinHubX.json";
-
-            try
-            {
-                var jsonData = await GetJsonDataAsync(jsonUrl);
-
-                // Office 2019
-                link32_2019 = jsonData["Office2019"]["Officex32"]?.ToString();
-                link64_2019 = jsonData["Office2019"]["Officex64"]?.ToString();
-                fileName_2019 = jsonData["Office2019"]["Offline2019"]?.ToString();
-                sha256_2019 = jsonData["Office2019"]["sha2562019"]?.ToString();
-
-                // Office 2021
-                link32_2021 = jsonData["Office2021"]["Officex32"]?.ToString();
-                link64_2021 = jsonData["Office2021"]["Officex64"]?.ToString();
-                fileName_2021 = jsonData["Office2021"]["Offline2021"]?.ToString();
-                sha256_2021 = jsonData["Office2021"]["sha2562021"]?.ToString();
-
-                // Office 2024
-                link32_2024 = jsonData["Office2024"]["Officex32"]?.ToString();
-                link64_2024 = jsonData["Office2024"]["Officex64"]?.ToString();
-                fileName_2024 = jsonData["Office2024"]["Offline2024"]?.ToString();
-                sha256_2024 = jsonData["Office2024"]["sha2562024"]?.ToString();
-
-                // Office 365
-                link32_365 = jsonData["Office365"]["Officex32"]?.ToString();
-                link64_365 = jsonData["Office365"]["Officex64"]?.ToString();
-                fileName_365 = jsonData["Office365"]["Offline365"]?.ToString();
-                sha256_365 = jsonData["Office365"]["sha256365"]?.ToString();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private async Task<JObject> GetJsonDataAsync(string url)
-        {
-            using (HttpClient client = new HttpClient())
-            {
-                var response = await client.GetStringAsync(url);
-                return JObject.Parse(response);
-            }
-        }
-
-        #endregion
-
-
-
-        #region Office2019
-
-        private void btn2019Online_MouseUp(object sender, MouseEventArgs e)
-        {
-            OfficeDialog officeDialog = new OfficeDialog()
-            {
-                TopMost = true,
-                FormBorderStyle = FormBorderStyle.None,
-                StartPosition = FormStartPosition.CenterScreen
-            };
-            officeDialog.openDialog(lblOffice2019, link32_2019, link64_2019);
-            officeDialog.ShowDialog();
-        }
-
-        private void btn2019Offline_MouseUp(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                Clipboard.SetText(sha256_2019);
-                notifyIcon.BalloonTipTitle = LanguageManager.GetTranslation("Global", "sha256title");
-                notifyIcon.BalloonTipText = LanguageManager.GetTranslation("Global", "sha256text");
-                notifyIcon.ShowBalloonTip(1000);
-            }
-            else if (e.Button == MouseButtons.Left)
-            {
-                try
-                {
-                    ProcessStartInfo psi = new ProcessStartInfo
-                    {
-                        FileName = fileName_2019,
-                        UseShellExecute = true
-                    };
-                    Process.Start(psi);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        #endregion
-
-        #region Office2021
-
-        private void btn2021Online_MouseUp(object sender, MouseEventArgs e)
-        {
-            OfficeDialog officeDialog = new OfficeDialog()
-            {
-                TopMost = true,
-                FormBorderStyle = FormBorderStyle.None,
-                StartPosition = FormStartPosition.CenterScreen
-            };
-            officeDialog.openDialog(lblOffice2021, link32_2021, link64_2021);
-            officeDialog.ShowDialog();
-        }
-
-        private void btn2021Offline_MouseUp(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                Clipboard.SetText(sha256_2021);
-                notifyIcon.BalloonTipTitle = LanguageManager.GetTranslation("FormOffice", "sha256title");
-                notifyIcon.BalloonTipText = LanguageManager.GetTranslation("FormOffice", "sha256text");
-                notifyIcon.ShowBalloonTip(1000);
-            }
-            else if (e.Button == MouseButtons.Left)
-            {
-                try
-                {
-                    ProcessStartInfo psi = new ProcessStartInfo
-                    {
-                        FileName = fileName_2021,
-                        UseShellExecute = true
-                    };
-                    Process.Start(psi);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-        #endregion
-
-        #region Office365
-
-        private void btn365Online_MouseUp(object sender, MouseEventArgs e)
-        {
-            OfficeDialog officeDialog = new OfficeDialog()
-            {
-                TopMost = true,
-                FormBorderStyle = FormBorderStyle.None,
-                StartPosition = FormStartPosition.CenterScreen
-            };
-            officeDialog.openDialog(lblOffice365, link32_365, link64_365);
-            officeDialog.ShowDialog();
-        }
-
-        private void btn365Offline_MouseUp(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                Clipboard.SetText(sha256_365);
-                notifyIcon.BalloonTipTitle = LanguageManager.GetTranslation("FormOffice", "sha256title");
-                notifyIcon.BalloonTipText = LanguageManager.GetTranslation("FormOffice", "sha256text");
-                notifyIcon.ShowBalloonTip(1000);
-            }
-            else if (e.Button == MouseButtons.Left)
-            {
-                try
-                {
-                    ProcessStartInfo psi = new ProcessStartInfo
-                    {
-                        FileName = fileName_365,
-                        UseShellExecute = true
-                    };
-                    Process.Start(psi);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        #endregion
-
-        #region Office2024
-
-
-        private void btn2024Online_MouseUp(object sender, MouseEventArgs e)
-        {
-            OfficeDialog officeDialog = new OfficeDialog()
-            {
-                TopMost = true,
-                FormBorderStyle = FormBorderStyle.None,
-                StartPosition = FormStartPosition.CenterScreen
-            };
-            officeDialog.openDialog(lblOffice2024, link32_2024, link64_2024);
-            officeDialog.ShowDialog();
-        }
-
-        private void btn2024Offline_MouseUp(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                Clipboard.SetText(sha256_2024);
-                notifyIcon.BalloonTipTitle = LanguageManager.GetTranslation("FormOffice", "sha256title");
-                notifyIcon.BalloonTipText = LanguageManager.GetTranslation("FormOffice", "sha256text");
-                notifyIcon.ShowBalloonTip(1000);
-            }
-            else if (e.Button == MouseButtons.Left)
-            {
-                try
-                {
-                    ProcessStartInfo psi = new ProcessStartInfo
-                    {
-                        FileName = fileName_2024,
-                        UseShellExecute = true
-                    };
-                    Process.Start(psi);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        #endregion
 
         #region AttivaOffice
         private async void btnAttivaOffice_Click(object sender, EventArgs e)
@@ -275,7 +51,7 @@ namespace WinHubX
                 }
                 else
                 {
-                    MessageBox.Show(
+                    _ = MessageBox.Show(
                         LanguageManager.GetTranslation("Global", "nointernet"),
                         "Errore",
                         MessageBoxButtons.OK,
@@ -286,7 +62,7 @@ namespace WinHubX
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -301,7 +77,7 @@ namespace WinHubX
 
                     System.IO.File.WriteAllText(tempFilePath, scriptContent);
 
-                    Process.Start(new ProcessStartInfo
+                    _ = Process.Start(new ProcessStartInfo
                     {
                         FileName = tempFilePath,
                         UseShellExecute = true,
@@ -311,7 +87,7 @@ namespace WinHubX
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -340,7 +116,7 @@ namespace WinHubX
                 byte[] scriptBytes = Properties.Resources.TSforge_Activation_Office;
 
                 File.WriteAllBytes(scriptPath, scriptBytes);
-                Process.Start(new ProcessStartInfo
+                _ = Process.Start(new ProcessStartInfo
                 {
                     FileName = scriptPath,
                     UseShellExecute = true,
@@ -349,7 +125,7 @@ namespace WinHubX
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         #endregion
@@ -376,7 +152,7 @@ namespace WinHubX
 
                 if (Directory.Exists(tempFolder))
                     Directory.Delete(tempFolder, true);
-                Directory.CreateDirectory(tempFolder);
+                _ = Directory.CreateDirectory(tempFolder);
 
                 using (HttpClient client = new HttpClient())
                 using (HttpResponseMessage response = await client.GetAsync(zipFileUrl))
@@ -397,24 +173,24 @@ namespace WinHubX
                 process.StartInfo.FileName = "cmd.exe";
                 process.StartInfo.Arguments = $"/c \"{cmdPath}\"";
                 process.StartInfo.WorkingDirectory = tempFolder;
-                process.StartInfo.Verb = "runas"; 
+                process.StartInfo.Verb = "runas";
                 process.StartInfo.UseShellExecute = true;
 
-                process.Start();
+                _ = process.Start();
                 await Task.Run(() => process.WaitForExit());
                 await Task.Run(() => AttendiScrubberConTitolo("Office Scrubber v12"));
                 Directory.Delete(tempFolder, true);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Errore: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Errore: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private async Task AttendiScrubberConTitolo(string titolo, int timeoutMs = 10 * 60 * 1000)
         {
             int waited = 0;
-            Process scrubberProc = null;
+            Process? scrubberProc = null;
 
             while (waited < timeoutMs)
             {
@@ -428,10 +204,7 @@ namespace WinHubX
                 waited += 1000;
             }
 
-            if (scrubberProc != null)
-            {
-                scrubberProc.WaitForExit();
-            }
+            scrubberProc?.WaitForExit();
         }
 
         private void btnPersonalizzaOffice_Click(object sender, EventArgs e)
@@ -441,12 +214,219 @@ namespace WinHubX
             PersonalizzazioneOffice formPersonalizzazioneOffice = new PersonalizzazioneOffice(form1, this) { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
             formPersonalizzazioneOffice.FormBorderStyle = FormBorderStyle.None;
             form1.PnlFormLoader.Controls.Add(formPersonalizzazioneOffice);
+            ThemeManager.ApplyThemeToControl(formPersonalizzazioneOffice, ThemeManager.IsDarkTheme);
             formPersonalizzazioneOffice.Show();
         }
 
-        private async void FormOffice_Load(object sender, EventArgs e)
+        private void comboBoxVerOffice_SelectedIndexChanged(object sender, EventArgs e)
         {
-            await LoadOfficeLinks();
+            comboBox_Lingua.Visible = true;
+            lblSelezionLingua.Visible = true;
+            string selectedVersion = comboBoxVerOffice.SelectedItem.ToString();
+
+            switch (selectedVersion)
+            {
+                case "Office 365":
+                    pictureBox4.Image = Properties.Resources.png365;
+                    break;
+                case "Office 2019":
+                case "Office 2021":
+                    pictureBox4.Image = Properties.Resources.pngOffice;
+                    break;
+                case "Office 2024":
+                    pictureBox4.Image = Properties.Resources.pngOfficeHome;
+                    break;
+                default:
+                    pictureBox4.Image = null;
+                    break;
+            }
+        }
+
+        private void comboBox_Lingua_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            selectedLanguage = comboBox_Lingua.SelectedItem?.ToString();
+            labelTipoInstallazione.Visible = true;
+            comboBoxInstallazione.Visible = true;
+            if (!string.IsNullOrEmpty(selectedInstallationType) && !string.IsNullOrEmpty(selectedOfficeVersion))
+            {
+                comboBoxInstallazione_SelectedIndexChanged(null, null);
+            }
+        }
+
+        private void comboBoxInstallazione_SelectedIndexChanged(object? sender, EventArgs? e)
+        {
+            string selezione = comboBoxInstallazione.SelectedItem?.ToString();
+            btnDownload.Visible = true;
+            richTextBoxInfo.Clear();
+
+            if (selezione.Contains("Online"))
+            {
+                richTextBoxInfo.AppendText(LanguageManager.GetTranslation("FormOffice", "paneltitle"), Color.DodgerBlue, FontStyle.Bold | FontStyle.Underline, 12);
+                richTextBoxInfo.AppendText("\n📦 ", Color.DodgerBlue, FontStyle.Regular, 11);
+                richTextBoxInfo.AppendText(LanguageManager.GetTranslation("FormOffice", "onlineDescription"), Color.Orange, FontStyle.Regular, 11);
+                richTextBoxInfo.AppendText("\n✅ " + LanguageManager.GetTranslation("FormOffice", "advantagesTitle") + "\n", Color.Green, FontStyle.Bold, 11);
+                richTextBoxInfo.AppendText(LanguageManager.GetTranslation("FormOffice", "onlineAdvantage1"), Color.DarkGreen, FontStyle.Regular, 10);
+                richTextBoxInfo.AppendText(LanguageManager.GetTranslation("FormOffice", "onlineAdvantage2"), Color.DarkGreen, FontStyle.Regular, 10);
+                richTextBoxInfo.AppendText("\n⚠️ " + LanguageManager.GetTranslation("FormOffice", "requirementsTitle") + "\n", Color.Orange, FontStyle.Bold, 11);
+                richTextBoxInfo.AppendText(LanguageManager.GetTranslation("FormOffice", "onlineRequirement1"), Color.DarkOrange, FontStyle.Regular, 10);
+                richTextBoxInfo.AppendText("\n────────────────────\n", Color.LightGray, FontStyle.Regular, 11);
+            }
+            else if (selezione.Contains("Offline"))
+            {
+                richTextBoxInfo.AppendText(LanguageManager.GetTranslation("FormOffice", "offlinePanelTitle"), Color.Purple, FontStyle.Bold | FontStyle.Underline, 12);
+                richTextBoxInfo.AppendText("\n🗂️ ", Color.Purple, FontStyle.Regular, 11);
+                richTextBoxInfo.AppendText(LanguageManager.GetTranslation("FormOffice", "offlineDescription"), Color.Orange, FontStyle.Regular, 11);
+                richTextBoxInfo.AppendText("\n✅ " + LanguageManager.GetTranslation("FormOffice", "advantagesTitle") + "\n", Color.Green, FontStyle.Bold, 11);
+                richTextBoxInfo.AppendText(LanguageManager.GetTranslation("FormOffice", "offlineAdvantage1"), Color.DarkGreen, FontStyle.Regular, 10);
+                richTextBoxInfo.AppendText(LanguageManager.GetTranslation("FormOffice", "offlineAdvantage2"), Color.DarkGreen, FontStyle.Regular, 10);
+                richTextBoxInfo.AppendText(LanguageManager.GetTranslation("FormOffice", "offlineAdvantage3"), Color.DarkGreen, FontStyle.Regular, 10);
+                richTextBoxInfo.AppendText("\n⚠️ " + LanguageManager.GetTranslation("FormOffice", "requirementsTitle") + "\n", Color.Orange, FontStyle.Bold, 11);
+                richTextBoxInfo.AppendText(LanguageManager.GetTranslation("FormOffice", "offlineRequirement1"), Color.DarkOrange, FontStyle.Regular, 10);
+                richTextBoxInfo.AppendText(LanguageManager.GetTranslation("FormOffice", "offlineRequirement2"), Color.DarkOrange, FontStyle.Regular, 10);
+                richTextBoxInfo.AppendText("\n────────────────────\n", Color.LightGray, FontStyle.Regular, 11);
+                richTextBoxInfo.AppendText(LanguageManager.GetTranslation("FormOffice", "offlineTip"), Color.DodgerBlue, FontStyle.Bold, 10);
+                richTextBoxInfo.AppendText(LanguageManager.GetTranslation("FormOffice", "offlineTipText"), Color.Gray, FontStyle.Italic, 10);
+            }
+
+            selectedInstallationType = comboBoxInstallazione.SelectedItem?.ToString();
+            selectedOfficeVersion = comboBoxVerOffice.SelectedItem?.ToString();
+
+            btnDownload.Visible = !string.IsNullOrEmpty(selectedInstallationType) &&
+                                   !string.IsNullOrEmpty(selectedOfficeVersion);
+            richTextBoxDescription.Clear();
+
+            if (!string.IsNullOrEmpty(selectedInstallationType) && !string.IsNullOrEmpty(selectedOfficeVersion))
+            {
+                richTextBoxDescription.AppendText(LanguageManager.GetTranslation("FormOffice", "configurationTitle"), Color.DodgerBlue, FontStyle.Bold | FontStyle.Underline, 12);
+                richTextBoxDescription.AppendText("\n────────────────────────────\n", Color.LightGray, FontStyle.Regular, 9);
+
+                richTextBoxDescription.AppendText("\n🏷️ " + LanguageManager.GetTranslation("FormOffice", "officeVersion") + ": ", Color.Gray, FontStyle.Bold, 10);
+                richTextBoxDescription.AppendText($"{selectedOfficeVersion}\n", Color.Orange, FontStyle.Regular, 11);
+
+                richTextBoxDescription.AppendText("🌍 " + LanguageManager.GetTranslation("FormOffice", "lingua") + ": ", Color.Gray, FontStyle.Bold, 10);
+                richTextBoxDescription.AppendText($"{selectedLanguage}\n", Color.Orange, FontStyle.Regular, 11);
+
+                richTextBoxDescription.AppendText("📦 " + LanguageManager.GetTranslation("FormOffice", "installationType") + ": ", Color.Gray, FontStyle.Bold, 10);
+                richTextBoxDescription.AppendText($"{selectedInstallationType}\n", Color.Orange, FontStyle.Regular, 11);
+
+                if (selectedInstallationType.Contains("Online"))
+                {
+                    richTextBoxDescription.AppendText("\nℹ️ " + LanguageManager.GetTranslation("FormOffice", "noteOnline"), Color.SteelBlue, FontStyle.Bold, 10);
+                    richTextBoxDescription.AppendText(LanguageManager.GetTranslation("FormOffice", "noteOnlineText"), Color.SteelBlue, FontStyle.Regular, 10);
+                }
+                else
+                {
+                    richTextBoxDescription.AppendText("\nℹ️ " + LanguageManager.GetTranslation("FormOffice", "noteOffline"), Color.SteelBlue, FontStyle.Bold, 10);
+                    richTextBoxDescription.AppendText(LanguageManager.GetTranslation("FormOffice", "noteOfflineText"), Color.SteelBlue, FontStyle.Regular, 10);
+                }
+            }
+        }
+
+        private async void btnDownload_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(selectedInstallationType) || string.IsNullOrEmpty(selectedOfficeVersion))
+            {
+                _ = MessageBox.Show(LanguageManager.GetTranslation("FormOffice", "seleziona_versione_tipo_installazione"));
+                return;
+            }
+
+            try
+            {
+                var config = await ScaricaConfigurazioneAsync();
+                string key = selectedOfficeVersion.Replace(" ", "");
+
+                Dictionary<string, OfficeLanguage> officeData = key switch
+                {
+                    "Office2019" => config.Office2019,
+                    "Office2021" => config.Office2021,
+                    "Office2024" => config.Office2024,
+                    "Office365" => config.Office365,
+                    _ => null
+                };
+
+                if (officeData == null || !officeData.TryGetValue(selectedLanguage, out var languageData))
+                {
+                    richTextBoxDescription.AppendText("\n❌ ", Color.Red, FontStyle.Bold, 11);
+                    richTextBoxDescription.AppendText(LanguageManager.GetTranslation("FormOffice", "configurazione_non_trovata"), Color.DarkRed, FontStyle.Regular, 11);
+                    return;
+                }
+
+                string offlineProperty = $"Offline{key.Substring(6)}";
+                string url = selectedInstallationType.ToLower() switch
+                {
+                    var x when x.Contains("offline") => languageData.GetType().GetProperty(offlineProperty)?.GetValue(languageData)?.ToString(),
+                    var x when x.Contains("online") => selectedInstallationType.Contains("x64") ? languageData.Officex64 : languageData.Officex32,
+                    _ => null
+                };
+
+                if (!string.IsNullOrEmpty(url))
+                {
+                    if (selectedInstallationType.ToLower().Contains("offline"))
+                    {
+                        if (config.OfficeHashes.TryGetValue(selectedLanguage, out var hashDict))
+                        {
+                            string shaKey = $"Sha256{key}";
+                            if (hashDict.TryGetValue(shaKey, out string sha256))
+                            {
+                                richTextBoxDescription.AppendText("\n🔒 ", Color.Green, FontStyle.Bold, 11);
+                                richTextBoxDescription.AppendText(LanguageManager.GetTranslation("FormOffice", "sha256_verifica") + ":\n", Color.DarkRed, FontStyle.Bold, 11);
+                                richTextBoxDescription.AppendTextInfo($"{sha256}\n", Color.DarkSlateBlue, FontStyle.Regular, 9, new FontFamily("Consolas"));
+                            }
+                        }
+                    }
+
+                    _ = Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
+                }
+                else
+                {
+                    richTextBoxDescription.AppendText("\n❌ ", Color.Red, FontStyle.Bold, 11);
+                    richTextBoxDescription.AppendText(LanguageManager.GetTranslation("FormOffice", "url_non_trovato"), Color.DarkRed, FontStyle.Regular, 11);
+                }
+            }
+            catch (Exception ex)
+            {
+                richTextBoxDescription.AppendText("\n❌ ", Color.Red, FontStyle.Bold, 11);
+                richTextBoxDescription.AppendText($"{LanguageManager.GetTranslation("FormOffice", "errore")} {ex.Message}\n", Color.DarkRed, FontStyle.Regular, 11);
+            }
+        }
+
+        private async Task<DownloadConfigOffice> ScaricaConfigurazioneAsync()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string json = await client.GetStringAsync("https://aimodsitalia.store/ConfigWinHubX/configWinHubX.json");
+                return JsonConvert.DeserializeObject<DownloadConfigOffice>(json)!;
+            }
+        }
+
+        public class DownloadConfigOffice
+        {
+            public required Dictionary<string, OfficeLanguage> Office2019 { get; set; }
+            public required Dictionary<string, OfficeLanguage> Office2021 { get; set; }
+            public required Dictionary<string, OfficeLanguage> Office2024 { get; set; }
+            public required Dictionary<string, OfficeLanguage> Office365 { get; set; }
+            public required Dictionary<string, Dictionary<string, string>> OfficeHashes { get; set; }
+        }
+
+        public class OfficeLanguage
+        {
+            public required string Officex64 { get; set; }
+            public required string Officex32 { get; set; }
+            public string? Offline2019 { get; set; }
+            public string? Offline2021 { get; set; }
+            public string? Offline2024 { get; set; }
+            public string? Offline365 { get; set; }
+        }
+
+        private void btnAggRimAppOffice_Click(object sender, EventArgs e)
+        {
+            form1.lblPanelTitle.Text = LanguageManager.GetTranslation("FormOffice", "aggiungirimuoviapp");
+            form1.PnlFormLoader.Controls.Clear();
+            FormAggiungiRimuoviAppOffice formaggiungirimuoviappoffice = new FormAggiungiRimuoviAppOffice(form1, this) { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
+            formaggiungirimuoviappoffice.FormBorderStyle = FormBorderStyle.None;
+            form1.PnlFormLoader.Controls.Add(formaggiungirimuoviappoffice);
+            ThemeManager.ApplyThemeToControl(formaggiungirimuoviappoffice, ThemeManager.IsDarkTheme);
+            formaggiungirimuoviappoffice.Show();
         }
     }
 }

@@ -22,6 +22,7 @@ namespace WinHubX.Forms.Settaggi
             InitializeComponent();
             this.form1 = form1;
             this.formSettaggi = formSettaggi;
+            ThemeManager.ApplyThemeToControl(this, ThemeManager.IsDarkTheme);
         }
         public void ImpostaSpecifichePC(string driveType, string ramSize, bool isSSD)
         {
@@ -30,12 +31,12 @@ namespace WinHubX.Forms.Settaggi
             label5.Text = ramSize;
         }
 
-        private async void btnAvviaSelezionati_Click(object sender, EventArgs e)
+        private void btnAvviaSelezionati_Click(object sender, EventArgs e)
         {
             totalSteps = 0;
             List<Panel> pannelli = new List<Panel>
     {
-        panel1, panel3, panel4, panel5, panel6,
+        panel23, panel32, panel4, panel5, panel6,
         panel8, panel9, panel10, panel11, panel12, panel13
     };
             foreach (var pannello in pannelli)
@@ -76,7 +77,7 @@ namespace WinHubX.Forms.Settaggi
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error: {ex.Message}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -95,7 +96,7 @@ namespace WinHubX.Forms.Settaggi
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Si è verificato un errore durante l'abilitazione del pulsante 'Termina attività': " + ex.Message, "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show("Error:" + ex.Message, "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -131,11 +132,11 @@ namespace WinHubX.Forms.Settaggi
                     WindowStyle = ProcessWindowStyle.Normal
                 };
 
-                Process.Start(processInfo);
+                _ = Process.Start(processInfo);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -170,11 +171,11 @@ namespace WinHubX.Forms.Settaggi
                     WindowStyle = ProcessWindowStyle.Normal
                 };
 
-                Process.Start(processInfo);
+                _ = Process.Start(processInfo);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -191,11 +192,11 @@ namespace WinHubX.Forms.Settaggi
                     CreateNoWindow = false,
                     WindowStyle = ProcessWindowStyle.Normal
                 };
-                Process.Start(processInfo);
+                _ = Process.Start(processInfo);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -212,11 +213,11 @@ namespace WinHubX.Forms.Settaggi
                     CreateNoWindow = false,
                     WindowStyle = ProcessWindowStyle.Normal
                 };
-                Process.Start(processInfo);
+                _ = Process.Start(processInfo);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -229,7 +230,7 @@ namespace WinHubX.Forms.Settaggi
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -244,7 +245,7 @@ namespace WinHubX.Forms.Settaggi
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -260,25 +261,29 @@ namespace WinHubX.Forms.Settaggi
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void AvviaProcessoDisabilitaRicercaInternet()
         {
             try
             {
-                string registryPath = @"SOFTWARE\Policies\Microsoft\Windows\Explorer";
-                string valueName = "DisableSearchBoxSuggestions";
-                string newValue = "1";
-                SetStringRegistryValue(registryPath, valueName, newValue, RegistryView.Registry64);
-                SetStringRegistryValue(registryPath, valueName, newValue, RegistryView.Registry32);
+                string registryPathBing = @"Software\Microsoft\Windows\CurrentVersion\Search";
+                string valueNameBing = "BingSearchEnabled";
+                string newValueBing = "0";
+                SetStringRegistryValue(registryPathBing, valueNameBing, newValueBing, RegistryView.Registry64);
+                SetStringRegistryValue(registryPathBing, valueNameBing, newValueBing, RegistryView.Registry32);
+                string registryPathCortana = @"Software\Microsoft\Windows\CurrentVersion\Search";
+                string valueNameCortana = "CortanaConsent";
+                string newValueCortana = "0";
+                SetStringRegistryValue(registryPathCortana, valueNameCortana, newValueCortana, RegistryView.Registry64);
+                SetStringRegistryValue(registryPathCortana, valueNameCortana, newValueCortana, RegistryView.Registry32);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private async Task AvviaProcessoConRegFile(string regFileName)
         {
             string jsonUrl = "https://aimodsitalia.store/ConfigWinHubX/configWinHubX.json";
@@ -337,10 +342,10 @@ namespace WinHubX.Forms.Settaggi
         {
             using (HttpClient client = new HttpClient())
             {
-                Directory.CreateDirectory(tempFolder);
+                _ = Directory.CreateDirectory(tempFolder);
                 using (var response = await client.GetAsync(url))
                 {
-                    response.EnsureSuccessStatusCode();
+                    _ = response.EnsureSuccessStatusCode();
                     using (var fs = new FileStream(filePath, FileMode.CreateNew))
                     {
                         await response.Content.CopyToAsync(fs);
@@ -349,7 +354,7 @@ namespace WinHubX.Forms.Settaggi
             }
         }
 
-        private string EstraiFileReg(string zipFilePath, string regFileName)
+        private string? EstraiFileReg(string zipFilePath, string regFileName)
         {
             string extractedRegFilePath = Path.Combine(tempFolder, regFileName);
             using (ZipArchive archive = ZipFile.OpenRead(zipFilePath))
@@ -374,7 +379,7 @@ namespace WinHubX.Forms.Settaggi
 
             try
             {
-                System.Diagnostics.Process.Start(regedit64Path, $"/s \"{filePath}\"");
+                _ = System.Diagnostics.Process.Start(regedit64Path, $"/s \"{filePath}\"");
             }
             catch (Exception)
             {
@@ -383,7 +388,7 @@ namespace WinHubX.Forms.Settaggi
 
             try
             {
-                System.Diagnostics.Process.Start(regedit32Path, $"/s \"{filePath}\"");
+                _ = System.Diagnostics.Process.Start(regedit32Path, $"/s \"{filePath}\"");
             }
             catch (Exception)
             {
@@ -587,7 +592,7 @@ namespace WinHubX.Forms.Settaggi
             {
                 process.Kill();
             }
-            System.Diagnostics.Process.Start("explorer.exe");
+            _ = System.Diagnostics.Process.Start("explorer.exe");
         }
 
         private void btnBack_Click(object sender, EventArgs e)
@@ -784,28 +789,28 @@ namespace WinHubX.Forms.Settaggi
             }
             if (radio_apricmd.Checked)
             {
-                AvviaProcessoConRegFile("cmdsi.reg");
+                _ = AvviaProcessoConRegFile("cmdsi.reg");
                 SetCheckboxState("ApriCMD", radio_apricmd.Checked);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
             }
             if (radio_eliminaapricmd.Checked)
             {
-                AvviaProcessoConRegFile("cmdno.reg");
+                _ = AvviaProcessoConRegFile("cmdno.reg");
                 SetCheckboxState("EliminaApriCMD", radio_eliminaapricmd.Checked);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
             }
             if (radio_apripowershell.Checked)
             {
-                AvviaProcessoConRegFile("powershellsi.reg");
+                _ = AvviaProcessoConRegFile("powershellsi.reg");
                 SetCheckboxState("ApriPowershell", radio_apripowershell.Checked);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
             }
             if (radio_eliminapowershell.Checked)
             {
-                AvviaProcessoConRegFile("powershellno.reg");
+                _ = AvviaProcessoConRegFile("powershellno.reg");
                 SetCheckboxState("EliminaPowershell", radio_eliminapowershell.Checked);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
@@ -814,11 +819,11 @@ namespace WinHubX.Forms.Settaggi
             {
                 if (isSSD)
                 {
-                    AvviaProcessoConRegFile("ottimizzazioni_ssd.reg");
+                    _ = AvviaProcessoConRegFile("ottimizzazioni_ssd.reg");
                 }
                 else
                 {
-                    AvviaProcessoConRegFile("ottimizzazioni_hdd.reg");
+                    _ = AvviaProcessoConRegFile("ottimizzazioni_hdd.reg");
                 }
                 SetCheckboxState("OttimazzazioneWindows", radio_ottimizzawindows.Checked);
                 currentStep++;
@@ -826,21 +831,21 @@ namespace WinHubX.Forms.Settaggi
             }
             if (radio_disattivafx.Checked)
             {
-                AvviaProcessoConRegFile("disabilita_tutti_visual_fx.reg");
+                _ = AvviaProcessoConRegFile("disabilita_tutti_visual_fx.reg");
                 SetCheckboxState("DisattivaFx", radio_disattivafx.Checked);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
             }
             if (radio_attivafx.Checked)
             {
-                AvviaProcessoConRegFile("abilita_visual_fx.reg");
+                _ = AvviaProcessoConRegFile("abilita_visual_fx.reg");
                 SetCheckboxState("AttivaFx", radio_attivafx.Checked);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
             }
             if (radio_ripristinaottimizzazionewin.Checked)
             {
-                AvviaProcessoConRegFile("ripristina_impostazioni_windows.reg");
+                _ = AvviaProcessoConRegFile("ripristina_impostazioni_windows.reg");
                 SetCheckboxState("RipristinaOttimizzazioneWin", radio_ripristinaottimizzazionewin.Checked);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
@@ -927,7 +932,7 @@ namespace WinHubX.Forms.Settaggi
             RestartExplorer();
             string messaggio = LanguageManager.GetTranslation("Global", "modifichesuccesso");
 
-            MessageBox.Show(
+            _ = MessageBox.Show(
                 messaggio,
                 "WinHubX",
                 MessageBoxButtons.OK,
@@ -941,6 +946,12 @@ namespace WinHubX.Forms.Settaggi
             {
                 key.SetValue(itemName, isChecked ? 1 : 0, RegistryValueKind.DWord);
             }
+        }
+
+        private void btnSettaggiExplorer_Click(object sender, EventArgs e)
+        {
+            FormExplorer formExplorer = new FormExplorer();
+            formExplorer.Show();
         }
     }
 }

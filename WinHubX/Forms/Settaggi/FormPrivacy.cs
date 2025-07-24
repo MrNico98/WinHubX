@@ -23,7 +23,7 @@ namespace WinHubX.Forms.Settaggi
             LoadCheckboxStates();
             DisabilitaPrivacy.MouseMove += new MouseEventHandler(checkedListBox1_MouseMove);
             AbilitaPrivacy.MouseMove += new MouseEventHandler(checkedListBox2_MouseMove);
-
+            ThemeManager.ApplyThemeToControl(this, ThemeManager.IsDarkTheme);
         }
 
         private void checkedListBox1_MouseMove(object sender, MouseEventArgs e)
@@ -354,11 +354,11 @@ namespace WinHubX.Forms.Settaggi
             }
         }
 
-        private async void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             string messaggio = LanguageManager.GetTranslation("Global", "modifichesuccesso");
 
-            MessageBox.Show(
+            _ = MessageBox.Show(
                 messaggio,
                 "WinHubX",
                 MessageBoxButtons.OK,
@@ -1080,35 +1080,23 @@ namespace WinHubX.Forms.Settaggi
                     using (RegistryKey key64 = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64)
                                                              .CreateSubKey(@"Software\Policies\Microsoft\Windows\Explorer"))
                     {
-                        if (key64 != null)
-                        {
-                            key64.SetValue("DisableNotificationCenter", 1, RegistryValueKind.DWord);
-                        }
+                        key64?.SetValue("DisableNotificationCenter", 1, RegistryValueKind.DWord);
                     }
 
                     using (RegistryKey key64 = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64)
                                                              .CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\PushNotifications"))
                     {
-                        if (key64 != null)
-                        {
-                            key64.SetValue("ToastEnabled", 0, RegistryValueKind.DWord);
-                        }
+                        key64?.SetValue("ToastEnabled", 0, RegistryValueKind.DWord);
                     }
                     using (RegistryKey key32 = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32)
                                                              .CreateSubKey(@"Software\Policies\Microsoft\Windows\Explorer"))
                     {
-                        if (key32 != null)
-                        {
-                            key32.SetValue("DisableNotificationCenter", 1, RegistryValueKind.DWord);
-                        }
+                        key32?.SetValue("DisableNotificationCenter", 1, RegistryValueKind.DWord);
                     }
                     using (RegistryKey key32 = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32)
                                                              .CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\PushNotifications"))
                     {
-                        if (key32 != null)
-                        {
-                            key32.SetValue("ToastEnabled", 0, RegistryValueKind.DWord);
-                        }
+                        key32?.SetValue("ToastEnabled", 0, RegistryValueKind.DWord);
                     }
                 }
                 catch (Exception)
@@ -1273,7 +1261,7 @@ namespace WinHubX.Forms.Settaggi
                             if (task.State == TaskState.Disabled)
                             {
                                 task.Enabled = true;
-                                taskService.RootFolder.RegisterTaskDefinition(task.Name, task.Definition);
+                                _ = taskService.RootFolder.RegisterTaskDefinition(task.Name, task.Definition);
                             }
                         }
                     }
@@ -1700,36 +1688,24 @@ namespace WinHubX.Forms.Settaggi
                     using (RegistryKey key64 = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64)
                                                              .CreateSubKey(@"Software\Policies\Microsoft\Windows\Explorer"))
                     {
-                        if (key64 != null)
-                        {
-                            key64.SetValue("DisableNotificationCenter", 0, RegistryValueKind.DWord);
-                        }
+                        key64?.SetValue("DisableNotificationCenter", 0, RegistryValueKind.DWord);
                     }
 
                     using (RegistryKey key64 = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64)
                                                              .CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\PushNotifications"))
                     {
-                        if (key64 != null)
-                        {
-                            key64.SetValue("ToastEnabled", 1, RegistryValueKind.DWord);
-                        }
+                        key64?.SetValue("ToastEnabled", 1, RegistryValueKind.DWord);
                     }
                     using (RegistryKey key32 = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32)
                                                              .CreateSubKey(@"Software\Policies\Microsoft\Windows\Explorer"))
                     {
-                        if (key32 != null)
-                        {
-                            key32.SetValue("DisableNotificationCenter", 0, RegistryValueKind.DWord);
-                        }
+                        key32?.SetValue("DisableNotificationCenter", 0, RegistryValueKind.DWord);
                     }
 
                     using (RegistryKey key32 = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32)
                                                              .CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\PushNotifications"))
                     {
-                        if (key32 != null)
-                        {
-                            key32.SetValue("ToastEnabled", 1, RegistryValueKind.DWord);
-                        }
+                        key32?.SetValue("ToastEnabled", 1, RegistryValueKind.DWord);
                     }
                 }
                 catch (UnauthorizedAccessException)

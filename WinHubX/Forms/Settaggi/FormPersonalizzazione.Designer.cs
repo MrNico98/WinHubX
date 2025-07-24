@@ -30,7 +30,7 @@
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPersonalizzazione));
-            panel1 = new Panel();
+            panel23 = new Panel();
             radio_mostraoradata = new RadioButton();
             radio_nascondioradata = new RadioButton();
             radio_orologiostandard = new RadioButton();
@@ -38,7 +38,7 @@
             radio_mostrasecondi = new RadioButton();
             label4 = new Label();
             btnAvviaSelezionati = new Button();
-            panel2 = new Panel();
+            panel24 = new Panel();
             panel14 = new Panel();
             radio_abilitaendtask = new RadioButton();
             radio_disabilitaendtask = new RadioButton();
@@ -48,7 +48,7 @@
             panel4 = new Panel();
             radio_apricmd = new RadioButton();
             radio_eliminaapricmd = new RadioButton();
-            panel3 = new Panel();
+            panel32 = new Panel();
             radio_destrolegacy = new RadioButton();
             radio_destrodefault = new RadioButton();
             label1 = new Label();
@@ -59,20 +59,20 @@
             panel6 = new Panel();
             radio_abilitarecall = new RadioButton();
             radio_disabilitarecall = new RadioButton();
+            panel13 = new Panel();
+            radio_attivafx = new RadioButton();
+            radio_disattivafx = new RadioButton();
             panel9 = new Panel();
             radio_abilitasuggeriti = new RadioButton();
             radio_disabilitasuggeriti = new RadioButton();
             panel11 = new Panel();
             radio_disabilitaricercainternet = new RadioButton();
-            label2 = new Label();
-            panel8 = new Panel();
-            radio_ottimizzaricerca = new RadioButton();
-            panel13 = new Panel();
-            radio_attivafx = new RadioButton();
-            radio_disattivafx = new RadioButton();
             panel12 = new Panel();
             radio_ripristinaottimizzazionewin = new RadioButton();
             radio_ottimizzawindows = new RadioButton();
+            label2 = new Label();
+            panel8 = new Panel();
+            radio_ottimizzaricerca = new RadioButton();
             btnBack = new Button();
             btn_resetselezione = new Button();
             label3 = new Label();
@@ -80,32 +80,33 @@
             progressBar1 = new ProgressBar();
             toolTip1 = new ToolTip(components);
             backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            panel1.SuspendLayout();
-            panel2.SuspendLayout();
+            btnSettaggiExplorer = new Button();
+            panel23.SuspendLayout();
+            panel24.SuspendLayout();
             panel14.SuspendLayout();
             panel5.SuspendLayout();
             panel4.SuspendLayout();
-            panel3.SuspendLayout();
+            panel32.SuspendLayout();
             panel7.SuspendLayout();
             panel10.SuspendLayout();
             panel6.SuspendLayout();
+            panel13.SuspendLayout();
             panel9.SuspendLayout();
             panel11.SuspendLayout();
-            panel8.SuspendLayout();
-            panel13.SuspendLayout();
             panel12.SuspendLayout();
+            panel8.SuspendLayout();
             SuspendLayout();
             // 
-            // panel1
+            // panel23
             // 
-            resources.ApplyResources(panel1, "panel1");
-            panel1.Controls.Add(radio_mostraoradata);
-            panel1.Controls.Add(radio_nascondioradata);
-            panel1.Controls.Add(radio_orologiostandard);
-            panel1.Controls.Add(radio_mostradatasecondi);
-            panel1.Controls.Add(radio_mostrasecondi);
-            panel1.Controls.Add(label4);
-            panel1.Name = "panel1";
+            resources.ApplyResources(panel23, "panel23");
+            panel23.Controls.Add(radio_mostraoradata);
+            panel23.Controls.Add(radio_nascondioradata);
+            panel23.Controls.Add(radio_orologiostandard);
+            panel23.Controls.Add(radio_mostradatasecondi);
+            panel23.Controls.Add(radio_mostrasecondi);
+            panel23.Controls.Add(label4);
+            panel23.Name = "panel23";
             // 
             // radio_mostraoradata
             // 
@@ -168,15 +169,15 @@
             btnAvviaSelezionati.UseVisualStyleBackColor = true;
             btnAvviaSelezionati.Click += btnAvviaSelezionati_Click;
             // 
-            // panel2
+            // panel24
             // 
-            resources.ApplyResources(panel2, "panel2");
-            panel2.Controls.Add(panel14);
-            panel2.Controls.Add(panel5);
-            panel2.Controls.Add(panel4);
-            panel2.Controls.Add(panel3);
-            panel2.Controls.Add(label1);
-            panel2.Name = "panel2";
+            resources.ApplyResources(panel24, "panel24");
+            panel24.Controls.Add(panel14);
+            panel24.Controls.Add(panel5);
+            panel24.Controls.Add(panel4);
+            panel24.Controls.Add(panel32);
+            panel24.Controls.Add(label1);
+            panel24.Name = "panel24";
             // 
             // panel14
             // 
@@ -253,12 +254,12 @@
             toolTip1.SetToolTip(radio_eliminaapricmd, resources.GetString("radio_eliminaapricmd.ToolTip"));
             radio_eliminaapricmd.UseVisualStyleBackColor = true;
             // 
-            // panel3
+            // panel32
             // 
-            panel3.Controls.Add(radio_destrolegacy);
-            panel3.Controls.Add(radio_destrodefault);
-            resources.ApplyResources(panel3, "panel3");
-            panel3.Name = "panel3";
+            panel32.Controls.Add(radio_destrolegacy);
+            panel32.Controls.Add(radio_destrodefault);
+            resources.ApplyResources(panel32, "panel32");
+            panel32.Name = "panel32";
             // 
             // radio_destrolegacy
             // 
@@ -289,8 +290,10 @@
             resources.ApplyResources(panel7, "panel7");
             panel7.Controls.Add(panel10);
             panel7.Controls.Add(panel6);
+            panel7.Controls.Add(panel13);
             panel7.Controls.Add(panel9);
             panel7.Controls.Add(panel11);
+            panel7.Controls.Add(panel12);
             panel7.Controls.Add(label2);
             panel7.Controls.Add(panel8);
             panel7.Name = "panel7";
@@ -345,6 +348,31 @@
             toolTip1.SetToolTip(radio_disabilitarecall, resources.GetString("radio_disabilitarecall.ToolTip"));
             radio_disabilitarecall.UseVisualStyleBackColor = true;
             // 
+            // panel13
+            // 
+            panel13.Controls.Add(radio_attivafx);
+            panel13.Controls.Add(radio_disattivafx);
+            resources.ApplyResources(panel13, "panel13");
+            panel13.Name = "panel13";
+            // 
+            // radio_attivafx
+            // 
+            resources.ApplyResources(radio_attivafx, "radio_attivafx");
+            radio_attivafx.ForeColor = Color.White;
+            radio_attivafx.Name = "radio_attivafx";
+            radio_attivafx.TabStop = true;
+            toolTip1.SetToolTip(radio_attivafx, resources.GetString("radio_attivafx.ToolTip"));
+            radio_attivafx.UseVisualStyleBackColor = true;
+            // 
+            // radio_disattivafx
+            // 
+            resources.ApplyResources(radio_disattivafx, "radio_disattivafx");
+            radio_disattivafx.ForeColor = Color.White;
+            radio_disattivafx.Name = "radio_disattivafx";
+            radio_disattivafx.TabStop = true;
+            toolTip1.SetToolTip(radio_disattivafx, resources.GetString("radio_disattivafx.ToolTip"));
+            radio_disattivafx.UseVisualStyleBackColor = true;
+            // 
             // panel9
             // 
             panel9.Controls.Add(radio_abilitasuggeriti);
@@ -385,51 +413,6 @@
             toolTip1.SetToolTip(radio_disabilitaricercainternet, resources.GetString("radio_disabilitaricercainternet.ToolTip"));
             radio_disabilitaricercainternet.UseVisualStyleBackColor = true;
             // 
-            // label2
-            // 
-            resources.ApplyResources(label2, "label2");
-            label2.ForeColor = Color.Coral;
-            label2.Name = "label2";
-            // 
-            // panel8
-            // 
-            panel8.Controls.Add(radio_ottimizzaricerca);
-            resources.ApplyResources(panel8, "panel8");
-            panel8.Name = "panel8";
-            // 
-            // radio_ottimizzaricerca
-            // 
-            resources.ApplyResources(radio_ottimizzaricerca, "radio_ottimizzaricerca");
-            radio_ottimizzaricerca.ForeColor = Color.White;
-            radio_ottimizzaricerca.Name = "radio_ottimizzaricerca";
-            radio_ottimizzaricerca.TabStop = true;
-            radio_ottimizzaricerca.UseVisualStyleBackColor = true;
-            // 
-            // panel13
-            // 
-            panel13.Controls.Add(radio_attivafx);
-            panel13.Controls.Add(radio_disattivafx);
-            resources.ApplyResources(panel13, "panel13");
-            panel13.Name = "panel13";
-            // 
-            // radio_attivafx
-            // 
-            resources.ApplyResources(radio_attivafx, "radio_attivafx");
-            radio_attivafx.ForeColor = Color.White;
-            radio_attivafx.Name = "radio_attivafx";
-            radio_attivafx.TabStop = true;
-            toolTip1.SetToolTip(radio_attivafx, resources.GetString("radio_attivafx.ToolTip"));
-            radio_attivafx.UseVisualStyleBackColor = true;
-            // 
-            // radio_disattivafx
-            // 
-            resources.ApplyResources(radio_disattivafx, "radio_disattivafx");
-            radio_disattivafx.ForeColor = Color.White;
-            radio_disattivafx.Name = "radio_disattivafx";
-            radio_disattivafx.TabStop = true;
-            toolTip1.SetToolTip(radio_disattivafx, resources.GetString("radio_disattivafx.ToolTip"));
-            radio_disattivafx.UseVisualStyleBackColor = true;
-            // 
             // panel12
             // 
             panel12.Controls.Add(radio_ripristinaottimizzazionewin);
@@ -452,6 +435,26 @@
             radio_ottimizzawindows.Name = "radio_ottimizzawindows";
             radio_ottimizzawindows.TabStop = true;
             radio_ottimizzawindows.UseVisualStyleBackColor = true;
+            // 
+            // label2
+            // 
+            resources.ApplyResources(label2, "label2");
+            label2.ForeColor = Color.Coral;
+            label2.Name = "label2";
+            // 
+            // panel8
+            // 
+            panel8.Controls.Add(radio_ottimizzaricerca);
+            resources.ApplyResources(panel8, "panel8");
+            panel8.Name = "panel8";
+            // 
+            // radio_ottimizzaricerca
+            // 
+            resources.ApplyResources(radio_ottimizzaricerca, "radio_ottimizzaricerca");
+            radio_ottimizzaricerca.ForeColor = Color.White;
+            radio_ottimizzaricerca.Name = "radio_ottimizzaricerca";
+            radio_ottimizzaricerca.TabStop = true;
+            radio_ottimizzaricerca.UseVisualStyleBackColor = true;
             // 
             // btnBack
             // 
@@ -500,60 +503,69 @@
             backgroundWorker1.ProgressChanged += backgroundWorker1_ProgressChanged;
             backgroundWorker1.RunWorkerCompleted += backgroundWorker1_RunWorkerCompleted;
             // 
+            // btnSettaggiExplorer
+            // 
+            resources.ApplyResources(btnSettaggiExplorer, "btnSettaggiExplorer");
+            btnSettaggiExplorer.Cursor = Cursors.Hand;
+            btnSettaggiExplorer.FlatAppearance.BorderSize = 0;
+            btnSettaggiExplorer.ForeColor = Color.White;
+            btnSettaggiExplorer.Name = "btnSettaggiExplorer";
+            btnSettaggiExplorer.UseVisualStyleBackColor = true;
+            btnSettaggiExplorer.Click += btnSettaggiExplorer_Click;
+            // 
             // FormPersonalizzazione
             // 
             resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.FromArgb(37, 38, 39);
+            Controls.Add(btnSettaggiExplorer);
             Controls.Add(progressBar1);
-            Controls.Add(panel13);
             Controls.Add(label5);
-            Controls.Add(panel12);
             Controls.Add(label3);
             Controls.Add(btn_resetselezione);
             Controls.Add(btnBack);
             Controls.Add(panel7);
-            Controls.Add(panel2);
+            Controls.Add(panel24);
             Controls.Add(btnAvviaSelezionati);
-            Controls.Add(panel1);
+            Controls.Add(panel23);
             FormBorderStyle = FormBorderStyle.None;
             Name = "FormPersonalizzazione";
             Load += FormPersonalizzazione_Load;
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
-            panel2.ResumeLayout(false);
-            panel2.PerformLayout();
+            panel23.ResumeLayout(false);
+            panel23.PerformLayout();
+            panel24.ResumeLayout(false);
+            panel24.PerformLayout();
             panel14.ResumeLayout(false);
             panel14.PerformLayout();
             panel5.ResumeLayout(false);
             panel5.PerformLayout();
             panel4.ResumeLayout(false);
             panel4.PerformLayout();
-            panel3.ResumeLayout(false);
-            panel3.PerformLayout();
+            panel32.ResumeLayout(false);
+            panel32.PerformLayout();
             panel7.ResumeLayout(false);
             panel7.PerformLayout();
             panel10.ResumeLayout(false);
             panel10.PerformLayout();
             panel6.ResumeLayout(false);
             panel6.PerformLayout();
+            panel13.ResumeLayout(false);
+            panel13.PerformLayout();
             panel9.ResumeLayout(false);
             panel9.PerformLayout();
             panel11.ResumeLayout(false);
             panel11.PerformLayout();
-            panel8.ResumeLayout(false);
-            panel8.PerformLayout();
-            panel13.ResumeLayout(false);
-            panel13.PerformLayout();
             panel12.ResumeLayout(false);
             panel12.PerformLayout();
+            panel8.ResumeLayout(false);
+            panel8.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private Panel panel1;
+        private Panel panel23;
         private Label label4;
         private RadioButton radio_orologiostandard;
         private RadioButton radio_mostradatasecondi;
@@ -561,8 +573,8 @@
         private RadioButton radio_mostraoradata;
         private RadioButton radio_nascondioradata;
         private Button btnAvviaSelezionati;
-        private Panel panel2;
-        private Panel panel3;
+        private Panel panel24;
+        private Panel panel32;
         private Label label1;
         private RadioButton radio_destrodefault;
         private RadioButton radio_destrolegacy;
@@ -603,5 +615,6 @@
         private Panel panel14;
         private RadioButton radio_abilitaendtask;
         private RadioButton radio_disabilitaendtask;
+        private Button btnSettaggiExplorer;
     }
 }

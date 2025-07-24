@@ -23,6 +23,8 @@ namespace WinHubX.Dialog.Tools
         public DialogDaRT()
         {
             InitializeComponent();
+            ThemeManager.ApplyThemeToControl(this, ThemeManager.IsDarkTheme);
+            LanguageManager.LoadTranslations();
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -39,12 +41,12 @@ namespace WinHubX.Dialog.Tools
                     FileName = "https://devuploads.com/5dh0kron451m",
                     UseShellExecute = true
                 };
-                Process.Start(psi);
+                _ = Process.Start(psi);
                 this.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Errore nell'aprire l'URL: {ex.Message}");
+                _ = MessageBox.Show($"URL Error: {ex.Message}");
             }
         }
     }

@@ -18,9 +18,9 @@ namespace WinHubX.Forms.Base
         private NotifyIcon notifyIcon;
         public FormMonitoraggio(Form1 form1)
         {
-            InitializeComponent();
             string savedLanguage = Properties.Settings.Default.Language ?? "it";
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(savedLanguage);
+            InitializeComponent();
             StopMonitoringRam();
             StartMonitoringCPU();
             this.form1 = form1;
@@ -36,6 +36,7 @@ namespace WinHubX.Forms.Base
             timer.Tick += Timer_Tick;
             timer.Start();
             LoadState();
+            ThemeManager.ApplyThemeToControl(this, ThemeManager.IsDarkTheme);
         }
         private void LoadState()
         {
@@ -85,8 +86,7 @@ namespace WinHubX.Forms.Base
         {
             if (float.TryParse(cpuTempStr, out float cpuTemp))
             {
-                Image image = null;
-
+                Image image;
                 if (cpuTemp >= 80)
                 {
                     image = Properties.Resources.term_rosso;
@@ -105,7 +105,7 @@ namespace WinHubX.Forms.Base
                 }
                 else
                 {
-                    MessageBox.Show("Immagine non trovata nelle risorse.", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    _ = MessageBox.Show("Immagine non trovata nelle risorse.", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -133,7 +133,7 @@ namespace WinHubX.Forms.Base
                 }
                 else
                 {
-                    MessageBox.Show("Immagine non trovata nelle risorse.", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    _ = MessageBox.Show("Immagine non trovata nelle risorse.", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -187,9 +187,9 @@ namespace WinHubX.Forms.Base
 
                     if (processHandle != IntPtr.Zero)
                     {
-                        SetProcessWorkingSetSize(processHandle, IntPtr.Zero, IntPtr.Zero);
-                        EmptyWorkingSet(processHandle);
-                        CloseHandle(processHandle);
+                        _ = SetProcessWorkingSetSize(processHandle, IntPtr.Zero, IntPtr.Zero);
+                        _ = EmptyWorkingSet(processHandle);
+                        _ = CloseHandle(processHandle);
                     }
                 }
                 catch (Exception)
@@ -206,7 +206,7 @@ namespace WinHubX.Forms.Base
 
             bool result = EmptyWorkingSet(processHandle);
 
-            CloseHandle(processHandle);
+            _ = CloseHandle(processHandle);
 
             return result;
         }
@@ -214,13 +214,13 @@ namespace WinHubX.Forms.Base
         {
             MEMORYSTATUSEX memStatus = new MEMORYSTATUSEX();
             memStatus.dwLength = (uint)Marshal.SizeOf(typeof(MEMORYSTATUSEX));
-            GlobalMemoryStatusEx(ref memStatus);
+            _ = GlobalMemoryStatusEx(ref memStatus);
             return memStatus;
         }
         private void OptimizeMemory()
         {
             var currentProcess = Process.GetCurrentProcess();
-            ReduceMemoryUse(currentProcess.Id);
+            _ = ReduceMemoryUse(currentProcess.Id);
         }
 
         [StructLayout(LayoutKind.Sequential)]
@@ -265,9 +265,9 @@ namespace WinHubX.Forms.Base
         private double GetCPUUsagePercentage()
         {
             PerformanceCounter cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
-            double cpuUsage = cpuCounter.NextValue();
+            _ = cpuCounter.NextValue();
             System.Threading.Thread.Sleep(1000);
-            cpuUsage = cpuCounter.NextValue();
+            double cpuUsage = cpuCounter.NextValue();
             return cpuUsage;
         }
         private void Cpureduct()
@@ -328,12 +328,12 @@ namespace WinHubX.Forms.Base
 
             if (isMonitoringOn)
             {
-                MessageBox.Show(LanguageManager.GetTranslation("FormMonitoraggio", "monitoron"), "INFO");
+                _ = MessageBox.Show(LanguageManager.GetTranslation("FormMonitoraggio", "monitoron"), "INFO");
                 StartMonitoringRam();
             }
             else
             {
-                MessageBox.Show(LanguageManager.GetTranslation("FormMonitoraggio", "monitoroff"), "INFO");
+                _ = MessageBox.Show(LanguageManager.GetTranslation("FormMonitoraggio", "monitoroff"), "INFO");
                 StopMonitoringRam();
             }
         }
@@ -428,7 +428,7 @@ namespace WinHubX.Forms.Base
             return size;
         }
         private bool notificaGiaMostrata = false;
-        private void comboBox_gb_SelectedIndexChanged(object sender, EventArgs e)
+        private void comboBox_gb_SelectedIndexChanged(object? sender, EventArgs? e)
         {
             if (int.TryParse(comboBox_gb.SelectedItem.ToString(), out int selectedLimitGB))
             {
@@ -500,7 +500,7 @@ namespace WinHubX.Forms.Base
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error:\n{ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error:\n{ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

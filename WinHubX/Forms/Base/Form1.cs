@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.InteropServices;
+using System.Text;
 using WinHubX.Forms.Base;
 using WinHubX.Forms.ReinstallaAPP;
 
@@ -15,7 +16,6 @@ namespace WinHubX
         private const int WM_NCHITTEST = 0x84;
         private const int HT_CAPTION = 0x2;
         private bool isLoading = true;
-        private bool light = false;
 
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
         private static extern IntPtr CreateRoundRectRgn(int nLeftRect, int nTopRect, int nRightRect, int nBottomRect, int nWidthEllipse, int nHeightEllipse);
@@ -81,9 +81,21 @@ namespace WinHubX
         private static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
 
         private const int WM_NCLBUTTONDOWN = 0xA1;
+
         public Form1()
         {
             InitializeComponent();
+            Icon appIcon = Properties.Resources.icoLogoWhite;
+            notifyIcon = new NotifyIcon
+            {
+                Icon = appIcon,
+                Visible = false
+            };
+            trayIconContextMenu = new ContextMenuStrip();
+            _ = trayIconContextMenu.Items.Add("Apri", null, (s, e) => ShowFromTray());
+            _ = trayIconContextMenu.Items.Add("Esci", null, (s, e) => Application.Exit());
+            notifyIcon.ContextMenuStrip = trayIconContextMenu;
+            notifyIcon.DoubleClick += (s, e) => ShowFromTray();
             this.Padding = new Padding(2);
             this.FormBorderStyle = FormBorderStyle.None;
             this.Resize += (s, e) =>
@@ -92,29 +104,30 @@ namespace WinHubX
             };
             bottoni.AddRange(new[] { btnHome, btnWin, btnOffice, btnSettaggi, btnDebloat, btnCreaISO, btnTools, btnmonitoraggio });
             LoadForm(new FormHome(), btnHome, "Home");
-            InitializeTrayIcon();
             LanguageManager.LoadTranslations();
+            this.ActiveControl = label1;
+            ThemeManager.ApplyThemeToControl(this, ThemeManager.IsDarkTheme);
         }
 
         private void EnableDragging(Control control)
         {
-            if (control is Button || control is TextBox || control is CheckBox || control is ComboBox || control is ListBox)
+            if (control is Button || control is TextBox || control is PictureBox || control is CheckBox || control is ComboBox || control is ListBox || control is RadioButton)
                 return;
 
             control.MouseDown += (s, e) =>
             {
                 if (e.Button == MouseButtons.Left)
                 {
-                    ReleaseCapture();
-                    SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+                    _ = ReleaseCapture();
+                    _ = SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
                 }
             };
+
             foreach (Control child in control.Controls)
             {
                 EnableDragging(child);
             }
         }
-
 
         private void ShowFromTray()
         {
@@ -122,21 +135,6 @@ namespace WinHubX
             this.WindowState = FormWindowState.Normal;
             this.Activate();
             notifyIcon.Visible = false;
-        }
-
-        private void InitializeTrayIcon()
-        {
-            Icon appIcon = Properties.Resources.icoLogoWhite;
-            notifyIcon = new NotifyIcon
-            {
-                Icon = appIcon,
-                Visible = false
-            };
-            trayIconContextMenu = new ContextMenuStrip();
-            trayIconContextMenu.Items.Add("Apri", null, (s, e) => ShowFromTray());
-            trayIconContextMenu.Items.Add("Esci", null, (s, e) => Application.Exit());
-            notifyIcon.ContextMenuStrip = trayIconContextMenu;
-            notifyIcon.DoubleClick += (s, e) => ShowFromTray();
         }
 
         private void swap_pnlNav(Button activeButton)
@@ -158,6 +156,8 @@ namespace WinHubX
             form.FormBorderStyle = FormBorderStyle.None;
             PnlFormLoader.Controls.Add(form);
             form.Show();
+            EnableDragging(this);
+            ThemeManager.ApplyThemeToControl(form, ThemeManager.IsDarkTheme);
         }
 
         private async void CheckForUpdatesOnStartup() => await CheckForUpdatesAsync();
@@ -165,7 +165,7 @@ namespace WinHubX
         private async Task CheckForUpdatesAsync()
         {
             string configUrl = "https://aimodsitalia.store/ConfigWinHubX/configWinHubX.json";
-            string currentVersion = "2.4.3.0";
+            string currentVersion = AppConfig.CurrentVersion;
 
             try
             {
@@ -177,12 +177,9 @@ namespace WinHubX
                 dynamic updateInfo = JsonConvert.DeserializeObject(response);
                 string latestVersion = (string)updateInfo.version;
 
-                string updateUrl = light
-                    ? (string)updateInfo.updateUrlLight
-                    : (string)updateInfo.updateUrl;
-
-                var releaseNotes = updateInfo.releaseNotes;
-                string releaseNotesText = string.Join("\n", releaseNotes);
+                string updateUrl = (string)updateInfo.updateUrl;
+                string userLang = Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName.ToUpper();
+                string releaseNotesText = GetReleaseNotesByLanguage(updateInfo.releaseNotes, userLang);
 
                 if (latestVersion != currentVersion)
                 {
@@ -206,7 +203,28 @@ namespace WinHubX
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private string GetReleaseNotesByLanguage(dynamic releaseNotesObject, string language)
+        {
+            try
+            {
+                var notes = releaseNotesObject[language];
+                if (notes == null)
+                    return "Nessuna nota disponibile.";
+
+                StringBuilder sb = new StringBuilder();
+                foreach (var note in notes)
+                {
+                    sb.AppendLine("• " + note.ToString());
+                }
+
+                return sb.ToString().Trim();
+            }
+            catch
+            {
+                return "Note di rilascio non disponibili per la lingua selezionata.";
             }
         }
 
@@ -223,12 +241,12 @@ namespace WinHubX
                     string currentExecutablePath = Application.ExecutablePath;
                     File.Move(currentExecutablePath, Path.ChangeExtension(currentExecutablePath, ".old"), true);
                     File.Move(updateFilePath, currentExecutablePath);
-                    Process.Start(currentExecutablePath);
+                    _ = Process.Start(currentExecutablePath);
                     Application.Exit();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    _ = MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 finally
                 {
@@ -239,7 +257,7 @@ namespace WinHubX
 
         private async Task DownloadFileWithProgress(string url, string filePath, ProgressForm progressForm)
         {
-            string localPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "WinHubX", "Lingue", "translations.json");
+            string localPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "WinHubX");
             if (File.Exists(localPath))
             {
                 try
@@ -248,12 +266,12 @@ namespace WinHubX
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error:\n{ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    _ = MessageBox.Show($"Error:\n{ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
 
             using var response = await client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead);
-            response.EnsureSuccessStatusCode();
+            _ = response.EnsureSuccessStatusCode();
             var totalBytes = response.Content.Headers.ContentLength.GetValueOrDefault();
             using var contentStream = await response.Content.ReadAsStreamAsync();
             using var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None, 8192, true);
@@ -264,7 +282,7 @@ namespace WinHubX
             {
                 await fileStream.WriteAsync(buffer, 0, read);
                 progressForm.Invoke(new Action(() =>
-                    progressForm.SetStatus("Download...", (int)((bytesRead * 100) / totalBytes))));
+                progressForm.SetStatus("Download...", (int)((bytesRead * 100) / totalBytes))));
             }
         }
 
@@ -297,7 +315,7 @@ namespace WinHubX
 
             if (result == DialogResult.Yes)
             {
-                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                _ = System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
                 {
                     FileName = "cmd.exe",
                     Arguments = "/c sc config UCPD start=disabled && schtasks /change /Enable /TN \"\\Microsoft\\Windows\\AppxDeploymentClient\\UCPD velocity\" && shutdown /r /t 0",
@@ -322,7 +340,7 @@ namespace WinHubX
                         object value = key.GetValue("SettaggiRiavviati");
                         if (value != null && value.ToString() == "0")
                         {
-                            MessageBox.Show("Per entrare in questo menù necessito dell'accesso al registro");
+                            _ = MessageBox.Show("I need registry access to access this menu");
                         }
                     }
                 }
@@ -409,7 +427,7 @@ if ($existingRestorePoints.Count -eq 0) {
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    _ = MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
 
@@ -459,7 +477,7 @@ if ($existingRestorePoints.Count -eq 0) {
             }
         }
 
-        private async void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboBox1.SelectedItem == null) return;
             string languageCode = "it";
@@ -473,6 +491,11 @@ if ($existingRestorePoints.Count -eq 0) {
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(languageCode);
             Controls.Clear();
             InitializeComponent();
+            bool dark = Properties.Settings.Default.DarkTheme;
+            ThemeManager.SetTheme(dark);
+            label1.Text = dark
+                ? LanguageManager.GetTranslation("Form1", "temascuro")
+                : LanguageManager.GetTranslation("Form1", "temachiaro");
             LoadForm(new FormHome(), btnHome, "Home");
             string savedLanguage = Properties.Settings.Default.Language ?? "it";
             LanguageManager.SetLanguage(savedLanguage);
@@ -498,7 +521,6 @@ if ($existingRestorePoints.Count -eq 0) {
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
             if (Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName == "en")
             {
                 comboBox1.SelectedItem = "English";
@@ -527,6 +549,12 @@ if ($existingRestorePoints.Count -eq 0) {
             EnableDragging(panel2);
             EnableDragging(panel3);
             EnableDragging(PnlFormLoader);
+            bool dark = Properties.Settings.Default.DarkTheme;
+            bottoniSwap1.Checked = dark;
+            ThemeManager.SetTheme(dark);
+            label1.Text = dark
+                ? LanguageManager.GetTranslation("Form1", "temascuro")
+                : LanguageManager.GetTranslation("Form1", "temachiaro");
         }
 
         private void pictureBox3_Click(object sender, EventArgs e)
@@ -538,8 +566,12 @@ if ($existingRestorePoints.Count -eq 0) {
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(newLanguage);
             Controls.Clear();
             InitializeComponent();
+            bool dark = Properties.Settings.Default.DarkTheme;
+            ThemeManager.SetTheme(dark);
+            label1.Text = dark
+                ? LanguageManager.GetTranslation("Form1", "temascuro")
+                : LanguageManager.GetTranslation("Form1", "temachiaro");
             LoadForm(new FormHome(), btnHome, "Home");
-            LanguageManager.SetLanguage(newLanguage);
             comboBox1.SelectedIndexChanged -= comboBox1_SelectedIndexChanged;
             if (newLanguage == "it")
             {
@@ -558,6 +590,7 @@ if ($existingRestorePoints.Count -eq 0) {
                 CheckForUpdatesOnStartup();
             }
         }
+
         private bool isFullScreen = false;
         private FormWindowState previousWindowState;
         private FormBorderStyle previousBorderStyle;
@@ -584,5 +617,22 @@ if ($existingRestorePoints.Count -eq 0) {
                 isFullScreen = false;
             }
         }
+
+        private void bottoniSwap1_CheckedChanged(object sender, EventArgs e)
+        {
+            bool dark = bottoniSwap1.Checked;
+            ThemeManager.SetTheme(dark);
+            label1.Text = dark
+                ? LanguageManager.GetTranslation("Form1", "temascuro")
+                : LanguageManager.GetTranslation("Form1", "temachiaro");
+            Properties.Settings.Default.DarkTheme = dark;
+            Properties.Settings.Default.Save();
+            ThemeManager.ApplyThemeToControl(this, dark);
+        }
     }
+    public static class AppConfig
+    {
+        public static string CurrentVersion { get; set; } = "2.4.3.3";
+    }
+
 }

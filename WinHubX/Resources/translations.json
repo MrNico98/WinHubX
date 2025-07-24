@@ -15,14 +15,6 @@
       "restartrequired": "Questa operazione richiede un riavvio del PC. Continuare?"
     }
   },
-  "FormHome": {
-    "en": {
-      "Changelog": "Changelog WinHubX\n\n18/06/2025 - v2.4.3.0:\n- ISO Creation enhancements and fixes\n- Automatic architecture detection for custom office\n- Ability to import and export WinHubX settings\n\n11/06/2025 - v2.4.2.9:\n- Fix icons in system tray\n- Added monitoring of %TEMP% folder\n- Update ISO STOCK Win10 and 11\n- Update of Office 2024 and 365 (Online and Offline)\n- Update WSA\n- Added new defender deactivation mode (from cmd type winhubx /help)\n\n26/05/2025 - v2.4.2.8:\n- Added logic for application resizing\n\n23/05/2025 - v2.4.2.7:\n- Fixed title Personalized office\n- Modify OfficeScrubber to make it more intuitive\n\n20/05/2025 - v2.4.2.6:\n- Fix WinHubXLiteOS\n- Added English language support in Custom Office Installation\n- New UI for ISO Creation\n- Added WinHubXLiteOS\n- Added tooltips in Tools section\n- Fix Custom Installation Office\n\n22/04/2025 - v2.4.2.4:\n- Fix Custom Installation Office\n\n17/04/2025 - v2.4.2.3:\n- Added support for English language\n\n22/04/2025 - v2.4.2.4:\n- Fix Custom Installation Office\n\n17/04/2025 - v2.4.2.3:\n- Added support for English language\n\n15/04/2025 - v2.4.2.2:\n- Implemented background work to improve responsiveness on Settings panel\n- Added progress bar on all settings for visual feedback\n- Added tooltips on settings for clarification\n- Fixed saving of settings, now persist correctly\n- New settings for latest Windows updates\n- Debloat: added service management (beta)\n- Direct activation of Windows (online and offline)\n- Direct activation of Office (online and offline)\n\n10/04/2025 - v2.4.2.1:\n- Fix for System Restore, code was not continuing\n\n19/02/2025 - v2.4.2.0:\n- Added WinHubX to CMD path, run 'winhubx /help' for more info\n- Updated all Windows 10/11 stock ISOs\n- Improved 'System Restore' section with HW/SW check and stress test\n- 'Debloat' updated: dynamic app detection and advanced mode\n- Option to show monitoring in taskbar or notification area\n- Fix WinGet installation in 'Install App'\n- Fix red texts on ISO optimization\n- Automatic HDD/SSD detection for system compacting\n- Office installation improvements\n- New Windows 10/11 Lite ISOs updated to Feb 2025\n- New permanent offline activation method"
-    },
-    "it": {
-      "Changelog": "Changelog WinHubX\n\n18/06/2025 - v2.4.3.0:\n- Ampliamento e sistemazione Crea ISO\n- Rilevamento automatico dell'architettura per office personalizzato\n- Possibilità di importare ed esporatare i settaggi di WinHubX\n\n11/06/2025 - v2.4.2.9:\n- Fix icone in system tray\n- Aggiunto monitoraggio cartella %TEMP%\n- Aggiornamento ISO STOCK Win10 e 11\n- Aggiornamento degli Office 2024 e 365 (Online e Offline)\n- Aggiornamento WSA\n- Aggiunta nuova modalità disattivazione defender (da cmd digitare winhubx /help)\n\n26/05/2025 - v2.4.2.8:\n- Inserita logica per ridimensionamento applicazione\n\n23/05/2025 - v2.4.2.7:\n- Fix titolo Office personalizzato\n- Modifica OfficeScrubber per renderlo più intuitivo\n\n20/05/2025 - v2.4.2.6:\n- Fix WinHubXLiteOS\n- Aggiunta della lingua EN nella Personalizzazione Office\n- Nuova UI per la Creazione ISO\n- Aggiunta di WinHubXLiteOS\n- Aggiunti tooltip nella sezione Tools\n- Fix Personalizzazione Office\n\n17/04/2025 - v2.4.2.4:\n- Fix Personalizzazione Office\n\n17/04/2025 - v2.4.2.3:\n- Aggiunto supporto per lingua inglese\n\n17/04/2025 - v2.4.2.4:\n- Fix Personalizzazione Office\n\n17/04/2025 - v2.4.2.3:\n- Aggiunto supporto per lingua inglese\n\n15/04/2025 - v2.4.2.2:\n- Implementato \"background work\" per velocizzare il codice sul pannello Settaggi, ora è più responsivo\n- Inserita progressbar su tutti i settaggi per avere un responso visivo\n- Inserito sui settaggi il tooltip esplicativo per sapere cosa è quell'impostazione\n- Fix salvataggio settaggi, ora vengono correttamente mantenuti in memoria\n- Aggiunti nuovi settaggi per gli ultimi aggiornamenti Windows\n- Inserito su Debloat la gestione dei servizi (beta)\n- Attivazione diretta windows (online e offline)\n- Attivazione diretta office (online e offline)\n\n10/04/2025 - v2.4.2.1:\n- Fix Ripristino SO, il codice non proseguiva\n\n19/02/2025 - v2.4.2.0:\n- Aggiunto winhubx al path cmd e ampliati i comandi digitare winhubx /help per maggiori info\n- Aggiornate tutte le iso di Win10/11 Stock\n- Sezione 'Ripristino SO' migliorata con verifica HW/SW e stress test\n- Sezione 'Debloat' aggiornata: rilevamento dinamico app e modalità avanzata\n- Opzione per mostrare il monitoraggio in barra applicazioni o area notifiche\n- Fix installazione WinGet su 'Installa App'\n- Fix scritte rosse su ottimizzazione ISO\n- Verifica automatica HDD/SSD per compattazione sistema\n- Aggiornamenti per installazioni Office\n- Nuove ISO Windows 10/11 Lite aggiornate a Febbraio 2025\n- Nuovo metodo di attivazione offline permanente"
-    }
-  },
   "Form1": {
     "en": {
       "newversion": "Update Available",
@@ -34,8 +26,9 @@
       "titoloMon": "Monitoring",
       "titoloApp": "Install App",
       "titoloSett": "Settings",
-      "titoloCreaISO": "Create ISO"
-
+      "titoloCreaISO": "Create ISO",
+      "temascuro": "Dark theme",
+      "temachiaro": "Light theme"
     },
     "it": {
       "newversion": "Aggiornamento Disponibile",
@@ -47,7 +40,9 @@
       "titoloMon": "Monitoraggio",
       "titoloApp": "Installa App",
       "titoloSett": "Settaggi",
-      "titoloCreaISO": "Crea ISO"
+      "titoloCreaISO": "Crea ISO",
+      "temascuro": "Tema scuro",
+      "temachiaro": "Tema chiaro"
     }
   },
   "FormMonitoraggio": {
@@ -60,16 +55,120 @@
       "monitoroff": "Monitoraggio Disattivo"
     }
   },
+  "FormOfficeAggiungiRimuovi": {
+    "en": {
+      "office_non_trovato": "Office not found",
+      "versione_office": "Office Version: {0}",
+      "piattaforma": "Platform: {0}",
+      "prodotto": "Product: {0}",
+      "lingua": "Language: {0}",
+      "versione_non_compatibile": "Office version not compatible ({0}).",
+      "versione_richiesta": "At least version {0} is required.",
+      "aggiungi": "Add",
+      "rimuovi": "Remove",
+      "nessuna": "None"
+    },
+    "it": {
+      "office_non_trovato": "Office non trovato",
+      "versione_office": "Versione Office: {0}",
+      "piattaforma": "Platform: {0}",
+      "prodotto": "Prodotto: {0}",
+      "lingua": "Lingua: {0}",
+      "versione_non_compatibile": "Versione Office non compatibile ({0}).",
+      "versione_richiesta": "È richiesta almeno la versione {0}.",
+      "aggiungi": "Aggiungi",
+      "rimuovi": "Rimuovi",
+      "nessuna": "Nessuna"
+    }
+  },
   "FormOffice": {
     "en": {
       "fileextracterror": "The file {0} was not extracted correctly.",
       "resourcenotfound": "Internal resource not found: {0}",
-      "paneltitle": "Office Customization"
+      "paneltitle": "Office Customization",
+      "onlineDescription": "It will download a lightweight executable (a few MB).",
+      "advantagesTitle": "Advantages:",
+      "onlineAdvantage1": "• Fast initial download",
+      "onlineAdvantage2": "• Always up to date with the latest version",
+      "requirementsTitle": "Requirements:",
+      "onlineRequirement1": "• Stable internet connection during installation",
+      "offlinePanelTitle": "Offline Installation",
+      "offlineDescription": "It will download a complete folder with all the files.",
+      "offlineAdvantage1": "• Can be installed without an internet connection",
+      "offlineAdvantage2": "• Portable (can be copied to USB)",
+      "offlineAdvantage3": "• Ideal for multiple installations",
+      "offlineRequirement1": "• Internet connection required for the initial download only",
+      "offlineRequirement2": "• Sufficient disk space for all files",
+      "offlineTip": "Tip:",
+      "offlineTipText": "Perfect for environments without internet",
+      "configurationTitle": "Selected Configuration",
+      "officeVersion": "Office Version",
+      "installationType": "Installation Type",
+      "noteOnline": "Note:",
+      "noteOnlineText": "A small installer will be downloaded that will fetch the files during installation.",
+      "noteOffline": "Note:",
+      "noteOfflineText": "The entire package will be downloaded for offline installations.",
+      "sha256_verifica": "SHA256 verification",
+      "configurazione_non_trovata": "Configuration not found",
+      "url_non_trovato": "URL not found for the selected combination",
+      "errore": "Error:",
+      "lingua": "Language",
+      "aggiungirimuoviapp": "Add\\Remove Office app"
     },
     "it": {
       "fileextracterror": "Il file {0} non è stato estratto correttamente.",
       "resourcenotfound": "Non trovo la risorsa interna: {0}",
-      "paneltitle": "Personalizzazione Office"
+      "paneltitle": "Personalizzazione Office",
+      "onlineDescription": "Scaricherà un eseguibile leggero (pochi MB).",
+      "advantagesTitle": "Vantaggi:",
+      "onlineAdvantage1": "• Download iniziale veloce",
+      "onlineAdvantage2": "• Sempre aggiornato all'ultima versione",
+      "requirementsTitle": "Requisiti:",
+      "onlineRequirement1": "• Connessione internet stabile durante l'installazione",
+      "offlinePanelTitle": "Installazione Offline",
+      "offlineDescription": "Scaricherà una cartella completa con tutti i file.",
+      "offlineAdvantage1": "• Installabile senza connessione internet",
+      "offlineAdvantage2": "• Portabile (può essere copiata su USB)",
+      "offlineAdvantage3": "• Ideale per più installazioni",
+      "offlineRequirement1": "• Connessione internet solo per il download iniziale",
+      "offlineRequirement2": "• Spazio su disco sufficiente per tutti i file",
+      "offlineTip": "Suggerimento:",
+      "offlineTipText": "Perfetta per ambienti senza internet",
+      "configurationTitle": "Configurazione Selezionata",
+      "officeVersion": "Versione Office",
+      "installationType": "Tipo Installazione",
+      "noteOnline": "Nota:",
+      "noteOnlineText": "Verrà scaricato un piccolo installer che recupererà i file durante l'installazione.",
+      "noteOffline": "Nota:",
+      "noteOfflineText": "Verrà scaricato l'intero pacchetto per installazioni offline.",
+      "sha256_verifica": "Verifica SHA256",
+      "configurazione_non_trovata": "Configurazione non trovata",
+      "url_non_trovato": "URL non trovato per la combinazione selezionata",
+      "errore": "Errore:",
+      "lingua": "Lingua",
+      "aggiungirimuoviapp": "Aggiungi\\Rimuovi app Office"
+    }
+  },
+  "FormExplorer": {
+    "en": {
+      "settings_loaded": "Current Explorer settings loaded successfully.",
+      "settings_applied": "Settings applied successfully! You may need to restart Explorer to see changes.",
+      "apply_error": "Error applying settings",
+      "load_error": "Error loading settings",
+      "confirm_reset": "Reset all settings to Windows defaults?",
+      "confirm_title": "Confirm Reset",
+      "settings_reset": "Settings reset to defaults. Click 'Apply' to save changes.",
+      "reset_error": "Error resetting settings"
+    },
+    "it": {
+      "settings_loaded": "Impostazioni di Esplora risorse caricate correttamente.",
+      "settings_applied": "Impostazioni applicate con successo! Potrebbe essere necessario riavviare Esplora risorse per vedere i cambiamenti.",
+      "apply_error": "Errore durante l'applicazione delle impostazioni",
+      "load_error": "Errore durante il caricamento delle impostazioni",
+      "confirm_reset": "Ripristinare tutte le impostazioni ai valori predefiniti di Windows?",
+      "confirm_title": "Conferma Ripristino",
+      "settings_reset": "Impostazioni ripristinate ai valori predefiniti. Clicca su 'Applica' per salvare i cambiamenti.",
+      "reset_error": "Errore durante il ripristino delle impostazioni"
     }
   },
   "FormReinstallAPP": {
@@ -438,30 +537,56 @@
       "tooltipAbil_default": "Nessuna descrizione disponibile."
     }
   },
-  "FormWin1011": {
+  "FormWin": {
     "en": {
-      "infoWin1011Lite": "Windows 10 LITE\n\nThis version of Windows 10 has been optimized by removing a number of drivers, apps, services, and components to improve system performance and reduce disk space usage.\nThis customization leads to a slimmer and faster operating system, ideal for those seeking a smoother, lighter alternative to the standard version.\n\nBelow is the list of removed services and components:\n\n- Windows Barcode Preview\n- Assigned Access Lock App\n- Narrator\n- Call\n- Windows Hello Setup\n- Eye Control\n- Cortana\n- Feedback Hub\n- Microsoft Account Family Features\n- Delivery Optimization Manager\n- Get Help\n- Groove Music\n- Mail and Calendar\n- Microsoft Advertising SDK for XAML\n- Microsoft Edge DevTools Client\n- Microsoft Pay\n- Microsoft People\n- Microsoft Photos\n- Microsoft Solitaire Collection\n- Microsoft Sticky Notes\n- Mixed Reality Portal\n- Movies & TV\n- MSN Weather\n- Office\n- OneNote\n- Paint 3D\n- Safe Device Removal\n- Default Windows Lock Screen\n- Skype\n- Tips (Basic Info)\n- Tests and Exams\n- 3D Viewer\n- Web Media Extensions\n- Windows Alarms & Clock\n- Windows Maps\n- Windows Voice Recorder\n- Xbox Game Bar Plugin\n- Xbox Game Bar\n- Xbox Game Speech Window\n- Xbox Game UI\n- Xbox TCUI\n- Xbox\n- Your Phone\n- Accessibility\n- Device Experience\n- Offline Files\n- Input Method Editor (IME) - Recommended\n- Internet Explorer\n- Payments\n- Remote Desktop Server\n- Telephony\n 📌 Added AIMODS-Store and WinHubX shortcuts to the desktop upon installation completion (for portable and removable versions).",
-      "rufusWarning": "Do not select any additional options in Rufus (local account, TPM, etc...) as they are already integrated."
+      "nointernet": "❗ Select an operating system from the list",
+      "configurazioneSelezionata": "Selected Configuration",
+      "sistemaOperativo": "Operating System",
+      "architettura": "Architecture",
+      "versione": "Version",
+      "selezionaOpzioneValida": "🛑 Please select a valid version and architecture option",
+      "verificaImpostazioni": "ℹ️ Please check the settings before proceeding",
+      "noisoLinkFound": "⚠️ ISO link not found for {os}",
+      "missingSelection": "⚠️ Make sure you have selected OS, Version, and Architecture.",
+      "unsupportedOS": "Operating system not supported.",
+      "combinationNotAvailable": "⚠️ Combination not available on the server: {combination}",
+      "integrityCheckHeader": "🔍 File Integrity Check",
+      "validSha256Found": "Valid SHA256 found for:",
+      "configurationLabel": "Configuration:",
+      "sha256CodeLabel": "SHA256 Code:",
+      "sha256InfoBox": "This code verifies the authenticity and integrity of the file.",
+      "sha256NotFound": "SHA256 not found",
+      "requiredConfigLabel": "Required configuration:",
+      "possibleCausesLabel": "Possible causes:",
+      "unsupportedConfig": "Unsupported configuration",
+      "dataRetrievalError": "Error retrieving data",
+      "updateRequired": "Update required",
+      "lingua": "Language"
     },
     "it": {
-      "infoWin1011Lite": "Windows 10 LITE\n\nQuesta versione di Windows 10 è stata ottimizzata rimuovendo una serie di driver, applicazioni, servizi e componenti, per migliorare le prestazioni del sistema e ridurre l'ingombro di spazio su disco.\nQuesta personalizzazione porta ad un sistema operativo più snello e performante, ideale per chi cerca una versione più fluida e leggera rispetto alla versione standard.\n\nDi seguito l'elenco dei servizi e componenti rimossi:\n\n- Anteprima codice a barre Windows\n- App di blocco con accesso assegnato\n- Assistente vocale\n- Chiama\n- Configurazione di Windows Hello\n- Controllo ottico\n- Cortana\n- Feedback Hub\n- Funzionalità per la famiglia di account Microsoft\n- Gestore distribuzione contenuti\n- Get Help\n- Groove Music\n- Mail and Calendar\n- Microsoft Advertising SDK for XAML\n- Microsoft Edge DevTools Client\n- Microsoft Pay\n- Microsoft People\n- Microsoft Photos\n- Microsoft Solitaire Collection\n- Microsoft Sticky Notes\n- Mixed Reality Portal\n- Movies & TV\n- MSN Weather\n- Office\n- OneNote\n- Paint 3D\n- Rimozione sicura del dispositivo\n- Schermata di blocco predefinita di Windows\n- Skype\n- Suggerimenti (Informazioni di base)\n- Test ed esami\n- Visualizzatore 3D\n- Web Media Extensions\n- Windows Alarms & Clock\n- Windows Maps\n- Windows Voice Recorder\n- Xbox Game Bar Plugin\n- Xbox Game Bar\n- Xbox Game Speech Window\n- Xbox Game UI\n- Xbox TCUI\n- Xbox\n- Your Phone\n- Accessibilità (Accessibilità)\n- Device Experience\n- File Offline\n- Input Method Editor (IME) - Consigliato\n- Internet Explorer\n- Pagamenti\n- Server Desktop remoto\n- Telefonia\n📌 Alla fine dell'installazione vengono aggiunti i collegamenti di AIMODS-Store e WinHubX sul desktop (versioni portatili e rimovibili).",
-      "rufusWarning": "Non selezionare nessuna opzione aggiuntiva su Rufus (account locale, TPM, ecc...)\nSono già integrate."
-    }
-  },
-  "FormWin7": {
-    "it": {
-      "infoWin7Lite": "Windows 7 Ultimate LITE\n\nQuesta versione di Windows 7 Ultimate è stata migliorata rimuovendo una serie di driver, applicazioni, servizi e componenti, per migliorare le prestazioni del sistema e ridurre l'ingombro di spazio su disco.\nQuesta personalizzazione porta ad un sistema operativo più snello e performante, ideale per chi cerca una versione più fluida e leggera rispetto alla versione stock.\n\nDi seguito l'elenco dei servizi e componenti rimossi:\n\n- Assistenza Remota\n- Auto Connection Manager di accesso remoto\n- Cache e file temporanei\n- Cartella Zip e Cab\n- Editor di caratteri personalizzati\n- Gadget\n- Giochi Multiplayer\n- Giochi Premium\n- Lente d'ingrandimento dello schermo\n- Narratore\n- Personalizzazione dei Temi di Windows\n- Puntatori del mouse (Accessibilità)\n- Redirector porta di Servizi Desktop remoto\n- Registro Remoto\n- RemoteFX\n- Servizi di integrazione Hyper-V\n- Servizio licenze Desktop remoto\n- Servizio Table Text\n- Suggerimenti (Informazioni di base)\n- Temi di base a contrasto elevato\n- Temi sul Market\n- Windows TIFF IFilter (OCR)\n- Accessibilità (Accessibilità)\n- Game Explorer\n- Giochi\n- Server Desktop remoto\n- Telefonia\n- Windows Sidebar\n\n📌 Alla fine dell'installazione vengono aggiunti i collegamenti di AIMODS-Store e WinHubX sul desktop (versioni portatili e rimovibili)."
-    },
-    "en": {
-      "infoWin7Lite": "Windows 7 Ultimate LITE\n\nThis version of Windows 7 Ultimate has been enhanced by removing a number of drivers, applications, services, and components to improve system performance and reduce disk space usage.\nThis customization leads to a slimmer and faster operating system, ideal for those looking for a lighter and smoother experience compared to the stock version.\n\nBelow is the list of removed services and components:\n\n- Remote Assistance\n- Remote Access Auto Connection Manager\n- Cache and temporary files\n- Zip and Cab folders\n- Custom font editor\n- Gadgets\n- Multiplayer Games\n- Premium Games\n- Screen Magnifier\n- Narrator\n- Windows Themes Personalization\n- Mouse Pointers (Accessibility)\n- Remote Desktop Services Redirector\n- Remote Registry\n- RemoteFX\n- Hyper-V Integration Services\n- Remote Desktop Licensing Service\n- Table Text Service\n- Tips (Basic Info)\n- High Contrast Basic Themes\n- Marketplace Themes\n- Windows TIFF IFilter (OCR)\n- Accessibility\n- Game Explorer\n- Games\n- Remote Desktop Server\n- Telephony\n- Windows Sidebar\n\n📌 After installation, AIMODS-Store and WinHubX shortcuts are added to the desktop (portable and removable versions)."
-    }
-  },
-  "FormWin8Dot1": {
-    "it": {
-      "infoWin8dot1Lite": "Windows 8.1 Enterprise LITE\n\nQuesta versione di Windows 8.1 Enterprise è stata ottimizzata rimuovendo una serie di driver, applicazioni, servizi e componenti, per migliorare le prestazioni del sistema e ridurre l'ingombro di spazio su disco.\nQuesta personalizzazione porta ad un sistema operativo più snello e performante, ideale per chi cerca una versione più fluida e leggera rispetto alla versione standard.\n\nDi seguito l'elenco dei servizi e componenti rimossi:\n\n- Adobe Flash per Internet Explorer - 32 bit\n- Aggiunta all'area di lavoro\n- Briefcase\n- Controllo genitori\n- File system resiliente (ReFS)\n- Floppy disk\n- Localizzatore Remote Procedure Call (RPC)\n- Notifiche cloud\n- Pannello Share Media Control\n- Registratore di suoni\n- Registrazione azioni utente\n- Registro Remoto\n- Remote Differential Compression (RDC)\n- RemoteFX\n- Screensaver\n- Servizi di integrazione Hyper-V\n- Servizio di Localizzazione\n- Servizio licenze Desktop remoto\n- Servizio Table Text\n- Sfondi schermata di sblocco\n- Sticky Notes\n- Suggerimenti (Informazioni di base)\n- Telefonia\n- Windows TIFF IFilter (OCR)\n- Check Point VPN\n- F5 VPN\n- Fotocamera\n- Games\n- Juniper Networks Junos Pulse\n- Mail, Calendar, and People\n- Maps\n- Microsoft PlayReady\n- MSN Food & Drink\n- MSN Health & Fitness\n- MSN Money\n- MSN News\n- MSN Sports\n- MSN Travel\n- MSN Weather\n- Music\n- OneNote\n- Reader\n- Skype\n- SonicWALL Mobile Connect\n- Video\n- Windows Alarms\n- Windows Help+Tips\n- Windows Reading List\n- Windows Sound Recorder\n\n📌 Alla fine dell'installazione vengono aggiunti i collegamenti di AIMODS-Store e WinHubX sul desktop (versioni portatili e rimovibili)."
-    },
-    "en": {
-      "infoWin8dot1Lite": "Windows 8.1 Enterprise LITE\n\nThis version of Windows 8.1 Enterprise has been optimized by removing a number of drivers, applications, services, and components to improve system performance and reduce disk space usage.\nThis customization results in a slimmer and more efficient OS, ideal for users seeking a smoother and lighter version than the standard one.\n\nBelow is the list of removed services and components:\n\n- Adobe Flash for Internet Explorer - 32-bit\n- Workplace Join\n- Briefcase\n- Parental Controls\n- Resilient File System (ReFS)\n- Floppy disk\n- Remote Procedure Call Locator\n- Cloud notifications\n- Share Media Control Panel\n- Sound Recorder\n- User Action Recorder\n- Remote Registry\n- Remote Differential Compression (RDC)\n- RemoteFX\n- Screensaver\n- Hyper-V Integration Services\n- Geolocation Service\n- Remote Desktop Licensing Service\n- Table Text Service\n- Lock screen backgrounds\n- Sticky Notes\n- Tips (Basic Info)\n- Telephony\n- Windows TIFF IFilter (OCR)\n- Check Point VPN\n- F5 VPN\n- Camera\n- Games\n- Juniper Networks Junos Pulse\n- Mail, Calendar, and People\n- Maps\n- Microsoft PlayReady\n- MSN Food & Drink\n- MSN Health & Fitness\n- MSN Money\n- MSN News\n- MSN Sports\n- MSN Travel\n- MSN Weather\n- Music\n- OneNote\n- Reader\n- Skype\n- SonicWALL Mobile Connect\n- Video\n- Windows Alarms\n- Windows Help+Tips\n- Windows Reading List\n- Windows Sound Recorder\n\n📌 After installation, AIMODS-Store and WinHubX shortcuts are added to the desktop (portable and removable versions)."
+      "nointernet": "❗ Seleziona un sistema operativo dalla lista",
+      "configurazioneSelezionata": "Configurazione selezionata",
+      "sistemaOperativo": "Sistema operativo",
+      "architettura": "Architettura",
+      "versione": "Versione",
+      "selezionaOpzioneValida": "🛑 Seleziona un'opzione valida di versione e architettura",
+      "verificaImpostazioni": "ℹ️ Verifica le impostazioni prima di procedere",
+      "noisoLinkFound": "⚠️ Link ISO non trovato per {os}",
+      "missingSelection": "⚠️ Assicurati di aver selezionato OS, Versione e Architettura.",
+      "unsupportedOS": "Sistema operativo non supportato.",
+      "combinationNotAvailable": "⚠️ Combinazione non disponibile nel server: {combination}",
+      "integrityCheckHeader": "🔍 Verifica Integrità File",
+      "validSha256Found": "SHA256 valida trovata per:",
+      "configurationLabel": "Configurazione:",
+      "sha256CodeLabel": "Codice SHA256:",
+      "sha256InfoBox": "Questo codice verifica l'autenticità e l'integrità del file.",
+      "sha256NotFound": "SHA256 non trovata",
+      "requiredConfigLabel": "Configurazione richiesta:",
+      "possibleCausesLabel": "Possibili cause:",
+      "unsupportedConfig": "Configurazione non supportata",
+      "dataRetrievalError": "Errore nel recupero dei dati",
+      "updateRequired": "Aggiornamento necessario",
+      "Lingua": "Lingua"
     }
   },
   "FormCreaISO": {

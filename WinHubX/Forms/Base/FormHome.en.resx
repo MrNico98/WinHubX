@@ -125,6 +125,9 @@
   <data name="btnChangelog.TabIndex" type="System.Int32, mscorlib">
     <value>100</value>
   </data>
+  <data name="btnChangelog.Text" xml:space="preserve">
+    <value>v2.4.3.2 - Changelog</value>
+  </data>
   <data name="btnKofi.Size" type="System.Drawing.Size, System.Drawing">
     <value>291, 64</value>
   </data>

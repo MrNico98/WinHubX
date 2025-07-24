@@ -31,6 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             tableLayoutPanel1 = new TableLayoutPanel();
             panel3 = new Panel();
+            label1 = new Label();
+            bottoniSwap1 = new WinHubX.Bottoni.BottoniSwap();
             btnFullScreen = new Button();
             btnMnmz = new Button();
             btnClose = new Button();
@@ -64,6 +66,7 @@
             // tableLayoutPanel1
             // 
             resources.ApplyResources(tableLayoutPanel1, "tableLayoutPanel1");
+            tableLayoutPanel1.BackColor = Color.FromArgb(64, 60, 59);
             tableLayoutPanel1.Controls.Add(panel3, 1, 0);
             tableLayoutPanel1.Controls.Add(panel1, 0, 0);
             tableLayoutPanel1.Controls.Add(panel2, 0, 1);
@@ -74,6 +77,8 @@
             // 
             resources.ApplyResources(panel3, "panel3");
             panel3.BackColor = Color.FromArgb(64, 60, 59);
+            panel3.Controls.Add(label1);
+            panel3.Controls.Add(bottoniSwap1);
             panel3.Controls.Add(btnFullScreen);
             panel3.Controls.Add(btnMnmz);
             panel3.Controls.Add(btnClose);
@@ -82,6 +87,22 @@
             panel3.Controls.Add(lblPanelTitle);
             panel3.Controls.Add(pictureBox2);
             panel3.Name = "panel3";
+            // 
+            // label1
+            // 
+            resources.ApplyResources(label1, "label1");
+            label1.Name = "label1";
+            // 
+            // bottoniSwap1
+            // 
+            resources.ApplyResources(bottoniSwap1, "bottoniSwap1");
+            bottoniSwap1.Name = "bottoniSwap1";
+            bottoniSwap1.OffBackColor = Color.Gray;
+            bottoniSwap1.OffToggleColor = Color.Gainsboro;
+            bottoniSwap1.OnBackColor = Color.MediumSlateBlue;
+            bottoniSwap1.OnToggleColor = Color.WhiteSmoke;
+            bottoniSwap1.UseVisualStyleBackColor = true;
+            bottoniSwap1.CheckedChanged += bottoniSwap1_CheckedChanged;
             // 
             // btnFullScreen
             // 
@@ -285,6 +306,7 @@
             // PnlFormLoader
             // 
             resources.ApplyResources(PnlFormLoader, "PnlFormLoader");
+            PnlFormLoader.BackColor = Color.FromArgb(37, 38, 39);
             PnlFormLoader.Name = "PnlFormLoader";
             // 
             // Form1
@@ -333,5 +355,7 @@
         private PictureBox pictureBox2;
         public Panel PnlFormLoader;
         private Button btnFullScreen;
+        private Label label1;
+        private Bottoni.BottoniSwap bottoniSwap1;
     }
 }

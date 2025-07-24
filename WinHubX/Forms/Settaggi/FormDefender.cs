@@ -23,6 +23,7 @@ namespace WinHubX.Forms.Settaggi
             //loadmsginziale();
             DisabilitaDefender.MouseMove += new MouseEventHandler(checkedListBox1_MouseMove);
             AbilitaDefender.MouseMove += new MouseEventHandler(checkedListBox2_MouseMove);
+            ThemeManager.ApplyThemeToControl(this, ThemeManager.IsDarkTheme);
         }
 
         private void checkedListBox1_MouseMove(object sender, MouseEventArgs e)
@@ -70,7 +71,7 @@ namespace WinHubX.Forms.Settaggi
 
         private void loadmsginziale()
         {
-            MessageBox.Show(
+            _ = MessageBox.Show(
                 LanguageManager.GetTranslation("FormDefender", "msgDisinstallaDefender"),
                 "WinHubX",
                 MessageBoxButtons.OK,
@@ -309,7 +310,7 @@ namespace WinHubX.Forms.Settaggi
 
             }
             string messaggio = LanguageManager.GetTranslation("Global", "modifichesuccesso");
-            MessageBox.Show(
+            _ = MessageBox.Show(
                 messaggio,
                 "WinHubX",
                 MessageBoxButtons.OK,
@@ -490,7 +491,7 @@ namespace WinHubX.Forms.Settaggi
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"An error occurred: {ex.Message}");
+                    _ = MessageBox.Show($"An error occurred: {ex.Message}");
                 }
             }
             else
@@ -1091,7 +1092,7 @@ namespace WinHubX.Forms.Settaggi
         private void backgroundWorker1_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
             string messaggio = LanguageManager.GetTranslation("Global", "modifichesuccesso");
-            MessageBox.Show(
+            _ = MessageBox.Show(
                 messaggio,
                 "WinHubX",
                 MessageBoxButtons.OK,

@@ -5,7 +5,7 @@ namespace WinHubX
 {
     public static class LanguageManager
     {
-        private static Dictionary<string, Dictionary<string, Dictionary<string, string>>> translations;
+        private static Dictionary<string, Dictionary<string, Dictionary<string, string>>>? translations;
         public static string CurrentLanguage { get; private set; } = "en";
 
         public static void LoadTranslations()
@@ -15,7 +15,7 @@ namespace WinHubX
 
             if (!Directory.Exists(localAppDataPath))
             {
-                Directory.CreateDirectory(localAppDataPath);
+                _ = Directory.CreateDirectory(localAppDataPath);
             }
 
             if (!File.Exists(filePath))

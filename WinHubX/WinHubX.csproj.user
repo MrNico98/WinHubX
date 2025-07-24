@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <_LastSelectedProfileId>C:\Users\utente\Downloads\WinHubX-main - Copia\WinHubX\Properties\PublishProfiles\FolderProfile.pubxml</_LastSelectedProfileId>
+    <_LastSelectedProfileId>C:\Users\utente\source\repos\WinHubX\WinHubX\Properties\PublishProfiles\FolderProfile.pubxml</_LastSelectedProfileId>
   </PropertyGroup>
   <ItemGroup>
     <Compile Update="Dialog\InfoDialog.cs">
@@ -23,9 +23,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Dialog\Tools\DialogRSTDriver.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Dialog\Tools\DialogRufus4Lite.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Dialog\Tools\DialogWIMToolKit.cs">
@@ -79,6 +76,12 @@
     <Compile Update="Forms\DebloatAvanzato\FormServizi.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Forms\Personalizzazione office\FormAggiungiRimuoviAppOffice.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\Settaggi\FormExplorer.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Forms\WinHubXLiteOs\FormWinHubXLiteOS.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -106,21 +109,15 @@
     <Compile Update="Forms\Settaggi\FormUtility.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Forms\Windows\FormWin10.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Forms\Windows\FormWin11.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Forms\Windows\FormWin7.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Forms\Windows\FormWin8Dot1.cs">
-      <SubType>Form</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Forms\Base\Form1.en.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Forms\Base\FormMonitoraggio.en.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Forms\Base\FormMonitoraggio.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Update="Properties\Resources.resx">

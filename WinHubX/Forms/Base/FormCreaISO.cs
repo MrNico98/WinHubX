@@ -10,10 +10,12 @@ namespace WinHubX.Forms.Base
     public partial class FormCreaISO : Form
     {
         private Form1 form1;
-        private string selectedFile;
+        private string selectedFile = string.Empty;
 
         public FormCreaISO(Form1 form1)
         {
+            string savedLanguage = Properties.Settings.Default.Language ?? "it";
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(savedLanguage);
             InitializeComponent();
             this.form1 = form1;
             groupBox7.Hide();
@@ -22,13 +24,11 @@ namespace WinHubX.Forms.Base
             pictureBox4.Hide();
             this.FormClosing += FormCreaISO_FormClosing;
             this.ActiveControl = btn_browser;
-            string savedLanguage = Properties.Settings.Default.Language ?? "it";
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo(savedLanguage);
+            ThemeManager.ApplyThemeToControl(this, ThemeManager.IsDarkTheme);
         }
 
-        string IsoMountLetter;
-        string installwimpath;
-        int windowsEdition;
+        string IsoMountLetter = string.Empty;
+        string installwimpath = string.Empty;
 
         public void ExecuteCommand(string command, bool ShowMessage)
         {
@@ -62,7 +62,7 @@ namespace WinHubX.Forms.Base
             {
                 using (HttpResponseMessage response = await client.GetAsync(url))
                 {
-                    response.EnsureSuccessStatusCode();
+                    _ = response.EnsureSuccessStatusCode();
                     using (FileStream fs = new FileStream(destinazione, FileMode.Create, FileAccess.Write, FileShare.None))
                     {
                         await response.Content.CopyToAsync(fs);
@@ -81,13 +81,13 @@ namespace WinHubX.Forms.Base
                     using (JsonDocument doc = JsonDocument.Parse(jsonResponse))
                     {
                         JsonElement root = doc.RootElement;
-                        string zipUrl = root.GetProperty("CreaISOWIN").GetProperty("creaiso").GetString();
-                        return zipUrl;
+                        string? zipUrl = root.GetProperty("CreaISOWIN").GetProperty("creaiso").GetString();
+                        return zipUrl ?? string.Empty;
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error: {ex.Message}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    _ = MessageBox.Show($"Error: {ex.Message}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return string.Empty;
                 }
             }
@@ -109,7 +109,7 @@ namespace WinHubX.Forms.Base
                 string tempPath = Path.Combine(Path.GetTempPath(), "RisorseCreaISO");
                 if (!Directory.Exists(tempPath))
                 {
-                    Directory.CreateDirectory(tempPath);
+                    _ = Directory.CreateDirectory(tempPath);
                 }
 
                 using (ZipArchive archive = ZipFile.OpenRead(zipFilePath))
@@ -122,9 +122,9 @@ namespace WinHubX.Forms.Base
                             continue;
                         }
                         string directoryPath = Path.GetDirectoryName(destinazioneFile);
-                        if (!Directory.Exists(directoryPath))
+                        if (!string.IsNullOrEmpty(directoryPath) && !Directory.Exists(directoryPath))
                         {
-                            Directory.CreateDirectory(directoryPath);
+                            _ = Directory.CreateDirectory(directoryPath);
                         }
 
                         entry.ExtractToFile(destinazioneFile, overwrite: true);
@@ -192,21 +192,34 @@ namespace WinHubX.Forms.Base
 
         private void btn_browser_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-
-            openFileDialog.Filter = "ISO Files (*.iso)|*.iso|All files (*.*)|*.*";
-            openFileDialog.Multiselect = false;
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "ISO Files (*.iso)|*.iso|All files (*.*)|*.*",
+                Multiselect = false
+            };
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 selectedFile = openFileDialog.FileName;
                 textBox1.Text = selectedFile;
-                ExecuteCommand("Mount-DiskImage -ImagePath " + "\"" + selectedFile + "\"", false);
+                var mountInfo = new ProcessStartInfo()
+                {
+                    FileName = "powershell.exe",
+                    Arguments = $"-Command \"Mount-DiskImage -ImagePath '{selectedFile}'\"",
+                    UseShellExecute = false,
+                    CreateNoWindow = true,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true
+                };
 
+                using (var process = Process.Start(mountInfo))
+                {
+                    process.WaitForExit();
+                }
                 var startInfo = new ProcessStartInfo()
                 {
                     FileName = "powershell.exe",
-                    Arguments = "(Get-DiskImage -ImagePath \"" + selectedFile + "\" | Get-Volume).DriveLetter",
+                    Arguments = $"-Command \"(Get-DiskImage -ImagePath '{selectedFile}' | Get-Volume).DriveLetter\"",
                     UseShellExecute = false,
                     CreateNoWindow = true,
                     RedirectStandardOutput = true,
@@ -216,79 +229,70 @@ namespace WinHubX.Forms.Base
                 using (var process = Process.Start(startInfo))
                 {
                     process.WaitForExit();
-
                     var output = process.StandardOutput.ReadToEnd();
-                    var error = process.StandardError.ReadToEnd();
                     IsoMountLetter = output.Trim();
                 }
 
-                if (File.Exists(IsoMountLetter + ":\\sources\\install.wim"))
+                if (string.IsNullOrWhiteSpace(IsoMountLetter))
                 {
-                    installwimpath = IsoMountLetter + ":\\sources\\install.wim";
+                    _ = MessageBox.Show("Impossibile trovare la lettera di unità montata.");
+                    return;
                 }
-                else if (File.Exists(IsoMountLetter + ":\\sources\\install.esd"))
+                if (File.Exists($"{IsoMountLetter}:\\sources\\install.wim"))
                 {
-                    installwimpath = IsoMountLetter + ":\\sources\\install.esd";
+                    installwimpath = $"{IsoMountLetter}:\\sources\\install.wim";
+                }
+                else if (File.Exists($"{IsoMountLetter}:\\sources\\install.esd"))
+                {
+                    installwimpath = $"{IsoMountLetter}:\\sources\\install.esd";
                 }
                 else
                 {
-                    MessageBox.Show("Non trovo Install.wim / install.esd");
+                    _ = MessageBox.Show("Impossibile trovare install.wim o install.esd.");
                     return;
                 }
                 new Thread(() =>
                 {
                     Thread.CurrentThread.IsBackground = true;
 
-                    var startInfoThi = new ProcessStartInfo()
+                    var dismInfo = new ProcessStartInfo()
                     {
                         FileName = "powershell.exe",
-                        Arguments = "dism /english /Get-WimInfo /WimFile:\"" + installwimpath + "\"",
+                        Arguments = $"-Command \"dism /english /Get-WimInfo /WimFile:'{installwimpath}'\"",
                         UseShellExecute = false,
                         CreateNoWindow = true,
                         RedirectStandardOutput = true,
                         RedirectStandardError = true
                     };
 
-                    using (var process = Process.Start(startInfoThi))
+                    using (var process = Process.Start(dismInfo))
                     {
                         process.WaitForExit();
 
                         var output = process.StandardOutput.ReadToEnd();
-                        var error = process.StandardError.ReadToEnd();
 
                         string input = output;
 
-                        int indiceIndex = 0;
-                        while ((indiceIndex = input.IndexOf("Index", indiceIndex)) != -1)
-                        {
-                            int indiceFineValore = input.IndexOfAny(new char[] { '\r', '\n' }, indiceIndex + 6);
-                            if (indiceFineValore != -1)
-                            {
-                                string valoreind = input.Substring(indiceIndex + 6, indiceFineValore - indiceIndex - 6);
-                            }
-
-                            indiceIndex = indiceFineValore + 1;
-                        }
-
-                        int indiceNome = 1;
+                        int indiceNome = 0;
                         int primoind = 1;
                         while ((indiceNome = input.IndexOf("Name", indiceNome)) != -1)
                         {
                             int indiceFineValore = input.IndexOfAny(new char[] { '\r', '\n' }, indiceNome + 6);
                             if (indiceFineValore != -1)
                             {
-                                string valoreNome = input.Substring(indiceNome + 6, indiceFineValore - indiceNome - 6);
-
-                                comboBox1.Invoke(new Action(() => comboBox1.Items.Add(primoind.ToString() + " - " + valoreNome.Replace(":", ""))));
-                                primoind += 1;
+                                string valoreNome = input.Substring(indiceNome + 6, indiceFineValore - indiceNome - 6).Trim();
+                                comboBox1.Invoke(new Action(() =>
+                                    comboBox1.Items.Add($"{primoind} - {valoreNome.Replace(":", "")}")
+                                ));
+                                primoind++;
                             }
-
                             indiceNome = indiceFineValore + 1;
                         }
                     }
                 }).Start();
             }
         }
+
 
         private void Win10Rad_CheckedChanged_1(object sender, EventArgs e)
         {
@@ -306,7 +310,7 @@ namespace WinHubX.Forms.Base
             pictureBox4.Hide();
         }
 
-        private void FormCreaISO_FormClosing(object sender, FormClosingEventArgs e)
+        private void FormCreaISO_FormClosing(object? sender, FormClosingEventArgs e)
         {
             if (!string.IsNullOrEmpty(IsoMountLetter))
             {

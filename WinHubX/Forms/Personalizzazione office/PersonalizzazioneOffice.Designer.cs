@@ -29,16 +29,17 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PersonalizzazioneOffice));
-            panel1 = new Panel();
+            panel5 = new Panel();
+            radiobutton_office2019 = new RadioButton();
             radioButton_office2024 = new RadioButton();
             label3 = new Label();
             radiobutton_office365 = new RadioButton();
             radiobutton_office2021 = new RadioButton();
-            panel2 = new Panel();
+            panel6 = new Panel();
             label1 = new Label();
             radioButton_x32 = new RadioButton();
             radioButton_x64 = new RadioButton();
-            panel3 = new Panel();
+            panel7 = new Panel();
             pictureBox10 = new PictureBox();
             pictureBox9 = new PictureBox();
             pictureBox8 = new PictureBox();
@@ -67,9 +68,9 @@
             label2 = new Label();
             radioButton_EN = new RadioButton();
             radioButton_IT = new RadioButton();
-            panel1.SuspendLayout();
-            panel2.SuspendLayout();
-            panel3.SuspendLayout();
+            panel5.SuspendLayout();
+            panel6.SuspendLayout();
+            panel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox10).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox9).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox8).BeginInit();
@@ -83,14 +84,23 @@
             panel4.SuspendLayout();
             SuspendLayout();
             // 
-            // panel1
+            // panel5
             // 
-            resources.ApplyResources(panel1, "panel1");
-            panel1.Controls.Add(radioButton_office2024);
-            panel1.Controls.Add(label3);
-            panel1.Controls.Add(radiobutton_office365);
-            panel1.Controls.Add(radiobutton_office2021);
-            panel1.Name = "panel1";
+            resources.ApplyResources(panel5, "panel5");
+            panel5.Controls.Add(radiobutton_office2019);
+            panel5.Controls.Add(radioButton_office2024);
+            panel5.Controls.Add(label3);
+            panel5.Controls.Add(radiobutton_office365);
+            panel5.Controls.Add(radiobutton_office2021);
+            panel5.Name = "panel5";
+            // 
+            // radiobutton_office2019
+            // 
+            resources.ApplyResources(radiobutton_office2019, "radiobutton_office2019");
+            radiobutton_office2019.ForeColor = Color.White;
+            radiobutton_office2019.Name = "radiobutton_office2019";
+            radiobutton_office2019.TabStop = true;
+            radiobutton_office2019.UseVisualStyleBackColor = true;
             // 
             // radioButton_office2024
             // 
@@ -125,13 +135,13 @@
             radiobutton_office2021.UseVisualStyleBackColor = true;
             radiobutton_office2021.CheckedChanged += radiobutton_office2021_CheckedChanged;
             // 
-            // panel2
+            // panel6
             // 
-            resources.ApplyResources(panel2, "panel2");
-            panel2.Controls.Add(label1);
-            panel2.Controls.Add(radioButton_x32);
-            panel2.Controls.Add(radioButton_x64);
-            panel2.Name = "panel2";
+            resources.ApplyResources(panel6, "panel6");
+            panel6.Controls.Add(label1);
+            panel6.Controls.Add(radioButton_x32);
+            panel6.Controls.Add(radioButton_x64);
+            panel6.Name = "panel6";
             // 
             // label1
             // 
@@ -155,31 +165,31 @@
             radioButton_x64.TabStop = true;
             radioButton_x64.UseVisualStyleBackColor = true;
             // 
-            // panel3
+            // panel7
             // 
-            resources.ApplyResources(panel3, "panel3");
-            panel3.Controls.Add(pictureBox10);
-            panel3.Controls.Add(pictureBox9);
-            panel3.Controls.Add(pictureBox8);
-            panel3.Controls.Add(pictureBox7);
-            panel3.Controls.Add(pictureBox6);
-            panel3.Controls.Add(pictureBox5);
-            panel3.Controls.Add(pictureBox4);
-            panel3.Controls.Add(pictureBox3);
-            panel3.Controls.Add(pictureBox2);
-            panel3.Controls.Add(pictureBox1);
-            panel3.Controls.Add(label5);
-            panel3.Controls.Add(checkBox_project);
-            panel3.Controls.Add(checkBox_visio);
-            panel3.Controls.Add(checkBox_publisher);
-            panel3.Controls.Add(checkBox_access);
-            panel3.Controls.Add(checkBox_onenote);
-            panel3.Controls.Add(checkBox_onedrive);
-            panel3.Controls.Add(checkBox_outlook);
-            panel3.Controls.Add(checkBox_powerpoint);
-            panel3.Controls.Add(checkBox_excel);
-            panel3.Controls.Add(checkBox_word);
-            panel3.Name = "panel3";
+            resources.ApplyResources(panel7, "panel7");
+            panel7.Controls.Add(pictureBox10);
+            panel7.Controls.Add(pictureBox9);
+            panel7.Controls.Add(pictureBox8);
+            panel7.Controls.Add(pictureBox7);
+            panel7.Controls.Add(pictureBox6);
+            panel7.Controls.Add(pictureBox5);
+            panel7.Controls.Add(pictureBox4);
+            panel7.Controls.Add(pictureBox3);
+            panel7.Controls.Add(pictureBox2);
+            panel7.Controls.Add(pictureBox1);
+            panel7.Controls.Add(label5);
+            panel7.Controls.Add(checkBox_project);
+            panel7.Controls.Add(checkBox_visio);
+            panel7.Controls.Add(checkBox_publisher);
+            panel7.Controls.Add(checkBox_access);
+            panel7.Controls.Add(checkBox_onenote);
+            panel7.Controls.Add(checkBox_onedrive);
+            panel7.Controls.Add(checkBox_outlook);
+            panel7.Controls.Add(checkBox_powerpoint);
+            panel7.Controls.Add(checkBox_excel);
+            panel7.Controls.Add(checkBox_word);
+            panel7.Name = "panel7";
             // 
             // pictureBox10
             // 
@@ -320,6 +330,7 @@
             // btn_avviainstallazione
             // 
             resources.ApplyResources(btn_avviainstallazione, "btn_avviainstallazione");
+            btn_avviainstallazione.Cursor = Cursors.Hand;
             btn_avviainstallazione.Name = "btn_avviainstallazione";
             btn_avviainstallazione.UseVisualStyleBackColor = true;
             btn_avviainstallazione.Click += btn_avviainstallazione_Click;
@@ -379,19 +390,19 @@
             Controls.Add(btnBack);
             Controls.Add(progressBar_office);
             Controls.Add(btn_avviainstallazione);
-            Controls.Add(panel3);
-            Controls.Add(panel2);
-            Controls.Add(panel1);
+            Controls.Add(panel7);
+            Controls.Add(panel6);
+            Controls.Add(panel5);
             FormBorderStyle = FormBorderStyle.None;
             Name = "PersonalizzazioneOffice";
             FormClosing += PersonalizzazioneOffice_FormClosing;
             Load += PersonalizzazioneOffice_Load;
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
-            panel2.ResumeLayout(false);
-            panel2.PerformLayout();
-            panel3.ResumeLayout(false);
-            panel3.PerformLayout();
+            panel5.ResumeLayout(false);
+            panel5.PerformLayout();
+            panel6.ResumeLayout(false);
+            panel6.PerformLayout();
+            panel7.ResumeLayout(false);
+            panel7.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox10).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox9).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox8).EndInit();
@@ -409,9 +420,9 @@
 
         #endregion
 
-        private Panel panel1;
-        private Panel panel2;
-        private Panel panel3;
+        private Panel panel5;
+        private Panel panel6;
+        private Panel panel7;
         private RadioButton radiobutton_office365;
         private RadioButton radiobutton_office2021;
         private RadioButton radioButton_x32;
@@ -447,5 +458,6 @@
         private Label label2;
         private RadioButton radioButton_EN;
         private RadioButton radioButton_IT;
+        private RadioButton radiobutton_office2019;
     }
 }

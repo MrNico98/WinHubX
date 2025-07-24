@@ -21,6 +21,8 @@
         public InfoDialog()
         {
             InitializeComponent();
+            ThemeManager.ApplyThemeToControl(this, ThemeManager.IsDarkTheme);
+            LanguageManager.LoadTranslations();
         }
 
         public InfoDialog(string description)

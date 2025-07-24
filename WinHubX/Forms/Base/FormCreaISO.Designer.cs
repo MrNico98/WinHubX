@@ -591,7 +591,6 @@
         private ComboBox comboBox1;
         private PictureBox pictureBox1;
         private PictureBox pictureBox2;
-        private Button CreateIsoBtn;
         private GroupBox groupBox4;
         private RadioButton NotRemProcRad;
         private RadioButton RemProcRad;

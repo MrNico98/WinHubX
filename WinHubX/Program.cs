@@ -30,22 +30,24 @@ namespace WinHubX
             string updatedPath = Environment.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.User);
             if (args.Length > 0)
             {
-                AllocConsole();
+                _ = AllocConsole();
                 Task.Run(() => ProcessCommandLineArgs(args)).Wait();
-                Task.Delay(8000);
+                _ = Task.Delay(8000);
                 Console.WriteLine("Premi un tasto per uscire...");
-                Console.ReadKey();
-                FreeConsole();
+                _ = Console.ReadKey();
+                _ = FreeConsole();
             }
             else
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
+                bool dark = Properties.Settings.Default.DarkTheme;
+                ThemeManager.SetTheme(dark);
                 Application.Run(new Form1());
             }
         }
 
-        static async Task ProcessCommandLineArgs(string[] args)
+        static void ProcessCommandLineArgs(string[] args)
         {
             string receivedArgs = string.Join(", ", args);
             string command = args[0].ToLower();
@@ -104,7 +106,7 @@ namespace WinHubX
                     if (args.Length > 1)
                     {
                         string pathDat = args[1];
-                        await ImportaSettaggi(pathDat);
+                        ImportaSettaggi(pathDat);
                         Environment.Exit(0);
                     }
                     else
@@ -112,26 +114,12 @@ namespace WinHubX
                         Console.WriteLine("Errore: devi specificare un percorso per il file .dat", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     break;
-                case "/iso":
-                    if (args.Length > 1)
-                    {
-                        string isoType = args[1].ToLower();
-                        ShowIsoOptions(isoType);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Quale ISO vuoi creare? Usa i seguenti parametri:\n" +
-                                        "/iso -server\n" +
-                                        "/iso -10ltsc\n" +
-                                        "/iso -11ltsc", "Opzioni ISO", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    break;
                 default:
                     Console.WriteLine("Comando non riconosciuto. Usa '/help' per visualizzare i comandi disponibili.", "Errore Comando", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     break;
             }
         }
-        static async Task ImportaSettaggi(string pathDat)
+        static void ImportaSettaggi(string pathDat)
         {
             if (!File.Exists(pathDat))
             {
@@ -186,7 +174,7 @@ namespace WinHubX
 
                 using (var response = await client.GetAsync(downloadUrl))
                 {
-                    response.EnsureSuccessStatusCode();
+                    _ = response.EnsureSuccessStatusCode();
                     await using var fs = new FileStream(tempPath, FileMode.Create, FileAccess.Write, FileShare.None);
                     await response.Content.CopyToAsync(fs);
                 }
@@ -206,7 +194,7 @@ namespace WinHubX
                     process.StartInfo.FileName = exePath;
                     process.StartInfo.Arguments = "--disable";
                     process.StartInfo.Verb = "runas";
-                    process.Start();
+                    _ = process.Start();
                     await process.WaitForExitAsync();
                 }
 
@@ -293,7 +281,7 @@ namespace WinHubX
 
                 using (var response = await client.GetAsync(downloadUrl))
                 {
-                    response.EnsureSuccessStatusCode();
+                    _ = response.EnsureSuccessStatusCode();
                     await using var fs = new FileStream(tempPath, FileMode.Create, FileAccess.Write, FileShare.None);
                     await response.Content.CopyToAsync(fs);
                 }
@@ -313,7 +301,7 @@ namespace WinHubX
                     process.StartInfo.FileName = exePath;
                     process.StartInfo.Arguments = "--name \"WinHubX\"";
                     process.StartInfo.Verb = "runas";
-                    process.Start();
+                    _ = process.Start();
                     await process.WaitForExitAsync();
                 }
 
@@ -364,12 +352,8 @@ namespace WinHubX
                                  "/driver - Salva i driver del pc\n" +
                                  "/defenderoff - Disabilita Windows Defender\n" +
                                  "/defenderon - Abilita Windows Defender\n" +
-                                 "/aggiornamentolite - Upgrade in-place lite.\n" +
-                                 "/iso <opzione>   - Scarica la ISO con l'opzione specificata.\n" +
-                                 "    Opzioni per /iso:\n" +
-                                 "    -10ltsc         - Scarica la ISO LTSC.\n" +
-                                 "    -11ltsc         - Scarica la ISO LTSC.\n" +
-                                 "    -server         - Scarica la LTSC.\n";
+                                 "/aggiornamentolite - Upgrade in-place lite.\n";
+
             Console.WriteLine(helpMessage, "Aiuto", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
@@ -405,7 +389,7 @@ namespace WinHubX
                 };
 
                 process.StartInfo = startInfo;
-                process.Start();
+                _ = process.Start();
                 string output = process.StandardOutput.ReadToEnd();
                 string error = process.StandardError.ReadToEnd();
                 process.WaitForExit();
@@ -424,7 +408,7 @@ namespace WinHubX
                 string driverDirectory = @"C:\DriverPC";
                 if (!Directory.Exists(driverDirectory))
                 {
-                    Directory.CreateDirectory(driverDirectory);
+                    _ = Directory.CreateDirectory(driverDirectory);
                     Console.WriteLine($"Cartella creata: {driverDirectory}");
                 }
                 var dismProcess = Process.Start(new ProcessStartInfo
@@ -443,7 +427,7 @@ namespace WinHubX
                     commandProcess.StartInfo.Arguments = $"/c driverquery > \"{outputPath}\"";
                     commandProcess.StartInfo.UseShellExecute = false;
                     commandProcess.StartInfo.CreateNoWindow = true;
-                    commandProcess.Start();
+                    _ = commandProcess.Start();
                     commandProcess.WaitForExit();
                 }
             }
@@ -466,7 +450,7 @@ namespace WinHubX
             using (Process process = new Process())
             {
                 process.StartInfo = psi;
-                process.Start();
+                _ = process.Start();
             }
         }
         static void PuliziaCartellaTemp()
@@ -475,8 +459,8 @@ namespace WinHubX
             {
                 string tempPath = Environment.GetEnvironmentVariable("TEMP");
                 string systemTempPath = Environment.GetEnvironmentVariable("SystemRoot") + "\\Temp";
-                Process.Start("cmd.exe", "/c robocopy \"" + tempPath + "\" NUL /mir /njh /njs /np /r:1 /w:1 && rmdir /s /q \"" + tempPath + "\"");
-                Process.Start("cmd.exe", "/c robocopy \"" + systemTempPath + "\" NUL /mir /njh /njs /np /r:1 /w:1 && rmdir /s /q \"" + systemTempPath + "\"");
+                _ = Process.Start("cmd.exe", "/c robocopy \"" + tempPath + "\" NUL /mir /njh /njs /np /r:1 /w:1 && rmdir /s /q \"" + tempPath + "\"");
+                _ = Process.Start("cmd.exe", "/c robocopy \"" + systemTempPath + "\" NUL /mir /njh /njs /np /r:1 /w:1 && rmdir /s /q \"" + systemTempPath + "\"");
 
                 Console.WriteLine("Temp folders cleared successfully.");
             }
@@ -510,7 +494,7 @@ namespace WinHubX
                 using (Process process = new Process())
                 {
                     process.StartInfo = psi;
-                    process.Start();
+                    _ = process.Start();
                     process.StandardInput.WriteLine(command);
                     process.StandardInput.WriteLine("exit");
                     process.StandardInput.Flush();
@@ -552,7 +536,7 @@ namespace WinHubX
             if (removeTask)
                 command += $"schtasks /delete /f /tn {taskName}";
 
-            Process.Start(new ProcessStartInfo
+            _ = Process.Start(new ProcessStartInfo
             {
                 FileName = "powershell",
                 Arguments = $"-Command \"{command}\"",
@@ -564,7 +548,7 @@ namespace WinHubX
             string choice = Console.ReadLine().ToLower();
             if (choice == "y")
             {
-                Process.Start(new ProcessStartInfo
+                _ = Process.Start(new ProcessStartInfo
                 {
                     FileName = "shutdown",
                     Arguments = "/r /t 0",
@@ -596,7 +580,7 @@ namespace WinHubX
                 using (Process process = new Process())
                 {
                     process.StartInfo = psi;
-                    process.Start();
+                    _ = process.Start();
                 }
             }
             catch (Exception ex)
@@ -618,10 +602,10 @@ namespace WinHubX
             using (Process process = new Process())
             {
                 process.StartInfo = psi;
-                process.Start();
+                _ = process.Start();
             }
         }
-        static void AggiornaLite(string isoPath = null)
+        static void AggiornaLite(string? isoPath = null)
         {
             string upgradeFolder = @"C:\StartOnUpgrade";
             string startBatPath = Path.Combine(upgradeFolder, "Start.bat");
@@ -631,7 +615,7 @@ namespace WinHubX
             {
                 if (!Directory.Exists(upgradeFolder))
                 {
-                    Directory.CreateDirectory(upgradeFolder);
+                    _ = Directory.CreateDirectory(upgradeFolder);
                 }
                 if (!File.Exists(startBatPath))
                 {
@@ -652,10 +636,10 @@ namespace WinHubX
                     File.WriteAllText(startBatPath, startBatContent);
                 }
                 string regCmd = @"reg add HKLM\Software\Microsoft\Windows\CurrentVersion\RunOnce /v StartPostUpgrade /t REG_SZ /d ""cmd /c C:\StartOnUpgrade\start.bat"" /f";
-                RunCommand("cmd.exe", $"/c {regCmd}");
+                _ = RunCommand("cmd.exe", $"/c {regCmd}");
                 if (!Directory.Exists(extractPath))
                 {
-                    Directory.CreateDirectory(extractPath);
+                    _ = Directory.CreateDirectory(extractPath);
                 }
                 string extractorPath = null;
                 string extractorArgs = null;
@@ -678,7 +662,7 @@ namespace WinHubX
                     Console.WriteLine("Né 7-Zip né WinRAR sono installati! Installane uno per procedere.", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                RunCommand(extractorPath, extractorArgs);
+                _ = RunCommand(extractorPath, extractorArgs);
                 string sourcesPath = Path.Combine(extractPath, "sources");
                 string appraiserBak = Path.Combine(sourcesPath, "appraiserres.dll.bak");
                 string appraiserDll = Path.Combine(sourcesPath, "appraiserres.dll");
@@ -695,7 +679,7 @@ namespace WinHubX
 
                 if (File.Exists(setupPath))
                 {
-                    Process.Start(setupPath, "/product server");
+                    _ = Process.Start(setupPath, "/product server");
                 }
                 else
                 {
@@ -744,60 +728,11 @@ namespace WinHubX
                         }
                     }
                 }
-                Process.Start(tempFilePath);
+                _ = Process.Start(tempFilePath);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Errore nell'avviare l'applicazione: {ex.Message}");
-            }
-        }
-
-        public static async Task ShowIsoOptions(string isoType)
-        {
-            try
-            {
-                string url = "https://aimodsitalia.store/ConfigWinHubX/configWinHubX.json";
-                using HttpClient client = new HttpClient();
-                string json = await client.GetStringAsync(url);
-                JObject data = JObject.Parse(json);
-
-                string arch = RuntimeInformation.OSArchitecture switch
-                {
-                    Architecture.X64 => "x64",
-                    Architecture.X86 => "x86",
-                    Architecture.Arm64 => "arm64",
-                    _ => "unknown"
-                };
-
-                string? downloadUrl = isoType switch
-                {
-                    "-10ltsc" => arch switch
-                    {
-                        "x64" => data["AltreIso"]?["LTSC10x64"]?.ToString(),
-                        "x86" => data["AltreIso"]?["LTSC10x86"]?.ToString(),
-                        _ => null
-                    },
-                    "-11ltsc" => data["AltreIso"]?["LTSC11"]?.ToString(),
-                    "-server" => data["AltreIso"]?["Server"]?.ToString(),
-                    _ => null
-                };
-
-                if (!string.IsNullOrEmpty(downloadUrl))
-                {
-                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
-                    {
-                        FileName = downloadUrl,
-                        UseShellExecute = true
-                    });
-                }
-                else
-                {
-                    MessageBox.Show("Opzione ISO non riconosciuta o non disponibile per questa architettura.", "Errore Opzione", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Errore durante il recupero delle opzioni ISO:\n" + ex.Message, "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
