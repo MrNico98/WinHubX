@@ -1,15 +1,17 @@
 {
-  "version": "2.4.3.2",
+  "version": "2.4.3.3",
   "releaseNotes": {
     "IT": [
-      "Aggiunto iso stock in EN",
-      "Aggiunto office stock in EN"
+      "Fix vari al codice",
+      "Aggiunto Office 2019 nel menù di Office personalizzato",
+      "Aggiunta possibilità di aggiungere rimuovere applicazioni office senza dover reinstallare office (2019-2021-2024-365)"
     ],
     "EN": [
-      "Add stock iso windows in EN",
-      "Add stock office windows in EN"
+      "Fixed miscellaneous codes",
+      "Added Office 2019 to the Office Customization menu",
+      "Added the ability to add and remove Office applications without having to reinstall Office (2019, 2021, 2024, and 365)"
     ]
   },
-  "updateUrl": "https://github.com/MrNico98/WinHubX/releases/download/WinHubX-v.2.4.3.2/WinHubX.exe",
-  "updateUrlLight": "https://github.com/MrNico98/WinHubX/releases/download/WinHubX-v.2.4.3.2/WinHubX.exe"
+  "updateUrl": "https://github.com/MrNico98/WinHubX/releases/download/WinHubX-v.2.4.3.3/WinHubX.exe",
+  "updateUrlLight": "https://github.com/MrNico98/WinHubX/releases/download/WinHubX-v.2.4.3.3/WinHubX.exe"
 }
