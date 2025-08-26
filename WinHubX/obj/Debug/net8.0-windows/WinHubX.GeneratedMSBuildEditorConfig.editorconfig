@@ -1,6 +1,10 @@
 is_global = true
+build_property.EnableAotAnalyzer = 
+build_property.EnableSingleFileAnalyzer = true
+build_property.EnableTrimAnalyzer = false
+build_property.IncludeAllContentForSelfExtract = true
 build_property.ApplicationManifest = app.manifest
-build_property.StartupObject = 
+build_property.StartupObject = WinHubX.Program
 build_property.ApplicationDefaultFont = 
 build_property.ApplicationHighDpiMode = SystemAware
 build_property.ApplicationUseCompatibleTextRendering = 

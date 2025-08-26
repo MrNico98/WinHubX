@@ -18,16 +18,19 @@ namespace WinHubX
         [STAThread]
         static void Main(string[] args)
         {
-            string exePath = AppDomain.CurrentDomain.BaseDirectory;
+            string exePath = AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\');
             string currentPath = Environment.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.User) ?? "";
             char pathSeparator = Path.PathSeparator;
-            var paths = currentPath.Split(pathSeparator)
-                                   .Where(p => !p.Contains("WinHubX", StringComparison.OrdinalIgnoreCase))
-                                   .ToList();
-            paths.Add(exePath);
-            string newPath = string.Join(pathSeparator.ToString(), paths);
-            Environment.SetEnvironmentVariable("PATH", newPath, EnvironmentVariableTarget.User);
-            string updatedPath = Environment.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.User);
+
+            if (!currentPath.Split(pathSeparator).Any(p => p.Equals(exePath, StringComparison.OrdinalIgnoreCase)))
+            {
+                var paths = currentPath.Split(pathSeparator)
+                                       .Where(p => !p.Contains("WinHubX", StringComparison.OrdinalIgnoreCase))
+                                       .ToList();
+                paths.Add(exePath);
+                string newPath = string.Join(pathSeparator.ToString(), paths);
+                Environment.SetEnvironmentVariable("PATH", newPath, EnvironmentVariableTarget.User);
+            }
             if (args.Length > 0)
             {
                 _ = AllocConsole();
@@ -39,10 +42,10 @@ namespace WinHubX
             }
             else
             {
+                Application.SetHighDpiMode(HighDpiMode.SystemAware);
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                bool dark = Properties.Settings.Default.DarkTheme;
-                ThemeManager.SetTheme(dark);
+                ThemeManager.SetTheme(Properties.Settings.Default.DarkTheme);
                 Application.Run(new Form1());
             }
         }

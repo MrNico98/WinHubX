@@ -30,6 +30,18 @@ namespace WinHubX
 
             try
             {
+                // Otteniamo informazioni sul sistema operativo
+                OperatingSystem os = Environment.OSVersion;
+                string osName = GetWindowsVersionName(os);
+
+                // Stop immediato per Windows 7, 8, 8.1
+                if (osName == "Windows 7" || osName == "Windows 8" || osName == "Windows 8.1")
+                {
+                    ExtractAndExecuteLocalScript();
+                    return;
+                }
+
+                // Per Windows 10/11 o versioni più recenti
                 if (IsInternetAvailable())
                 {
                     using (HttpClient client = new HttpClient())
@@ -48,13 +60,44 @@ namespace WinHubX
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Warning
                     );
-                    ExtractAndExecuteLocalScript();
+
+                    // Windows 10 più vecchi (< 19041)
+                    if (osName == "Windows 10")
+                    {
+                        ExtractAndExecuteLocalScript();
+                    }
+                    else
+                    {
+                        ExtractAndExecuteLocalScriptKMS38();
+                    }
                 }
             }
             catch (Exception ex)
             {
                 _ = MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        // Metodo helper per ottenere il nome Windows
+        private string GetWindowsVersionName(OperatingSystem os)
+        {
+            Version v = os.Version;
+            switch (v.Major)
+            {
+                case 6:
+                    switch (v.Minor)
+                    {
+                        case 1: return "Windows 7";
+                        case 2: return "Windows 8";
+                        case 3: return "Windows 8.1";
+                    }
+                    break;
+                case 10:
+                    return "Windows 10";
+                case 11:
+                    return "Windows 11"; // approssimativo, perché Environment.OSVersion potrebbe non distinguere Windows 11 correttamente
+            }
+            return "Unknown";
         }
 
         private bool IsInternetAvailable()
@@ -74,6 +117,26 @@ namespace WinHubX
         }
 
         private void ExtractAndExecuteLocalScript()
+        {
+            try
+            {
+                string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                string scriptPath = Path.Combine(documentsPath, "TSforge_Activation.cmd");
+                byte[] scriptBytes = Properties.Resources.TSforge_Activation;
+                File.WriteAllBytes(scriptPath, scriptBytes);
+                _ = Process.Start(new ProcessStartInfo
+                {
+                    FileName = scriptPath,
+                    UseShellExecute = true,
+                    Verb = "runas"
+                });
+            }
+            catch (Exception ex)
+            {
+                _ = MessageBox.Show($"Error: {ex.Message}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private void ExtractAndExecuteLocalScriptKMS38()
         {
             try
             {
@@ -191,8 +254,17 @@ namespace WinHubX
             }
             comboBoxArchitettura.Items.Clear();
             comboBoxVersione.Items.Clear();
-
-            if (selectedOS == "Windows 7" || selectedOS == "Windows 8.1")
+            if (selectedOS == "Windows Live" || selectedOS == "Windows Server")
+            {
+                btnDownload.Visible = true;
+                lblSelezionaLingua.Visible = false;
+                comboBox_SelezionaLingua.Visible = false;
+                labelArchitettura.Visible = false;
+                comboBoxArchitettura.Visible= false;
+                labelVersione.Visible = false;
+                comboBoxVersione.Visible = false;
+            }
+            else if (selectedOS == "Windows 7" || selectedOS == "Windows 8.1")
             {
                 labelVersione.Visible = true;
                 comboBoxVersione.Visible = true;
@@ -299,6 +371,7 @@ namespace WinHubX
         private void AggiornaDescrizione()
         {
             richTextBoxDescription.Clear();
+            richTextBoxInfo.Clear();
 
             if (string.IsNullOrEmpty(selectedOS))
             {
@@ -311,15 +384,20 @@ namespace WinHubX
             richTextBoxDescription.AppendText("🖥️ ", Color.DodgerBlue, FontStyle.Regular, 11);
             richTextBoxDescription.AppendText(LanguageManager.GetTranslation("FormWin", "sistemaOperativo") + ": ", Color.Gray, FontStyle.Bold, 11);
             richTextBoxDescription.AppendText($"{selectedOS}\n", Color.Orange, FontStyle.Regular, 11);
+
             richTextBoxDescription.AppendText("🌍 ", Color.DodgerBlue, FontStyle.Regular, 11);
             richTextBoxDescription.AppendText(LanguageManager.GetTranslation("FormWin", "lingua") + ": ", Color.Gray, FontStyle.Bold, 11);
             richTextBoxDescription.AppendText($"{selectedLanguage}\n", Color.Orange, FontStyle.Regular, 11);
+
             string versioneSelezionata = null;
 
             if (!string.IsNullOrWhiteSpace(comboBoxVersione?.Text))
             {
                 versioneSelezionata = comboBoxVersione.Text.ToLower();
             }
+
+            // Scrive informazioni aggiuntive nel richTextBoxInfo
+            richTextBoxInfo.AppendText("ℹ️ " + LanguageManager.GetTranslation("FormWin", "versionInfoLabel") + ":\n\n", Color.DodgerBlue, FontStyle.Bold, 11);
 
             if (selectedOS != "Windows Server" && selectedOS != "Windows Live")
             {
@@ -332,30 +410,51 @@ namespace WinHubX
 
                 richTextBoxDescription.AppendText("📦 ", Color.DodgerBlue, FontStyle.Regular, 11);
                 richTextBoxDescription.AppendText(LanguageManager.GetTranslation("FormWin", "versione") + ": ", Color.Gray, FontStyle.Bold, 11);
+
                 if (selectedOS == "Windows 7")
                 {
                     if (versioneSelezionata == "stock")
+                    {
                         richTextBoxDescription.AppendText($"{selectedVersion} - HomeBasic, HomePremium, Professional, Enterprise e Ultimate\n", Color.Orange, FontStyle.Regular, 11);
+                        richTextBoxInfo.AppendText("• " + LanguageManager.GetTranslation("FormWin", "stockMeaning") + " (Windows 7)\n", Color.Gray, FontStyle.Regular, 10);
+                    }
                     else if (versioneSelezionata == "lite")
+                    {
                         richTextBoxDescription.AppendText($"{selectedVersion} - Ultimate\n", Color.Orange, FontStyle.Regular, 11);
+                        richTextBoxInfo.AppendText("• " + LanguageManager.GetTranslation("FormWin", "liteMeaning") + " (Windows 7)\n", Color.Gray, FontStyle.Regular, 10);
+                    }
                 }
                 else if (selectedOS == "Windows 8.1")
                 {
                     if (versioneSelezionata == "stock")
+                    {
                         richTextBoxDescription.AppendText($"{selectedVersion} - Core, Enterprise\n", Color.Orange, FontStyle.Regular, 11);
+                        richTextBoxInfo.AppendText("• " + LanguageManager.GetTranslation("FormWin", "stockMeaning") + " (Windows 8.1)\n", Color.Gray, FontStyle.Regular, 10);
+                    }
                     else if (versioneSelezionata == "lite")
+                    {
                         richTextBoxDescription.AppendText($"{selectedVersion} - Enterprise\n", Color.Orange, FontStyle.Regular, 11);
+                        richTextBoxInfo.AppendText("• " + LanguageManager.GetTranslation("FormWin", "liteMeaning") + " (Windows 8.1)\n", Color.Gray, FontStyle.Regular, 10);
+                    }
                 }
+
                 if (selectedArch != null && selectedArch.ToLower().Contains("arm64") && versioneSelezionata == "stock")
                 {
                     richTextBoxDescription.AppendText("Stock - Pro, Enterprise\n", Color.Orange, FontStyle.Regular, 11);
+                    richTextBoxInfo.AppendText("• " + LanguageManager.GetTranslation("FormWin", "stockMeaning") + " (ARM64)\n", Color.Gray, FontStyle.Regular, 10);
                 }
                 else if (selectedOS == "Windows 10")
                 {
                     if (versioneSelezionata == "stock")
+                    {
                         richTextBoxDescription.AppendText($"{selectedVersion} - Consumer\n", Color.Orange, FontStyle.Regular, 11);
+                        richTextBoxInfo.AppendText("• " + LanguageManager.GetTranslation("FormWin", "consumerMeaning") + " (Windows 10)\n", Color.Gray, FontStyle.Regular, 10);
+                    }
                     else if (versioneSelezionata == "lite" || versioneSelezionata == "ltsc")
+                    {
                         richTextBoxDescription.AppendText($"{selectedVersion} - LTSC\n", Color.Orange, FontStyle.Regular, 11);
+                        richTextBoxInfo.AppendText("• " + LanguageManager.GetTranslation("FormWin", "ltscMeaning") + " (Windows 10)\n", Color.Gray, FontStyle.Regular, 10);
+                    }
                 }
                 else if (selectedOS == "Windows 11")
                 {
@@ -364,30 +463,51 @@ namespace WinHubX
                         string architettura = comboBoxArchitettura.SelectedItem?.ToString();
 
                         if (architettura == "x64 - 23H2")
+                        {
                             richTextBoxDescription.AppendText($"{selectedVersion} - PRO\n", Color.Orange, FontStyle.Regular, 11);
+                            richTextBoxInfo.AppendText("• " + LanguageManager.GetTranslation("FormWin", "liteMeaning") + " (Windows 11 23H2)\n", Color.Gray, FontStyle.Regular, 10);
+                        }
                         else if (architettura == "x64 - 24H2")
+                        {
                             richTextBoxDescription.AppendText($"{selectedVersion} - LTSC\n", Color.Orange, FontStyle.Regular, 11);
+                            richTextBoxInfo.AppendText("• " + LanguageManager.GetTranslation("FormWin", "ltscMeaning") + " (Windows 11 24H2)\n", Color.Gray, FontStyle.Regular, 10);
+                        }
                     }
                     else if (versioneSelezionata == "stock")
                     {
                         richTextBoxDescription.AppendText($"{selectedVersion} - Consumer\n", Color.Orange, FontStyle.Regular, 11);
+                        richTextBoxInfo.AppendText("• " + LanguageManager.GetTranslation("FormWin", "consumerMeaning") + " (Windows 11)\n", Color.Gray, FontStyle.Regular, 10);
                     }
                     else if (versioneSelezionata == "ltsc")
                     {
                         selectedArch = "x64";
                         richTextBoxDescription.AppendText($"{selectedArch}\n", Color.Orange, FontStyle.Regular, 11);
+                        richTextBoxInfo.AppendText("• " + LanguageManager.GetTranslation("FormWin", "ltscMeaning") + " (Windows 11)\n", Color.Gray, FontStyle.Regular, 10);
                     }
                 }
+
                 if (string.IsNullOrEmpty(selectedArch) && string.IsNullOrEmpty(selectedVersion))
                 {
                     richTextBoxDescription.AppendText(LanguageManager.GetTranslation("FormWin", "selezionaOpzioneValida"), Color.OrangeRed, FontStyle.Bold, 11);
                 }
             }
+            else
+            {
+                // Informazioni per Windows Server e Windows Live
+                richTextBoxInfo.AppendText($"• {selectedOS}: " + LanguageManager.GetTranslation("FormWin", "serverMeaning") + "\n", Color.Gray, FontStyle.Regular, 10);
+            }
+
+            // Note sulla configurazione
+            richTextBoxInfo.AppendText("🔹 " + LanguageManager.GetTranslation("FormWin", "infoconfigurationLabel") + "\n", Color.Gray, FontStyle.Bold, 10);
+            richTextBoxInfo.AppendText("• " + LanguageManager.GetTranslation("FormWin", "consumerMeaning") + "\n", Color.Gray, FontStyle.Regular, 10);
+            richTextBoxInfo.AppendText("• " + LanguageManager.GetTranslation("FormWin", "enterpriseMeaning") + "\n", Color.Gray, FontStyle.Regular, 10);
+            richTextBoxInfo.AppendText("• " + LanguageManager.GetTranslation("FormWin", "ltscMeaning") + "\n", Color.Gray, FontStyle.Regular, 10);
+            richTextBoxInfo.AppendText("• " + LanguageManager.GetTranslation("FormWin", "stockMeaning") + "\n", Color.Gray, FontStyle.Regular, 10);
+            richTextBoxInfo.AppendText("• " + LanguageManager.GetTranslation("FormWin", "liteMeaning") + "\n", Color.Gray, FontStyle.Regular, 10);
+
             richTextBoxDescription.AppendText("\n────────────────────────\n", Color.LightGray, FontStyle.Regular, 11);
             richTextBoxDescription.AppendText(LanguageManager.GetTranslation("FormWin", "verificaImpostazioni"), Color.SteelBlue, FontStyle.Italic, 10);
         }
-
-
 
         private async Task<DownloadConfig> ScaricaConfigurazioneAsync()
         {

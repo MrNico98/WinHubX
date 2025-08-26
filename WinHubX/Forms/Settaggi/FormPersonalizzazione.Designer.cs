@@ -107,6 +107,7 @@
             panel23.Controls.Add(radio_mostrasecondi);
             panel23.Controls.Add(label4);
             panel23.Name = "panel23";
+            toolTip1.SetToolTip(panel23, resources.GetString("panel23.ToolTip"));
             // 
             // radio_mostraoradata
             // 
@@ -158,6 +159,7 @@
             resources.ApplyResources(label4, "label4");
             label4.ForeColor = Color.Coral;
             label4.Name = "label4";
+            toolTip1.SetToolTip(label4, resources.GetString("label4.ToolTip"));
             // 
             // btnAvviaSelezionati
             // 
@@ -166,6 +168,7 @@
             btnAvviaSelezionati.FlatAppearance.BorderSize = 0;
             btnAvviaSelezionati.ForeColor = Color.White;
             btnAvviaSelezionati.Name = "btnAvviaSelezionati";
+            toolTip1.SetToolTip(btnAvviaSelezionati, resources.GetString("btnAvviaSelezionati.ToolTip"));
             btnAvviaSelezionati.UseVisualStyleBackColor = true;
             btnAvviaSelezionati.Click += btnAvviaSelezionati_Click;
             // 
@@ -178,13 +181,15 @@
             panel24.Controls.Add(panel32);
             panel24.Controls.Add(label1);
             panel24.Name = "panel24";
+            toolTip1.SetToolTip(panel24, resources.GetString("panel24.ToolTip"));
             // 
             // panel14
             // 
+            resources.ApplyResources(panel14, "panel14");
             panel14.Controls.Add(radio_abilitaendtask);
             panel14.Controls.Add(radio_disabilitaendtask);
-            resources.ApplyResources(panel14, "panel14");
             panel14.Name = "panel14";
+            toolTip1.SetToolTip(panel14, resources.GetString("panel14.ToolTip"));
             // 
             // radio_abilitaendtask
             // 
@@ -206,10 +211,11 @@
             // 
             // panel5
             // 
+            resources.ApplyResources(panel5, "panel5");
             panel5.Controls.Add(radio_apripowershell);
             panel5.Controls.Add(radio_eliminapowershell);
-            resources.ApplyResources(panel5, "panel5");
             panel5.Name = "panel5";
+            toolTip1.SetToolTip(panel5, resources.GetString("panel5.ToolTip"));
             // 
             // radio_apripowershell
             // 
@@ -231,10 +237,11 @@
             // 
             // panel4
             // 
+            resources.ApplyResources(panel4, "panel4");
             panel4.Controls.Add(radio_apricmd);
             panel4.Controls.Add(radio_eliminaapricmd);
-            resources.ApplyResources(panel4, "panel4");
             panel4.Name = "panel4";
+            toolTip1.SetToolTip(panel4, resources.GetString("panel4.ToolTip"));
             // 
             // radio_apricmd
             // 
@@ -256,10 +263,11 @@
             // 
             // panel32
             // 
+            resources.ApplyResources(panel32, "panel32");
             panel32.Controls.Add(radio_destrolegacy);
             panel32.Controls.Add(radio_destrodefault);
-            resources.ApplyResources(panel32, "panel32");
             panel32.Name = "panel32";
+            toolTip1.SetToolTip(panel32, resources.GetString("panel32.ToolTip"));
             // 
             // radio_destrolegacy
             // 
@@ -284,6 +292,7 @@
             resources.ApplyResources(label1, "label1");
             label1.ForeColor = Color.Coral;
             label1.Name = "label1";
+            toolTip1.SetToolTip(label1, resources.GetString("label1.ToolTip"));
             // 
             // panel7
             // 
@@ -297,13 +306,15 @@
             panel7.Controls.Add(label2);
             panel7.Controls.Add(panel8);
             panel7.Name = "panel7";
+            toolTip1.SetToolTip(panel7, resources.GetString("panel7.ToolTip"));
             // 
             // panel10
             // 
+            resources.ApplyResources(panel10, "panel10");
             panel10.Controls.Add(radio_abilicopilot);
             panel10.Controls.Add(radio_disacopilot);
-            resources.ApplyResources(panel10, "panel10");
             panel10.Name = "panel10";
+            toolTip1.SetToolTip(panel10, resources.GetString("panel10.ToolTip"));
             // 
             // radio_abilicopilot
             // 
@@ -325,10 +336,11 @@
             // 
             // panel6
             // 
+            resources.ApplyResources(panel6, "panel6");
             panel6.Controls.Add(radio_abilitarecall);
             panel6.Controls.Add(radio_disabilitarecall);
-            resources.ApplyResources(panel6, "panel6");
             panel6.Name = "panel6";
+            toolTip1.SetToolTip(panel6, resources.GetString("panel6.ToolTip"));
             // 
             // radio_abilitarecall
             // 
@@ -350,10 +362,11 @@
             // 
             // panel13
             // 
+            resources.ApplyResources(panel13, "panel13");
             panel13.Controls.Add(radio_attivafx);
             panel13.Controls.Add(radio_disattivafx);
-            resources.ApplyResources(panel13, "panel13");
             panel13.Name = "panel13";
+            toolTip1.SetToolTip(panel13, resources.GetString("panel13.ToolTip"));
             // 
             // radio_attivafx
             // 
@@ -375,10 +388,11 @@
             // 
             // panel9
             // 
+            resources.ApplyResources(panel9, "panel9");
             panel9.Controls.Add(radio_abilitasuggeriti);
             panel9.Controls.Add(radio_disabilitasuggeriti);
-            resources.ApplyResources(panel9, "panel9");
             panel9.Name = "panel9";
+            toolTip1.SetToolTip(panel9, resources.GetString("panel9.ToolTip"));
             // 
             // radio_abilitasuggeriti
             // 
@@ -400,9 +414,10 @@
             // 
             // panel11
             // 
-            panel11.Controls.Add(radio_disabilitaricercainternet);
             resources.ApplyResources(panel11, "panel11");
+            panel11.Controls.Add(radio_disabilitaricercainternet);
             panel11.Name = "panel11";
+            toolTip1.SetToolTip(panel11, resources.GetString("panel11.ToolTip"));
             // 
             // radio_disabilitaricercainternet
             // 
@@ -415,10 +430,11 @@
             // 
             // panel12
             // 
+            resources.ApplyResources(panel12, "panel12");
             panel12.Controls.Add(radio_ripristinaottimizzazionewin);
             panel12.Controls.Add(radio_ottimizzawindows);
-            resources.ApplyResources(panel12, "panel12");
             panel12.Name = "panel12";
+            toolTip1.SetToolTip(panel12, resources.GetString("panel12.ToolTip"));
             // 
             // radio_ripristinaottimizzazionewin
             // 
@@ -426,6 +442,7 @@
             radio_ripristinaottimizzazionewin.ForeColor = Color.White;
             radio_ripristinaottimizzazionewin.Name = "radio_ripristinaottimizzazionewin";
             radio_ripristinaottimizzazionewin.TabStop = true;
+            toolTip1.SetToolTip(radio_ripristinaottimizzazionewin, resources.GetString("radio_ripristinaottimizzazionewin.ToolTip"));
             radio_ripristinaottimizzazionewin.UseVisualStyleBackColor = true;
             // 
             // radio_ottimizzawindows
@@ -434,6 +451,7 @@
             radio_ottimizzawindows.ForeColor = Color.White;
             radio_ottimizzawindows.Name = "radio_ottimizzawindows";
             radio_ottimizzawindows.TabStop = true;
+            toolTip1.SetToolTip(radio_ottimizzawindows, resources.GetString("radio_ottimizzawindows.ToolTip"));
             radio_ottimizzawindows.UseVisualStyleBackColor = true;
             // 
             // label2
@@ -441,12 +459,14 @@
             resources.ApplyResources(label2, "label2");
             label2.ForeColor = Color.Coral;
             label2.Name = "label2";
+            toolTip1.SetToolTip(label2, resources.GetString("label2.ToolTip"));
             // 
             // panel8
             // 
-            panel8.Controls.Add(radio_ottimizzaricerca);
             resources.ApplyResources(panel8, "panel8");
+            panel8.Controls.Add(radio_ottimizzaricerca);
             panel8.Name = "panel8";
+            toolTip1.SetToolTip(panel8, resources.GetString("panel8.ToolTip"));
             // 
             // radio_ottimizzaricerca
             // 
@@ -454,15 +474,17 @@
             radio_ottimizzaricerca.ForeColor = Color.White;
             radio_ottimizzaricerca.Name = "radio_ottimizzaricerca";
             radio_ottimizzaricerca.TabStop = true;
+            toolTip1.SetToolTip(radio_ottimizzaricerca, resources.GetString("radio_ottimizzaricerca.ToolTip"));
             radio_ottimizzaricerca.UseVisualStyleBackColor = true;
             // 
             // btnBack
             // 
+            resources.ApplyResources(btnBack, "btnBack");
             btnBack.Cursor = Cursors.Hand;
             btnBack.FlatAppearance.BorderSize = 0;
-            resources.ApplyResources(btnBack, "btnBack");
             btnBack.Image = Properties.Resources.pngBackArrow;
             btnBack.Name = "btnBack";
+            toolTip1.SetToolTip(btnBack, resources.GetString("btnBack.ToolTip"));
             btnBack.UseMnemonic = false;
             btnBack.UseVisualStyleBackColor = true;
             btnBack.Click += btnBack_Click;
@@ -474,6 +496,7 @@
             btn_resetselezione.FlatAppearance.BorderSize = 0;
             btn_resetselezione.ForeColor = Color.White;
             btn_resetselezione.Name = "btn_resetselezione";
+            toolTip1.SetToolTip(btn_resetselezione, resources.GetString("btn_resetselezione.ToolTip"));
             btn_resetselezione.UseVisualStyleBackColor = true;
             btn_resetselezione.Click += btn_resetselezione_Click;
             // 
@@ -482,18 +505,21 @@
             resources.ApplyResources(label3, "label3");
             label3.ForeColor = Color.Coral;
             label3.Name = "label3";
+            toolTip1.SetToolTip(label3, resources.GetString("label3.ToolTip"));
             // 
             // label5
             // 
             resources.ApplyResources(label5, "label5");
             label5.ForeColor = Color.Coral;
             label5.Name = "label5";
+            toolTip1.SetToolTip(label5, resources.GetString("label5.ToolTip"));
             // 
             // progressBar1
             // 
             resources.ApplyResources(progressBar1, "progressBar1");
             progressBar1.Name = "progressBar1";
             progressBar1.Style = ProgressBarStyle.Continuous;
+            toolTip1.SetToolTip(progressBar1, resources.GetString("progressBar1.ToolTip"));
             // 
             // backgroundWorker1
             // 
@@ -510,6 +536,7 @@
             btnSettaggiExplorer.FlatAppearance.BorderSize = 0;
             btnSettaggiExplorer.ForeColor = Color.White;
             btnSettaggiExplorer.Name = "btnSettaggiExplorer";
+            toolTip1.SetToolTip(btnSettaggiExplorer, resources.GetString("btnSettaggiExplorer.ToolTip"));
             btnSettaggiExplorer.UseVisualStyleBackColor = true;
             btnSettaggiExplorer.Click += btnSettaggiExplorer_Click;
             // 
@@ -530,6 +557,7 @@
             Controls.Add(panel23);
             FormBorderStyle = FormBorderStyle.None;
             Name = "FormPersonalizzazione";
+            toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
             Load += FormPersonalizzazione_Load;
             panel23.ResumeLayout(false);
             panel23.PerformLayout();

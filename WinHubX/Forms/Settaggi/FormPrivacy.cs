@@ -939,8 +939,6 @@ namespace WinHubX.Forms.Settaggi
                             key64.SetValue("GameDVR_Enabled", 0, RegistryValueKind.DWord);
                         }
                     }
-
-                    // Imposta le chiavi di registro per la configurazione a 32-bit
                     using (RegistryKey key32 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32)
                                                              .OpenSubKey(@"SYSTEM\GameConfigStore", writable: true))
                     {

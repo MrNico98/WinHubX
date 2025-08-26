@@ -15,7 +15,6 @@ namespace WinHubX
         private readonly List<Button> bottoni = new();
         private const int WM_NCHITTEST = 0x84;
         private const int HT_CAPTION = 0x2;
-        private bool isLoading = true;
 
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
         private static extern IntPtr CreateRoundRectRgn(int nLeftRect, int nTopRect, int nRightRect, int nBottomRect, int nWidthEllipse, int nHeightEllipse);
@@ -81,32 +80,52 @@ namespace WinHubX
         private static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
 
         private const int WM_NCLBUTTONDOWN = 0xA1;
+        bool dark = Properties.Settings.Default.DarkTheme;
 
         public Form1()
         {
             InitializeComponent();
+            this.ShowInTaskbar = true;
             Icon appIcon = Properties.Resources.icoLogoWhite;
             notifyIcon = new NotifyIcon
             {
                 Icon = appIcon,
-                Visible = false
+                Visible = true
             };
+
             trayIconContextMenu = new ContextMenuStrip();
-            _ = trayIconContextMenu.Items.Add("Apri", null, (s, e) => ShowFromTray());
-            _ = trayIconContextMenu.Items.Add("Esci", null, (s, e) => Application.Exit());
+            trayIconContextMenu.Items.Add("Apri", null, (s, e) => ShowFromTray());
+            trayIconContextMenu.Items.Add("Esci", null, (s, e) => Application.Exit());
             notifyIcon.ContextMenuStrip = trayIconContextMenu;
             notifyIcon.DoubleClick += (s, e) => ShowFromTray();
-            this.Padding = new Padding(2);
+
             this.FormBorderStyle = FormBorderStyle.None;
+            this.Padding = new Padding(2);
             this.Resize += (s, e) =>
             {
                 Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 25, 25));
             };
-            bottoni.AddRange(new[] { btnHome, btnWin, btnOffice, btnSettaggi, btnDebloat, btnCreaISO, btnTools, btnmonitoraggio });
+            bottoni.AddRange(new[] { btnHome, btnWin, btnOffice, btnSettaggi, btnDebloat, btnCreaISO, btnTools, btnmonitoraggio, btnReinstallaApp});
             LoadForm(new FormHome(), btnHome, "Home");
             LanguageManager.LoadTranslations();
-            this.ActiveControl = label1;
+            this.ActiveControl = pictureBox2;
             ThemeManager.ApplyThemeToControl(this, ThemeManager.IsDarkTheme);
+            this.Shown += (s, e) =>
+            {
+                this.Show();
+                this.BringToFront();
+                this.Activate();
+            };
+        }
+        public void ReloadUI()
+        {
+            this.Controls.Clear();
+            InitializeComponent();
+            bool dark = Properties.Settings.Default.DarkTheme;
+            ThemeManager.SetTheme(dark);
+            string savedLanguage = Properties.Settings.Default.Language ?? "it";
+            LanguageManager.SetLanguage(savedLanguage);
+            LoadForm(new FormHome(), btnHome, "Home");
         }
 
         private void EnableDragging(Control control)
@@ -137,17 +156,24 @@ namespace WinHubX
             notifyIcon.Visible = false;
         }
 
-        private void swap_pnlNav(Button activeButton)
+        private void swap_pnlNav(Button activeButton, bool darkTheme)
         {
-            foreach (var button in bottoni)
-                button.BackColor = (button == activeButton) ? Color.FromArgb(46, 51, 73) : Color.FromArgb(64, 60, 59);
+            Color baseColor = darkTheme ? Color.FromArgb(64, 60, 59) : Color.FromArgb(245, 245, 245);
+            Color activeColor = darkTheme ? Color.FromArgb(80, 80, 80) : Color.FromArgb(220, 220, 220);
 
+            foreach (var button in bottoni)
+            {
+                button.BackColor = baseColor;
+                button.ForeColor = darkTheme ? Color.White : Color.Black;
+            }
+            activeButton.BackColor = activeColor;
             pnlNav.SetBounds(activeButton.Left, activeButton.Top, pnlNav.Width, activeButton.Height);
         }
 
         public void LoadForm(Form form, Button button, string title)
         {
-            swap_pnlNav(button);
+            bool dark = Properties.Settings.Default.DarkTheme;
+            swap_pnlNav(button, dark);
             lblPanelTitle.Text = title;
             PnlFormLoader.Controls.Clear();
             form.Dock = DockStyle.Fill;
@@ -157,10 +183,10 @@ namespace WinHubX
             PnlFormLoader.Controls.Add(form);
             form.Show();
             EnableDragging(this);
-            ThemeManager.ApplyThemeToControl(form, ThemeManager.IsDarkTheme);
+            ThemeManager.ApplyThemeToControl(form, dark);
         }
 
-        private async void CheckForUpdatesOnStartup() => await CheckForUpdatesAsync();
+        public async void CheckForUpdatesOnStartup() => await CheckForUpdatesAsync();
 
         private async Task CheckForUpdatesAsync()
         {
@@ -443,7 +469,15 @@ if ($existingRestorePoints.Count -eq 0) {
         private void btnReinstallaApp_Click(object sender, EventArgs e) =>
             LoadForm(new FormReinstallaAPP(), btnReinstallaApp, LanguageManager.GetTranslation("Form1", "titoloApp"));
 
-        private void btnClose_Click(object sender, EventArgs e) => Application.Exit();
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            foreach (Form openForm in Application.OpenForms.Cast<Form>().ToList())
+            {
+                openForm.Close();
+            }
+            Application.Exit();
+        }
+
         private void btnMnmz_Click(object sender, EventArgs e)
         {
             if (Properties.Settings.Default.MinimizeToTray)
@@ -477,118 +511,15 @@ if ($existingRestorePoints.Count -eq 0) {
             }
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (comboBox1.SelectedItem == null) return;
-            string languageCode = "it";
-            string selectedLanguage = comboBox1.SelectedItem.ToString();
-            if (selectedLanguage == "English")
-            {
-                languageCode = "en";
-            }
-            Properties.Settings.Default.Language = languageCode;
-            Properties.Settings.Default.Save();
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo(languageCode);
-            Controls.Clear();
-            InitializeComponent();
-            bool dark = Properties.Settings.Default.DarkTheme;
-            ThemeManager.SetTheme(dark);
-            label1.Text = dark
-                ? LanguageManager.GetTranslation("Form1", "temascuro")
-                : LanguageManager.GetTranslation("Form1", "temachiaro");
-            LoadForm(new FormHome(), btnHome, "Home");
-            string savedLanguage = Properties.Settings.Default.Language ?? "it";
-            LanguageManager.SetLanguage(savedLanguage);
-
-            comboBox1.SelectedIndexChanged -= comboBox1_SelectedIndexChanged;
-            if (savedLanguage == "it")
-            {
-                comboBox1.SelectedItem = "Italiano";
-                pictureBox3.Image = Properties.Resources.italias;
-            }
-            else if (savedLanguage == "en")
-            {
-                comboBox1.SelectedItem = "English";
-                pictureBox3.Image = Properties.Resources.englisj;
-            }
-
-            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
-            if (isLoading == false)
-            {
-                CheckForUpdatesOnStartup();
-            }
-        }
-
         private void Form1_Load(object sender, EventArgs e)
         {
-            if (Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName == "en")
-            {
-                comboBox1.SelectedItem = "English";
-            }
-            else
-            {
-                comboBox1.SelectedItem = "Italiano";
-            }
             CheckForUpdatesOnStartup();
-            isLoading = false;
-            string savedLanguage = Properties.Settings.Default.Language ?? "it";
-            comboBox1.SelectedIndexChanged -= comboBox1_SelectedIndexChanged;
-            if (savedLanguage == "it")
-            {
-                comboBox1.SelectedItem = "Italiano";
-                pictureBox3.Image = Properties.Resources.italias;
-            }
-            else if (savedLanguage == "en")
-            {
-                comboBox1.SelectedItem = "English";
-                pictureBox3.Image = Properties.Resources.englisj;
-            }
-            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
             EnableDragging(tableLayoutPanel1);
             EnableDragging(panel1);
             EnableDragging(panel2);
             EnableDragging(panel3);
             EnableDragging(PnlFormLoader);
-            bool dark = Properties.Settings.Default.DarkTheme;
-            bottoniSwap1.Checked = dark;
             ThemeManager.SetTheme(dark);
-            label1.Text = dark
-                ? LanguageManager.GetTranslation("Form1", "temascuro")
-                : LanguageManager.GetTranslation("Form1", "temachiaro");
-        }
-
-        private void pictureBox3_Click(object sender, EventArgs e)
-        {
-            string currentLanguage = Properties.Settings.Default.Language ?? "it";
-            string newLanguage = currentLanguage == "it" ? "en" : "it";
-            Properties.Settings.Default.Language = newLanguage;
-            Properties.Settings.Default.Save();
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo(newLanguage);
-            Controls.Clear();
-            InitializeComponent();
-            bool dark = Properties.Settings.Default.DarkTheme;
-            ThemeManager.SetTheme(dark);
-            label1.Text = dark
-                ? LanguageManager.GetTranslation("Form1", "temascuro")
-                : LanguageManager.GetTranslation("Form1", "temachiaro");
-            LoadForm(new FormHome(), btnHome, "Home");
-            comboBox1.SelectedIndexChanged -= comboBox1_SelectedIndexChanged;
-            if (newLanguage == "it")
-            {
-                comboBox1.SelectedItem = "Italiano";
-                pictureBox3.Image = Properties.Resources.italias;
-            }
-            else if (newLanguage == "en")
-            {
-                comboBox1.SelectedItem = "English";
-                pictureBox3.Image = Properties.Resources.englisj;
-            }
-
-            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
-            if (!isLoading)
-            {
-                CheckForUpdatesOnStartup();
-            }
         }
 
         private bool isFullScreen = false;
@@ -618,21 +549,29 @@ if ($existingRestorePoints.Count -eq 0) {
             }
         }
 
-        private void bottoniSwap1_CheckedChanged(object sender, EventArgs e)
+        private void pictureBox4_Click(object sender, EventArgs e)
         {
-            bool dark = bottoniSwap1.Checked;
-            ThemeManager.SetTheme(dark);
-            label1.Text = dark
-                ? LanguageManager.GetTranslation("Form1", "temascuro")
-                : LanguageManager.GetTranslation("Form1", "temachiaro");
-            Properties.Settings.Default.DarkTheme = dark;
-            Properties.Settings.Default.Save();
-            ThemeManager.ApplyThemeToControl(this, dark);
+            var formAperto = Application.OpenForms
+                .OfType<FormImpostazioniApp>()
+                .FirstOrDefault();
+
+            if (formAperto != null)
+            {
+                formAperto.WindowState = FormWindowState.Normal;
+                formAperto.BringToFront();
+                formAperto.Activate();
+            }
+            else
+            {
+                FormImpostazioniApp impostazioni = new FormImpostazioniApp(this, null);
+                ThemeManager.ApplyThemeToControl(impostazioni, ThemeManager.IsDarkTheme);
+                impostazioni.Show();
+            }
         }
     }
     public static class AppConfig
     {
-        public static string CurrentVersion { get; set; } = "2.4.3.3";
+        public static string CurrentVersion { get; set; } = "2.4.3.4";
     }
 
 }

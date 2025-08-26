@@ -117,207 +117,378 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="btnAttivaOffice.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Right</value>
+  <data name="$this.Text" xml:space="preserve">
+    <value>FormOffice</value>
   </data>
-  <data name="btnAttivaOffice.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
+  <data name="&gt;&gt;btnPersonalizzaOffice.Name" xml:space="preserve">
+    <value>btnPersonalizzaOffice</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="btnAttivaOffice.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 19.800001pt, style=Bold</value>
-  </data>
-  <data name="btnAttivaOffice.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
-  </data>
-  <data name="btnAttivaOffice.Location" type="System.Drawing.Point, System.Drawing">
-    <value>622, 316</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="btnAttivaOffice.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="btnAttivaOffice.Size" type="System.Drawing.Size, System.Drawing">
-    <value>267, 53</value>
+  <data name="&gt;&gt;richTextBoxInfo.ZOrder" xml:space="preserve">
+    <value>4</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="btnAttivaOffice.TabIndex" type="System.Int32, mscorlib">
     <value>79</value>
   </data>
-  <data name="btnAttivaOffice.Text" xml:space="preserve">
-    <value> Attiva Office</value>
+  <data name="&gt;&gt;pictureBox4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="pictureBox4.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
+    <value>Zoom</value>
+  </data>
+  <data name="richTextBoxInfo.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Right</value>
   </data>
   <data name="btnAttivaOffice.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
     <value>ImageBeforeText</value>
   </data>
-  <data name="&gt;&gt;btnAttivaOffice.Name" xml:space="preserve">
-    <value>btnAttivaOffice</value>
-  </data>
-  <data name="&gt;&gt;btnAttivaOffice.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnAttivaOffice.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;btnAttivaOffice.ZOrder" xml:space="preserve">
-    <value>13</value>
-  </data>
-  <data name="btnScrubber.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left</value>
-  </data>
-  <data name="btnScrubber.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="btnScrubber.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 19.800001pt, style=Bold</value>
-  </data>
-  <data name="btnScrubber.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
-  </data>
-  <data name="btnScrubber.Location" type="System.Drawing.Point, System.Drawing">
-    <value>31, 316</value>
-  </data>
-  <data name="btnScrubber.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="btnScrubber.Size" type="System.Drawing.Size, System.Drawing">
-    <value>335, 53</value>
-  </data>
-  <data name="btnScrubber.TabIndex" type="System.Int32, mscorlib">
-    <value>80</value>
-  </data>
-  <data name="btnScrubber.Text" xml:space="preserve">
-    <value> Disinstalla Office</value>
-  </data>
-  <data name="btnScrubber.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>ImageBeforeText</value>
-  </data>
-  <data name="&gt;&gt;btnScrubber.Name" xml:space="preserve">
-    <value>btnScrubber</value>
-  </data>
-  <data name="&gt;&gt;btnScrubber.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnScrubber.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;btnScrubber.ZOrder" xml:space="preserve">
-    <value>12</value>
-  </data>
-  <data name="btnPersonalizzaOffice.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Right</value>
-  </data>
-  <data name="btnPersonalizzaOffice.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="btnPersonalizzaOffice.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 19.800001pt, style=Bold</value>
-  </data>
-  <data name="btnPersonalizzaOffice.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
-  </data>
-  <data name="btnPersonalizzaOffice.Location" type="System.Drawing.Point, System.Drawing">
-    <value>453, 394</value>
-  </data>
-  <data name="btnPersonalizzaOffice.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="btnPersonalizzaOffice.Size" type="System.Drawing.Size, System.Drawing">
-    <value>436, 53</value>
-  </data>
-  <data name="btnPersonalizzaOffice.TabIndex" type="System.Int32, mscorlib">
-    <value>82</value>
-  </data>
-  <data name="btnPersonalizzaOffice.Text" xml:space="preserve">
-    <value> Crea Office Personalizzato</value>
-  </data>
-  <data name="btnPersonalizzaOffice.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>ImageBeforeText</value>
-  </data>
-  <data name="&gt;&gt;btnPersonalizzaOffice.Name" xml:space="preserve">
-    <value>btnPersonalizzaOffice</value>
-  </data>
-  <data name="&gt;&gt;btnPersonalizzaOffice.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnPersonalizzaOffice.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;btnPersonalizzaOffice.ZOrder" xml:space="preserve">
-    <value>11</value>
-  </data>
-  <data name="comboBoxInstallazione.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>System</value>
-  </data>
-  <data name="comboBoxInstallazione.Items" xml:space="preserve">
-    <value>x64 - Online</value>
-  </data>
-  <data name="comboBoxInstallazione.Items1" xml:space="preserve">
-    <value>x64 - Offline</value>
-  </data>
   <data name="comboBoxInstallazione.Items2" xml:space="preserve">
     <value>x32 - Online</value>
   </data>
-  <data name="comboBoxInstallazione.Items3" xml:space="preserve">
-    <value>x32 - Offline</value>
+  <data name="richTextBoxInfo.TabIndex" type="System.Int32, mscorlib">
+    <value>97</value>
   </data>
-  <data name="comboBoxInstallazione.Location" type="System.Drawing.Point, System.Drawing">
-    <value>253, 62</value>
-  </data>
-  <data name="comboBoxInstallazione.Size" type="System.Drawing.Size, System.Drawing">
-    <value>113, 23</value>
-  </data>
-  <data name="comboBoxInstallazione.TabIndex" type="System.Int32, mscorlib">
-    <value>94</value>
-  </data>
-  <data name="comboBoxInstallazione.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;comboBoxInstallazione.Name" xml:space="preserve">
-    <value>comboBoxInstallazione</value>
-  </data>
-  <data name="&gt;&gt;comboBoxInstallazione.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;comboBoxInstallazione.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;comboBoxInstallazione.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="labelTipoInstallazione.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="labelTipoInstallazione.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 13.8pt, style=Italic</value>
-  </data>
-  <data name="labelTipoInstallazione.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="labelTipoInstallazione.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 62</value>
-  </data>
-  <data name="labelTipoInstallazione.Size" type="System.Drawing.Size, System.Drawing">
-    <value>235, 24</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btnAttivaOffice.Size" type="System.Drawing.Size, System.Drawing">
+    <value>267, 53</value>
   </data>
   <data name="labelTipoInstallazione.TabIndex" type="System.Int32, mscorlib">
     <value>93</value>
   </data>
-  <data name="labelTipoInstallazione.Text" xml:space="preserve">
-    <value>Seleziona tipo installazione</value>
+  <data name="richTextBoxInfo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>453, 12</value>
   </data>
-  <data name="labelTipoInstallazione.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+  <data name="btnScrubber.TabIndex" type="System.Int32, mscorlib">
+    <value>80</value>
+  </data>
+  <data name="labelversione.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="&gt;&gt;btnDownload.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;richTextBoxDescription.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="btnDownload.Location" type="System.Drawing.Point, System.Drawing">
+    <value>388, 307</value>
+  </data>
+  <data name="&gt;&gt;btnAttivaOffice.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="comboBoxVerOffice.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>System</value>
+  </data>
+  <data name="btnAggRimAppOffice.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;comboBox_Lingua.Name" xml:space="preserve">
+    <value>comboBox_Lingua</value>
+  </data>
+  <data name="&gt;&gt;lblSelezionLingua.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;comboBoxVerOffice.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="comboBox_Lingua.TabIndex" type="System.Int32, mscorlib">
+    <value>100</value>
+  </data>
+  <data name="btnAttivaOffice.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 19.800001pt, style=Bold</value>
+  </data>
+  <data name="&gt;&gt;richTextBoxInfo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btnDownload.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 19.800001pt, style=Bold</value>
+  </data>
+  <data name="btnScrubber.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
+    <value>ImageBeforeText</value>
+  </data>
+  <data name="comboBoxInstallazione.Size" type="System.Drawing.Size, System.Drawing">
+    <value>113, 23</value>
+  </data>
+  <data name="lblSelezionLingua.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>96, 96</value>
+  </data>
+  <data name="labelversione.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 13.8pt, style=Italic</value>
+  </data>
+  <data name="comboBoxVerOffice.Items1" xml:space="preserve">
+    <value>Office 2021</value>
+  </data>
+  <data name="&gt;&gt;btnAttivaOffice.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;labelTipoInstallazione.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btnScrubber.Size" type="System.Drawing.Size, System.Drawing">
+    <value>335, 53</value>
+  </data>
+  <data name="&gt;&gt;richTextBoxInfo.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="btnPersonalizzaOffice.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="&gt;&gt;btnPersonalizzaOffice.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="comboBox_Lingua.Items1" xml:space="preserve">
+    <value>EN</value>
+  </data>
+  <data name="comboBoxInstallazione.TabIndex" type="System.Int32, mscorlib">
+    <value>94</value>
+  </data>
+  <data name="richTextBoxInfo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>436, 290</value>
+  </data>
+  <data name="btnAggRimAppOffice.Size" type="System.Drawing.Size, System.Drawing">
+    <value>359, 53</value>
+  </data>
+  <data name="btnPersonalizzaOffice.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>901, 458</value>
+  </data>
+  <data name="&gt;&gt;comboBoxInstallazione.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="btnScrubber.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="labelversione.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>BottomCenter</value>
+  </data>
+  <data name="btnScrubber.Text" xml:space="preserve">
+    <value> Disinstalla Office</value>
+  </data>
+  <data name="btnScrubber.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="labelversione.Text" xml:space="preserve">
+    <value>Seleziona versione Office</value>
+  </data>
+  <data name="btnDownload.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
+    <value>ImageBeforeText</value>
+  </data>
+  <data name="&gt;&gt;comboBoxVerOffice.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="comboBoxVerOffice.TabIndex" type="System.Int32, mscorlib">
+    <value>89</value>
+  </data>
+  <data name="btnDownload.Size" type="System.Drawing.Size, System.Drawing">
+    <value>185, 62</value>
+  </data>
+  <data name="btnAttivaOffice.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="richTextBoxDescription.TabIndex" type="System.Int32, mscorlib">
+    <value>96</value>
+  </data>
+  <data name="&gt;&gt;labelversione.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="btnScrubber.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 19.800001pt, style=Bold</value>
+  </data>
+  <data name="comboBoxVerOffice.Items3" xml:space="preserve">
+    <value>Office 365</value>
+  </data>
+  <data name="btnAggRimAppOffice.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 19.800001pt, style=Bold</value>
+  </data>
+  <data name="&gt;&gt;pictureBox4.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="comboBoxInstallazione.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="btnAggRimAppOffice.Text" xml:space="preserve">
+    <value>Aggiungi\Rimuovi app</value>
+  </data>
+  <data name="btnScrubber.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="labelTipoInstallazione.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 62</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>FormOffice</value>
+  </data>
+  <data name="pictureBox4.TabIndex" type="System.Int32, mscorlib">
+    <value>95</value>
+  </data>
+  <data name="comboBox_Lingua.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>System</value>
+  </data>
+  <data name="labelversione.TabIndex" type="System.Int32, mscorlib">
+    <value>90</value>
+  </data>
+  <data name="&gt;&gt;labelversione.Name" xml:space="preserve">
+    <value>labelversione</value>
   </data>
   <data name="labelTipoInstallazione.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="&gt;&gt;labelTipoInstallazione.Name" xml:space="preserve">
-    <value>labelTipoInstallazione</value>
+  <data name="labelversione.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 5</value>
   </data>
-  <data name="&gt;&gt;labelTipoInstallazione.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="btnPersonalizzaOffice.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="&gt;&gt;lblSelezionLingua.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="btnDownload.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom</value>
+  </data>
+  <data name="btnAttivaOffice.Location" type="System.Drawing.Point, System.Drawing">
+    <value>622, 316</value>
+  </data>
+  <data name="comboBoxInstallazione.Location" type="System.Drawing.Point, System.Drawing">
+    <value>253, 62</value>
+  </data>
+  <data name="lblSelezionLingua.Text" xml:space="preserve">
+    <value>Seleziona lingua</value>
+  </data>
+  <data name="comboBoxVerOffice.Items" xml:space="preserve">
+    <value>Office 2019</value>
+  </data>
+  <data name="btnAggRimAppOffice.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="labelTipoInstallazione.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>BottomCenter</value>
+  </data>
+  <data name="&gt;&gt;richTextBoxDescription.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="comboBoxInstallazione.Items3" xml:space="preserve">
+    <value>x32 - Offline</value>
+  </data>
+  <data name="&gt;&gt;btnAttivaOffice.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="comboBox_Lingua.Size" type="System.Drawing.Size, System.Drawing">
+    <value>113, 23</value>
+  </data>
+  <data name="lblSelezionLingua.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 13.8pt, style=Italic</value>
+  </data>
+  <data name="&gt;&gt;comboBox_Lingua.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnPersonalizzaOffice.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="pictureBox4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>59, 43</value>
+  </data>
+  <data name="btnAggRimAppOffice.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="&gt;&gt;btnScrubber.Name" xml:space="preserve">
+    <value>btnScrubber</value>
+  </data>
+  <data name="btnPersonalizzaOffice.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 19.800001pt, style=Bold</value>
+  </data>
+  <data name="richTextBoxDescription.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left</value>
+  </data>
+  <data name="lblSelezionLingua.TabIndex" type="System.Int32, mscorlib">
+    <value>99</value>
+  </data>
+  <data name="btnDownload.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="lblSelezionLingua.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 34</value>
+  </data>
+  <data name="btnAggRimAppOffice.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
+    <value>ImageBeforeText</value>
+  </data>
+  <data name="btnDownload.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="&gt;&gt;comboBox_Lingua.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="btnDownload.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="&gt;&gt;comboBoxVerOffice.Name" xml:space="preserve">
+    <value>comboBoxVerOffice</value>
+  </data>
+  <data name="labelTipoInstallazione.Size" type="System.Drawing.Size, System.Drawing">
+    <value>235, 24</value>
+  </data>
+  <data name="lblSelezionLingua.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>BottomCenter</value>
+  </data>
+  <data name="btnPersonalizzaOffice.Size" type="System.Drawing.Size, System.Drawing">
+    <value>436, 53</value>
+  </data>
+  <data name="&gt;&gt;btnDownload.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="labelTipoInstallazione.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 13.8pt, style=Italic</value>
+  </data>
+  <data name="&gt;&gt;lblSelezionLingua.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="btnAttivaOffice.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="&gt;&gt;richTextBoxDescription.Name" xml:space="preserve">
+    <value>richTextBoxDescription</value>
+  </data>
+  <data name="labelversione.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblSelezionLingua.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="comboBoxVerOffice.Location" type="System.Drawing.Point, System.Drawing">
+    <value>253, 6</value>
+  </data>
+  <data name="&gt;&gt;comboBoxInstallazione.Name" xml:space="preserve">
+    <value>comboBoxInstallazione</value>
+  </data>
+  <data name="&gt;&gt;comboBoxVerOffice.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="btnAggRimAppOffice.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="&gt;&gt;comboBox_Lingua.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="comboBoxVerOffice.Size" type="System.Drawing.Size, System.Drawing">
+    <value>113, 23</value>
+  </data>
+  <data name="&gt;&gt;labelversione.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;btnPersonalizzaOffice.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;btnAggRimAppOffice.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="&gt;&gt;labelTipoInstallazione.Parent" xml:space="preserve">
     <value>$this</value>
@@ -325,340 +496,172 @@
   <data name="&gt;&gt;labelTipoInstallazione.ZOrder" xml:space="preserve">
     <value>8</value>
   </data>
-  <data name="labelversione.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="labelversione.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 13.8pt, style=Italic</value>
-  </data>
-  <data name="labelversione.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="labelversione.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 5</value>
-  </data>
-  <data name="labelversione.Size" type="System.Drawing.Size, System.Drawing">
-    <value>223, 24</value>
-  </data>
-  <data name="labelversione.TabIndex" type="System.Int32, mscorlib">
-    <value>90</value>
-  </data>
-  <data name="labelversione.Text" xml:space="preserve">
-    <value>Seleziona versione Office</value>
-  </data>
-  <data name="labelversione.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>BottomCenter</value>
-  </data>
-  <data name="&gt;&gt;labelversione.Name" xml:space="preserve">
-    <value>labelversione</value>
-  </data>
-  <data name="&gt;&gt;labelversione.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;labelversione.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;labelversione.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
-  <data name="comboBoxVerOffice.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>System</value>
-  </data>
-  <data name="comboBoxVerOffice.Items" xml:space="preserve">
-    <value>Office 2019</value>
-  </data>
-  <data name="comboBoxVerOffice.Items1" xml:space="preserve">
-    <value>Office 2021</value>
-  </data>
   <data name="comboBoxVerOffice.Items2" xml:space="preserve">
     <value>Office 2024</value>
   </data>
-  <data name="comboBoxVerOffice.Items3" xml:space="preserve">
-    <value>Office 365</value>
-  </data>
-  <data name="comboBoxVerOffice.Location" type="System.Drawing.Point, System.Drawing">
-    <value>253, 6</value>
-  </data>
-  <data name="comboBoxVerOffice.Size" type="System.Drawing.Size, System.Drawing">
-    <value>113, 23</value>
-  </data>
-  <data name="comboBoxVerOffice.TabIndex" type="System.Int32, mscorlib">
-    <value>89</value>
-  </data>
-  <data name="&gt;&gt;comboBoxVerOffice.Name" xml:space="preserve">
-    <value>comboBoxVerOffice</value>
-  </data>
-  <data name="&gt;&gt;comboBoxVerOffice.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;comboBoxVerOffice.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;comboBoxVerOffice.ZOrder" xml:space="preserve">
-    <value>10</value>
-  </data>
-  <data name="pictureBox4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>372, 5</value>
-  </data>
-  <data name="pictureBox4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>59, 43</value>
-  </data>
-  <data name="pictureBox4.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
-    <value>Zoom</value>
-  </data>
-  <data name="pictureBox4.TabIndex" type="System.Int32, mscorlib">
-    <value>95</value>
-  </data>
-  <data name="&gt;&gt;pictureBox4.Name" xml:space="preserve">
-    <value>pictureBox4</value>
-  </data>
-  <data name="&gt;&gt;pictureBox4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;pictureBox4.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;pictureBox4.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="richTextBoxInfo.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Right</value>
-  </data>
-  <data name="richTextBoxInfo.Location" type="System.Drawing.Point, System.Drawing">
-    <value>453, 12</value>
-  </data>
-  <data name="richTextBoxInfo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>436, 290</value>
-  </data>
-  <data name="richTextBoxInfo.TabIndex" type="System.Int32, mscorlib">
-    <value>97</value>
-  </data>
-  <data name="richTextBoxInfo.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;richTextBoxInfo.Name" xml:space="preserve">
-    <value>richTextBoxInfo</value>
-  </data>
-  <data name="&gt;&gt;richTextBoxInfo.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;richTextBoxInfo.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;richTextBoxInfo.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="richTextBoxDescription.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left</value>
-  </data>
-  <data name="richTextBoxDescription.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 105</value>
-  </data>
-  <data name="richTextBoxDescription.Size" type="System.Drawing.Size, System.Drawing">
-    <value>435, 197</value>
-  </data>
-  <data name="richTextBoxDescription.TabIndex" type="System.Int32, mscorlib">
-    <value>96</value>
-  </data>
-  <data name="richTextBoxDescription.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;richTextBoxDescription.Name" xml:space="preserve">
-    <value>richTextBoxDescription</value>
-  </data>
-  <data name="&gt;&gt;richTextBoxDescription.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;richTextBoxDescription.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;richTextBoxDescription.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="btnDownload.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom</value>
-  </data>
-  <data name="btnDownload.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="btnDownload.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 19.800001pt, style=Bold</value>
-  </data>
-  <data name="btnDownload.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
-  </data>
-  <data name="btnDownload.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="btnDownload.Location" type="System.Drawing.Point, System.Drawing">
-    <value>388, 307</value>
-  </data>
-  <data name="btnDownload.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="btnDownload.Size" type="System.Drawing.Size, System.Drawing">
-    <value>185, 62</value>
-  </data>
-  <data name="btnDownload.TabIndex" type="System.Int32, mscorlib">
-    <value>98</value>
-  </data>
-  <data name="btnDownload.Text" xml:space="preserve">
-    <value> Scarica</value>
-  </data>
-  <data name="btnDownload.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>ImageBeforeText</value>
+  <data name="&gt;&gt;btnScrubber.ZOrder" xml:space="preserve">
+    <value>12</value>
   </data>
   <data name="btnDownload.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="&gt;&gt;btnDownload.Name" xml:space="preserve">
-    <value>btnDownload</value>
-  </data>
-  <data name="&gt;&gt;btnDownload.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnDownload.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;btnDownload.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="comboBox_Lingua.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>System</value>
-  </data>
-  <data name="comboBox_Lingua.Items" xml:space="preserve">
-    <value>IT</value>
-  </data>
-  <data name="comboBox_Lingua.Items1" xml:space="preserve">
-    <value>EN</value>
-  </data>
-  <data name="comboBox_Lingua.Location" type="System.Drawing.Point, System.Drawing">
-    <value>253, 34</value>
-  </data>
-  <data name="comboBox_Lingua.Size" type="System.Drawing.Size, System.Drawing">
-    <value>113, 23</value>
-  </data>
-  <data name="comboBox_Lingua.TabIndex" type="System.Int32, mscorlib">
-    <value>100</value>
-  </data>
-  <data name="comboBox_Lingua.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;comboBox_Lingua.Name" xml:space="preserve">
-    <value>comboBox_Lingua</value>
-  </data>
-  <data name="&gt;&gt;comboBox_Lingua.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;comboBox_Lingua.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;comboBox_Lingua.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="lblSelezionLingua.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lblSelezionLingua.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 13.8pt, style=Italic</value>
-  </data>
-  <data name="lblSelezionLingua.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="lblSelezionLingua.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 34</value>
-  </data>
-  <data name="lblSelezionLingua.Size" type="System.Drawing.Size, System.Drawing">
-    <value>149, 24</value>
-  </data>
-  <data name="lblSelezionLingua.TabIndex" type="System.Int32, mscorlib">
-    <value>99</value>
-  </data>
-  <data name="lblSelezionLingua.Text" xml:space="preserve">
-    <value>Seleziona lingua</value>
-  </data>
-  <data name="lblSelezionLingua.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>BottomCenter</value>
-  </data>
-  <data name="lblSelezionLingua.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;lblSelezionLingua.Name" xml:space="preserve">
-    <value>lblSelezionLingua</value>
-  </data>
-  <data name="&gt;&gt;lblSelezionLingua.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblSelezionLingua.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lblSelezionLingua.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="btnAggRimAppOffice.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left</value>
-  </data>
-  <data name="btnAggRimAppOffice.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="btnAggRimAppOffice.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 19.800001pt, style=Bold</value>
-  </data>
-  <data name="btnAggRimAppOffice.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+  <data name="btnDownload.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleLeft</value>
   </data>
-  <data name="btnAggRimAppOffice.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="btnDownload.Text" xml:space="preserve">
+    <value> Scarica</value>
   </data>
-  <data name="btnAggRimAppOffice.Location" type="System.Drawing.Point, System.Drawing">
-    <value>31, 394</value>
+  <data name="&gt;&gt;comboBoxInstallazione.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="btnAggRimAppOffice.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="btnAttivaOffice.Text" xml:space="preserve">
+    <value> Attiva Office</value>
+  </data>
+  <data name="btnScrubber.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 2, 3, 2</value>
-  </data>
-  <data name="btnAggRimAppOffice.Size" type="System.Drawing.Size, System.Drawing">
-    <value>359, 53</value>
   </data>
   <data name="btnAggRimAppOffice.TabIndex" type="System.Int32, mscorlib">
     <value>101</value>
   </data>
-  <data name="btnAggRimAppOffice.Text" xml:space="preserve">
-    <value>Aggiungi\Rimuovi app</value>
+  <data name="&gt;&gt;btnDownload.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
-  <data name="btnAggRimAppOffice.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>ImageBeforeText</value>
+  <data name="comboBox_Lingua.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
-  <data name="&gt;&gt;btnAggRimAppOffice.Name" xml:space="preserve">
-    <value>btnAggRimAppOffice</value>
+  <data name="btnAggRimAppOffice.Location" type="System.Drawing.Point, System.Drawing">
+    <value>31, 394</value>
+  </data>
+  <data name="comboBoxInstallazione.Items1" xml:space="preserve">
+    <value>x64 - Offline</value>
+  </data>
+  <data name="lblSelezionLingua.Size" type="System.Drawing.Size, System.Drawing">
+    <value>149, 24</value>
+  </data>
+  <data name="&gt;&gt;richTextBoxInfo.Name" xml:space="preserve">
+    <value>richTextBoxInfo</value>
+  </data>
+  <data name="labelTipoInstallazione.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="btnPersonalizzaOffice.Location" type="System.Drawing.Point, System.Drawing">
+    <value>453, 394</value>
+  </data>
+  <data name="&gt;&gt;comboBoxInstallazione.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;pictureBox4.Name" xml:space="preserve">
+    <value>pictureBox4</value>
+  </data>
+  <data name="&gt;&gt;richTextBoxDescription.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnDownload.Name" xml:space="preserve">
+    <value>btnDownload</value>
+  </data>
+  <data name="btnDownload.TabIndex" type="System.Int32, mscorlib">
+    <value>98</value>
+  </data>
+  <data name="comboBox_Lingua.Items" xml:space="preserve">
+    <value>IT</value>
   </data>
   <data name="&gt;&gt;btnAggRimAppOffice.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="labelversione.Size" type="System.Drawing.Size, System.Drawing">
+    <value>223, 24</value>
+  </data>
+  <data name="&gt;&gt;btnAttivaOffice.Name" xml:space="preserve">
+    <value>btnAttivaOffice</value>
+  </data>
+  <data name="&gt;&gt;lblSelezionLingua.Name" xml:space="preserve">
+    <value>lblSelezionLingua</value>
+  </data>
+  <data name="&gt;&gt;pictureBox4.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="richTextBoxInfo.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="richTextBoxDescription.Size" type="System.Drawing.Size, System.Drawing">
+    <value>435, 197</value>
+  </data>
   <data name="&gt;&gt;btnAggRimAppOffice.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;btnAggRimAppOffice.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="&gt;&gt;labelTipoInstallazione.Name" xml:space="preserve">
+    <value>labelTipoInstallazione</value>
   </data>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>96, 96</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>901, 458</value>
-  </data>
-  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>FormOffice</value>
-  </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>FormOffice</value>
+  <data name="comboBoxInstallazione.Items" xml:space="preserve">
+    <value>x64 - Online</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.Form, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="btnAggRimAppOffice.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="labelTipoInstallazione.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="richTextBoxDescription.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 105</value>
+  </data>
+  <data name="&gt;&gt;labelversione.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnScrubber.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="pictureBox4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>372, 5</value>
+  </data>
+  <data name="btnScrubber.Location" type="System.Drawing.Point, System.Drawing">
+    <value>31, 316</value>
+  </data>
+  <data name="btnPersonalizzaOffice.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="&gt;&gt;btnScrubber.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="btnPersonalizzaOffice.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
+    <value>ImageBeforeText</value>
+  </data>
+  <data name="btnAttivaOffice.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="btnAttivaOffice.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="btnPersonalizzaOffice.TabIndex" type="System.Int32, mscorlib">
+    <value>82</value>
+  </data>
+  <data name="comboBox_Lingua.Location" type="System.Drawing.Point, System.Drawing">
+    <value>253, 34</value>
+  </data>
+  <data name="btnPersonalizzaOffice.Text" xml:space="preserve">
+    <value> Crea Office Personalizzato</value>
+  </data>
+  <data name="lblSelezionLingua.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="richTextBoxDescription.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;btnAggRimAppOffice.Name" xml:space="preserve">
+    <value>btnAggRimAppOffice</value>
+  </data>
+  <data name="labelTipoInstallazione.Text" xml:space="preserve">
+    <value>Seleziona tipo installazione</value>
+  </data>
+  <data name="comboBoxInstallazione.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>System</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="$this.Language" type="System.Globalization.CultureInfo, System.Private.CoreLib, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+    <value>en</value>
+  </metadata>
 </root>

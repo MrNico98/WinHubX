@@ -497,10 +497,10 @@
     <value>4</value>
   </data>
   <data name="richTextBoxInfo.Location" type="System.Drawing.Point, System.Drawing">
-    <value>490, 84</value>
+    <value>490, 56</value>
   </data>
   <data name="richTextBoxInfo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>399, 225</value>
+    <value>399, 253</value>
   </data>
   <data name="richTextBoxInfo.TabIndex" type="System.Int32, mscorlib">
     <value>91</value>

@@ -397,7 +397,7 @@
             // pictureBox9
             // 
             pictureBox9.BackColor = Color.Transparent;
-            pictureBox9.Image = Properties.Resources.pngDriverIso;
+            pictureBox9.Image = Properties.Resources.pngAddDrivers;
             resources.ApplyResources(pictureBox9, "pictureBox9");
             pictureBox9.Name = "pictureBox9";
             pictureBox9.TabStop = false;
@@ -442,7 +442,7 @@
             // pictureBox10
             // 
             pictureBox10.BackColor = Color.Transparent;
-            pictureBox10.Image = Properties.Resources.pngTipologia;
+            pictureBox10.Image = Properties.Resources.pngCategoriaISO;
             resources.ApplyResources(pictureBox10, "pictureBox10");
             pictureBox10.Name = "pictureBox10";
             pictureBox10.TabStop = false;
@@ -485,7 +485,7 @@
             // pictureBox11
             // 
             pictureBox11.BackColor = Color.Transparent;
-            pictureBox11.Image = Properties.Resources.pngSettaggioWinHubx;
+            pictureBox11.Image = Properties.Resources.pngSettaggioWinHubX;
             resources.ApplyResources(pictureBox11, "pictureBox11");
             pictureBox11.Name = "pictureBox11";
             pictureBox11.TabStop = false;
@@ -521,11 +521,11 @@
             resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.FromArgb(37, 38, 39);
+            Controls.Add(pictureBox9);
             Controls.Add(pictureBox11);
             Controls.Add(groupBox10);
             Controls.Add(pictureBox10);
             Controls.Add(groupBox9);
-            Controls.Add(pictureBox9);
             Controls.Add(groupBox8);
             Controls.Add(pictureBox7);
             Controls.Add(pictureBox8);

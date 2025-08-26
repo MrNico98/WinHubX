@@ -118,27 +118,21 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="btnChangelog.Location" type="System.Drawing.Point, System.Drawing">
-    <value>622, 221</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="btnChangelog.TabIndex" type="System.Int32, mscorlib">
-    <value>100</value>
-  </data>
-  <data name="btnChangelog.Text" xml:space="preserve">
-    <value>v2.4.3.2 - Changelog</value>
-  </data>
   <data name="btnKofi.Size" type="System.Drawing.Size, System.Drawing">
     <value>291, 64</value>
   </data>
   <data name="btnKofi.Text" xml:space="preserve">
-    <value>if you want to support the project, click here!</value>
+    <value>Help us support the project!</value>
   </data>
-  <data name="btnKofi.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="tgWinHubX.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="tgWinHubX.Location" type="System.Drawing.Point, System.Drawing">
-    <value>661, 402</value>
+    <value>635, 403</value>
+  </data>
+  <data name="tgWinHubX.Size" type="System.Drawing.Size, System.Drawing">
+    <value>45, 40</value>
   </data>
   <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
     <value>625, 18</value>
@@ -146,11 +140,12 @@
   <data name="label3.Text" xml:space="preserve">
     <value>For assistance (WinHubX problems, how to install ISO, WinHubX tips) contact us on telegram</value>
   </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="label1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
   <data name="lblInfoWinAIO64.Size" type="System.Drawing.Size, System.Drawing">
-    <value>578, 312</value>
+    <value>595, 264</value>
   </data>
   <data name="lblInfoWinAIO64.Text" xml:space="preserve">
     <value>Discover WinHubX, your indispensable ally for Windows! This amazing tool allows you to monitor and optimize your system easily and effectively.

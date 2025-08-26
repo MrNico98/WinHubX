@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSettaggi));
             btnPrivacy = new Button();
             btnUtility = new Button();
@@ -47,6 +48,7 @@
             label4 = new Label();
             btnEsportaSettaggi = new Button();
             btnImportaSettaggi = new Button();
+            toolTip1 = new ToolTip(components);
             SuspendLayout();
             // 
             // btnPrivacy
@@ -189,9 +191,11 @@
             // 
             resources.ApplyResources(btnEsportaSettaggi, "btnEsportaSettaggi");
             btnEsportaSettaggi.Cursor = Cursors.Hand;
-            btnEsportaSettaggi.FlatAppearance.BorderSize = 2;
+            btnEsportaSettaggi.FlatAppearance.BorderSize = 0;
             btnEsportaSettaggi.ForeColor = Color.White;
+            btnEsportaSettaggi.Image = Properties.Resources.pngEsporta;
             btnEsportaSettaggi.Name = "btnEsportaSettaggi";
+            toolTip1.SetToolTip(btnEsportaSettaggi, resources.GetString("btnEsportaSettaggi.ToolTip"));
             btnEsportaSettaggi.UseVisualStyleBackColor = true;
             btnEsportaSettaggi.Click += btnEsportaSettaggi_Click;
             // 
@@ -199,9 +203,11 @@
             // 
             resources.ApplyResources(btnImportaSettaggi, "btnImportaSettaggi");
             btnImportaSettaggi.Cursor = Cursors.Hand;
-            btnImportaSettaggi.FlatAppearance.BorderSize = 2;
+            btnImportaSettaggi.FlatAppearance.BorderSize = 0;
             btnImportaSettaggi.ForeColor = Color.White;
+            btnImportaSettaggi.Image = Properties.Resources.pngImporta;
             btnImportaSettaggi.Name = "btnImportaSettaggi";
+            toolTip1.SetToolTip(btnImportaSettaggi, resources.GetString("btnImportaSettaggi.ToolTip"));
             btnImportaSettaggi.UseVisualStyleBackColor = true;
             btnImportaSettaggi.Click += btnImportaSettaggi_Click;
             // 
@@ -254,5 +260,6 @@
         private Label label4;
         private Button btnEsportaSettaggi;
         private Button btnImportaSettaggi;
+        private ToolTip toolTip1;
     }
 }

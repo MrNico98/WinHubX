@@ -44,18 +44,14 @@ namespace WinHubX.Forms.Base
             label3 = new Label();
             btn_pulisciram = new Button();
             btn_puliscicpu = new Button();
-            radioButton_taskbar = new RadioButton();
-            radioButton_notifica = new RadioButton();
             CartellaTemp = new CircularProgressBar();
             label4 = new Label();
             comboBox_gb = new ComboBox();
             btnPulisciTemp = new Button();
             tempMonitorTimer = new System.Windows.Forms.Timer(components);
             label5 = new Label();
-            panel10 = new Panel();
             ((System.ComponentModel.ISupportInitialize)pic_termcpu).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pic_termgpu).BeginInit();
-            panel10.SuspendLayout();
             SuspendLayout();
             // 
             // pic_termcpu
@@ -103,6 +99,7 @@ namespace WinHubX.Forms.Base
             // swapButton1
             // 
             resources.ApplyResources(swapButton1, "swapButton1");
+            swapButton1.Cursor = Cursors.Hand;
             swapButton1.Name = "swapButton1";
             swapButton1.OffBackColor = Color.Gray;
             swapButton1.OffToggleColor = Color.Gainsboro;
@@ -133,6 +130,7 @@ namespace WinHubX.Forms.Base
             // 
             resources.ApplyResources(btn_pulisciram, "btn_pulisciram");
             btn_pulisciram.BackColor = Color.FromArgb(64, 64, 64);
+            btn_pulisciram.Cursor = Cursors.Hand;
             btn_pulisciram.FlatAppearance.BorderSize = 0;
             btn_pulisciram.ForeColor = Color.FromArgb(224, 224, 224);
             btn_pulisciram.Name = "btn_pulisciram";
@@ -143,30 +141,12 @@ namespace WinHubX.Forms.Base
             // 
             resources.ApplyResources(btn_puliscicpu, "btn_puliscicpu");
             btn_puliscicpu.BackColor = Color.FromArgb(64, 64, 64);
+            btn_puliscicpu.Cursor = Cursors.Hand;
             btn_puliscicpu.FlatAppearance.BorderSize = 0;
             btn_puliscicpu.ForeColor = Color.FromArgb(224, 224, 224);
             btn_puliscicpu.Name = "btn_puliscicpu";
             btn_puliscicpu.UseVisualStyleBackColor = false;
             btn_puliscicpu.Click += btn_puliscicpu_Click;
-            // 
-            // radioButton_taskbar
-            // 
-            resources.ApplyResources(radioButton_taskbar, "radioButton_taskbar");
-            radioButton_taskbar.ForeColor = Color.White;
-            radioButton_taskbar.Name = "radioButton_taskbar";
-            radioButton_taskbar.TabStop = true;
-            radioButton_taskbar.UseVisualStyleBackColor = true;
-            radioButton_taskbar.CheckedChanged += radioButton_taskbar_CheckedChanged;
-            // 
-            // radioButton_notifica
-            // 
-            radioButton_notifica.Cursor = Cursors.Hand;
-            radioButton_notifica.ForeColor = Color.White;
-            resources.ApplyResources(radioButton_notifica, "radioButton_notifica");
-            radioButton_notifica.Name = "radioButton_notifica";
-            radioButton_notifica.TabStop = true;
-            radioButton_notifica.UseVisualStyleBackColor = true;
-            radioButton_notifica.CheckedChanged += radioButton_notifica_CheckedChanged;
             // 
             // CartellaTemp
             // 
@@ -195,6 +175,7 @@ namespace WinHubX.Forms.Base
             // 
             resources.ApplyResources(btnPulisciTemp, "btnPulisciTemp");
             btnPulisciTemp.BackColor = Color.FromArgb(64, 64, 64);
+            btnPulisciTemp.Cursor = Cursors.Hand;
             btnPulisciTemp.FlatAppearance.BorderSize = 0;
             btnPulisciTemp.ForeColor = Color.FromArgb(224, 224, 224);
             btnPulisciTemp.Name = "btnPulisciTemp";
@@ -207,19 +188,11 @@ namespace WinHubX.Forms.Base
             label5.ForeColor = Color.FromArgb(224, 224, 224);
             label5.Name = "label5";
             // 
-            // panel10
-            // 
-            resources.ApplyResources(panel10, "panel10");
-            panel10.Controls.Add(radioButton_notifica);
-            panel10.Controls.Add(radioButton_taskbar);
-            panel10.Name = "panel10";
-            // 
             // FormMonitoraggio
             // 
             resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.FromArgb(37, 38, 39);
-            Controls.Add(panel10);
             Controls.Add(label5);
             Controls.Add(btnPulisciTemp);
             Controls.Add(comboBox_gb);
@@ -243,8 +216,6 @@ namespace WinHubX.Forms.Base
             Load += FormMonitoraggio_Load;
             ((System.ComponentModel.ISupportInitialize)pic_termcpu).EndInit();
             ((System.ComponentModel.ISupportInitialize)pic_termgpu).EndInit();
-            panel10.ResumeLayout(false);
-            panel10.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -263,14 +234,11 @@ namespace WinHubX.Forms.Base
         private Label label3;
         private Button btn_pulisciram;
         private Button btn_puliscicpu;
-        private RadioButton radioButton_taskbar;
-        private RadioButton radioButton_notifica;
         private CircularProgressBar CartellaTemp;
         private Label label4;
         private ComboBox comboBox_gb;
         private Button btnPulisciTemp;
         private System.Windows.Forms.Timer tempMonitorTimer;
         private Label label5;
-        private Panel panel10;
     }
 }

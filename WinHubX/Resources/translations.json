@@ -561,7 +561,15 @@
       "unsupportedConfig": "Unsupported configuration",
       "dataRetrievalError": "Error retrieving data",
       "updateRequired": "Update required",
-      "lingua": "Language"
+      "lingua": "Language",
+      "infoconfigurationLabel": "Configuration notes:",
+      "versionInfoLabel": "Version information",
+      "consumerMeaning": "Consumer = Includes all editions: Pro, Home, Education and other consumer editions",
+      "enterpriseMeaning": "Enterprise = Business edition with advanced features and centralized management",
+      "ltscMeaning": "LTSC = Long-Term Servicing Channel version with less frequent updates",
+      "stockMeaning": "Stock = Original version without modifications or optimizations",
+      "liteMeaning": "Lite = Optimized version with non-essential components removed",
+      "serverMeaning": "Server/enterprise version with specific functionalities"
     },
     "it": {
       "nointernet": "❗ Seleziona un sistema operativo dalla lista",
@@ -586,7 +594,15 @@
       "unsupportedConfig": "Configurazione non supportata",
       "dataRetrievalError": "Errore nel recupero dei dati",
       "updateRequired": "Aggiornamento necessario",
-      "Lingua": "Lingua"
+      "Lingua": "Lingua",
+      "infoconfigurationLabel": "Note sulla configurazione:",
+      "versionInfoLabel": "Informazioni sulle versioni",
+      "consumerMeaning": "Consumer = Include tutte le edizioni: Pro, Home, Education e altre edizioni consumer",
+      "enterpriseMeaning": "Enterprise = Edizione aziendale con funzionalità avanzate e gestione centralizzata",
+      "ltscMeaning": "LTSC = Versione stabile a supporto prolungato con aggiornamenti meno frequenti",
+      "stockMeaning": "Stock = Versione originale senza modifiche o ottimizzazioni",
+      "liteMeaning": "Lite = Versione ottimizzata con componenti non essenziali rimossi",
+      "serverMeaning": "Versione server/enterprise con funzionalità specifiche"
     }
   },
   "FormCreaISO": {

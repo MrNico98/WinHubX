@@ -145,6 +145,12 @@
   <data name="labelTipoInstallazione.Text" xml:space="preserve">
     <value>Select installation type</value>
   </data>
+  <data name="labelversione.Size" type="System.Drawing.Size, System.Drawing">
+    <value>181, 24</value>
+  </data>
+  <data name="labelversione.Text" xml:space="preserve">
+    <value>Select Office version</value>
+  </data>
   <data name="btnDownload.Location" type="System.Drawing.Point, System.Drawing">
     <value>372, 307</value>
   </data>

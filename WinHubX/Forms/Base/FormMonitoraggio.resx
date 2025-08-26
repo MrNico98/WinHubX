@@ -123,7 +123,7 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="pic_termcpu.Location" type="System.Drawing.Point, System.Drawing">
-    <value>356, 273</value>
+    <value>477, 273</value>
   </data>
   <data name="pic_termcpu.Size" type="System.Drawing.Size, System.Drawing">
     <value>57, 112</value>
@@ -145,7 +145,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;pic_termcpu.ZOrder" xml:space="preserve">
-    <value>17</value>
+    <value>16</value>
   </data>
   <data name="pic_termgpu.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top</value>
@@ -172,7 +172,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;pic_termgpu.ZOrder" xml:space="preserve">
-    <value>16</value>
+    <value>15</value>
   </data>
   <data name="labelCpuTemp.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top</value>
@@ -184,7 +184,7 @@
     <value>Segoe UI, 14pt, style=Bold</value>
   </data>
   <data name="labelCpuTemp.Location" type="System.Drawing.Point, System.Drawing">
-    <value>361, 234</value>
+    <value>482, 234</value>
   </data>
   <data name="labelCpuTemp.Size" type="System.Drawing.Size, System.Drawing">
     <value>65, 25</value>
@@ -208,7 +208,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;labelCpuTemp.ZOrder" xml:space="preserve">
-    <value>15</value>
+    <value>14</value>
   </data>
   <data name="labelGpuTemp.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top</value>
@@ -244,7 +244,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;labelGpuTemp.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>13</value>
   </data>
   <data name="BarRAM.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top</value>
@@ -271,13 +271,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;BarRAM.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>12</value>
   </data>
   <data name="BarCPU.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top</value>
   </data>
   <data name="BarCPU.Location" type="System.Drawing.Point, System.Drawing">
-    <value>322, 98</value>
+    <value>443, 98</value>
   </data>
   <data name="BarCPU.Size" type="System.Drawing.Size, System.Drawing">
     <value>135, 133</value>
@@ -298,13 +298,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;BarCPU.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>11</value>
   </data>
   <data name="swapButton1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="swapButton1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>252, 7</value>
+    <value>252, 11</value>
   </data>
   <data name="swapButton1.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>45, 24</value>
@@ -325,7 +325,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;swapButton1.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>10</value>
   </data>
   <data name="label1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top</value>
@@ -361,7 +361,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>9</value>
   </data>
   <data name="label2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top</value>
@@ -373,7 +373,7 @@
     <value>Segoe UI, 14pt, style=Bold</value>
   </data>
   <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>361, 70</value>
+    <value>482, 70</value>
   </data>
   <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
     <value>50, 25</value>
@@ -397,7 +397,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>8</value>
   </data>
   <data name="label3.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -430,7 +430,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>7</value>
   </data>
   <data name="btn_pulisciram.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top</value>
@@ -442,10 +442,10 @@
     <value>Segoe UI, 14pt, style=Bold</value>
   </data>
   <data name="btn_pulisciram.Location" type="System.Drawing.Point, System.Drawing">
-    <value>172, 149</value>
+    <value>206, 148</value>
   </data>
   <data name="btn_pulisciram.Size" type="System.Drawing.Size, System.Drawing">
-    <value>125, 32</value>
+    <value>161, 32</value>
   </data>
   <data name="btn_pulisciram.TabIndex" type="System.Int32, mscorlib">
     <value>14</value>
@@ -463,7 +463,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btn_pulisciram.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>6</value>
   </data>
   <data name="btn_puliscicpu.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top</value>
@@ -475,10 +475,10 @@
     <value>Segoe UI, 14pt, style=Bold</value>
   </data>
   <data name="btn_puliscicpu.Location" type="System.Drawing.Point, System.Drawing">
-    <value>172, 287</value>
+    <value>206, 286</value>
   </data>
   <data name="btn_puliscicpu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>125, 32</value>
+    <value>161, 32</value>
   </data>
   <data name="btn_puliscicpu.TabIndex" type="System.Int32, mscorlib">
     <value>15</value>
@@ -496,64 +496,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btn_puliscicpu.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="radioButton_taskbar.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="radioButton_taskbar.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="radioButton_taskbar.Size" type="System.Drawing.Size, System.Drawing">
-    <value>129, 19</value>
-  </data>
-  <data name="radioButton_taskbar.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="radioButton_taskbar.Text" xml:space="preserve">
-    <value>Nascondi in taskbar</value>
-  </data>
-  <data name="&gt;&gt;radioButton_taskbar.Name" xml:space="preserve">
-    <value>radioButton_taskbar</value>
-  </data>
-  <data name="&gt;&gt;radioButton_taskbar.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;radioButton_taskbar.Parent" xml:space="preserve">
-    <value>panel10</value>
-  </data>
-  <data name="&gt;&gt;radioButton_taskbar.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="radioButton_notifica.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 28</value>
-  </data>
-  <data name="radioButton_notifica.Size" type="System.Drawing.Size, System.Drawing">
-    <value>169, 19</value>
-  </data>
-  <data name="radioButton_notifica.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="radioButton_notifica.Text" xml:space="preserve">
-    <value>Nascondi in area di notifica</value>
-  </data>
-  <data name="&gt;&gt;radioButton_notifica.Name" xml:space="preserve">
-    <value>radioButton_notifica</value>
-  </data>
-  <data name="&gt;&gt;radioButton_notifica.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;radioButton_notifica.Parent" xml:space="preserve">
-    <value>panel10</value>
-  </data>
-  <data name="&gt;&gt;radioButton_notifica.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>5</value>
   </data>
   <data name="CartellaTemp.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top</value>
   </data>
   <data name="CartellaTemp.Location" type="System.Drawing.Point, System.Drawing">
-    <value>549, 98</value>
+    <value>683, 98</value>
   </data>
   <data name="CartellaTemp.Size" type="System.Drawing.Size, System.Drawing">
     <value>135, 133</value>
@@ -574,7 +523,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;CartellaTemp.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>4</value>
   </data>
   <data name="label4.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top</value>
@@ -589,7 +538,7 @@
     <value>NoControl</value>
   </data>
   <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>507, 234</value>
+    <value>641, 234</value>
   </data>
   <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
     <value>223, 25</value>
@@ -613,7 +562,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>3</value>
   </data>
   <data name="comboBox_gb.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top</value>
@@ -652,7 +601,7 @@
     <value>10</value>
   </data>
   <data name="comboBox_gb.Location" type="System.Drawing.Point, System.Drawing">
-    <value>591, 273</value>
+    <value>725, 273</value>
   </data>
   <data name="comboBox_gb.Size" type="System.Drawing.Size, System.Drawing">
     <value>56, 23</value>
@@ -670,7 +619,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;comboBox_gb.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>2</value>
   </data>
   <data name="btnPulisciTemp.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top</value>
@@ -685,7 +634,7 @@
     <value>NoControl</value>
   </data>
   <data name="btnPulisciTemp.Location" type="System.Drawing.Point, System.Drawing">
-    <value>553, 316</value>
+    <value>687, 316</value>
   </data>
   <data name="btnPulisciTemp.Size" type="System.Drawing.Size, System.Drawing">
     <value>139, 32</value>
@@ -706,7 +655,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnPulisciTemp.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>1</value>
   </data>
   <metadata name="tempMonitorTimer.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
@@ -724,7 +673,7 @@
     <value>NoControl</value>
   </data>
   <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>568, 70</value>
+    <value>702, 70</value>
   </data>
   <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
     <value>95, 25</value>
@@ -748,30 +697,6 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="panel10.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="panel10.Location" type="System.Drawing.Point, System.Drawing">
-    <value>688, 12</value>
-  </data>
-  <data name="panel10.Size" type="System.Drawing.Size, System.Drawing">
-    <value>185, 58</value>
-  </data>
-  <data name="panel10.TabIndex" type="System.Int32, mscorlib">
-    <value>24</value>
-  </data>
-  <data name="&gt;&gt;panel10.Name" xml:space="preserve">
-    <value>panel10</value>
-  </data>
-  <data name="&gt;&gt;panel10.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;panel10.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;panel10.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">

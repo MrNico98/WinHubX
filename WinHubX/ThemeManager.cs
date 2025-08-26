@@ -14,8 +14,12 @@
 
         public static void ApplyThemeToControl(Control control, bool darkTheme)
         {
-            Color backColor = darkTheme ? Color.FromArgb(32, 32, 32) : Color.White;
+            if (control.Name == "pnlNav")
+                return;
+
+            Color backColor = darkTheme ? Color.FromArgb(37, 38, 39) : Color.White;
             Color foreColor = darkTheme ? Color.White : Color.Black;
+
             string parentPanelName = GetSpecialParentPanelName(control);
             if (parentPanelName == "panel1" || parentPanelName == "panel2" || parentPanelName == "panel3" || parentPanelName == "tableLayoutPanel1")
             {
@@ -25,8 +29,10 @@
             {
                 backColor = darkTheme ? Color.FromArgb(37, 38, 39) : Color.White;
             }
+
             Color arancione = Color.Coral;
             Color sostitutoTemaChiaro = Color.DarkOrange;
+
             if (control is Form form && form.Name != "Form1")
             {
                 if (AreColorsSimilar(form.BackColor, arancione) || AreColorsSimilar(form.BackColor, sostitutoTemaChiaro))
@@ -37,6 +43,7 @@
                 {
                     form.BackColor = darkTheme ? Color.FromArgb(37, 38, 39) : Color.White;
                 }
+
                 if (AreColorsSimilar(form.ForeColor, arancione) || AreColorsSimilar(form.ForeColor, sostitutoTemaChiaro))
                 {
                     form.ForeColor = darkTheme ? arancione : sostitutoTemaChiaro;
@@ -56,6 +63,7 @@
                 {
                     control.BackColor = backColor;
                 }
+
                 if (!(control is PictureBox))
                 {
                     if (AreColorsSimilar(control.ForeColor, arancione) || AreColorsSimilar(control.ForeColor, sostitutoTemaChiaro))
@@ -67,12 +75,21 @@
                         control.ForeColor = foreColor;
                     }
                 }
+                if (control is RadioButton rb)
+                {
+                    rb.BackColor = backColor;
+                    rb.ForeColor = foreColor;
+                }
             }
             foreach (Control child in control.Controls)
             {
+                if (child.BackColor == Color.Transparent)
+                    child.BackColor = backColor;
+
                 ApplyThemeToControl(child, darkTheme);
             }
         }
+
 
         private static string GetSpecialParentPanelName(Control control)
         {

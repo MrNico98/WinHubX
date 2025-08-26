@@ -36,8 +36,7 @@ namespace WinHubX.Forms.CreaISO
         {
             _cancellationTokenSource = new CancellationTokenSource();
             var token = _cancellationTokenSource.Token;
-            form1.comboBox1.Enabled = false;
-            form1.pictureBox3.Enabled = false;
+            form1.pictureBox4.Enabled = false;
             form1.btnHome.Enabled = false;
             form1.btnTools.Enabled = false;
             form1.btnWin.Enabled = false;
@@ -136,8 +135,7 @@ namespace WinHubX.Forms.CreaISO
 
                 btnStop.Visible = false;
                 btnBack.Enabled = true;
-                form1.comboBox1.Enabled = true;
-                form1.pictureBox3.Enabled = true;
+                form1.pictureBox4.Enabled = true;
                 form1.btnHome.Enabled = true;
                 form1.btnTools.Enabled = true;
                 form1.btnWin.Enabled = true;
@@ -529,97 +527,76 @@ namespace WinHubX.Forms.CreaISO
 
                         await Task.Run(async () =>
                         {
-                            _ = ExecuteCommand($"reg load HKLM\\TK_COMPONENTS \"{mountDir}\\Windows\\System32\\config\\COMPONENTS\"", token);
-                            _ = ExecuteCommand($"reg load HKLM\\TK_DEFAULT \"{mountDir}\\Windows\\System32\\config\\default\"", token);
-                            _ = ExecuteCommand($"reg load HKLM\\TK_NTUSER \"{mountDir}\\Users\\Default\\ntuser.dat\"", token);
-                            _ = ExecuteCommand($"reg load HKLM\\TK_SOFTWARE \"{mountDir}\\Windows\\System32\\config\\SOFTWARE\"", token);
-                            _ = ExecuteCommand($"reg load HKLM\\TK_SYSTEM \"{mountDir}\\Windows\\System32\\config\\SYSTEM\"", token);
-
+                            await ExecuteCommand($"reg load HKLM\\TK_COMPONENTS \"{mountDir}\\Windows\\System32\\config\\COMPONENTS\"", token);
+                            await ExecuteCommand($"reg load HKLM\\TK_DEFAULT \"{mountDir}\\Windows\\System32\\config\\default\"", token);
+                            await ExecuteCommand($"reg load HKLM\\TK_NTUSER \"{mountDir}\\Users\\Default\\ntuser.dat\"", token);
+                            await ExecuteCommand($"reg load HKLM\\TK_SOFTWARE \"{mountDir}\\Windows\\System32\\config\\SOFTWARE\"", token);
+                            await ExecuteCommand($"reg load HKLM\\TK_SYSTEM \"{mountDir}\\Windows\\System32\\config\\SYSTEM\"", token);
                             var regCommands = new List<string>
-{
-@"reg add ""HKLM\TK_SOFTWARE\Microsoft\Windows\CurrentVersion\Communications"" /v ""ConfigureChatAutoInstall"" /t REG_DWORD /d 0 /f",
-@"reg add ""HKLM\TK_NTUSER\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager"" /v ""OemPreInstalledAppsEnabled"" /t REG_DWORD /d 0 /f",
-@"reg add ""HKLM\TK_NTUSER\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager"" /v ""PreInstalledAppsEnabled"" /t REG_DWORD /d 0 /f",
-@"reg add ""HKLM\TK_NTUSER\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager"" /v ""SilentInstalledAppsEnabled"" /t REG_DWORD /d 0 /f",
-@"reg add ""HKLM\TK_SOFTWARE\Policies\Microsoft\Windows\CloudContent"" /v ""DisableWindowsConsumerFeature"" /t REG_DWORD /d 1 /f",
-@"reg add ""HKLM\TK_NTUSER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager"" /v ""ContentDeliveryAllowed"" /t REG_DWORD /d 0 /f",
-@"reg add ""HKLM\TK_SOFTWARE\Microsoft\PolicyManager\current\device\Start"" /v ""ConfigureStartPins"" /t REG_SZ /d ""{\""pinnedList\"": [{}]}"" /f",
-@"reg add ""HKLM\TK_NTUSER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager"" /v ""FeatureManagementEnabled"" /t REG_DWORD /d 0 /f",
-@"reg add ""HKLM\TK_NTUSER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager"" /v ""PreInstalledAppsEverEnabled"" /t REG_DWORD /d 0 /f",
-@"reg add ""HKLM\TK_NTUSER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager"" /v ""SoftLandingEnabled"" /t REG_DWORD /d 0 /f",
-@"reg add ""HKLM\TK_NTUSER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager"" /v ""SubscribedContentEnabled"" /t REG_DWORD /d 0 /f",
-@"reg add ""HKLM\TK_NTUSER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager"" /v ""SubscribedContent-310093Enabled"" /t REG_DWORD /d 0 /f",
-@"reg add ""HKLM\TK_NTUSER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager"" /v ""SubscribedContent-338388Enabled"" /t REG_DWORD /d 0 /f",
-@"reg add ""HKLM\TK_NTUSER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager"" /v ""SubscribedContent-338389Enabled"" /t REG_DWORD /d 0 /f",
-@"reg add ""HKLM\TK_NTUSER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager"" /v ""SubscribedContent-338393Enabled"" /t REG_DWORD /d 0 /f",
-@"reg add ""HKLM\TK_NTUSER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager"" /v ""SubscribedContent-353694Enabled"" /t REG_DWORD /d 0 /f",
-@"reg add ""HKLM\TK_NTUSER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager"" /v ""SubscribedContent-353696Enabled"" /t REG_DWORD /d 0 /f",
-@"reg add ""HKLM\TK_NTUSER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager"" /v ""SystemPaneSuggestionsEnabled"" /t REG_DWORD /d 0 /f",
-@"reg add ""HKLM\TK_SOFTWARE\Policies\Microsoft\PushToInstall"" /v ""DisablePushToInstall"" /t REG_DWORD /d 1 /f",
-@"reg add ""HKLM\TK_SOFTWARE\Policies\Microsoft\MRT"" /v ""DontOfferThroughWUAU"" /t REG_DWORD /d 1 /f",
-@"reg delete ""HKLM\TK_NTUSER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\Subscriptions"" /f",
-@"reg delete ""HKLM\TK_NTUSER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps"" /f",
-@"reg add ""HKLM\TK_SOFTWARE\Policies\Microsoft\Windows\CloudContent"" /v ""DisableConsumerAccountStateContent"" /t REG_DWORD /d 1 /f",
-@"reg add ""HKLM\TK_SOFTWARE\Policies\Microsoft\Windows\CloudContent"" /v ""DisableCloudOptimizedContent"" /t REG_DWORD /d 1 /f",
-@"reg add ""HKLM\TK_SOFTWARE\Microsoft\Windows\CurrentVersion\ReserveManager"" /v ""ShippedWithReserves"" /t REG_DWORD /d 0 /f",
-@"reg add ""HKLM\TK_SOFTWARE\Policies\Microsoft\Windows\Windows Chat"" /v ""ChatIcon"" /t REG_DWORD /d 3 /f",
-@"reg add ""HKLM\TK_NTUSER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced"" /v ""TaskbarMn"" /t REG_DWORD /d 0 /f",
-@"reg add ""HKLM\TK_DEFAULT\Control Panel\UnsupportedHardwareNotificationCache"" /v ""SV1"" /t REG_DWORD /d 0 /f",
-@"reg add ""HKLM\TK_DEFAULT\Control Panel\UnsupportedHardwareNotificationCache"" /v ""SV2"" /t REG_DWORD /d 0 /f",
-@"reg add ""HKLM\TK_NTUSER\Control Panel\UnsupportedHardwareNotificationCache"" /v ""SV1"" /t REG_DWORD /d 0 /f",
-@"reg add ""HKLM\TK_NTUSER\Control Panel\UnsupportedHardwareNotificationCache"" /v ""SV2"" /t REG_DWORD /d 0 /f",
-@"reg add ""HKLM\TK_SYSTEM\Setup\LabConfig"" /v ""BypassCPUCheck"" /t REG_DWORD /d 1 /f",
-@"reg add ""HKLM\TK_SYSTEM\Setup\LabConfig"" /v ""BypassRAMCheck"" /t REG_DWORD /d 1 /f",
-@"reg add ""HKLM\TK_SYSTEM\Setup\LabConfig"" /v ""BypassSecureBootCheck"" /t REG_DWORD /d 1 /f",
-@"reg add ""HKLM\TK_SYSTEM\Setup\LabConfig"" /v ""BypassStorageCheck"" /t REG_DWORD /d 1 /f",
-@"reg add ""HKLM\TK_SYSTEM\Setup\LabConfig"" /v ""BypassTPMCheck"" /t REG_DWORD /d 1 /f",
-@"reg add ""HKLM\TK_SYSTEM\Setup\MoSetup"" /v ""AllowUpgradesWithUnsupportedTPMOrCPU"" /t REG_DWORD /d 1 /f",
-@"reg add ""HKLM\TK_SOFTWARE\Microsoft\Windows\CurrentVersion\OOBE"" /v ""BypassNRO"" /t REG_DWORD /d 1 /f"
-};
+            {
+                @"reg add ""HKLM\TK_SOFTWARE\Microsoft\Windows\CurrentVersion\Communications"" /v ""ConfigureChatAutoInstall"" /t REG_DWORD /d 0 /f",
+                @"reg add ""HKLM\TK_NTUSER\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager"" /v ""OemPreInstalledAppsEnabled"" /t REG_DWORD /d 0 /f",
+                @"reg add ""HKLM\TK_NTUSER\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager"" /v ""PreInstalledAppsEnabled"" /t REG_DWORD /d 0 /f",
+                @"reg add ""HKLM\TK_NTUSER\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager"" /v ""SilentInstalledAppsEnabled"" /t REG_DWORD /d 0 /f",
+                @"reg add ""HKLM\TK_SOFTWARE\Policies\Microsoft\Windows\CloudContent"" /v ""DisableWindowsConsumerFeature"" /t REG_DWORD /d 1 /f",
+                @"reg add ""HKLM\TK_NTUSER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager"" /v ""ContentDeliveryAllowed"" /t REG_DWORD /d 0 /f",
+                @"reg add ""HKLM\TK_SOFTWARE\Microsoft\PolicyManager\current\device\Start"" /v ""ConfigureStartPins"" /t REG_SZ /d ""{\""pinnedList\"": [{}]}"" /f",
+                @"reg add ""HKLM\TK_NTUSER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager"" /v ""FeatureManagementEnabled"" /t REG_DWORD /d 0 /f",
+                @"reg add ""HKLM\TK_NTUSER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager"" /v ""PreInstalledAppsEverEnabled"" /t REG_DWORD /d 0 /f",
+                @"reg add ""HKLM\TK_NTUSER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager"" /v ""SoftLandingEnabled"" /t REG_DWORD /d 0 /f",
+                @"reg add ""HKLM\TK_NTUSER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager"" /v ""SubscribedContentEnabled"" /t REG_DWORD /d 0 /f",
+                @"reg add ""HKLM\TK_NTUSER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager"" /v ""SubscribedContent-310093Enabled"" /t REG_DWORD /d 0 /f",
+                @"reg add ""HKLM\TK_NTUSER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager"" /v ""SubscribedContent-338388Enabled"" /t REG_DWORD /d 0 /f",
+                @"reg add ""HKLM\TK_NTUSER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager"" /v ""SubscribedContent-338389Enabled"" /t REG_DWORD /d 0 /f",
+                @"reg add ""HKLM\TK_NTUSER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager"" /v ""SubscribedContent-338393Enabled"" /t REG_DWORD /d 0 /f",
+                @"reg add ""HKLM\TK_NTUSER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager"" /v ""SubscribedContent-353694Enabled"" /t REG_DWORD /d 0 /f",
+                @"reg add ""HKLM\TK_NTUSER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager"" /v ""SubscribedContent-353696Enabled"" /t REG_DWORD /d 0 /f",
+                @"reg add ""HKLM\TK_NTUSER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager"" /v ""SystemPaneSuggestionsEnabled"" /t REG_DWORD /d 0 /f",
+                @"reg add ""HKLM\TK_SOFTWARE\Policies\Microsoft\PushToInstall"" /v ""DisablePushToInstall"" /t REG_DWORD /d 1 /f",
+                @"reg add ""HKLM\TK_SOFTWARE\Policies\Microsoft\MRT"" /v ""DontOfferThroughWUAU"" /t REG_DWORD /d 1 /f",
+                @"reg delete ""HKLM\TK_NTUSER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\Subscriptions"" /f",
+                @"reg delete ""HKLM\TK_NTUSER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps"" /f",
+                @"reg add ""HKLM\TK_SOFTWARE\Policies\Microsoft\Windows\CloudContent"" /v ""DisableConsumerAccountStateContent"" /t REG_DWORD /d 1 /f",
+                @"reg add ""HKLM\TK_SOFTWARE\Policies\Microsoft\Windows\CloudContent"" /v ""DisableCloudOptimizedContent"" /t REG_DWORD /d 1 /f",
+                @"reg add ""HKLM\TK_SOFTWARE\Microsoft\Windows\CurrentVersion\ReserveManager"" /v ""ShippedWithReserves"" /t REG_DWORD /d 0 /f",
+                @"reg add ""HKLM\TK_SOFTWARE\Policies\Microsoft\Windows\Windows Chat"" /v ""ChatIcon"" /t REG_DWORD /d 3 /f",
+                @"reg add ""HKLM\TK_NTUSER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced"" /v ""TaskbarMn"" /t REG_DWORD /d 0 /f",
+                @"reg add ""HKLM\TK_DEFAULT\Control Panel\UnsupportedHardwareNotificationCache"" /v ""SV1"" /t REG_DWORD /d 0 /f",
+                @"reg add ""HKLM\TK_DEFAULT\Control Panel\UnsupportedHardwareNotificationCache"" /v ""SV2"" /t REG_DWORD /d 0 /f",
+                @"reg add ""HKLM\TK_NTUSER\Control Panel\UnsupportedHardwareNotificationCache"" /v ""SV1"" /t REG_DWORD /d 0 /f",
+                @"reg add ""HKLM\TK_NTUSER\Control Panel\UnsupportedHardwareNotificationCache"" /v ""SV2"" /t REG_DWORD /d 0 /f",
+                @"reg add ""HKLM\TK_SYSTEM\Setup\LabConfig"" /v ""BypassCPUCheck"" /t REG_DWORD /d 1 /f",
+                @"reg add ""HKLM\TK_SYSTEM\Setup\LabConfig"" /v ""BypassRAMCheck"" /t REG_DWORD /d 1 /f",
+                @"reg add ""HKLM\TK_SYSTEM\Setup\LabConfig"" /v ""BypassSecureBootCheck"" /t REG_DWORD /d 1 /f",
+                @"reg add ""HKLM\TK_SYSTEM\Setup\LabConfig"" /v ""BypassStorageCheck"" /t REG_DWORD /d 1 /f",
+                @"reg add ""HKLM\TK_SYSTEM\Setup\LabConfig"" /v ""BypassTPMCheck"" /t REG_DWORD /d 1 /f",
+                @"reg add ""HKLM\TK_SYSTEM\Setup\MoSetup"" /v ""AllowUpgradesWithUnsupportedTPMOrCPU"" /t REG_DWORD /d 1 /f",
+                @"reg add ""HKLM\TK_SOFTWARE\Microsoft\Windows\CurrentVersion\OOBE"" /v ""BypassNRO"" /t REG_DWORD /d 1 /f"
+            };
 
                             foreach (var cmd in regCommands)
-                                _ = ExecuteCommand(cmd, token);
-
-                            _ = Task.Delay(5000);
-                            string[] unloadMounts = new[]
                             {
-    "TK_COMPONENTS", "TK_DEFAULT", "TK_DRIVERS", "TK_NTUSER", "TK_SCHEMA", "TK_SOFTWARE", "TK_SYSTEM"
-};
+                                await ExecuteCommand(cmd, token);
+                            }
+                            string[] unloadMounts = { "TK_COMPONENTS", "TK_DEFAULT", "TK_NTUSER", "TK_SOFTWARE", "TK_SYSTEM" };
 
                             foreach (var mount in unloadMounts)
                             {
-                                _ = ExecuteCommand($"reg unload HKLM\\{mount}", token);
+                                await ExecuteCommand($"reg unload HKLM\\{mount}", token);
                                 await Task.Delay(3000, token);
                             }
-
-                            string[] subKeysToCheck = {
-    "TK_COMPONENTS",
-    "TK_DEFAULT",
-    "TK_DRIVERS",
-    "TK_NTUSER",
-    "TK_SCHEMA",
-    "TK_SOFTWARE",
-    "TK_SYSTEM"
-};
-                            int maxRetryy = 5;
-                            for (int i = 0; i < maxRetryy; i++)
+                            int maxRetry = 5;
+                            for (int i = 0; i < maxRetry; i++)
                             {
                                 bool allUnloaded = true;
 
-                                foreach (var subKey in subKeysToCheck)
+                                foreach (var subKey in unloadMounts)
                                 {
                                     string fullKeyPath = $@"HKEY_LOCAL_MACHINE\{subKey}";
                                     if (RegistryKeyExists(fullKeyPath))
                                     {
                                         allUnloaded = false;
-                                        try
-                                        {
-                                            _ = ExecuteCommand($"reg unload HKLM\\{subKey}", token);
-                                        }
-                                        catch (Exception)
-                                        {
-
-                                        }
+                                        await ExecuteCommand($"reg unload HKLM\\{subKey}", token);
                                     }
                                 }
 
@@ -628,7 +605,6 @@ namespace WinHubX.Forms.CreaISO
 
                                 await Task.Delay(5000, token);
                             }
-
                         }, token);
 
                         if (File.Exists(bootWimPath))
@@ -641,38 +617,36 @@ namespace WinHubX.Forms.CreaISO
                             if (success)
                             {
                                 richTextBox1.AppendText("\n" + LanguageManager.GetTranslation("FormCreazioneISO", "montaggiobootsuccesso"));
-
-                                _ = ExecuteCommand($"reg load HKLM\\TK_BOOT_SYSTEM \"{bootMountDir}\\Windows\\System32\\Config\\SYSTEM\"", token);
+                                await ExecuteCommand($"reg load HKLM\\TK_BOOT_SYSTEM \"{bootMountDir}\\Windows\\System32\\Config\\SYSTEM\"", token);
                                 var regCommands = new List<string>
-                        {
-                            @"reg add ""HKLM\TK_BOOT_SYSTEM\Setup\LabConfig"" /v ""BypassCPUCheck"" /t REG_DWORD /d 1 /f",
-                            @"reg add ""HKLM\TK_BOOT_SYSTEM\Setup\LabConfig"" /v ""BypassRAMCheck"" /t REG_DWORD /d 1 /f",
-                            @"reg add ""HKLM\TK_BOOT_SYSTEM\Setup\LabConfig"" /v ""BypassSecureBootCheck"" /t REG_DWORD /d 1 /f",
-                            @"reg add ""HKLM\TK_BOOT_SYSTEM\Setup\LabConfig"" /v ""BypassStorageCheck"" /t REG_DWORD /d 1 /f",
-                            @"reg add ""HKLM\TK_BOOT_SYSTEM\Setup\LabConfig"" /v ""BypassTPMCheck"" /t REG_DWORD /d 1 /f"
-                        };
+        {
+            @"reg add ""HKLM\TK_BOOT_SYSTEM\Setup\LabConfig"" /v ""BypassCPUCheck"" /t REG_DWORD /d 1 /f",
+            @"reg add ""HKLM\TK_BOOT_SYSTEM\Setup\LabConfig"" /v ""BypassRAMCheck"" /t REG_DWORD /d 1 /f",
+            @"reg add ""HKLM\TK_BOOT_SYSTEM\Setup\LabConfig"" /v ""BypassSecureBootCheck"" /t REG_DWORD /d 1 /f",
+            @"reg add ""HKLM\TK_BOOT_SYSTEM\Setup\LabConfig"" /v ""BypassStorageCheck"" /t REG_DWORD /d 1 /f",
+            @"reg add ""HKLM\TK_BOOT_SYSTEM\Setup\LabConfig"" /v ""BypassTPMCheck"" /t REG_DWORD /d 1 /f"
+        };
 
-                                foreach (var cmd in regCommands) _ = ExecuteCommand(cmd, token);
-                                await Task.Delay(5000);
+                                foreach (var cmd in regCommands)
+                                {
+                                    await ExecuteCommand(cmd, token);
+                                }
                                 if (File.Exists(appraiserPath))
                                 {
-                                    File.Move(appraiserPath, appraiserBakPath);
+                                    File.Move(appraiserPath, appraiserBakPath, true);
                                     richTextBox1.AppendText("\n" + LanguageManager.GetTranslation("FormCreazioneISO", "rinominatoappraiser"));
                                 }
                                 else
                                 {
                                     richTextBox1.AppendText("\n" + LanguageManager.GetTranslation("FormCreazioneISO", "appraisernontrovato"));
                                 }
-                                await Task.Delay(5000);
-                                _ = ExecuteCommand("reg unload HKLM\\TK_BOOT_SYSTEM", token);
-                                int maxRetry = 5;
-                                for (int i = 0; i < maxRetry; i++)
+                                await ExecuteCommand("reg unload HKLM\\TK_BOOT_SYSTEM", token);
+                                int retry = 0;
+                                while (RegistryKeyExists(@"HKEY_LOCAL_MACHINE\TK_BOOT_SYSTEM") && retry < 5)
                                 {
-                                    if (!RegistryKeyExists(@"HKEY_LOCAL_MACHINE\TK_BOOT_SYSTEM"))
-                                        break;
-
-                                    await Task.Delay(3000);
-                                    _ = ExecuteCommand("reg unload HKLM\\TK_BOOT_SYSTEM", token);
+                                    await Task.Delay(3000, token);
+                                    await ExecuteCommand("reg unload HKLM\\TK_BOOT_SYSTEM", token);
+                                    retry++;
                                 }
                                 richTextBox1.AppendText("\n" + LanguageManager.GetTranslation("FormCreazioneISO", "smontaggioboot"));
                                 string unmountArguments = $"/unmount-image /mountdir:\"{bootMountDir}\" /commit";
@@ -797,33 +771,55 @@ namespace WinHubX.Forms.CreaISO
             }
         }
 
-
         private async Task RimozioneDiAlcuniProcessi(CancellationToken token)
         {
-            if (ParametriISO != null && ParametriISO.TryGetValue("Processi", out var processo) && processo == "RimuoviProcessi")
+            if (ParametriISO != null &&
+                ParametriISO.TryGetValue("Processi", out var processo) &&
+                processo == "RimuoviProcessi")
             {
-                string[] comandi = new string[]
-                {
-            "powershell -Command \"Get-WindowsPackage -Path 'C:\\mount\\mount' | Where-Object {$_.PackageName -like 'Microsoft-Windows-InternetExplorer-Optional-Package*'} | ForEach-Object {dism /English /image:C:\\mount\\mount /Remove-Package /PackageName:$($_.PackageName) /NoRestart | Out-Null}\"",
-            "powershell -Command \"Get-WindowsPackage -Path 'C:\\mount\\mount' | Where-Object {$_.PackageName -like 'Microsoft-Windows-Kernel-LA57-FoD*'} | ForEach-Object {dism /English /image:C:\\mount\\mount /Remove-Package /PackageName:$($_.PackageName) /NoRestart | Out-Null}\"",
-            "powershell -Command \"Get-WindowsPackage -Path 'C:\\mount\\mount' | Where-Object {$_.PackageName -like 'Microsoft-Windows-LanguageFeatures-Handwriting*'} | ForEach-Object {dism /English /image:C:\\mount\\mount /Remove-Package /PackageName:$($_.PackageName) /NoRestart | Out-Null}\"",
-            "powershell -Command \"Get-WindowsPackage -Path 'C:\\mount\\mount' | Where-Object {$_.PackageName -like 'Microsoft-Windows-LanguageFeatures-OCR*'} | ForEach-Object {dism /English /image:C:\\mount\\mount /Remove-Package /PackageName:$($_.PackageName) /NoRestart | Out-Null}\"",
-            "powershell -Command \"Get-WindowsPackage -Path 'C:\\mount\\mount' | Where-Object {$_.PackageName -like 'Microsoft-Windows-LanguageFeatures-Speech*'} | ForEach-Object {dism /English /image:C:\\mount\\mount /Remove-Package /PackageName:$($_.PackageName) /NoRestart | Out-Null}\"",
-            "powershell -Command \"Get-WindowsPackage -Path 'C:\\mount\\mount' | Where-Object {$_.PackageName -like 'Microsoft-Windows-LanguageFeatures-TextToSpeech*'} | ForEach-Object {dism /English /image:C:\\mount\\mount /Remove-Package /PackageName:$($_.PackageName) /NoRestart | Out-Null}\"",
-            "powershell -Command \"Get-WindowsPackage -Path 'C:\\mount\\mount' | Where-Object {$_.PackageName -like 'Microsoft-Windows-MediaPlayer-Package*'} | ForEach-Object {dism /English /image:C:\\mount\\mount /Remove-Package /PackageName:$($_.PackageName) /NoRestart | Out-Null}\"",
-            "powershell -Command \"Get-WindowsPackage -Path 'C:\\mount\\mount' | Where-Object {$_.PackageName -like 'Microsoft-Windows-TabletPCMath-Package*'} | ForEach-Object {dism /English /image:C:\\mount\\mount /Remove-Package /PackageName:$($_.PackageName) /NoRestart | Out-Null}\"",
-            "powershell -Command \"Get-WindowsPackage -Path 'C:\\mount\\mount' | Where-Object {$_.PackageName -like 'Microsoft-Windows-Wallpaper-Content-Extended-FoD*'} | ForEach-Object {dism /English /image:C:\\mount\\mount /Remove-Package /PackageName:$($_.PackageName) /NoRestart | Out-Null}\""
-                };
+                string mountPath = @"C:\mount\mount";
+                var pacchetti = new Dictionary<string, string>
+        {
+            { "InternetExplorer-Optional-Package",
+              $@"$pkgs = Get-WindowsPackage -Path '{mountPath}' | Where-Object {{ $_.PackageName -like 'Microsoft-Windows-InternetExplorer-Optional-Package*' }}; foreach ($pkg in $pkgs) {{ dism /English /image:{mountPath} /Remove-Package /PackageName:$($pkg.PackageName) /NoRestart }}" },
+
+            { "Windows-Kernel-LA57-FoD",
+              $@"$pkgs = Get-WindowsPackage -Path '{mountPath}' | Where-Object {{ $_.PackageName -like 'Microsoft-Windows-Kernel-LA57-FoD*' }}; foreach ($pkg in $pkgs) {{ dism /English /image:{mountPath} /Remove-Package /PackageName:$($pkg.PackageName) /NoRestart }}" },
+
+            { "LanguageFeatures-Handwriting",
+              $@"$pkgs = Get-WindowsPackage -Path '{mountPath}' | Where-Object {{ $_.PackageName -like 'Microsoft-Windows-LanguageFeatures-Handwriting*' }}; foreach ($pkg in $pkgs) {{ dism /English /image:{mountPath} /Remove-Package /PackageName:$($pkg.PackageName) /NoRestart }}" },
+
+            { "LanguageFeatures-OCR",
+              $@"$pkgs = Get-WindowsPackage -Path '{mountPath}' | Where-Object {{ $_.PackageName -like 'Microsoft-Windows-LanguageFeatures-OCR*' }}; foreach ($pkg in $pkgs) {{ dism /English /image:{mountPath} /Remove-Package /PackageName:$($pkg.PackageName) /NoRestart }}" },
+
+            { "LanguageFeatures-Speech",
+              $@"$pkgs = Get-WindowsPackage -Path '{mountPath}' | Where-Object {{ $_.PackageName -like 'Microsoft-Windows-LanguageFeatures-Speech*' }}; foreach ($pkg in $pkgs) {{ dism /English /image:{mountPath} /Remove-Package /PackageName:$($pkg.PackageName) /NoRestart }}" },
+
+            { "LanguageFeatures-TextToSpeech",
+              $@"$pkgs = Get-WindowsPackage -Path '{mountPath}' | Where-Object {{ $_.PackageName -like 'Microsoft-Windows-LanguageFeatures-TextToSpeech*' }}; foreach ($pkg in $pkgs) {{ dism /English /image:{mountPath} /Remove-Package /PackageName:$($pkg.PackageName) /NoRestart }}" },
+
+            { "MediaPlayer-Package",
+              $@"$pkgs = Get-WindowsPackage -Path '{mountPath}' | Where-Object {{ $_.PackageName -like 'Microsoft-Windows-MediaPlayer-Package*' }}; foreach ($pkg in $pkgs) {{ dism /English /image:{mountPath} /Remove-Package /PackageName:$($pkg.PackageName) /NoRestart }}" },
+
+            { "TabletPCMath-Package",
+              $@"$pkgs = Get-WindowsPackage -Path '{mountPath}' | Where-Object {{ $_.PackageName -like 'Microsoft-Windows-TabletPCMath-Package*' }}; foreach ($pkg in $pkgs) {{ dism /English /image:{mountPath} /Remove-Package /PackageName:$($pkg.PackageName) /NoRestart }}" },
+
+            { "Wallpaper-Content-Extended-FoD",
+              $@"$pkgs = Get-WindowsPackage -Path '{mountPath}' | Where-Object {{ $_.PackageName -like 'Microsoft-Windows-Wallpaper-Content-Extended-FoD*' }}; foreach ($pkg in $pkgs) {{ dism /English /image:{mountPath} /Remove-Package /PackageName:$($pkg.PackageName) /NoRestart }}" },
+        };
 
                 Invoke(new Action(() =>
                 {
                     progressBar2.Minimum = 0;
-                    progressBar2.Maximum = comandi.Length;
+                    progressBar2.Maximum = pacchetti.Count;
                     progressBar2.Value = 0;
                 }));
 
-                foreach (var cmd in comandi)
+                foreach (var kvp in pacchetti)
                 {
+                    string nome = kvp.Key;
+                    string comando = kvp.Value;
+
                     if (token.IsCancellationRequested)
                     {
                         Invoke(new Action(() =>
@@ -834,8 +830,15 @@ namespace WinHubX.Forms.CreaISO
                         break;
                     }
 
-                    var processInfo = new ProcessStartInfo("cmd.exe", "/c " + cmd)
+                    Invoke(new Action(() =>
                     {
+                        richTextBox1.AppendText($"\nRimozione di \"{nome}\"...");
+                    }));
+
+                    var processInfo = new ProcessStartInfo()
+                    {
+                        FileName = "powershell.exe",
+                        Arguments = $"-NoProfile -ExecutionPolicy Bypass -Command \"{comando}; $pkgs.Count\"",
                         CreateNoWindow = true,
                         UseShellExecute = false,
                         RedirectStandardOutput = true,
@@ -847,18 +850,22 @@ namespace WinHubX.Forms.CreaISO
                         string output = await process.StandardOutput.ReadToEndAsync();
                         string error = await process.StandardError.ReadToEndAsync();
                         await process.WaitForExitAsync();
+                        int removedCount = 0;
+                        int.TryParse(output.Trim().Split('\n').LastOrDefault()?.Trim(), out removedCount);
 
                         Invoke(new Action(() =>
                         {
-                            if (!string.IsNullOrEmpty(output))
-                                richTextBox1.AppendText($"\n{output}");
-                            if (!string.IsNullOrEmpty(error))
-                                richTextBox1.AppendText($"\nError: {error}");
+                            if (removedCount > 0)
+                                richTextBox1.AppendText(" OK");
+                            else
+                                richTextBox1.AppendText(" ⚠ Nessun pacchetto rimosso");
+
                             if (progressBar2.Value < progressBar2.Maximum)
                                 progressBar2.Value += 1;
                         }));
                     }
-                    await Task.Delay(1000, token);
+
+                    await Task.Delay(500, token);
                 }
 
                 Invoke(new Action(() =>
@@ -868,7 +875,6 @@ namespace WinHubX.Forms.CreaISO
                 }));
             }
         }
-
         private async Task VerificaParametri(CancellationToken token)
         {
             string targetDir = @"C:\mount\mount\Windows";
@@ -1361,8 +1367,7 @@ namespace WinHubX.Forms.CreaISO
             _cancellationTokenSource?.Cancel();
             btnBack.Enabled = true;
             btnBack.Cursor = Cursors.Hand;
-            form1.comboBox1.Enabled = true;
-            form1.pictureBox3.Enabled = true;
+            form1.pictureBox4.Enabled = true;
             form1.btnHome.Enabled = true;
             form1.btnWin.Enabled = true;
             form1.btnOffice.Enabled = true;

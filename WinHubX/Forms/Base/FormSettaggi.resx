@@ -740,16 +740,19 @@ Abilita/Disabilita gli update di Windows</value>
     <value>Flat</value>
   </data>
   <data name="btnEsportaSettaggi.Location" type="System.Drawing.Point, System.Drawing">
-    <value>317, 382</value>
+    <value>387, 9</value>
   </data>
   <data name="btnEsportaSettaggi.Size" type="System.Drawing.Size, System.Drawing">
-    <value>120, 34</value>
+    <value>65, 58</value>
   </data>
   <data name="btnEsportaSettaggi.TabIndex" type="System.Int32, mscorlib">
     <value>63</value>
   </data>
-  <data name="btnEsportaSettaggi.Text" xml:space="preserve">
-    <value>Esporta i settaggi</value>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <data name="btnEsportaSettaggi.ToolTip" xml:space="preserve">
+    <value>Esporta i settaggi attuali di WinHubX</value>
   </data>
   <data name="&gt;&gt;btnEsportaSettaggi.Name" xml:space="preserve">
     <value>btnEsportaSettaggi</value>
@@ -773,16 +776,16 @@ Abilita/Disabilita gli update di Windows</value>
     <value>NoControl</value>
   </data>
   <data name="btnImportaSettaggi.Location" type="System.Drawing.Point, System.Drawing">
-    <value>459, 381</value>
+    <value>458, 9</value>
   </data>
   <data name="btnImportaSettaggi.Size" type="System.Drawing.Size, System.Drawing">
-    <value>116, 34</value>
+    <value>62, 57</value>
   </data>
   <data name="btnImportaSettaggi.TabIndex" type="System.Int32, mscorlib">
     <value>64</value>
   </data>
-  <data name="btnImportaSettaggi.Text" xml:space="preserve">
-    <value>Importa settaggi</value>
+  <data name="btnImportaSettaggi.ToolTip" xml:space="preserve">
+    <value>Importa settaggi di WinHubX</value>
   </data>
   <data name="&gt;&gt;btnImportaSettaggi.Name" xml:space="preserve">
     <value>btnImportaSettaggi</value>
@@ -807,6 +810,12 @@ Abilita/Disabilita gli update di Windows</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>FormSettaggi</value>
+  </data>
+  <data name="&gt;&gt;toolTip1.Name" xml:space="preserve">
+    <value>toolTip1</value>
+  </data>
+  <data name="&gt;&gt;toolTip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>FormSettaggi</value>

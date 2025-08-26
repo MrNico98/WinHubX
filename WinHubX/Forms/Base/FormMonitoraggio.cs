@@ -349,9 +349,6 @@ namespace WinHubX.Forms.Base
         }
         private void FormMonitoraggio_Load(object sender, EventArgs e)
         {
-            radioButton_notifica.Checked = Properties.Settings.Default.MinimizeToTray;
-            radioButton_taskbar.Checked = !Properties.Settings.Default.MinimizeToTray;
-
             using (RegistryKey key = Registry.CurrentUser.OpenSubKey(RegistryKey))
             {
                 if (key != null)
@@ -392,23 +389,6 @@ namespace WinHubX.Forms.Base
             Cpureduct();
         }
 
-        private void radioButton_notifica_CheckedChanged(object sender, EventArgs e)
-        {
-            if (radioButton_notifica.Checked)
-            {
-                Properties.Settings.Default.MinimizeToTray = true;
-                Properties.Settings.Default.Save();
-            }
-        }
-
-        private void radioButton_taskbar_CheckedChanged(object sender, EventArgs e)
-        {
-            if (radioButton_taskbar.Checked)
-            {
-                Properties.Settings.Default.MinimizeToTray = false;
-                Properties.Settings.Default.Save();
-            }
-        }
         private long GetFolderSize(DirectoryInfo dir)
         {
             long size = 0;

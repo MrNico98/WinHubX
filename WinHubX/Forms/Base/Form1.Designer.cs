@@ -31,13 +31,10 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             tableLayoutPanel1 = new TableLayoutPanel();
             panel3 = new Panel();
-            label1 = new Label();
-            bottoniSwap1 = new WinHubX.Bottoni.BottoniSwap();
+            pictureBox4 = new PictureBox();
             btnFullScreen = new Button();
             btnMnmz = new Button();
             btnClose = new Button();
-            pictureBox3 = new PictureBox();
-            comboBox1 = new ComboBox();
             lblPanelTitle = new Label();
             pictureBox2 = new PictureBox();
             panel1 = new Panel();
@@ -56,7 +53,7 @@
             PnlFormLoader = new Panel();
             tableLayoutPanel1.SuspendLayout();
             panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -77,32 +74,22 @@
             // 
             resources.ApplyResources(panel3, "panel3");
             panel3.BackColor = Color.FromArgb(64, 60, 59);
-            panel3.Controls.Add(label1);
-            panel3.Controls.Add(bottoniSwap1);
+            panel3.Controls.Add(pictureBox4);
             panel3.Controls.Add(btnFullScreen);
             panel3.Controls.Add(btnMnmz);
             panel3.Controls.Add(btnClose);
-            panel3.Controls.Add(pictureBox3);
-            panel3.Controls.Add(comboBox1);
             panel3.Controls.Add(lblPanelTitle);
             panel3.Controls.Add(pictureBox2);
             panel3.Name = "panel3";
             // 
-            // label1
+            // pictureBox4
             // 
-            resources.ApplyResources(label1, "label1");
-            label1.Name = "label1";
-            // 
-            // bottoniSwap1
-            // 
-            resources.ApplyResources(bottoniSwap1, "bottoniSwap1");
-            bottoniSwap1.Name = "bottoniSwap1";
-            bottoniSwap1.OffBackColor = Color.Gray;
-            bottoniSwap1.OffToggleColor = Color.Gainsboro;
-            bottoniSwap1.OnBackColor = Color.MediumSlateBlue;
-            bottoniSwap1.OnToggleColor = Color.WhiteSmoke;
-            bottoniSwap1.UseVisualStyleBackColor = true;
-            bottoniSwap1.CheckedChanged += bottoniSwap1_CheckedChanged;
+            pictureBox4.Cursor = Cursors.Hand;
+            pictureBox4.Image = Properties.Resources.pngConfiguration;
+            resources.ApplyResources(pictureBox4, "pictureBox4");
+            pictureBox4.Name = "pictureBox4";
+            pictureBox4.TabStop = false;
+            pictureBox4.Click += pictureBox4_Click;
             // 
             // btnFullScreen
             // 
@@ -137,24 +124,6 @@
             btnClose.UseVisualStyleBackColor = true;
             btnClose.Click += btnClose_Click;
             // 
-            // pictureBox3
-            // 
-            resources.ApplyResources(pictureBox3, "pictureBox3");
-            pictureBox3.Cursor = Cursors.Hand;
-            pictureBox3.Image = Properties.Resources.italias;
-            pictureBox3.Name = "pictureBox3";
-            pictureBox3.TabStop = false;
-            pictureBox3.Click += pictureBox3_Click;
-            // 
-            // comboBox1
-            // 
-            resources.ApplyResources(comboBox1, "comboBox1");
-            comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Items.AddRange(new object[] { resources.GetString("comboBox1.Items"), resources.GetString("comboBox1.Items1") });
-            comboBox1.Name = "comboBox1";
-            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
-            // 
             // lblPanelTitle
             // 
             resources.ApplyResources(lblPanelTitle, "lblPanelTitle");
@@ -184,7 +153,6 @@
             // 
             // panel2
             // 
-            resources.ApplyResources(panel2, "panel2");
             panel2.BackColor = Color.FromArgb(64, 60, 59);
             panel2.Controls.Add(pnlNav);
             panel2.Controls.Add(btnReinstallaApp);
@@ -196,6 +164,7 @@
             panel2.Controls.Add(btnOffice);
             panel2.Controls.Add(btnWin);
             panel2.Controls.Add(btnHome);
+            resources.ApplyResources(panel2, "panel2");
             panel2.Name = "panel2";
             // 
             // pnlNav
@@ -322,7 +291,7 @@
             tableLayoutPanel1.ResumeLayout(false);
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
@@ -349,13 +318,10 @@
         public Button btnHome;
         private Button btnMnmz;
         private Button btnClose;
-        public PictureBox pictureBox3;
-        public ComboBox comboBox1;
         public Label lblPanelTitle;
         private PictureBox pictureBox2;
         public Panel PnlFormLoader;
         private Button btnFullScreen;
-        private Label label1;
-        private Bottoni.BottoniSwap bottoniSwap1;
+        public PictureBox pictureBox4;
     }
 }

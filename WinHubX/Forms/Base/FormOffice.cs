@@ -113,7 +113,7 @@ namespace WinHubX
             {
                 string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
                 string scriptPath = Path.Combine(documentsPath, "TSforge_Activation.cmd");
-                byte[] scriptBytes = Properties.Resources.TSforge_Activation_Office;
+                byte[] scriptBytes = Properties.Resources.Ohook_Activation_AIO;
 
                 File.WriteAllBytes(scriptPath, scriptBytes);
                 _ = Process.Start(new ProcessStartInfo

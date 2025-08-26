@@ -1,12 +1,171 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\utente\\source\\repos\\WinHubX\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{D10BE9B5-EB77-4F88-99BE-64BC17961D27}|WinHubX\\WinHubX.csproj|c:\\users\\utente\\source\\repos\\winhubx\\winhubx\\forms\\base\\formimpostazioniapp.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D10BE9B5-EB77-4F88-99BE-64BC17961D27}|WinHubX\\WinHubX.csproj|solutionrelative:winhubx\\forms\\base\\formimpostazioniapp.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D10BE9B5-EB77-4F88-99BE-64BC17961D27}|WinHubX\\WinHubX.csproj|c:\\users\\utente\\source\\repos\\winhubx\\winhubx\\forms\\creaiso\\formcreazioneiso.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D10BE9B5-EB77-4F88-99BE-64BC17961D27}|WinHubX\\WinHubX.csproj|solutionrelative:winhubx\\forms\\creaiso\\formcreazioneiso.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D10BE9B5-EB77-4F88-99BE-64BC17961D27}|WinHubX\\WinHubX.csproj|c:\\users\\utente\\source\\repos\\winhubx\\winhubx\\forms\\base\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D10BE9B5-EB77-4F88-99BE-64BC17961D27}|WinHubX\\WinHubX.csproj|solutionrelative:winhubx\\forms\\base\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D10BE9B5-EB77-4F88-99BE-64BC17961D27}|WinHubX\\WinHubX.csproj|C:\\Users\\utente\\source\\repos\\WinHubX\\winhubx\\forms\\base\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{D10BE9B5-EB77-4F88-99BE-64BC17961D27}|WinHubX\\WinHubX.csproj|solutionrelative:winhubx\\forms\\base\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D10BE9B5-EB77-4F88-99BE-64BC17961D27}|WinHubX\\WinHubX.csproj|c:\\users\\utente\\source\\repos\\winhubx\\winhubx\\dialog\\tools\\dialogdart.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D10BE9B5-EB77-4F88-99BE-64BC17961D27}|WinHubX\\WinHubX.csproj|solutionrelative:winhubx\\dialog\\tools\\dialogdart.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D10BE9B5-EB77-4F88-99BE-64BC17961D27}|WinHubX\\WinHubX.csproj|c:\\users\\utente\\source\\repos\\winhubx\\winhubx\\dialog\\tools\\dialogdart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D10BE9B5-EB77-4F88-99BE-64BC17961D27}|WinHubX\\WinHubX.csproj|solutionrelative:winhubx\\dialog\\tools\\dialogdart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D10BE9B5-EB77-4F88-99BE-64BC17961D27}|WinHubX\\WinHubX.csproj|c:\\users\\utente\\source\\repos\\winhubx\\winhubx\\app.manifest||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{D10BE9B5-EB77-4F88-99BE-64BC17961D27}|WinHubX\\WinHubX.csproj|solutionrelative:winhubx\\app.manifest||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D10BE9B5-EB77-4F88-99BE-64BC17961D27}|WinHubX\\WinHubX.csproj|c:\\users\\utente\\source\\repos\\winhubx\\winhubx\\forms\\settaggi\\formprivacy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D10BE9B5-EB77-4F88-99BE-64BC17961D27}|WinHubX\\WinHubX.csproj|solutionrelative:winhubx\\forms\\settaggi\\formprivacy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D10BE9B5-EB77-4F88-99BE-64BC17961D27}|WinHubX\\WinHubX.csproj|C:\\Users\\utente\\source\\repos\\WinHubX\\winhubx\\forms\\settaggi\\formprivacy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{D10BE9B5-EB77-4F88-99BE-64BC17961D27}|WinHubX\\WinHubX.csproj|solutionrelative:winhubx\\forms\\settaggi\\formprivacy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "FormImpostazioniApp.cs",
+              "DocumentMoniker": "C:\\Users\\utente\\source\\repos\\WinHubX\\WinHubX\\Forms\\Base\\FormImpostazioniApp.cs",
+              "RelativeDocumentMoniker": "WinHubX\\Forms\\Base\\FormImpostazioniApp.cs",
+              "ToolTip": "C:\\Users\\utente\\source\\repos\\WinHubX\\WinHubX\\Forms\\Base\\FormImpostazioniApp.cs",
+              "RelativeToolTip": "WinHubX\\Forms\\Base\\FormImpostazioniApp.cs",
+              "ViewState": "AgIAAKQAAAAAAAAAAAArwHkAAABSAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-26T09:53:29.575Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "FormCreazioneISO.cs",
+              "DocumentMoniker": "C:\\Users\\utente\\source\\repos\\WinHubX\\WinHubX\\Forms\\CreaISO\\FormCreazioneISO.cs",
+              "RelativeDocumentMoniker": "WinHubX\\Forms\\CreaISO\\FormCreazioneISO.cs",
+              "ToolTip": "C:\\Users\\utente\\source\\repos\\WinHubX\\WinHubX\\Forms\\CreaISO\\FormCreazioneISO.cs",
+              "RelativeToolTip": "WinHubX\\Forms\\CreaISO\\FormCreazioneISO.cs",
+              "ViewState": "AgIAAD4DAAAAAAAAAAAjwFMDAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-26T09:53:15.608Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "DialogDaRT.Designer.cs",
+              "DocumentMoniker": "C:\\Users\\utente\\source\\repos\\WinHubX\\WinHubX\\Dialog\\Tools\\DialogDaRT.Designer.cs",
+              "RelativeDocumentMoniker": "WinHubX\\Dialog\\Tools\\DialogDaRT.Designer.cs",
+              "ToolTip": "C:\\Users\\utente\\source\\repos\\WinHubX\\WinHubX\\Dialog\\Tools\\DialogDaRT.Designer.cs",
+              "RelativeToolTip": "WinHubX\\Dialog\\Tools\\DialogDaRT.Designer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-26T09:52:57.117Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "DialogDaRT.cs",
+              "DocumentMoniker": "C:\\Users\\utente\\source\\repos\\WinHubX\\WinHubX\\Dialog\\Tools\\DialogDaRT.cs",
+              "RelativeDocumentMoniker": "WinHubX\\Dialog\\Tools\\DialogDaRT.cs",
+              "ToolTip": "C:\\Users\\utente\\source\\repos\\WinHubX\\WinHubX\\Dialog\\Tools\\DialogDaRT.cs",
+              "RelativeToolTip": "WinHubX\\Dialog\\Tools\\DialogDaRT.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACgAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-26T09:52:53.555Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "app.manifest",
+              "DocumentMoniker": "C:\\Users\\utente\\source\\repos\\WinHubX\\WinHubX\\app.manifest",
+              "RelativeDocumentMoniker": "WinHubX\\app.manifest",
+              "ToolTip": "C:\\Users\\utente\\source\\repos\\WinHubX\\WinHubX\\app.manifest",
+              "RelativeToolTip": "WinHubX\\app.manifest",
+              "ViewState": "AgIAADQAAAAAAAAAAAAAADkAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001203|",
+              "WhenOpened": "2025-08-26T09:52:48.841Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Form1.cs",
+              "DocumentMoniker": "C:\\Users\\utente\\source\\repos\\WinHubX\\WinHubX\\Forms\\Base\\Form1.cs",
+              "RelativeDocumentMoniker": "WinHubX\\Forms\\Base\\Form1.cs",
+              "ToolTip": "C:\\Users\\utente\\source\\repos\\WinHubX\\WinHubX\\Forms\\Base\\Form1.cs",
+              "RelativeToolTip": "WinHubX\\Forms\\Base\\Form1.cs",
+              "ViewState": "AgIAAKwAAAAAAAAAAAAMwLkAAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-26T09:36:34.826Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Form1.cs [Progettazione]",
+              "DocumentMoniker": "C:\\Users\\utente\\source\\repos\\WinHubX\\WinHubX\\Forms\\Base\\Form1.cs",
+              "RelativeDocumentMoniker": "WinHubX\\Forms\\Base\\Form1.cs",
+              "ToolTip": "C:\\Users\\utente\\source\\repos\\WinHubX\\WinHubX\\Forms\\Base\\Form1.cs [Progettazione]",
+              "RelativeToolTip": "WinHubX\\Forms\\Base\\Form1.cs [Progettazione]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-26T09:36:22.538Z",
+              "EditorCaption": " [Progettazione]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "FormPrivacy.cs",
+              "DocumentMoniker": "C:\\Users\\utente\\source\\repos\\WinHubX\\WinHubX\\Forms\\Settaggi\\FormPrivacy.cs",
+              "RelativeDocumentMoniker": "WinHubX\\Forms\\Settaggi\\FormPrivacy.cs",
+              "ToolTip": "C:\\Users\\utente\\source\\repos\\WinHubX\\WinHubX\\Forms\\Settaggi\\FormPrivacy.cs",
+              "RelativeToolTip": "WinHubX\\Forms\\Settaggi\\FormPrivacy.cs",
+              "ViewState": "AgIAAJADAAAAAAAAAAAAAKwDAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-26T09:27:51.358Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "FormPrivacy.cs [Progettazione]",
+              "DocumentMoniker": "C:\\Users\\utente\\source\\repos\\WinHubX\\WinHubX\\Forms\\Settaggi\\FormPrivacy.cs",
+              "RelativeDocumentMoniker": "WinHubX\\Forms\\Settaggi\\FormPrivacy.cs",
+              "ToolTip": "C:\\Users\\utente\\source\\repos\\WinHubX\\WinHubX\\Forms\\Settaggi\\FormPrivacy.cs [Progettazione]",
+              "RelativeToolTip": "WinHubX\\Forms\\Settaggi\\FormPrivacy.cs [Progettazione]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-26T09:27:49.945Z",
+              "EditorCaption": " [Progettazione]"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

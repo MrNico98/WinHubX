@@ -154,6 +154,12 @@
   <data name="label4.Text" xml:space="preserve">
     <value>Clock</value>
   </data>
+  <data name="label4.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="panel23.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="btnAvviaSelezionati.Location" type="System.Drawing.Point, System.Drawing">
     <value>750, 414</value>
   </data>
@@ -162,6 +168,9 @@
   </data>
   <data name="btnAvviaSelezionati.Text" xml:space="preserve">
     <value>Run Select</value>
+  </data>
+  <data name="btnAvviaSelezionati.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="radio_abilitaendtask.Size" type="System.Drawing.Size, System.Drawing">
     <value>104, 23</value>
@@ -175,6 +184,9 @@
   <data name="radio_disabilitaendtask.Text" xml:space="preserve">
     <value>Delete EndTask</value>
   </data>
+  <data name="panel14.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="radio_apripowershell.Size" type="System.Drawing.Size, System.Drawing">
     <value>158, 23</value>
   </data>
@@ -186,6 +198,9 @@
   </data>
   <data name="radio_eliminapowershell.Text" xml:space="preserve">
     <value>Delete Open Powershell</value>
+  </data>
+  <data name="panel5.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="radio_apricmd.Size" type="System.Drawing.Size, System.Drawing">
     <value>126, 23</value>
@@ -199,6 +214,9 @@
   <data name="radio_eliminaapricmd.Text" xml:space="preserve">
     <value>Delete Open CMD</value>
   </data>
+  <data name="panel4.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="radio_destrolegacy.Size" type="System.Drawing.Size, System.Drawing">
     <value>131, 23</value>
   </data>
@@ -211,11 +229,20 @@
   <data name="radio_destrodefault.Text" xml:space="preserve">
     <value>Right click default</value>
   </data>
+  <data name="panel32.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
     <value>110, 24</value>
   </data>
   <data name="label1.Text" xml:space="preserve">
     <value>Right button</value>
+  </data>
+  <data name="label1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="panel24.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="radio_abilicopilot.Size" type="System.Drawing.Size, System.Drawing">
     <value>115, 23</value>
@@ -229,6 +256,9 @@
   <data name="radio_disacopilot.Text" xml:space="preserve">
     <value>Disable Copilot</value>
   </data>
+  <data name="panel10.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="radio_abilitarecall.Size" type="System.Drawing.Size, System.Drawing">
     <value>105, 23</value>
   </data>
@@ -241,35 +271,8 @@
   <data name="radio_disabilitarecall.Text" xml:space="preserve">
     <value>Disable Recall</value>
   </data>
-  <data name="radio_abilitasuggeriti.Size" type="System.Drawing.Size, System.Drawing">
-    <value>135, 23</value>
-  </data>
-  <data name="radio_abilitasuggeriti.Text" xml:space="preserve">
-    <value>Enable Suggested</value>
-  </data>
-  <data name="radio_disabilitasuggeriti.Size" type="System.Drawing.Size, System.Drawing">
-    <value>149, 23</value>
-  </data>
-  <data name="radio_disabilitasuggeriti.Text" xml:space="preserve">
-    <value>Disable Suggestions</value>
-  </data>
-  <data name="radio_disabilitaricercainternet.Size" type="System.Drawing.Size, System.Drawing">
-    <value>166, 23</value>
-  </data>
-  <data name="radio_disabilitaricercainternet.Text" xml:space="preserve">
-    <value>Disable internet search</value>
-  </data>
-  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>122, 24</value>
-  </data>
-  <data name="label2.Text" xml:space="preserve">
-    <value>Optimizations</value>
-  </data>
-  <data name="radio_ottimizzaricerca.Size" type="System.Drawing.Size, System.Drawing">
-    <value>126, 23</value>
-  </data>
-  <data name="radio_ottimizzaricerca.Text" xml:space="preserve">
-    <value>Optimize Search</value>
+  <data name="panel6.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="radio_attivafx.Size" type="System.Drawing.Size, System.Drawing">
     <value>124, 23</value>
@@ -283,19 +286,100 @@
   <data name="radio_disattivafx.Text" xml:space="preserve">
     <value>Disable Visual Fx</value>
   </data>
+  <data name="panel13.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="radio_abilitasuggeriti.Size" type="System.Drawing.Size, System.Drawing">
+    <value>135, 23</value>
+  </data>
+  <data name="radio_abilitasuggeriti.Text" xml:space="preserve">
+    <value>Enable Suggested</value>
+  </data>
+  <data name="radio_disabilitasuggeriti.Size" type="System.Drawing.Size, System.Drawing">
+    <value>149, 23</value>
+  </data>
+  <data name="radio_disabilitasuggeriti.Text" xml:space="preserve">
+    <value>Disable Suggestions</value>
+  </data>
+  <data name="panel9.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="radio_disabilitaricercainternet.Size" type="System.Drawing.Size, System.Drawing">
+    <value>166, 23</value>
+  </data>
+  <data name="radio_disabilitaricercainternet.Text" xml:space="preserve">
+    <value>Disable internet search</value>
+  </data>
+  <data name="panel11.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="radio_ripristinaottimizzazionewin.Size" type="System.Drawing.Size, System.Drawing">
-    <value>161, 23</value>
+    <value>159, 23</value>
   </data>
   <data name="radio_ripristinaottimizzazionewin.Text" xml:space="preserve">
-    <value>Restore Windows Ott.</value>
+    <value>Restore Disk optimize</value>
+  </data>
+  <data name="radio_ripristinaottimizzazionewin.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="radio_ottimizzawindows.Size" type="System.Drawing.Size, System.Drawing">
-    <value>142, 23</value>
+    <value>112, 23</value>
   </data>
   <data name="radio_ottimizzawindows.Text" xml:space="preserve">
-    <value>Optimize Windows</value>
+    <value>Optimize Disk</value>
+  </data>
+  <data name="radio_ottimizzawindows.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="panel12.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>122, 24</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>Optimizations</value>
+  </data>
+  <data name="label2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="radio_ottimizzaricerca.Size" type="System.Drawing.Size, System.Drawing">
+    <value>126, 23</value>
+  </data>
+  <data name="radio_ottimizzaricerca.Text" xml:space="preserve">
+    <value>Optimize Search</value>
+  </data>
+  <data name="radio_ottimizzaricerca.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="panel8.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="panel7.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnBack.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="btn_resetselezione.Text" xml:space="preserve">
     <value>Reset Select</value>
+  </data>
+  <data name="btn_resetselezione.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label3.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label5.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="progressBar1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnSettaggiExplorer.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="$this.ToolTip" xml:space="preserve">
+    <value />
   </data>
 </root>

@@ -81,9 +81,9 @@
             // 
             // comboBoxInstallazione
             // 
+            resources.ApplyResources(comboBoxInstallazione, "comboBoxInstallazione");
             comboBoxInstallazione.Cursor = Cursors.Hand;
             comboBoxInstallazione.DropDownStyle = ComboBoxStyle.DropDownList;
-            resources.ApplyResources(comboBoxInstallazione, "comboBoxInstallazione");
             comboBoxInstallazione.FormattingEnabled = true;
             comboBoxInstallazione.Items.AddRange(new object[] { resources.GetString("comboBoxInstallazione.Items"), resources.GetString("comboBoxInstallazione.Items1"), resources.GetString("comboBoxInstallazione.Items2"), resources.GetString("comboBoxInstallazione.Items3") });
             comboBoxInstallazione.Name = "comboBoxInstallazione";
@@ -103,10 +103,10 @@
             // 
             // comboBoxVerOffice
             // 
+            resources.ApplyResources(comboBoxVerOffice, "comboBoxVerOffice");
             comboBoxVerOffice.BackColor = Color.White;
             comboBoxVerOffice.Cursor = Cursors.Hand;
             comboBoxVerOffice.DropDownStyle = ComboBoxStyle.DropDownList;
-            resources.ApplyResources(comboBoxVerOffice, "comboBoxVerOffice");
             comboBoxVerOffice.FormattingEnabled = true;
             comboBoxVerOffice.Items.AddRange(new object[] { resources.GetString("comboBoxVerOffice.Items"), resources.GetString("comboBoxVerOffice.Items1"), resources.GetString("comboBoxVerOffice.Items2"), resources.GetString("comboBoxVerOffice.Items3") });
             comboBoxVerOffice.Name = "comboBoxVerOffice";
@@ -147,9 +147,9 @@
             // 
             // comboBox_Lingua
             // 
+            resources.ApplyResources(comboBox_Lingua, "comboBox_Lingua");
             comboBox_Lingua.Cursor = Cursors.Hand;
             comboBox_Lingua.DropDownStyle = ComboBoxStyle.DropDownList;
-            resources.ApplyResources(comboBox_Lingua, "comboBox_Lingua");
             comboBox_Lingua.FormattingEnabled = true;
             comboBox_Lingua.Items.AddRange(new object[] { resources.GetString("comboBox_Lingua.Items"), resources.GetString("comboBox_Lingua.Items1") });
             comboBox_Lingua.Name = "comboBox_Lingua";

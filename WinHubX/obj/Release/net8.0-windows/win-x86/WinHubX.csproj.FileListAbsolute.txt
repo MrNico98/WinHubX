@@ -7421,3 +7421,5 @@ C:\Users\utente\source\repos\WinHubX\WinHubX\bin\Release\net8.0-windows\win-x86\
 C:\Users\utente\source\repos\WinHubX\WinHubX\bin\Release\net8.0-windows\win-x86\it\WindowsFormsIntegration.resources.dll
 C:\Users\utente\source\repos\WinHubX\WinHubX\obj\Release\net8.0-windows\win-x86\WinHubX.Forms.Personalizzazione_office.FormAggiungiRimuoviAppOffice.resources
 C:\Users\utente\source\repos\WinHubX\WinHubX\obj\Release\net8.0-windows\win-x86\WinHubX.Forms.Personalizzazione_office.FormAggiungiRimuoviAppOffice.en.resources
+C:\Users\utente\source\repos\WinHubX\WinHubX\obj\Release\net8.0-windows\win-x86\WinHubX.Forms.Base.FormImpostazioniApp.resources
+C:\Users\utente\source\repos\WinHubX\WinHubX\obj\Release\net8.0-windows\win-x86\WinHubX.Forms.Base.FormImpostazioniApp.en.resources
