@@ -1,17 +1,29 @@
 {
-  "version": "2.4.3.3",
+  "version": "2.4.3.4",
   "releaseNotes": {
     "IT": [
-      "Fix vari al codice",
-      "Aggiunto Office 2019 nel menù di Office personalizzato",
-      "Aggiunta possibilità di aggiungere rimuovere applicazioni office senza dover reinstallare office (2019-2021-2024-365)"
+      "Fix attivazione pulsante download con windows server",
+      "Fix attivazione pulsante download con windows live",
+      "Fix seleziona driver cartella in creazione iso",
+      "Fix creazione iso dava errore sulla rimozione pacchetti",
+      "Fix creazione iso non bypassava correttamente i requisiti di win11",
+      "Ora permette di attivare Win7",
+      "Ora permette di attivare Win8",
+      "Ora permette di attivare Win8.1",
+      "Aggiunto pulsante per settaggi WinHubX"
     ],
     "EN": [
-      "Fixed miscellaneous codes",
-      "Added Office 2019 to the Office Customization menu",
-      "Added the ability to add and remove Office applications without having to reinstall Office (2019, 2021, 2024, and 365)"
+"Fixed enabling the download button with Windows Server",
+"Fixed enabling the download button with Windows Live",
+"Fix selected driver folder when creating an ISO",
+"Fixed ISO creation error when removing packages",
+"Fixed ISO creation not bypassing Win11 requirements correctly",
+"Now allows activation of Win7",
+"Now allows activation of Win8",
+"Now allows activation of Win8.1",
+"Added button for WinHubX settings"
     ]
   },
-  "updateUrl": "https://github.com/MrNico98/WinHubX/releases/download/WinHubX-v.2.4.3.3/WinHubX.exe",
-  "updateUrlLight": "https://github.com/MrNico98/WinHubX/releases/download/WinHubX-v.2.4.3.3/WinHubX.exe"
+  "updateUrl": "https://github.com/MrNico98/WinHubX/releases/download/WinHubX-v.2.4.3.4/WinHubX.exe"
 }
+
