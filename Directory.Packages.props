@@ -1,0 +1,15 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
+    <NoWarn>$(NoWarn);NU1507</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageVersion Include="DiscUtils.Udf" Version="0.16.13" />
+    <PackageVersion Include="LibreHardwareMonitorLib" Version="0.9.4" />
+    <PackageVersion Include="Microsoft.PowerShell.Native" Version="7.4.0" />
+    <PackageVersion Include="System.Management.Automation" Version="7.4.11" />
+    <PackageVersion Include="System.ServiceProcess.ServiceController" Version="10.0.0-rc.1.25451.107" />
+    <PackageVersion Include="TaskScheduler" Version="2.12.2" />
+  </ItemGroup>
+</Project>

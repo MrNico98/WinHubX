@@ -1,36 +1,34 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
-	<PropertyGroup>
-		<OutputType>WinExe</OutputType>
-		<TargetFramework>net8.0-windows</TargetFramework>
-		<Nullable>enable</Nullable>
-		<UseWindowsForms>true</UseWindowsForms>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<ApplicationHighDpiMode>SystemAware</ApplicationHighDpiMode>
-		<AssemblyVersion>2.4.3.4</AssemblyVersion>
-		<FileVersion>2.4.3.4</FileVersion>
-		<ForceDesignerDPIUnaware>true</ForceDesignerDPIUnaware>
-		<ApplicationManifest>app.manifest</ApplicationManifest>
-		<Version>2.0.0</Version>
-		<ApplicationIcon>icoLogoWhite.ico</ApplicationIcon>
-		<Platforms>AnyCPU</Platforms>
-		<PlatformTarget>AnyCPU</PlatformTarget>
-		<DebugType>none</DebugType>
-		<DebugSymbols>false</DebugSymbols>
-		<Optimize>true</Optimize>
-		<Deterministic>true</Deterministic>
-		<IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
-		<SuppressTrimAnalysisWarnings>true</SuppressTrimAnalysisWarnings>
-		<SatelliteResourceLanguages>it;en</SatelliteResourceLanguages>
-		<PublishSingleFile>true</PublishSingleFile>
-		<TrimMode>partial</TrimMode>
-		<EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
-		<IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
-		<EnableUnsafeBinaryFormatterSerialization>false</EnableUnsafeBinaryFormatterSerialization>
-		<EventSourceSupport>false</EventSourceSupport>
-		<StartupObject>WinHubX.Program</StartupObject>
-	</PropertyGroup>
-
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationHighDpiMode>SystemAware</ApplicationHighDpiMode>
+    <AssemblyVersion>2.4.3.4</AssemblyVersion>
+    <FileVersion>2.4.3.4</FileVersion>
+    <ForceDesignerDPIUnaware>true</ForceDesignerDPIUnaware>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <Version>2.0.0</Version>
+    <ApplicationIcon>icoLogoWhite.ico</ApplicationIcon>
+    <Platforms>AnyCPU</Platforms>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>true</Optimize>
+    <Deterministic>true</Deterministic>
+    <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+    <SuppressTrimAnalysisWarnings>true</SuppressTrimAnalysisWarnings>
+    <SatelliteResourceLanguages>it;en</SatelliteResourceLanguages>
+    <PublishSingleFile>true</PublishSingleFile>
+    <TrimMode>partial</TrimMode>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <EnableUnsafeBinaryFormatterSerialization>false</EnableUnsafeBinaryFormatterSerialization>
+    <EventSourceSupport>false</EventSourceSupport>
+    <StartupObject>WinHubX.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <None Remove="Resources\Immagini\Form1\englisj.jpg" />
     <None Remove="Resources\Immagini\Form1\italias.jpg" />
@@ -115,11 +113,9 @@
     <None Remove="Resources\WinHubXStatoAttivazione.cmd" />
     <None Remove="Resources\WinHubXWSL.ps1" />
   </ItemGroup>
-
   <ItemGroup>
     <Content Include="icoLogoWhite.ico" />
   </ItemGroup>
-
   <ItemGroup>
     <EmbeddedResource Include="Resources\Immagini\Form1\englisj.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -344,13 +340,11 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
-
   <ItemGroup>
     <EmbeddedResource Include="Resources\OfficePersonalizzato\bin.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
-
   <ItemGroup>
     <EmbeddedResource Include="Resources\Product Sans Black.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -365,16 +359,14 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
-
   <ItemGroup>
-    <PackageReference Include="DiscUtils.Udf" Version="0.16.13" />
-    <PackageReference Include="LibreHardwareMonitorLib" Version="0.9.4" />
-    <PackageReference Include="Microsoft.PowerShell.Native" Version="7.4.0" />
-    <PackageReference Include="System.Management.Automation" Version="7.4.11" />
-    <PackageReference Include="System.ServiceProcess.ServiceController" Version="9.0.7" />
-    <PackageReference Include="TaskScheduler" Version="2.12.2" />
+    <PackageReference Include="DiscUtils.Udf" />
+    <PackageReference Include="LibreHardwareMonitorLib" />
+    <PackageReference Include="Microsoft.PowerShell.Native" />
+    <PackageReference Include="System.Management.Automation" />
+    <PackageReference Include="System.ServiceProcess.ServiceController" />
+    <PackageReference Include="TaskScheduler" />
   </ItemGroup>
-
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -387,19 +379,16 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
   </ItemGroup>
-
   <ItemGroup>
     <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-
   <ItemGroup>
     <None Update="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-
 </Project>
