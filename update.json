@@ -1,29 +1,16 @@
 {
-  "version": "2.4.3.4",
+  "version": "2.4.3.5",
   "releaseNotes": {
     "IT": [
-      "Fix attivazione pulsante download con windows server",
-      "Fix attivazione pulsante download con windows live",
-      "Fix seleziona driver cartella in creazione iso",
-      "Fix creazione iso dava errore sulla rimozione pacchetti",
-      "Fix creazione iso non bypassava correttamente i requisiti di win11",
-      "Ora permette di attivare Win7",
-      "Ora permette di attivare Win8",
-      "Ora permette di attivare Win8.1",
-      "Aggiunto pulsante per settaggi WinHubX"
+      "Aggiunta ISO Win 11 25H2 Edizione consumer (stock)",
+      "Aggiunta ISO Win 11 25H2 PRO Lite"
     ],
     "EN": [
-"Fixed enabling the download button with Windows Server",
-"Fixed enabling the download button with Windows Live",
-"Fix selected driver folder when creating an ISO",
-"Fixed ISO creation error when removing packages",
-"Fixed ISO creation not bypassing Win11 requirements correctly",
-"Now allows activation of Win7",
-"Now allows activation of Win8",
-"Now allows activation of Win8.1",
-"Added button for WinHubX settings"
+"Added ISO for Win 11 25H2 Consumer Edition (stock)",
+"Added ISO for Win 11 25H2 PRO Lite"
     ]
   },
-  "updateUrl": "https://github.com/MrNico98/WinHubX/releases/download/WinHubX-v.2.4.3.4/WinHubX.exe"
+  "updateUrl": "https://github.com/MrNico98/WinHubX/releases/download/WinHubX-v.2.4.3.5/WinHubX.exe"
 }
+
 
