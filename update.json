@@ -1,16 +1,15 @@
 {
-  "version": "2.4.3.5",
+  "version": "2.4.3.6",
   "releaseNotes": {
     "IT": [
-      "Aggiunta ISO Win 11 25H2 Edizione consumer (stock)",
-      "Aggiunta ISO Win 11 25H2 PRO Lite"
+"Fix WinHubXLiteOS"
     ],
     "EN": [
-"Added ISO for Win 11 25H2 Consumer Edition (stock)",
-"Added ISO for Win 11 25H2 PRO Lite"
+"Fix WinHubXLiteOS"
     ]
   },
-  "updateUrl": "https://github.com/MrNico98/WinHubX/releases/download/WinHubX-v.2.4.3.5/WinHubX.exe"
+  "updateUrl": "https://github.com/MrNico98/WinHubX/releases/download/WinHubX-v.2.4.3.6/WinHubX.exe"
 }
+
 
 
