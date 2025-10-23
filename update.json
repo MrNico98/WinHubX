@@ -1,15 +1,16 @@
 {
-  "version": "2.4.3.6",
+  "version": "2.4.3.7",
   "releaseNotes": {
     "IT": [
-"Fix WinHubXLiteOS"
+"Aggiunta attivazione Windows Server"
     ],
     "EN": [
-"Fix WinHubXLiteOS"
+"Added Activation Windows Server"
     ]
   },
-  "updateUrl": "https://github.com/MrNico98/WinHubX/releases/download/WinHubX-v.2.4.3.6/WinHubX.exe"
+  "updateUrl": "https://github.com/MrNico98/WinHubX/releases/download/WinHubX-v.2.4.3.7/WinHubX.exe"
 }
+
 
 
 
