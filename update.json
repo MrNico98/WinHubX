@@ -1,16 +1,38 @@
 {
-  "version": "2.4.3.7",
+  "version": "2.5.0.0",
   "releaseNotes": {
     "IT": [
-"Aggiunta attivazione Windows Server"
+      "🎨 Nuova interfaccia completamente ridisegnata",
+      "Aggiunte nuove sezioni: Windows, Office, Tweaks, Debloat, Monitoraggio, Impostazioni",
+      "Migliorati i codici di attivazione per Windows e Office",
+      "Risolti problemi di download e creazione ISO (codice riscritto)",
+      "Nuovo sistema di download Office",
+      "Nuovo sistema per personalizzare le app di Office",
+      "Debloat avanzato con possibilità di reinstallare componenti",
+      "Migliorati i Tweaks di sistema",
+      "Nuova logica per disattivazione di Windows Defender",
+      "Monitoraggio in tempo reale riscritto (CPU, RAM, Rete, GPU, Disco)",
+      "Codice centralizzato e aggiornamento pacchetti NuGet",
+      "Riduzione falsi positivi antivirus",
+      "Rimozione PowerRun",
+      "NB: WSA e rimozione processi momentaneamente indisponibili"
     ],
     "EN": [
-"Added Activation Windows Server"
+      "🎨 Completely redesigned UI",
+      "Added new sections: Windows, Office, Tweaks, Debloat, Monitoring, Settings",
+      "Improved activation codes for Windows and Office",
+      "Fixed ISO download/creation issues (rewritten code)",
+      "New Office download system",
+      "New engine to customize Office apps",
+      "Advanced Debloat with component reinstall support",
+      "Improved system Tweaks",
+      "New logic for disabling Windows Defender",
+      "Real-time monitoring rewritten (CPU, RAM, Network, GPU, Disk)",
+      "Centralized code and updated NuGet packages",
+      "Reduced antivirus false positives",
+      "Removed PowerRun",
+      "NB: WSA and process removal temporarily unavailable"
     ]
   },
-  "updateUrl": "https://github.com/MrNico98/WinHubX/releases/download/WinHubX-v.2.4.3.7/WinHubX.exe"
+  "updateUrl": "https://github.com/MrNico98/WinHubX/releases/download/WinHubX-v.2.5.0.0/WinHubX.exe"
 }
-
-
-
-
