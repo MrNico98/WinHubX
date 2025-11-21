@@ -1,0 +1,1287 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--
+    Microsoft ResX Schema
+
+    Version 2.0
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
+    associated with the data types.
+
+    Example:
+
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+
+    There are any number of "resheader" rows that contain simple
+    name/value pairs.
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
+    mimetype set.
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
+    extensible. For a given mimetype the value must be set accordingly:
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
+    read any of the formats listed below.
+
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="radio_disabilitaendtask.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="radio_disabilitaendtask.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.2pt</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="radio_disabilitaendtask.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radio_disabilitaendtask.Location" type="System.Drawing.Point, System.Drawing">
+    <value>203, 87</value>
+  </data>
+  <data name="radio_disabilitaendtask.Size" type="System.Drawing.Size, System.Drawing">
+    <value>185, 23</value>
+  </data>
+  <data name="radio_disabilitaendtask.TabIndex" type="System.Int32, mscorlib">
+    <value>211</value>
+  </data>
+  <data name="radio_disabilitaendtask.Text" xml:space="preserve">
+    <value>Rimuovi "Termina attività"</value>
+  </data>
+  <data name="&gt;&gt;radio_disabilitaendtask.Name" xml:space="preserve">
+    <value>radio_disabilitaendtask</value>
+  </data>
+  <data name="&gt;&gt;radio_disabilitaendtask.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;radio_disabilitaendtask.Parent" xml:space="preserve">
+    <value>panel76</value>
+  </data>
+  <data name="&gt;&gt;radio_disabilitaendtask.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="radio_abilitaendtask.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="radio_abilitaendtask.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.2pt</value>
+  </data>
+  <data name="radio_abilitaendtask.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radio_abilitaendtask.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 87</value>
+  </data>
+  <data name="radio_abilitaendtask.Size" type="System.Drawing.Size, System.Drawing">
+    <value>191, 23</value>
+  </data>
+  <data name="radio_abilitaendtask.TabIndex" type="System.Int32, mscorlib">
+    <value>210</value>
+  </data>
+  <data name="radio_abilitaendtask.Text" xml:space="preserve">
+    <value>Aggiungi "Termina attività"</value>
+  </data>
+  <data name="&gt;&gt;radio_abilitaendtask.Name" xml:space="preserve">
+    <value>radio_abilitaendtask</value>
+  </data>
+  <data name="&gt;&gt;radio_abilitaendtask.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;radio_abilitaendtask.Parent" xml:space="preserve">
+    <value>panel76</value>
+  </data>
+  <data name="&gt;&gt;radio_abilitaendtask.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="radio_eliminapowershell.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="radio_eliminapowershell.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.2pt</value>
+  </data>
+  <data name="radio_eliminapowershell.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radio_eliminapowershell.Location" type="System.Drawing.Point, System.Drawing">
+    <value>203, 63</value>
+  </data>
+  <data name="radio_eliminapowershell.Size" type="System.Drawing.Size, System.Drawing">
+    <value>184, 23</value>
+  </data>
+  <data name="radio_eliminapowershell.TabIndex" type="System.Int32, mscorlib">
+    <value>209</value>
+  </data>
+  <data name="radio_eliminapowershell.Text" xml:space="preserve">
+    <value>Rimuovi "Apri Powershell"</value>
+  </data>
+  <data name="&gt;&gt;radio_eliminapowershell.Name" xml:space="preserve">
+    <value>radio_eliminapowershell</value>
+  </data>
+  <data name="&gt;&gt;radio_eliminapowershell.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;radio_eliminapowershell.Parent" xml:space="preserve">
+    <value>panel76</value>
+  </data>
+  <data name="&gt;&gt;radio_eliminapowershell.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="radio_apripowershell.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="radio_apripowershell.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.2pt</value>
+  </data>
+  <data name="radio_apripowershell.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radio_apripowershell.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 63</value>
+  </data>
+  <data name="radio_apripowershell.Size" type="System.Drawing.Size, System.Drawing">
+    <value>190, 23</value>
+  </data>
+  <data name="radio_apripowershell.TabIndex" type="System.Int32, mscorlib">
+    <value>208</value>
+  </data>
+  <data name="radio_apripowershell.Text" xml:space="preserve">
+    <value>Aggiungi "Apri Powershell"</value>
+  </data>
+  <data name="&gt;&gt;radio_apripowershell.Name" xml:space="preserve">
+    <value>radio_apripowershell</value>
+  </data>
+  <data name="&gt;&gt;radio_apripowershell.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;radio_apripowershell.Parent" xml:space="preserve">
+    <value>panel76</value>
+  </data>
+  <data name="&gt;&gt;radio_apripowershell.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="radio_eliminaapricmd.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="radio_eliminaapricmd.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.2pt</value>
+  </data>
+  <data name="radio_eliminaapricmd.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radio_eliminaapricmd.Location" type="System.Drawing.Point, System.Drawing">
+    <value>203, 39</value>
+  </data>
+  <data name="radio_eliminaapricmd.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 23</value>
+  </data>
+  <data name="radio_eliminaapricmd.TabIndex" type="System.Int32, mscorlib">
+    <value>207</value>
+  </data>
+  <data name="radio_eliminaapricmd.Text" xml:space="preserve">
+    <value>Rimuovi "Apri CMD"</value>
+  </data>
+  <data name="&gt;&gt;radio_eliminaapricmd.Name" xml:space="preserve">
+    <value>radio_eliminaapricmd</value>
+  </data>
+  <data name="&gt;&gt;radio_eliminaapricmd.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;radio_eliminaapricmd.Parent" xml:space="preserve">
+    <value>panel76</value>
+  </data>
+  <data name="&gt;&gt;radio_eliminaapricmd.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="radio_destrolegacy.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="radio_destrolegacy.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.2pt</value>
+  </data>
+  <data name="radio_destrolegacy.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radio_destrolegacy.Location" type="System.Drawing.Point, System.Drawing">
+    <value>203, 13</value>
+  </data>
+  <data name="radio_destrolegacy.Size" type="System.Drawing.Size, System.Drawing">
+    <value>144, 23</value>
+  </data>
+  <data name="radio_destrolegacy.TabIndex" type="System.Int32, mscorlib">
+    <value>206</value>
+  </data>
+  <data name="radio_destrolegacy.Text" xml:space="preserve">
+    <value>Tasto destro legacy</value>
+  </data>
+  <data name="&gt;&gt;radio_destrolegacy.Name" xml:space="preserve">
+    <value>radio_destrolegacy</value>
+  </data>
+  <data name="&gt;&gt;radio_destrolegacy.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;radio_destrolegacy.Parent" xml:space="preserve">
+    <value>panel76</value>
+  </data>
+  <data name="&gt;&gt;radio_destrolegacy.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="radio_destrodefault.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="radio_destrodefault.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.2pt</value>
+  </data>
+  <data name="radio_destrodefault.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radio_destrodefault.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 13</value>
+  </data>
+  <data name="radio_destrodefault.Size" type="System.Drawing.Size, System.Drawing">
+    <value>148, 23</value>
+  </data>
+  <data name="radio_destrodefault.TabIndex" type="System.Int32, mscorlib">
+    <value>205</value>
+  </data>
+  <data name="radio_destrodefault.Text" xml:space="preserve">
+    <value>Tasto destro default</value>
+  </data>
+  <data name="&gt;&gt;radio_destrodefault.Name" xml:space="preserve">
+    <value>radio_destrodefault</value>
+  </data>
+  <data name="&gt;&gt;radio_destrodefault.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;radio_destrodefault.Parent" xml:space="preserve">
+    <value>panel76</value>
+  </data>
+  <data name="&gt;&gt;radio_destrodefault.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="radio_apricmd.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="radio_apricmd.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.2pt</value>
+  </data>
+  <data name="radio_apricmd.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radio_apricmd.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 39</value>
+  </data>
+  <data name="radio_apricmd.Size" type="System.Drawing.Size, System.Drawing">
+    <value>158, 23</value>
+  </data>
+  <data name="radio_apricmd.TabIndex" type="System.Int32, mscorlib">
+    <value>204</value>
+  </data>
+  <data name="radio_apricmd.Text" xml:space="preserve">
+    <value>Aggiungi "Apri CMD"</value>
+  </data>
+  <data name="&gt;&gt;radio_apricmd.Name" xml:space="preserve">
+    <value>radio_apricmd</value>
+  </data>
+  <data name="&gt;&gt;radio_apricmd.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;radio_apricmd.Parent" xml:space="preserve">
+    <value>panel76</value>
+  </data>
+  <data name="&gt;&gt;radio_apricmd.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="panel76.Location" type="System.Drawing.Point, System.Drawing">
+    <value>434, 51</value>
+  </data>
+  <data name="panel76.Size" type="System.Drawing.Size, System.Drawing">
+    <value>441, 138</value>
+  </data>
+  <data name="panel76.TabIndex" type="System.Int32, mscorlib">
+    <value>225</value>
+  </data>
+  <data name="&gt;&gt;panel76.Name" xml:space="preserve">
+    <value>panel76</value>
+  </data>
+  <data name="&gt;&gt;panel76.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;panel76.Parent" xml:space="preserve">
+    <value>panello</value>
+  </data>
+  <data name="&gt;&gt;panel76.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="radio_disacopilot.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="radio_disacopilot.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.2pt</value>
+  </data>
+  <data name="radio_disacopilot.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radio_disacopilot.Location" type="System.Drawing.Point, System.Drawing">
+    <value>215, 150</value>
+  </data>
+  <data name="radio_disacopilot.Size" type="System.Drawing.Size, System.Drawing">
+    <value>191, 23</value>
+  </data>
+  <data name="radio_disacopilot.TabIndex" type="System.Int32, mscorlib">
+    <value>230</value>
+  </data>
+  <data name="radio_disacopilot.Text" xml:space="preserve">
+    <value>Disabilita Windows Copilot</value>
+  </data>
+  <data name="&gt;&gt;radio_disacopilot.Name" xml:space="preserve">
+    <value>radio_disacopilot</value>
+  </data>
+  <data name="&gt;&gt;radio_disacopilot.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;radio_disacopilot.Parent" xml:space="preserve">
+    <value>panel77</value>
+  </data>
+  <data name="&gt;&gt;radio_disacopilot.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="radio_abilicopilot.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="radio_abilicopilot.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.2pt</value>
+  </data>
+  <data name="radio_abilicopilot.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radio_abilicopilot.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 150</value>
+  </data>
+  <data name="radio_abilicopilot.Size" type="System.Drawing.Size, System.Drawing">
+    <value>174, 23</value>
+  </data>
+  <data name="radio_abilicopilot.TabIndex" type="System.Int32, mscorlib">
+    <value>229</value>
+  </data>
+  <data name="radio_abilicopilot.Text" xml:space="preserve">
+    <value>Abilita Windows Copilot</value>
+  </data>
+  <data name="&gt;&gt;radio_abilicopilot.Name" xml:space="preserve">
+    <value>radio_abilicopilot</value>
+  </data>
+  <data name="&gt;&gt;radio_abilicopilot.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;radio_abilicopilot.Parent" xml:space="preserve">
+    <value>panel77</value>
+  </data>
+  <data name="&gt;&gt;radio_abilicopilot.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="radio_disattivafx.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="radio_disattivafx.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.2pt</value>
+  </data>
+  <data name="radio_disattivafx.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radio_disattivafx.Location" type="System.Drawing.Point, System.Drawing">
+    <value>215, 121</value>
+  </data>
+  <data name="radio_disattivafx.Size" type="System.Drawing.Size, System.Drawing">
+    <value>142, 23</value>
+  </data>
+  <data name="radio_disattivafx.TabIndex" type="System.Int32, mscorlib">
+    <value>228</value>
+  </data>
+  <data name="radio_disattivafx.Text" xml:space="preserve">
+    <value>Disabilita Visual FX</value>
+  </data>
+  <data name="&gt;&gt;radio_disattivafx.Name" xml:space="preserve">
+    <value>radio_disattivafx</value>
+  </data>
+  <data name="&gt;&gt;radio_disattivafx.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;radio_disattivafx.Parent" xml:space="preserve">
+    <value>panel77</value>
+  </data>
+  <data name="&gt;&gt;radio_disattivafx.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="radio_attivafx.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="radio_attivafx.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.2pt</value>
+  </data>
+  <data name="radio_attivafx.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radio_attivafx.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 121</value>
+  </data>
+  <data name="radio_attivafx.Size" type="System.Drawing.Size, System.Drawing">
+    <value>125, 23</value>
+  </data>
+  <data name="radio_attivafx.TabIndex" type="System.Int32, mscorlib">
+    <value>227</value>
+  </data>
+  <data name="radio_attivafx.Text" xml:space="preserve">
+    <value>Abilita Visual FX</value>
+  </data>
+  <data name="&gt;&gt;radio_attivafx.Name" xml:space="preserve">
+    <value>radio_attivafx</value>
+  </data>
+  <data name="&gt;&gt;radio_attivafx.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;radio_attivafx.Parent" xml:space="preserve">
+    <value>panel77</value>
+  </data>
+  <data name="&gt;&gt;radio_attivafx.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="radio_disabilitarecall.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="radio_disabilitarecall.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.2pt</value>
+  </data>
+  <data name="radio_disabilitarecall.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radio_disabilitarecall.Location" type="System.Drawing.Point, System.Drawing">
+    <value>215, 92</value>
+  </data>
+  <data name="radio_disabilitarecall.Size" type="System.Drawing.Size, System.Drawing">
+    <value>181, 23</value>
+  </data>
+  <data name="radio_disabilitarecall.TabIndex" type="System.Int32, mscorlib">
+    <value>226</value>
+  </data>
+  <data name="radio_disabilitarecall.Text" xml:space="preserve">
+    <value>Disabilita Windows Recall</value>
+  </data>
+  <data name="&gt;&gt;radio_disabilitarecall.Name" xml:space="preserve">
+    <value>radio_disabilitarecall</value>
+  </data>
+  <data name="&gt;&gt;radio_disabilitarecall.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;radio_disabilitarecall.Parent" xml:space="preserve">
+    <value>panel77</value>
+  </data>
+  <data name="&gt;&gt;radio_disabilitarecall.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="radio_abilitarecall.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="radio_abilitarecall.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.2pt</value>
+  </data>
+  <data name="radio_abilitarecall.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radio_abilitarecall.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 92</value>
+  </data>
+  <data name="radio_abilitarecall.Size" type="System.Drawing.Size, System.Drawing">
+    <value>164, 23</value>
+  </data>
+  <data name="radio_abilitarecall.TabIndex" type="System.Int32, mscorlib">
+    <value>225</value>
+  </data>
+  <data name="radio_abilitarecall.Text" xml:space="preserve">
+    <value>Abilita Windows Recall</value>
+  </data>
+  <data name="&gt;&gt;radio_abilitarecall.Name" xml:space="preserve">
+    <value>radio_abilitarecall</value>
+  </data>
+  <data name="&gt;&gt;radio_abilitarecall.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;radio_abilitarecall.Parent" xml:space="preserve">
+    <value>panel77</value>
+  </data>
+  <data name="&gt;&gt;radio_abilitarecall.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="radio_disabilitasuggeriti.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="radio_disabilitasuggeriti.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.2pt</value>
+  </data>
+  <data name="radio_disabilitasuggeriti.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radio_disabilitasuggeriti.Location" type="System.Drawing.Point, System.Drawing">
+    <value>215, 63</value>
+  </data>
+  <data name="radio_disabilitasuggeriti.Size" type="System.Drawing.Size, System.Drawing">
+    <value>215, 23</value>
+  </data>
+  <data name="radio_disabilitasuggeriti.TabIndex" type="System.Int32, mscorlib">
+    <value>224</value>
+  </data>
+  <data name="radio_disabilitasuggeriti.Text" xml:space="preserve">
+    <value>Disabilita suggeriti dalla ricerca</value>
+  </data>
+  <data name="&gt;&gt;radio_disabilitasuggeriti.Name" xml:space="preserve">
+    <value>radio_disabilitasuggeriti</value>
+  </data>
+  <data name="&gt;&gt;radio_disabilitasuggeriti.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;radio_disabilitasuggeriti.Parent" xml:space="preserve">
+    <value>panel77</value>
+  </data>
+  <data name="&gt;&gt;radio_disabilitasuggeriti.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="radio_abilitasuggeriti.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="radio_abilitasuggeriti.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.2pt</value>
+  </data>
+  <data name="radio_abilitasuggeriti.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radio_abilitasuggeriti.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 63</value>
+  </data>
+  <data name="radio_abilitasuggeriti.Size" type="System.Drawing.Size, System.Drawing">
+    <value>198, 23</value>
+  </data>
+  <data name="radio_abilitasuggeriti.TabIndex" type="System.Int32, mscorlib">
+    <value>223</value>
+  </data>
+  <data name="radio_abilitasuggeriti.Text" xml:space="preserve">
+    <value>Abilita suggeriti dalla ricerca</value>
+  </data>
+  <data name="&gt;&gt;radio_abilitasuggeriti.Name" xml:space="preserve">
+    <value>radio_abilitasuggeriti</value>
+  </data>
+  <data name="&gt;&gt;radio_abilitasuggeriti.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;radio_abilitasuggeriti.Parent" xml:space="preserve">
+    <value>panel77</value>
+  </data>
+  <data name="&gt;&gt;radio_abilitasuggeriti.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="radio_disabilitaottimizzaricerca.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="radio_disabilitaottimizzaricerca.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.2pt</value>
+  </data>
+  <data name="radio_disabilitaottimizzaricerca.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radio_disabilitaottimizzaricerca.Location" type="System.Drawing.Point, System.Drawing">
+    <value>215, 34</value>
+  </data>
+  <data name="radio_disabilitaottimizzaricerca.Size" type="System.Drawing.Size, System.Drawing">
+    <value>217, 23</value>
+  </data>
+  <data name="radio_disabilitaottimizzaricerca.TabIndex" type="System.Int32, mscorlib">
+    <value>222</value>
+  </data>
+  <data name="radio_disabilitaottimizzaricerca.Text" xml:space="preserve">
+    <value>Disabilita ottimizzazione ricerca</value>
+  </data>
+  <data name="&gt;&gt;radio_disabilitaottimizzaricerca.Name" xml:space="preserve">
+    <value>radio_disabilitaottimizzaricerca</value>
+  </data>
+  <data name="&gt;&gt;radio_disabilitaottimizzaricerca.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;radio_disabilitaottimizzaricerca.Parent" xml:space="preserve">
+    <value>panel77</value>
+  </data>
+  <data name="&gt;&gt;radio_disabilitaottimizzaricerca.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="radio_disabilitaricercainternet.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="radio_disabilitaricercainternet.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.2pt</value>
+  </data>
+  <data name="radio_disabilitaricercainternet.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radio_disabilitaricercainternet.Location" type="System.Drawing.Point, System.Drawing">
+    <value>215, 8</value>
+  </data>
+  <data name="radio_disabilitaricercainternet.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 23</value>
+  </data>
+  <data name="radio_disabilitaricercainternet.TabIndex" type="System.Int32, mscorlib">
+    <value>221</value>
+  </data>
+  <data name="radio_disabilitaricercainternet.Text" xml:space="preserve">
+    <value>Disabilita ricerca internet</value>
+  </data>
+  <data name="&gt;&gt;radio_disabilitaricercainternet.Name" xml:space="preserve">
+    <value>radio_disabilitaricercainternet</value>
+  </data>
+  <data name="&gt;&gt;radio_disabilitaricercainternet.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;radio_disabilitaricercainternet.Parent" xml:space="preserve">
+    <value>panel77</value>
+  </data>
+  <data name="&gt;&gt;radio_disabilitaricercainternet.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="radio_abilitaRicercainternet.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="radio_abilitaRicercainternet.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.2pt</value>
+  </data>
+  <data name="radio_abilitaRicercainternet.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radio_abilitaRicercainternet.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 8</value>
+  </data>
+  <data name="radio_abilitaRicercainternet.Size" type="System.Drawing.Size, System.Drawing">
+    <value>161, 23</value>
+  </data>
+  <data name="radio_abilitaRicercainternet.TabIndex" type="System.Int32, mscorlib">
+    <value>220</value>
+  </data>
+  <data name="radio_abilitaRicercainternet.Text" xml:space="preserve">
+    <value>Abilita ricerca internet</value>
+  </data>
+  <data name="&gt;&gt;radio_abilitaRicercainternet.Name" xml:space="preserve">
+    <value>radio_abilitaRicercainternet</value>
+  </data>
+  <data name="&gt;&gt;radio_abilitaRicercainternet.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;radio_abilitaRicercainternet.Parent" xml:space="preserve">
+    <value>panel77</value>
+  </data>
+  <data name="&gt;&gt;radio_abilitaRicercainternet.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="radio_ottimizzaricerca.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="radio_ottimizzaricerca.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.2pt</value>
+  </data>
+  <data name="radio_ottimizzaricerca.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radio_ottimizzaricerca.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 34</value>
+  </data>
+  <data name="radio_ottimizzaricerca.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 23</value>
+  </data>
+  <data name="radio_ottimizzaricerca.TabIndex" type="System.Int32, mscorlib">
+    <value>219</value>
+  </data>
+  <data name="radio_ottimizzaricerca.Text" xml:space="preserve">
+    <value>Abilita ottimizzazione ricerca</value>
+  </data>
+  <data name="&gt;&gt;radio_ottimizzaricerca.Name" xml:space="preserve">
+    <value>radio_ottimizzaricerca</value>
+  </data>
+  <data name="&gt;&gt;radio_ottimizzaricerca.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;radio_ottimizzaricerca.Parent" xml:space="preserve">
+    <value>panel77</value>
+  </data>
+  <data name="&gt;&gt;radio_ottimizzaricerca.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="panel77.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 207</value>
+  </data>
+  <data name="panel77.Size" type="System.Drawing.Size, System.Drawing">
+    <value>441, 180</value>
+  </data>
+  <data name="panel77.TabIndex" type="System.Int32, mscorlib">
+    <value>224</value>
+  </data>
+  <data name="&gt;&gt;panel77.Name" xml:space="preserve">
+    <value>panel77</value>
+  </data>
+  <data name="&gt;&gt;panel77.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;panel77.Parent" xml:space="preserve">
+    <value>panello</value>
+  </data>
+  <data name="&gt;&gt;panel77.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="radio_orologionascondioradata.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="radio_orologionascondioradata.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.2pt</value>
+  </data>
+  <data name="radio_orologionascondioradata.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radio_orologionascondioradata.Location" type="System.Drawing.Point, System.Drawing">
+    <value>221, 39</value>
+  </data>
+  <data name="radio_orologionascondioradata.Size" type="System.Drawing.Size, System.Drawing">
+    <value>150, 23</value>
+  </data>
+  <data name="radio_orologionascondioradata.TabIndex" type="System.Int32, mscorlib">
+    <value>199</value>
+  </data>
+  <data name="radio_orologionascondioradata.Text" xml:space="preserve">
+    <value>Nascondi data e ora</value>
+  </data>
+  <data name="&gt;&gt;radio_orologionascondioradata.Name" xml:space="preserve">
+    <value>radio_orologionascondioradata</value>
+  </data>
+  <data name="&gt;&gt;radio_orologionascondioradata.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;radio_orologionascondioradata.Parent" xml:space="preserve">
+    <value>panel78</value>
+  </data>
+  <data name="&gt;&gt;radio_orologionascondioradata.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="radio_orologiomostraoradata.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="radio_orologiomostraoradata.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.2pt</value>
+  </data>
+  <data name="radio_orologiomostraoradata.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radio_orologiomostraoradata.Location" type="System.Drawing.Point, System.Drawing">
+    <value>221, 13</value>
+  </data>
+  <data name="radio_orologiomostraoradata.Size" type="System.Drawing.Size, System.Drawing">
+    <value>138, 23</value>
+  </data>
+  <data name="radio_orologiomostraoradata.TabIndex" type="System.Int32, mscorlib">
+    <value>198</value>
+  </data>
+  <data name="radio_orologiomostraoradata.Text" xml:space="preserve">
+    <value>Mostra data e ora</value>
+  </data>
+  <data name="&gt;&gt;radio_orologiomostraoradata.Name" xml:space="preserve">
+    <value>radio_orologiomostraoradata</value>
+  </data>
+  <data name="&gt;&gt;radio_orologiomostraoradata.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;radio_orologiomostraoradata.Parent" xml:space="preserve">
+    <value>panel78</value>
+  </data>
+  <data name="&gt;&gt;radio_orologiomostraoradata.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="radio_orologiomostradatasecondi.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="radio_orologiomostradatasecondi.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.2pt</value>
+  </data>
+  <data name="radio_orologiomostradatasecondi.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radio_orologiomostradatasecondi.Location" type="System.Drawing.Point, System.Drawing">
+    <value>14, 65</value>
+  </data>
+  <data name="radio_orologiomostradatasecondi.Size" type="System.Drawing.Size, System.Drawing">
+    <value>164, 23</value>
+  </data>
+  <data name="radio_orologiomostradatasecondi.TabIndex" type="System.Int32, mscorlib">
+    <value>197</value>
+  </data>
+  <data name="radio_orologiomostradatasecondi.Text" xml:space="preserve">
+    <value>Mostra data e secondi</value>
+  </data>
+  <data name="&gt;&gt;radio_orologiomostradatasecondi.Name" xml:space="preserve">
+    <value>radio_orologiomostradatasecondi</value>
+  </data>
+  <data name="&gt;&gt;radio_orologiomostradatasecondi.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;radio_orologiomostradatasecondi.Parent" xml:space="preserve">
+    <value>panel78</value>
+  </data>
+  <data name="&gt;&gt;radio_orologiomostradatasecondi.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="radio_orologiostandard.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="radio_orologiostandard.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.2pt</value>
+  </data>
+  <data name="radio_orologiostandard.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radio_orologiostandard.Location" type="System.Drawing.Point, System.Drawing">
+    <value>14, 13</value>
+  </data>
+  <data name="radio_orologiostandard.Size" type="System.Drawing.Size, System.Drawing">
+    <value>140, 23</value>
+  </data>
+  <data name="radio_orologiostandard.TabIndex" type="System.Int32, mscorlib">
+    <value>196</value>
+  </data>
+  <data name="radio_orologiostandard.Text" xml:space="preserve">
+    <value>Orologio standard</value>
+  </data>
+  <data name="&gt;&gt;radio_orologiostandard.Name" xml:space="preserve">
+    <value>radio_orologiostandard</value>
+  </data>
+  <data name="&gt;&gt;radio_orologiostandard.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;radio_orologiostandard.Parent" xml:space="preserve">
+    <value>panel78</value>
+  </data>
+  <data name="&gt;&gt;radio_orologiostandard.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="radio_orologiomostrasecondi.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="radio_orologiomostrasecondi.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.2pt</value>
+  </data>
+  <data name="radio_orologiomostrasecondi.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radio_orologiomostrasecondi.Location" type="System.Drawing.Point, System.Drawing">
+    <value>14, 39</value>
+  </data>
+  <data name="radio_orologiomostrasecondi.Size" type="System.Drawing.Size, System.Drawing">
+    <value>122, 23</value>
+  </data>
+  <data name="radio_orologiomostrasecondi.TabIndex" type="System.Int32, mscorlib">
+    <value>195</value>
+  </data>
+  <data name="radio_orologiomostrasecondi.Text" xml:space="preserve">
+    <value>Mostra secondi</value>
+  </data>
+  <data name="&gt;&gt;radio_orologiomostrasecondi.Name" xml:space="preserve">
+    <value>radio_orologiomostrasecondi</value>
+  </data>
+  <data name="&gt;&gt;radio_orologiomostrasecondi.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;radio_orologiomostrasecondi.Parent" xml:space="preserve">
+    <value>panel78</value>
+  </data>
+  <data name="&gt;&gt;radio_orologiomostrasecondi.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="panel78.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 51</value>
+  </data>
+  <data name="panel78.Size" type="System.Drawing.Size, System.Drawing">
+    <value>385, 101</value>
+  </data>
+  <data name="panel78.TabIndex" type="System.Int32, mscorlib">
+    <value>223</value>
+  </data>
+  <data name="&gt;&gt;panel78.Name" xml:space="preserve">
+    <value>panel78</value>
+  </data>
+  <data name="&gt;&gt;panel78.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;panel78.Parent" xml:space="preserve">
+    <value>panello</value>
+  </data>
+  <data name="&gt;&gt;panel78.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="btnSettaggiExplorerVerdi.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="btnSettaggiExplorerVerdi.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="btnSettaggiExplorerVerdi.Location" type="System.Drawing.Point, System.Drawing">
+    <value>697, 222</value>
+  </data>
+  <data name="btnSettaggiExplorerVerdi.Size" type="System.Drawing.Size, System.Drawing">
+    <value>196, 45</value>
+  </data>
+  <data name="btnSettaggiExplorerVerdi.TabIndex" type="System.Int32, mscorlib">
+    <value>222</value>
+  </data>
+  <data name="&gt;&gt;btnSettaggiExplorerVerdi.Name" xml:space="preserve">
+    <value>btnSettaggiExplorerVerdi</value>
+  </data>
+  <data name="&gt;&gt;btnSettaggiExplorerVerdi.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiButton, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;btnSettaggiExplorerVerdi.Parent" xml:space="preserve">
+    <value>panello</value>
+  </data>
+  <data name="&gt;&gt;btnSettaggiExplorerVerdi.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="btnResetVerdi.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="btnResetVerdi.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="btnResetVerdi.Location" type="System.Drawing.Point, System.Drawing">
+    <value>697, 342</value>
+  </data>
+  <data name="btnResetVerdi.Size" type="System.Drawing.Size, System.Drawing">
+    <value>196, 45</value>
+  </data>
+  <data name="btnResetVerdi.TabIndex" type="System.Int32, mscorlib">
+    <value>221</value>
+  </data>
+  <data name="&gt;&gt;btnResetVerdi.Name" xml:space="preserve">
+    <value>btnResetVerdi</value>
+  </data>
+  <data name="&gt;&gt;btnResetVerdi.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiButton, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;btnResetVerdi.Parent" xml:space="preserve">
+    <value>panello</value>
+  </data>
+  <data name="&gt;&gt;btnResetVerdi.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="cuiButton1Verdi.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="cuiButton1Verdi.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="cuiButton1Verdi.Location" type="System.Drawing.Point, System.Drawing">
+    <value>697, 404</value>
+  </data>
+  <data name="cuiButton1Verdi.Size" type="System.Drawing.Size, System.Drawing">
+    <value>196, 45</value>
+  </data>
+  <data name="cuiButton1Verdi.TabIndex" type="System.Int32, mscorlib">
+    <value>220</value>
+  </data>
+  <data name="&gt;&gt;cuiButton1Verdi.Name" xml:space="preserve">
+    <value>cuiButton1Verdi</value>
+  </data>
+  <data name="&gt;&gt;cuiButton1Verdi.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiButton, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;cuiButton1Verdi.Parent" xml:space="preserve">
+    <value>panello</value>
+  </data>
+  <data name="&gt;&gt;cuiButton1Verdi.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="progressBar1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left, Right</value>
+  </data>
+  <data name="progressBar1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>16, 412</value>
+  </data>
+  <data name="progressBar1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>620, 28</value>
+  </data>
+  <data name="progressBar1.TabIndex" type="System.Int32, mscorlib">
+    <value>219</value>
+  </data>
+  <data name="&gt;&gt;progressBar1.Name" xml:space="preserve">
+    <value>progressBar1</value>
+  </data>
+  <data name="&gt;&gt;progressBar1.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiProgressBarHorizontal, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;progressBar1.Parent" xml:space="preserve">
+    <value>panello</value>
+  </data>
+  <data name="&gt;&gt;progressBar1.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="label1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom</value>
+  </data>
+  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label1.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI Semibold, 19.800001pt, style=Bold</value>
+  </data>
+  <data name="label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 167</value>
+  </data>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>147, 37</value>
+  </data>
+  <data name="label1.TabIndex" type="System.Int32, mscorlib">
+    <value>204</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Preferenze</value>
+  </data>
+  <data name="&gt;&gt;label1.Name" xml:space="preserve">
+    <value>label1</value>
+  </data>
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+    <value>panello</value>
+  </data>
+  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="label4.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom</value>
+  </data>
+  <data name="label4.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label4.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI Semibold, 19.800001pt, style=Bold</value>
+  </data>
+  <data name="label4.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>426, 10</value>
+  </data>
+  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>166, 37</value>
+  </data>
+  <data name="label4.TabIndex" type="System.Int32, mscorlib">
+    <value>195</value>
+  </data>
+  <data name="label4.Text" xml:space="preserve">
+    <value>Tasto destro</value>
+  </data>
+  <data name="&gt;&gt;label4.Name" xml:space="preserve">
+    <value>label4</value>
+  </data>
+  <data name="&gt;&gt;label4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label4.Parent" xml:space="preserve">
+    <value>panello</value>
+  </data>
+  <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="label3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom</value>
+  </data>
+  <data name="label3.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label3.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI Semibold, 19.800001pt, style=Bold</value>
+  </data>
+  <data name="label3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 10</value>
+  </data>
+  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>125, 37</value>
+  </data>
+  <data name="label3.TabIndex" type="System.Int32, mscorlib">
+    <value>189</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>Orologio</value>
+  </data>
+  <data name="&gt;&gt;label3.Name" xml:space="preserve">
+    <value>label3</value>
+  </data>
+  <data name="&gt;&gt;label3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label3.Parent" xml:space="preserve">
+    <value>panello</value>
+  </data>
+  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="panello.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="panello.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="panello.Size" type="System.Drawing.Size, System.Drawing">
+    <value>901, 458</value>
+  </data>
+  <data name="panello.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;panello.Name" xml:space="preserve">
+    <value>panello</value>
+  </data>
+  <data name="&gt;&gt;panello.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;panello.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;panello.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <metadata name="backgroundWorker1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>129, 17</value>
+  </metadata>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>29</value>
+  </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>96, 96</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>901, 458</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>FormPersonalizzazione</value>
+  </data>
+  <data name="&gt;&gt;toolTip1.Name" xml:space="preserve">
+    <value>toolTip1</value>
+  </data>
+  <data name="&gt;&gt;toolTip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;backgroundWorker1.Name" xml:space="preserve">
+    <value>backgroundWorker1</value>
+  </data>
+  <data name="&gt;&gt;backgroundWorker1.Type" xml:space="preserve">
+    <value>System.ComponentModel.BackgroundWorker, System.ComponentModel.EventBasedAsync, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>FormPersonalizzazione</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+</root>

@@ -1,0 +1,112 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\utente\\source\\repos\\WinHubX\\WinHubX\\WinHubX.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\utente\\source\\repos\\WinHubX\\WinHubX\\WinHubX.csproj": {
+      "version": "2.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\utente\\source\\repos\\WinHubX\\WinHubX\\WinHubX.csproj",
+        "projectName": "WinHubX",
+        "projectPath": "C:\\Users\\utente\\source\\repos\\WinHubX\\WinHubX\\WinHubX.csproj",
+        "packagesPath": "C:\\Users\\utente\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\utente\\source\\repos\\WinHubX\\WinHubX\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\utente\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0-windows"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0-windows7.0": {
+            "targetAlias": "net8.0-windows",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.100"
+      },
+      "frameworks": {
+        "net8.0-windows7.0": {
+          "targetAlias": "net8.0-windows",
+          "dependencies": {
+            "CuoreUI.Winforms": {
+              "target": "Package",
+              "version": "[2025.10.18.1, )"
+            },
+            "DiscUtils.Udf": {
+              "target": "Package",
+              "version": "[0.16.13, )"
+            },
+            "LibreHardwareMonitorLib": {
+              "target": "Package",
+              "version": "[0.9.4, )"
+            },
+            "Microsoft.NET.ILLink.Tasks": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.22, )",
+              "autoReferenced": true
+            },
+            "Microsoft.PowerShell.Native": {
+              "target": "Package",
+              "version": "[7.4.0, )"
+            },
+            "System.Management.Automation": {
+              "target": "Package",
+              "version": "[7.4.13, )"
+            },
+            "System.ServiceProcess.ServiceController": {
+              "target": "Package",
+              "version": "[10.0.0, )"
+            },
+            "TaskScheduler": {
+              "target": "Package",
+              "version": "[2.12.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            },
+            "Microsoft.WindowsDesktop.App.WindowsForms": {
+              "privateAssets": "none"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.100/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

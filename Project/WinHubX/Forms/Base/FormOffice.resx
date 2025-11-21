@@ -1,0 +1,970 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--
+    Microsoft ResX Schema
+
+    Version 2.0
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
+    associated with the data types.
+
+    Example:
+
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+
+    There are any number of "resheader" rows that contain simple
+    name/value pairs.
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
+    mimetype set.
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
+    extensible. For a given mimetype the value must be set accordingly:
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
+    read any of the formats listed below.
+
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="&gt;&gt;btnPersonalizzaOfficePrinci.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btnPersonalizzaOfficePrinci.Location" type="System.Drawing.Point, System.Drawing">
+    <value>39, 330</value>
+  </data>
+  <data name="comboBoxVerOffice.Items3" xml:space="preserve">
+    <value>Office 365</value>
+  </data>
+  <data name="&gt;&gt;comboBoxVerOffice.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;comboBoxVerOffice.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="comboBoxInstallazione.TabIndex" type="System.Int32, mscorlib">
+    <value>161</value>
+  </data>
+  <data name="Checkbox_Salva.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="&gt;&gt;comboBox_Lingua.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btn_cambiaBianco.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>📁</value>
+  </data>
+  <data name="&gt;&gt;labelTipoInstallazione.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="comboBoxVerOffice.TabIndex" type="System.Int32, mscorlib">
+    <value>158</value>
+  </data>
+  <data name="labelavviso.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 9pt, style=Italic</value>
+  </data>
+  <data name="labelpercorso.TabIndex" type="System.Int32, mscorlib">
+    <value>170</value>
+  </data>
+  <data name="&gt;&gt;Checkbox_Installa.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Checkbox_Installa.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="btnPersonalizzaOfficePrinci.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="&gt;&gt;btnDownloadVerdi.Parent" xml:space="preserve">
+    <value>panel70</value>
+  </data>
+  <data name="lblSelezionLingua.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnAggRimAppOfficePrinci.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="labelpercorso.Text" xml:space="preserve">
+    <value>C:</value>
+  </data>
+  <data name="&gt;&gt;label2.Name" xml:space="preserve">
+    <value>label2</value>
+  </data>
+  <data name="&gt;&gt;panel70.Parent" xml:space="preserve">
+    <value>tableLayoutPanel50</value>
+  </data>
+  <data name="panel60.Location" type="System.Drawing.Point, System.Drawing">
+    <value>321, 3</value>
+  </data>
+  <data name="tableLayoutPanel50.RowCount" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="labelavviso.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Checkbox_Salva.TabIndex" type="System.Int32, mscorlib">
+    <value>212</value>
+  </data>
+  <data name="&gt;&gt;Checkbox_Installa.Parent" xml:space="preserve">
+    <value>panel70</value>
+  </data>
+  <data name="comboBoxInstallazione.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>System</value>
+  </data>
+  <data name="&gt;&gt;label2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;labelversione.Name" xml:space="preserve">
+    <value>labelversione</value>
+  </data>
+  <data name="btnScrubberPrinci.TabIndex" type="System.Int32, mscorlib">
+    <value>165</value>
+  </data>
+  <data name="&gt;&gt;labelpercorso.Parent" xml:space="preserve">
+    <value>panel70</value>
+  </data>
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>38, 15</value>
+  </data>
+  <data name="label1.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>BottomCenter</value>
+  </data>
+  <data name="panel50.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;labelavviso.Name" xml:space="preserve">
+    <value>labelavviso</value>
+  </data>
+  <data name="&gt;&gt;comboBoxInstallazione.Parent" xml:space="preserve">
+    <value>panel70</value>
+  </data>
+  <data name="&gt;&gt;comboBoxVerOffice.Parent" xml:space="preserve">
+    <value>panel70</value>
+  </data>
+  <data name="labelpercorso.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="tableLayoutPanel50.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="panel60" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="panel70" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,35,294117,Percent,64,70588" /&gt;&lt;Rows Styles="Percent,51,310043" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <data name="panel50.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="labelTipoInstallazione.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>BottomCenter</value>
+  </data>
+  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;panel60.Name" xml:space="preserve">
+    <value>panel60</value>
+  </data>
+  <data name="btnAttivaOfficePrinci.Location" type="System.Drawing.Point, System.Drawing">
+    <value>39, 34</value>
+  </data>
+  <data name="&gt;&gt;btnScrubberPrinci.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiButton, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;btnAggRimAppOfficePrinci.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="lblSelezionLingua.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI Semibold, 13.8pt, style=Bold</value>
+  </data>
+  <data name="comboBoxInstallazione.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 221</value>
+  </data>
+  <data name="&gt;&gt;progressBar1.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiProgressBarHorizontal, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;labelavviso.Parent" xml:space="preserve">
+    <value>panel70</value>
+  </data>
+  <data name="btnAggRimAppOfficePrinci.TabIndex" type="System.Int32, mscorlib">
+    <value>167</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="labelversione.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI Semibold, 13.8pt, style=Bold</value>
+  </data>
+  <data name="&gt;&gt;btnPersonalizzaOfficePrinci.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiButton, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;labelTipoInstallazione.Name" xml:space="preserve">
+    <value>labelTipoInstallazione</value>
+  </data>
+  <data name="comboBoxVerOffice.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>System</value>
+  </data>
+  <data name="progressBar1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>196, 28</value>
+  </data>
+  <data name="tableLayoutPanel50.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="labelpercorso.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 9pt, style=Italic</value>
+  </data>
+  <data name="labelavviso.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="labelTipoInstallazione.TabIndex" type="System.Int32, mscorlib">
+    <value>160</value>
+  </data>
+  <data name="Checkbox_Installa.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="btnPersonalizzaOfficePrinci.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI Semibold, 22.2pt, style=Bold</value>
+  </data>
+  <data name="tableLayoutPanel50.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblSelezionLingua.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;Checkbox_Salva.Name" xml:space="preserve">
+    <value>Checkbox_Salva</value>
+  </data>
+  <data name="btnScrubberPrinci.Location" type="System.Drawing.Point, System.Drawing">
+    <value>39, 131</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>96, 96</value>
+  </data>
+  <data name="&gt;&gt;toolTip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="labelversione.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;Checkbox_Installa.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="labelavviso.Text" xml:space="preserve">
+    <value>Verrà installato su questo PC</value>
+  </data>
+  <data name="&gt;&gt;btnPersonalizzaOfficePrinci.Parent" xml:space="preserve">
+    <value>panel60</value>
+  </data>
+  <data name="btnAggRimAppOfficePrinci.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="&gt;&gt;panel60.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="panel70.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="Checkbox_Installa.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="btnAttivaOfficePrinci.Size" type="System.Drawing.Size, System.Drawing">
+    <value>496, 66</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>901, 458</value>
+  </data>
+  <data name="label2.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="Checkbox_Salva.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 189</value>
+  </data>
+  <data name="&gt;&gt;btnDownloadVerdi.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiButton, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;btnDownloadVerdi.Name" xml:space="preserve">
+    <value>btnDownloadVerdi</value>
+  </data>
+  <data name="btnDownloadVerdi.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="labelversione.Text" xml:space="preserve">
+    <value>Seleziona versione Office</value>
+  </data>
+  <data name="&gt;&gt;labelversione.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="panel50.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="labelavviso.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="&gt;&gt;btn_cambiaBianco.Parent" xml:space="preserve">
+    <value>panel70</value>
+  </data>
+  <data name="&gt;&gt;labelavviso.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>FormOffice</value>
+  </data>
+  <data name="&gt;&gt;comboBoxInstallazione.Name" xml:space="preserve">
+    <value>comboBoxInstallazione</value>
+  </data>
+  <data name="Checkbox_Installa.TabIndex" type="System.Int32, mscorlib">
+    <value>211</value>
+  </data>
+  <data name="&gt;&gt;labelpercorso.Name" xml:space="preserve">
+    <value>labelpercorso</value>
+  </data>
+  <data name="comboBoxInstallazione.Items2" xml:space="preserve">
+    <value>x32 - Online</value>
+  </data>
+  <data name="&gt;&gt;btnAttivaOfficePrinci.Name" xml:space="preserve">
+    <value>btnAttivaOfficePrinci</value>
+  </data>
+  <data name="labelTipoInstallazione.Size" type="System.Drawing.Size, System.Drawing">
+    <value>244, 25</value>
+  </data>
+  <data name="&gt;&gt;panel50.Name" xml:space="preserve">
+    <value>panel50</value>
+  </data>
+  <data name="panel60.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="btnPersonalizzaOfficePrinci.Size" type="System.Drawing.Size, System.Drawing">
+    <value>496, 66</value>
+  </data>
+  <data name="&gt;&gt;btnScrubberPrinci.Name" xml:space="preserve">
+    <value>btnScrubberPrinci</value>
+  </data>
+  <data name="lblSelezionLingua.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="btn_cambiaBianco.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="panel60.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="labelTipoInstallazione.Text" xml:space="preserve">
+    <value>Seleziona tipo installazione</value>
+  </data>
+  <data name="tableLayoutPanel50.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="comboBoxInstallazione.Items1" xml:space="preserve">
+    <value>x64 - Offline</value>
+  </data>
+  <data name="labelversione.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>BottomCenter</value>
+  </data>
+  <data name="lblSelezionLingua.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>BottomCenter</value>
+  </data>
+  <data name="&gt;&gt;btnScrubberPrinci.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="lblSelezionLingua.Size" type="System.Drawing.Size, System.Drawing">
+    <value>151, 25</value>
+  </data>
+  <data name="labelversione.Size" type="System.Drawing.Size, System.Drawing">
+    <value>227, 25</value>
+  </data>
+  <data name="$this.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;btn_cambiaBianco.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="panel60.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;labelpercorso.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="labelpercorso.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="labelpercorso.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>BottomCenter</value>
+  </data>
+  <data name="comboBox_Lingua.Items" xml:space="preserve">
+    <value>IT</value>
+  </data>
+  <data name="comboBox_Lingua.Size" type="System.Drawing.Size, System.Drawing">
+    <value>240, 23</value>
+  </data>
+  <data name="btnScrubberPrinci.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI Semibold, 22.2pt, style=Bold</value>
+  </data>
+  <data name="labelpercorso.Location" type="System.Drawing.Point, System.Drawing">
+    <value>28, 222</value>
+  </data>
+  <data name="Checkbox_Installa.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="labelavviso.TabIndex" type="System.Int32, mscorlib">
+    <value>171</value>
+  </data>
+  <data name="labelavviso.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="progressBar1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left, Right</value>
+  </data>
+  <data name="&gt;&gt;comboBox_Lingua.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="Checkbox_Installa.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="labelversione.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="panel70.Size" type="System.Drawing.Size, System.Drawing">
+    <value>312, 452</value>
+  </data>
+  <data name="btn_cambiaBianco.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 9pt</value>
+  </data>
+  <data name="labelavviso.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>BottomCenter</value>
+  </data>
+  <data name="&gt;&gt;panel70.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;btn_cambiaBianco.Name" xml:space="preserve">
+    <value>btn_cambiaBianco</value>
+  </data>
+  <data name="&gt;&gt;comboBox_Lingua.Parent" xml:space="preserve">
+    <value>panel70</value>
+  </data>
+  <data name="btnScrubberPrinci.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;lblSelezionLingua.Parent" xml:space="preserve">
+    <value>panel70</value>
+  </data>
+  <data name="comboBoxVerOffice.Location" type="System.Drawing.Point, System.Drawing">
+    <value>11, 31</value>
+  </data>
+  <data name="labelavviso.Size" type="System.Drawing.Size, System.Drawing">
+    <value>159, 15</value>
+  </data>
+  <data name="progressBar1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 350</value>
+  </data>
+  <data name="comboBoxInstallazione.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="&gt;&gt;progressBar1.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="Checkbox_Installa.Location" type="System.Drawing.Point, System.Drawing">
+    <value>158, 189</value>
+  </data>
+  <data name="&gt;&gt;progressBar1.Name" xml:space="preserve">
+    <value>progressBar1</value>
+  </data>
+  <data name="comboBox_Lingua.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>System</value>
+  </data>
+  <data name="labelversione.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 2</value>
+  </data>
+  <data name="lblSelezionLingua.TabIndex" type="System.Int32, mscorlib">
+    <value>162</value>
+  </data>
+  <data name="btnAttivaOfficePrinci.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="comboBoxInstallazione.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 158</value>
+  </data>
+  <data name="label1.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 9pt</value>
+  </data>
+  <data name="btn_cambiaBianco.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;labelpercorso.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btn_cambiaBianco.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiButton, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="labelversione.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="labelavviso.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 258</value>
+  </data>
+  <data name="comboBox_Lingua.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;lblSelezionLingua.Name" xml:space="preserve">
+    <value>lblSelezionLingua</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>label2</value>
+  </data>
+  <data name="btnScrubberPrinci.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel50.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="labelpercorso.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="panel60.Size" type="System.Drawing.Size, System.Drawing">
+    <value>577, 452</value>
+  </data>
+  <data name="label2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="comboBoxVerOffice.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="comboBoxInstallazione.Items" xml:space="preserve">
+    <value>x64 - Online</value>
+  </data>
+  <data name="lblSelezionLingua.Text" xml:space="preserve">
+    <value>Seleziona lingua</value>
+  </data>
+  <data name="&gt;&gt;comboBox_Lingua.Name" xml:space="preserve">
+    <value>comboBox_Lingua</value>
+  </data>
+  <data name="Checkbox_Salva.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>19, 15</value>
+  </data>
+  <data name="comboBoxInstallazione.Size" type="System.Drawing.Size, System.Drawing">
+    <value>240, 23</value>
+  </data>
+  <data name="lblSelezionLingua.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 63</value>
+  </data>
+  <data name="label1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;panel50.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btnDownloadVerdi.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 285</value>
+  </data>
+  <data name="label1.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;btnAttivaOfficePrinci.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiButton, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel50.Name" xml:space="preserve">
+    <value>tableLayoutPanel50</value>
+  </data>
+  <data name="label1.TabIndex" type="System.Int32, mscorlib">
+    <value>174</value>
+  </data>
+  <data name="&gt;&gt;btnAggRimAppOfficePrinci.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiButton, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
+    <value>panel70</value>
+  </data>
+  <data name="&gt;&gt;labelavviso.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="labelavviso.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="btnDownloadVerdi.Size" type="System.Drawing.Size, System.Drawing">
+    <value>196, 45</value>
+  </data>
+  <data name="label2.TabIndex" type="System.Int32, mscorlib">
+    <value>213</value>
+  </data>
+  <data name="labelTipoInstallazione.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 130</value>
+  </data>
+  <data name="btnAggRimAppOfficePrinci.Location" type="System.Drawing.Point, System.Drawing">
+    <value>39, 228</value>
+  </data>
+  <data name="&gt;&gt;labelTipoInstallazione.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblSelezionLingua.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="tableLayoutPanel50.Size" type="System.Drawing.Size, System.Drawing">
+    <value>901, 458</value>
+  </data>
+  <data name="&gt;&gt;Checkbox_Salva.Parent" xml:space="preserve">
+    <value>panel70</value>
+  </data>
+  <data name="comboBoxVerOffice.Items2" xml:space="preserve">
+    <value>Office 2024</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel50.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>FormOffice</value>
+  </data>
+  <data name="label2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="progressBar1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;panel70.Name" xml:space="preserve">
+    <value>panel70</value>
+  </data>
+  <data name="btn_cambiaBianco.TabIndex" type="System.Int32, mscorlib">
+    <value>175</value>
+  </data>
+  <data name="comboBox_Lingua.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 91</value>
+  </data>
+  <data name="btnScrubberPrinci.Size" type="System.Drawing.Size, System.Drawing">
+    <value>496, 66</value>
+  </data>
+  <data name="&gt;&gt;comboBoxVerOffice.Name" xml:space="preserve">
+    <value>comboBoxVerOffice</value>
+  </data>
+  <data name="&gt;&gt;Checkbox_Installa.Name" xml:space="preserve">
+    <value>Checkbox_Installa</value>
+  </data>
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btnPersonalizzaOfficePrinci.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnDownloadVerdi.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnAttivaOfficePrinci.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI Semibold, 22.2pt, style=Bold</value>
+  </data>
+  <data name="Checkbox_Installa.Size" type="System.Drawing.Size, System.Drawing">
+    <value>78, 25</value>
+  </data>
+  <data name="btnDownloadVerdi.TabIndex" type="System.Int32, mscorlib">
+    <value>164</value>
+  </data>
+  <data name="label2.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;comboBoxInstallazione.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="btnPersonalizzaOfficePrinci.TabIndex" type="System.Int32, mscorlib">
+    <value>168</value>
+  </data>
+  <data name="&gt;&gt;lblSelezionLingua.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="labelTipoInstallazione.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="tableLayoutPanel50.ColumnCount" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="btn_cambiaBianco.Size" type="System.Drawing.Size, System.Drawing">
+    <value>73, 17</value>
+  </data>
+  <data name="&gt;&gt;btnScrubberPrinci.Parent" xml:space="preserve">
+    <value>panel60</value>
+  </data>
+  <data name="&gt;&gt;btnPersonalizzaOfficePrinci.Name" xml:space="preserve">
+    <value>btnPersonalizzaOfficePrinci</value>
+  </data>
+  <data name="&gt;&gt;Checkbox_Salva.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="Checkbox_Salva.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Checkbox_Salva.Text" xml:space="preserve">
+    <value>Salva</value>
+  </data>
+  <data name="Checkbox_Salva.Size" type="System.Drawing.Size, System.Drawing">
+    <value>66, 25</value>
+  </data>
+  <data name="&gt;&gt;comboBoxInstallazione.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;panel70.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="labelTipoInstallazione.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Checkbox_Salva.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="comboBoxVerOffice.Items" xml:space="preserve">
+    <value>Office 2019</value>
+  </data>
+  <data name="&gt;&gt;labelversione.Parent" xml:space="preserve">
+    <value>panel70</value>
+  </data>
+  <data name="comboBox_Lingua.TabIndex" type="System.Int32, mscorlib">
+    <value>163</value>
+  </data>
+  <data name="panel50.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="labelTipoInstallazione.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="&gt;&gt;labelversione.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>211, 358</value>
+  </data>
+  <data name="tableLayoutPanel50.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="&gt;&gt;btnAttivaOfficePrinci.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;Checkbox_Salva.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btnDownloadVerdi.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left, Right</value>
+  </data>
+  <data name="comboBoxVerOffice.Size" type="System.Drawing.Size, System.Drawing">
+    <value>240, 23</value>
+  </data>
+  <data name="&gt;&gt;panel60.Parent" xml:space="preserve">
+    <value>tableLayoutPanel50</value>
+  </data>
+  <data name="&gt;&gt;labelTipoInstallazione.Parent" xml:space="preserve">
+    <value>panel70</value>
+  </data>
+  <data name="comboBoxInstallazione.Items3" xml:space="preserve">
+    <value>x32 - Offline</value>
+  </data>
+  <data name="Checkbox_Salva.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;label1.Name" xml:space="preserve">
+    <value>label1</value>
+  </data>
+  <data name="progressBar1.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="comboBox_Lingua.Items1" xml:space="preserve">
+    <value>EN</value>
+  </data>
+  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+    <value>panel70</value>
+  </data>
+  <data name="panel70.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="comboBoxVerOffice.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;btnAggRimAppOfficePrinci.Parent" xml:space="preserve">
+    <value>panel60</value>
+  </data>
+  <data name="&gt;&gt;btnAttivaOfficePrinci.Parent" xml:space="preserve">
+    <value>panel60</value>
+  </data>
+  <data name="&gt;&gt;panel50.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="btnAggRimAppOfficePrinci.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI Semibold, 22.2pt, style=Bold</value>
+  </data>
+  <data name="labelpercorso.Size" type="System.Drawing.Size, System.Drawing">
+    <value>18, 15</value>
+  </data>
+  <data name="panel70.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="btnAttivaOfficePrinci.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;panel60.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="btnAttivaOfficePrinci.TabIndex" type="System.Int32, mscorlib">
+    <value>166</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel50.Parent" xml:space="preserve">
+    <value>panel50</value>
+  </data>
+  <data name="btnAggRimAppOfficePrinci.Size" type="System.Drawing.Size, System.Drawing">
+    <value>496, 66</value>
+  </data>
+  <data name="&gt;&gt;panel50.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;btnAggRimAppOfficePrinci.Name" xml:space="preserve">
+    <value>btnAggRimAppOfficePrinci</value>
+  </data>
+  <data name="comboBox_Lingua.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="Checkbox_Installa.Text" xml:space="preserve">
+    <value>Installa</value>
+  </data>
+  <data name="labelpercorso.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="&gt;&gt;progressBar1.Parent" xml:space="preserve">
+    <value>panel70</value>
+  </data>
+  <data name="progressBar1.TabIndex" type="System.Int32, mscorlib">
+    <value>169</value>
+  </data>
+  <data name="&gt;&gt;btnDownloadVerdi.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="labelversione.TabIndex" type="System.Int32, mscorlib">
+    <value>159</value>
+  </data>
+  <data name="panel50.Size" type="System.Drawing.Size, System.Drawing">
+    <value>901, 458</value>
+  </data>
+  <data name="panel70.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btn_cambiaBianco.Location" type="System.Drawing.Point, System.Drawing">
+    <value>158, 221</value>
+  </data>
+  <data name="labelTipoInstallazione.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI Semibold, 13.8pt, style=Bold</value>
+  </data>
+  <data name="comboBoxVerOffice.Items1" xml:space="preserve">
+    <value>Office 2021</value>
+  </data>
+  <data name="&gt;&gt;toolTip1.Name" xml:space="preserve">
+    <value>toolTip1</value>
+  </data>
+  <metadata name="$this.Language" type="System.Globalization.CultureInfo, System.Private.CoreLib, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+    <value>en</value>
+  </metadata>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+</root>

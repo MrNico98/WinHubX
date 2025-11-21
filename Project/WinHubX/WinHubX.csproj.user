@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <_LastSelectedProfileId>C:\Users\utente\source\repos\WinHubX\WinHubX\Properties\PublishProfiles\FolderProfile.pubxml</_LastSelectedProfileId>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Update="DialogBlock\Form_DialogBlock.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\Base\Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\CreaISO\FormCreaISO.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\Base\FormDebloat.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\Base\FormHome.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\Base\FormMonitoraggio.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\Base\FormOffice.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\Base\FormSettaggi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\Base\FormWin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\Base\ProgressBar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\CreaISO\FormCreazioneISO.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\DebloatAvanzato\AppItemControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Forms\DebloatAvanzato\FormServizi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\Personalizzazione office\AppItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Forms\Personalizzazione office\FormAggiungiRimuoviAppOffice.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\Settaggi\FormExplorer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\Personalizzazione office\PersonalizzazioneOffice.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\Settaggi\FormDefender.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\Settaggi\FormPersonalizzazione.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\Settaggi\FormPrivacy.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\Settaggi\FormRipristinoSO.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\Settaggi\FormUpdate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\Settaggi\FormUtility.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Forms\Base\FormMonitoraggio.en.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Forms\Base\FormMonitoraggio.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

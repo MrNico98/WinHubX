@@ -1,0 +1,540 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--
+    Microsoft ResX Schema
+
+    Version 2.0
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
+    associated with the data types.
+
+    Example:
+
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+
+    There are any number of "resheader" rows that contain simple
+    name/value pairs.
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
+    mimetype set.
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
+    extensible. For a given mimetype the value must be set accordingly:
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
+    read any of the formats listed below.
+
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="btnWSATweaksDisattivo.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btnWSATweaksDisattivo.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI Semibold, 22.2pt, style=Bold</value>
+  </data>
+  <data name="btnWSATweaksDisattivo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>24, 280</value>
+  </data>
+  <data name="btnWSATweaksDisattivo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>409, 66</value>
+  </data>
+  <data name="btnWSATweaksDisattivo.TabIndex" type="System.Int32, mscorlib">
+    <value>123</value>
+  </data>
+  <data name="btnWSATweaksDisattivo.ToolTip" xml:space="preserve">
+    <value>Attiva Windows Subsystem Android</value>
+  </data>
+  <data name="&gt;&gt;btnWSATweaksDisattivo.Name" xml:space="preserve">
+    <value>btnWSATweaksDisattivo</value>
+  </data>
+  <data name="&gt;&gt;btnWSATweaksDisattivo.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiButton, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;btnWSATweaksDisattivo.Parent" xml:space="preserve">
+    <value>panel69</value>
+  </data>
+  <data name="&gt;&gt;btnWSATweaksDisattivo.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="btnPersonalizzazioneTweaksPrinci.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI Semibold, 22.2pt, style=Bold</value>
+  </data>
+  <data name="btnPersonalizzazioneTweaksPrinci.Location" type="System.Drawing.Point, System.Drawing">
+    <value>24, 195</value>
+  </data>
+  <data name="btnPersonalizzazioneTweaksPrinci.Size" type="System.Drawing.Size, System.Drawing">
+    <value>409, 66</value>
+  </data>
+  <data name="btnPersonalizzazioneTweaksPrinci.TabIndex" type="System.Int32, mscorlib">
+    <value>122</value>
+  </data>
+  <data name="btnPersonalizzazioneTweaksPrinci.ToolTip" xml:space="preserve">
+    <value>Personalizza alcuni aspetti di windwos</value>
+  </data>
+  <data name="&gt;&gt;btnPersonalizzazioneTweaksPrinci.Name" xml:space="preserve">
+    <value>btnPersonalizzazioneTweaksPrinci</value>
+  </data>
+  <data name="&gt;&gt;btnPersonalizzazioneTweaksPrinci.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiButton, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;btnPersonalizzazioneTweaksPrinci.Parent" xml:space="preserve">
+    <value>panel69</value>
+  </data>
+  <data name="&gt;&gt;btnPersonalizzazioneTweaksPrinci.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="btnDefenderTweaksPrinci.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI Semibold, 22.2pt, style=Bold</value>
+  </data>
+  <data name="btnDefenderTweaksPrinci.Location" type="System.Drawing.Point, System.Drawing">
+    <value>24, 110</value>
+  </data>
+  <data name="btnDefenderTweaksPrinci.Size" type="System.Drawing.Size, System.Drawing">
+    <value>409, 66</value>
+  </data>
+  <data name="btnDefenderTweaksPrinci.TabIndex" type="System.Int32, mscorlib">
+    <value>121</value>
+  </data>
+  <data name="btnDefenderTweaksPrinci.ToolTip" xml:space="preserve">
+    <value>Modifica impostazioni defeder</value>
+  </data>
+  <data name="&gt;&gt;btnDefenderTweaksPrinci.Name" xml:space="preserve">
+    <value>btnDefenderTweaksPrinci</value>
+  </data>
+  <data name="&gt;&gt;btnDefenderTweaksPrinci.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiButton, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;btnDefenderTweaksPrinci.Parent" xml:space="preserve">
+    <value>panel69</value>
+  </data>
+  <data name="&gt;&gt;btnDefenderTweaksPrinci.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="btnPrivacyTweaksPrinci.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI Semibold, 22.2pt, style=Bold</value>
+  </data>
+  <data name="btnPrivacyTweaksPrinci.Location" type="System.Drawing.Point, System.Drawing">
+    <value>24, 25</value>
+  </data>
+  <data name="btnPrivacyTweaksPrinci.Size" type="System.Drawing.Size, System.Drawing">
+    <value>409, 66</value>
+  </data>
+  <data name="btnPrivacyTweaksPrinci.TabIndex" type="System.Int32, mscorlib">
+    <value>120</value>
+  </data>
+  <data name="btnPrivacyTweaksPrinci.ToolTip" xml:space="preserve">
+    <value>Modifica le impostazioni privacy di windows</value>
+  </data>
+  <data name="&gt;&gt;btnPrivacyTweaksPrinci.Name" xml:space="preserve">
+    <value>btnPrivacyTweaksPrinci</value>
+  </data>
+  <data name="&gt;&gt;btnPrivacyTweaksPrinci.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiButton, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;btnPrivacyTweaksPrinci.Parent" xml:space="preserve">
+    <value>panel69</value>
+  </data>
+  <data name="&gt;&gt;btnPrivacyTweaksPrinci.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="btnWSLTweaksPrinci.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI Semibold, 22.2pt, style=Bold</value>
+  </data>
+  <data name="btnWSLTweaksPrinci.Location" type="System.Drawing.Point, System.Drawing">
+    <value>11, 280</value>
+  </data>
+  <data name="btnWSLTweaksPrinci.Size" type="System.Drawing.Size, System.Drawing">
+    <value>409, 66</value>
+  </data>
+  <data name="btnWSLTweaksPrinci.TabIndex" type="System.Int32, mscorlib">
+    <value>126</value>
+  </data>
+  <data name="btnWSLTweaksPrinci.ToolTip" xml:space="preserve">
+    <value>Attiva Windows Subsystem Linux</value>
+  </data>
+  <data name="&gt;&gt;btnWSLTweaksPrinci.Name" xml:space="preserve">
+    <value>btnWSLTweaksPrinci</value>
+  </data>
+  <data name="&gt;&gt;btnWSLTweaksPrinci.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiButton, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;btnWSLTweaksPrinci.Parent" xml:space="preserve">
+    <value>panel68</value>
+  </data>
+  <data name="&gt;&gt;btnWSLTweaksPrinci.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="btnRipristinoeTestTweaksPrinci.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI Semibold, 22.2pt, style=Bold</value>
+  </data>
+  <data name="btnRipristinoeTestTweaksPrinci.Location" type="System.Drawing.Point, System.Drawing">
+    <value>11, 195</value>
+  </data>
+  <data name="btnRipristinoeTestTweaksPrinci.Size" type="System.Drawing.Size, System.Drawing">
+    <value>409, 66</value>
+  </data>
+  <data name="btnRipristinoeTestTweaksPrinci.TabIndex" type="System.Int32, mscorlib">
+    <value>127</value>
+  </data>
+  <data name="btnRipristinoeTestTweaksPrinci.ToolTip" xml:space="preserve">
+    <value>Ripristina Windows o esegui uno stress test</value>
+  </data>
+  <data name="&gt;&gt;btnRipristinoeTestTweaksPrinci.Name" xml:space="preserve">
+    <value>btnRipristinoeTestTweaksPrinci</value>
+  </data>
+  <data name="&gt;&gt;btnRipristinoeTestTweaksPrinci.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiButton, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;btnRipristinoeTestTweaksPrinci.Parent" xml:space="preserve">
+    <value>panel68</value>
+  </data>
+  <data name="&gt;&gt;btnRipristinoeTestTweaksPrinci.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="btnUpdateTweaksPrinci.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI Semibold, 22.2pt, style=Bold</value>
+  </data>
+  <data name="btnUpdateTweaksPrinci.Location" type="System.Drawing.Point, System.Drawing">
+    <value>11, 110</value>
+  </data>
+  <data name="btnUpdateTweaksPrinci.Size" type="System.Drawing.Size, System.Drawing">
+    <value>409, 66</value>
+  </data>
+  <data name="btnUpdateTweaksPrinci.TabIndex" type="System.Int32, mscorlib">
+    <value>128</value>
+  </data>
+  <data name="btnUpdateTweaksPrinci.ToolTip" xml:space="preserve">
+    <value>Modifica impostazioni di windows upadate</value>
+  </data>
+  <data name="&gt;&gt;btnUpdateTweaksPrinci.Name" xml:space="preserve">
+    <value>btnUpdateTweaksPrinci</value>
+  </data>
+  <data name="&gt;&gt;btnUpdateTweaksPrinci.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiButton, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;btnUpdateTweaksPrinci.Parent" xml:space="preserve">
+    <value>panel68</value>
+  </data>
+  <data name="&gt;&gt;btnUpdateTweaksPrinci.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="btnUtilityTweaksPrinci.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI Semibold, 22.2pt, style=Bold</value>
+  </data>
+  <data name="btnUtilityTweaksPrinci.Location" type="System.Drawing.Point, System.Drawing">
+    <value>11, 25</value>
+  </data>
+  <data name="btnUtilityTweaksPrinci.Size" type="System.Drawing.Size, System.Drawing">
+    <value>409, 66</value>
+  </data>
+  <data name="btnUtilityTweaksPrinci.TabIndex" type="System.Int32, mscorlib">
+    <value>129</value>
+  </data>
+  <data name="btnUtilityTweaksPrinci.ToolTip" xml:space="preserve">
+    <value>Alcuni settaggi utili di windows</value>
+  </data>
+  <data name="&gt;&gt;btnUtilityTweaksPrinci.Name" xml:space="preserve">
+    <value>btnUtilityTweaksPrinci</value>
+  </data>
+  <data name="&gt;&gt;btnUtilityTweaksPrinci.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiButton, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;btnUtilityTweaksPrinci.Parent" xml:space="preserve">
+    <value>panel68</value>
+  </data>
+  <data name="&gt;&gt;btnUtilityTweaksPrinci.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="tableLayoutPanel27.ColumnCount" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;cuiFileDropper1White.Name" xml:space="preserve">
+    <value>cuiFileDropper1White</value>
+  </data>
+  <data name="&gt;&gt;cuiFileDropper1White.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiFileDropper, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;cuiFileDropper1White.Parent" xml:space="preserve">
+    <value>panel69</value>
+  </data>
+  <data name="&gt;&gt;cuiFileDropper1White.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="panel69.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="panel69.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="panel69.Size" type="System.Drawing.Size, System.Drawing">
+    <value>443, 450</value>
+  </data>
+  <data name="panel69.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;panel69.Name" xml:space="preserve">
+    <value>panel69</value>
+  </data>
+  <data name="&gt;&gt;panel69.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;panel69.Parent" xml:space="preserve">
+    <value>tableLayoutPanel27</value>
+  </data>
+  <data name="&gt;&gt;panel69.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="cuiFileDropper2White.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.2pt</value>
+  </data>
+  <data name="cuiFileDropper2White.Location" type="System.Drawing.Point, System.Drawing">
+    <value>11, 364</value>
+  </data>
+  <data name="cuiFileDropper2White.Size" type="System.Drawing.Size, System.Drawing">
+    <value>181, 78</value>
+  </data>
+  <data name="cuiFileDropper2White.TabIndex" type="System.Int32, mscorlib">
+    <value>125</value>
+  </data>
+  <data name="cuiFileDropper2White.Text" xml:space="preserve">
+    <value>cuiFileDropper2</value>
+  </data>
+  <data name="&gt;&gt;cuiFileDropper2White.Name" xml:space="preserve">
+    <value>cuiFileDropper2White</value>
+  </data>
+  <data name="&gt;&gt;cuiFileDropper2White.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiFileDropper, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;cuiFileDropper2White.Parent" xml:space="preserve">
+    <value>panel68</value>
+  </data>
+  <data name="&gt;&gt;cuiFileDropper2White.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="panel68.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="panel68.Location" type="System.Drawing.Point, System.Drawing">
+    <value>452, 3</value>
+  </data>
+  <data name="panel68.Size" type="System.Drawing.Size, System.Drawing">
+    <value>444, 450</value>
+  </data>
+  <data name="panel68.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;panel68.Name" xml:space="preserve">
+    <value>panel68</value>
+  </data>
+  <data name="&gt;&gt;panel68.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;panel68.Parent" xml:space="preserve">
+    <value>tableLayoutPanel27</value>
+  </data>
+  <data name="&gt;&gt;panel68.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="tableLayoutPanel27.Location" type="System.Drawing.Point, System.Drawing">
+    <value>1, 1</value>
+  </data>
+  <data name="tableLayoutPanel27.RowCount" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="tableLayoutPanel27.Size" type="System.Drawing.Size, System.Drawing">
+    <value>899, 456</value>
+  </data>
+  <data name="tableLayoutPanel27.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel27.Name" xml:space="preserve">
+    <value>tableLayoutPanel27</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel27.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel27.Parent" xml:space="preserve">
+    <value>panel70</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel27.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tableLayoutPanel27.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="panel69" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="panel68" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50,Percent,50" /&gt;&lt;Rows Styles="Percent,50" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <data name="panel70.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="panel70.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="panel70.Size" type="System.Drawing.Size, System.Drawing">
+    <value>901, 458</value>
+  </data>
+  <data name="panel70.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;panel70.Name" xml:space="preserve">
+    <value>panel70</value>
+  </data>
+  <data name="&gt;&gt;panel70.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;panel70.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;panel70.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="cuiFileDropper1White.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.2pt</value>
+  </data>
+  <data name="cuiFileDropper1White.Location" type="System.Drawing.Point, System.Drawing">
+    <value>252, 364</value>
+  </data>
+  <data name="cuiFileDropper1White.Size" type="System.Drawing.Size, System.Drawing">
+    <value>181, 78</value>
+  </data>
+  <data name="cuiFileDropper1White.TabIndex" type="System.Int32, mscorlib">
+    <value>124</value>
+  </data>
+  <data name="cuiFileDropper1White.Text" xml:space="preserve">
+    <value>cuiFileDropper1</value>
+  </data>
+  <data name="&gt;&gt;cuiFileDropper1White.Name" xml:space="preserve">
+    <value>cuiFileDropper1White</value>
+  </data>
+  <data name="&gt;&gt;cuiFileDropper1White.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiFileDropper, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;cuiFileDropper1White.Parent" xml:space="preserve">
+    <value>panel69</value>
+  </data>
+  <data name="&gt;&gt;cuiFileDropper1White.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>37</value>
+  </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>96, 96</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>901, 458</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>FormSettaggi</value>
+  </data>
+  <data name="&gt;&gt;toolTip1.Name" xml:space="preserve">
+    <value>toolTip1</value>
+  </data>
+  <data name="&gt;&gt;toolTip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>FormSettaggi</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+</root>

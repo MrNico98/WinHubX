@@ -1,0 +1,493 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="pngCPUMonitoraggio" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormMonitoraggio\pngCPUMonitoraggio.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngGPUMonitoraggio" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormMonitoraggio\pngGPUMonitoraggio.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngAttivaWindows" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormWin\pngAttivaWindows.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngStatoWindowsHome" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormHome\pngStatoWindowsHome.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngCheckCreaISO" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormCreaISO\pngCheckCreaISO.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngDiscoBlackFormHome" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\pngDiscoBlackFormHome.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngImpostazioniBlackForm1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\Black\Form1\pngImpostazioniBlackForm1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Microsoft_Office_Excel_2025present" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormOffice\Office365\Microsoft_Office_Excel_2025present.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngOSBlackFormHome" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\pngOSBlackFormHome.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Microsoft_Office_PowerPoint_20192025" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormOffice\Office2019-2024\Microsoft_Office_PowerPoint_20192025.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngclick" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormCreaISO\pngclick.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngRAMMonitoraggio" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormMonitoraggio\pngRAMMonitoraggio.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngUploadCreaISO" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormCreaISO\pngUploadCreaISO.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngHDDHome" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormHome\pngHDDHome.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngCpuBlackFormHome" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\pngCpuBlackFormHome.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngPulisciMonitoraggio" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormMonitoraggio\pngPulisciMonitoraggio.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Microsoft_Office_PowerPoint_2025present" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormOffice\Office365\Microsoft_Office_PowerPoint_2025present.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngScuroImpostazioniWinHubX" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormImpostazioni\pngScuroImpostazioniWinHubX.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngPersonalizzazione" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormSettaggi\pngPersonalizzazione.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="term_rosso" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormMonitoraggio\term_rosso.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngVelocitaMonitoraggio" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormMonitoraggio\pngVelocitaMonitoraggio.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngCreaISO" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormWin\pngCreaISO.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngextWIMToolkit" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormTools\pngextWIMToolkit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngDownloadMonitoraggio" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormMonitoraggio\pngDownloadMonitoraggio.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Microsoft_Outlook_Icon_2025present" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormOffice\Office365\Microsoft_Outlook_Icon_2025present.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngTweaksForm1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\Form1\pngTweaksForm1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Ohook_Activation_AIO" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Ohook_Activation_AIO.cmd;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Microsoft_Project_2019present" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormOffice\Office2019-2024\Microsoft_Project_2019present.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngRamHome" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormHome\pngRamHome.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Microsoft_OneDrive_Icon_2025present" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormOffice\Office365\Microsoft_OneDrive_Icon_2025present.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Windows_Package_Manager_logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormDebloat\InstallaApp\Windows_Package_Manager_logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngDefenderWin" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormCreaISO\pngDefenderWin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Microsoft_Office_Teams_2025present" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormOffice\Office365\Microsoft_Office_Teams_2025present.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngDebloatAutomaticoBlackDebloat" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\pngDebloatAutomaticoBlackDebloat.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngDebloatAutoaticoDebloat" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormDebloat\pngDebloatAutoaticoDebloat.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngIngleseImpostazioniWinHubX" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormImpostazioni\pngIngleseImpostazioniWinHubX.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngLogoWinHubX" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\pngLogoWinHubX.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="en" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\en.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="pngCambioEdizione" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormWin\pngCambioEdizione.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngMonitoraggioForm1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\Form1\pngMonitoraggioForm1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Microsoft_Office_Access_20192025" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormOffice\Office2019-2024\Microsoft_Office_Access_20192025.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="support_me_on_kofi_badge_red" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\support_me_on_kofi_badge_red.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngDriverRST1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\pngDriverRST.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngImportaTweaks" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormSettaggi\pngImportaTweaks.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngSvuotaMonitoraggio" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormMonitoraggio\pngSvuotaMonitoraggio.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Microsoft_Office_Outlook_20182024" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormOffice\Office2019-2024\Microsoft_Office_Outlook_20182024.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngRipristinoTestTweaks" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormSettaggi\pngRipristinoTestTweaks.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngDebloatAvanzatoDebloat" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormDebloat\pngDebloatAvanzatoDebloat.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngTelegram" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormHome\pngTelegram.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngDaRT" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormTools\pngDaRT.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TSforge_Activation" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TSforge_Activation.cmd;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Microsoft_Store_logo_dark.svg" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormDebloat\InstallaApp\Microsoft_Store_logo_dark.svg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngAddDrivers" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormCreaISO\pngAddDrivers.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngMinimizzaBlackForm1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\Black\Form1\pngMinimizzaBlackForm1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="KMS38_Activation" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\KMS38_Activation.cmd;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="pngSuggeritiTweaks" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormSettaggi\pngSuggeritiTweaks.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngReteMonitoraggio" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormMonitoraggio\pngReteMonitoraggio.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngDriverRST" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormTools\pngDriverRST.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Microsoft_Office_Excel_20192025" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormOffice\Office2019-2024\Microsoft_Office_Excel_20192025.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngFrecciaHome" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\Form1\pngFrecciaHome.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngExplorerPersonalizzazioneTweaks" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormSettaggi\pngExplorerPersonalizzazioneTweaks.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngWSATweaks" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormSettaggi\pngWSATweaks.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngUploadMonitoraggio" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormMonitoraggio\pngUploadMonitoraggio.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngProtezioneMinimaDefender" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormSettaggi\pngProtezioneMinimaDefender.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngCpuHome" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormHome\pngCpuHome.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngInstallaAppDebloat" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormDebloat\pngInstallaAppDebloat.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngTipologiaCreaISO" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormCreaISO\pngTipologiaCreaISO.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngItaliaImpostazioniWinHubX" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormImpostazioni\pngItaliaImpostazioniWinHubX.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngScaricaOffice" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormOffice\pngScaricaOffice.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngLinguaImpostazioniWinHubX" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormImpostazioni\pngLinguaImpostazioniWinHubX.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Microsoft_Office_Teams_20192025" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormOffice\Office2019-2024\Microsoft_Office_Teams_20192025.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngDomanda" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormCreaISO\pngDomanda.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngbypass" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormCreaISO\pngbypass.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngFrecciaIndietroBlackForm1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\Black\Form1\pngFrecciaIndietroBlackForm1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Microsoft_Office_Word_20192025" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormOffice\Office2019-2024\Microsoft_Office_Word_20192025.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngKasperskyLive" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormTools\pngKasperskyLive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngDebloatForm1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\Form1\pngDebloatForm1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngDownloadISO" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormWin\pngDownloadISO.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngMinimizzaForm1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\Form1\pngMinimizzaForm1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngStatoOfficeBlackFormHome" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\pngStatoOfficeBlackFormHome.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Microsoft_Office_Word_2025present" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormOffice\Office365\Microsoft_Office_Word_2025present.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngEspandiForm1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\Form1\pngEspandiForm1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngUtilityTweaks" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormSettaggi\pngUtilityTweaks.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngUpdateWin" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormSettaggi\pngUpdateWin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngTemaImpostazioniWinHubX" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormImpostazioni\pngTemaImpostazioniWinHubX.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="it" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\it.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Microsoft_OneNote_Icon_2025present" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormOffice\Office365\Microsoft_OneNote_Icon_2025present.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngHomeForm1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\Form1\pngHomeForm1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngStatoOfficeHome" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormHome\pngStatoOfficeHome.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="term_verde" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormMonitoraggio\term_verde.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngWindowsForm1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\Form1\pngWindowsForm1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngEdge" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormCreaISO\pngEdge.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngModificaServiziDebloat" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormDebloat\pngModificaServiziDebloat.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngWSLTweaks" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormSettaggi\pngWSLTweaks.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Microsoft_Office_OneNote_20192025" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormOffice\Office2019-2024\Microsoft_Office_OneNote_20192025.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngRipristinaDefenderTweaks" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormSettaggi\pngRipristinaDefenderTweaks.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngMPM" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormTools\pngMPM.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngHardDiskMonitoraggio" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormMonitoraggio\pngHardDiskMonitoraggio.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngEspandiBlackForm1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\Black\Form1\pngEspandiBlackForm1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngPersonalizzaOffice" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormOffice\pngPersonalizzaOffice.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngProcessiCreaIso" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormCreaISO\pngProcessiCreaIso.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngArchitettura" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormCreaISO\pngArchitettura.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngAggiungiRimuoviOffice" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormOffice\pngAggiungiRimuoviOffice.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngChiudiForm1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\Form1\pngChiudiForm1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngDebloatAppCreaISo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormCreaISO\pngDebloatAppCreaISo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Microsoft_Office_Visio_2019" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormOffice\Office2019-2024\Microsoft_Office_Visio_2019.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngOSHome" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormHome\pngOSHome.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngDisinstallaOffice" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormOffice\pngDisinstallaOffice.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngRipristinaSOTweaks" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormSettaggi\pngRipristinaSOTweaks.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngImpostazioniForm1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\Form1\pngImpostazioniForm1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngWinHubXLiteOS" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormTools\pngWinHubXLiteOS.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngRamBlackFormHome" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\pngRamBlackFormHome.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Microsoft_Office_OneDrive_20192025" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormOffice\Office2019-2024\Microsoft_Office_OneDrive_20192025.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngChiudiBlackForm1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\Black\Form1\pngChiudiBlackForm1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngCloseCreazioneISO" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormCreazioneISO\pngCloseCreazioneISO.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngEsportaTweaks" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormSettaggi\pngEsportaTweaks.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngStatoWindowsBlackFormHome" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\pngStatoWindowsBlackFormHome.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngDialogBlock" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\pngDialogBlock.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="term_giallo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormMonitoraggio\term_giallo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngSistemaImpostazioniWinHubX" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormImpostazioni\pngSistemaImpostazioniWinHubX.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngPrivacyTweaks" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormSettaggi\pngPrivacyTweaks.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Microsoft_Office_Publisher_2019present" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormOffice\Office2019-2024\Microsoft_Office_Publisher_2019present.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngChiaroImpostazioniWinHubX" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Immagini\FormImpostazioni\pngChiaroImpostazioniWinHubX.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pngOfficeForm1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\pngOfficeForm1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+</root>

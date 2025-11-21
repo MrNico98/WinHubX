@@ -1,0 +1,405 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--
+    Microsoft ResX Schema
+
+    Version 2.0
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
+    associated with the data types.
+
+    Example:
+
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+
+    There are any number of "resheader" rows that contain simple
+    name/value pairs.
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
+    mimetype set.
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
+    extensible. For a given mimetype the value must be set accordingly:
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
+    read any of the formats listed below.
+
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="label3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="label3.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="label3.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI Semibold, 19.800001pt, style=Bold</value>
+  </data>
+  <data name="label3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 9</value>
+  </data>
+  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>530, 37</value>
+  </data>
+  <data name="label3.TabIndex" type="System.Int32, mscorlib">
+    <value>190</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>Seleziona i componenti che vuoi installare</value>
+  </data>
+  <data name="&gt;&gt;label3.Name" xml:space="preserve">
+    <value>label3</value>
+  </data>
+  <data name="&gt;&gt;label3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label3.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="btnInstallaVerdi.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="btnInstallaVerdi.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="btnInstallaVerdi.Location" type="System.Drawing.Point, System.Drawing">
+    <value>456, 247</value>
+  </data>
+  <data name="btnInstallaVerdi.Size" type="System.Drawing.Size, System.Drawing">
+    <value>196, 45</value>
+  </data>
+  <data name="btnInstallaVerdi.TabIndex" type="System.Int32, mscorlib">
+    <value>222</value>
+  </data>
+  <data name="&gt;&gt;btnInstallaVerdi.Name" xml:space="preserve">
+    <value>btnInstallaVerdi</value>
+  </data>
+  <data name="&gt;&gt;btnInstallaVerdi.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiButton, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;btnInstallaVerdi.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;btnInstallaVerdi.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="pictureBoxPowerPoint.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="pictureBoxPowerPoint.Location" type="System.Drawing.Point, System.Drawing">
+    <value>34, 131</value>
+  </data>
+  <data name="pictureBoxPowerPoint.Size" type="System.Drawing.Size, System.Drawing">
+    <value>56, 40</value>
+  </data>
+  <data name="pictureBoxPowerPoint.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
+    <value>Zoom</value>
+  </data>
+  <data name="pictureBoxPowerPoint.TabIndex" type="System.Int32, mscorlib">
+    <value>228</value>
+  </data>
+  <data name="&gt;&gt;pictureBoxPowerPoint.Name" xml:space="preserve">
+    <value>pictureBoxPowerPoint</value>
+  </data>
+  <data name="&gt;&gt;pictureBoxPowerPoint.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pictureBoxPowerPoint.Parent" xml:space="preserve">
+    <value>panel27</value>
+  </data>
+  <data name="&gt;&gt;pictureBoxPowerPoint.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="pictureBoxExcel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="pictureBoxExcel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>34, 70</value>
+  </data>
+  <data name="pictureBoxExcel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>56, 40</value>
+  </data>
+  <data name="pictureBoxExcel.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
+    <value>Zoom</value>
+  </data>
+  <data name="pictureBoxExcel.TabIndex" type="System.Int32, mscorlib">
+    <value>227</value>
+  </data>
+  <data name="&gt;&gt;pictureBoxExcel.Name" xml:space="preserve">
+    <value>pictureBoxExcel</value>
+  </data>
+  <data name="&gt;&gt;pictureBoxExcel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pictureBoxExcel.Parent" xml:space="preserve">
+    <value>panel27</value>
+  </data>
+  <data name="&gt;&gt;pictureBoxExcel.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="pictureBoxWord.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="pictureBoxWord.Location" type="System.Drawing.Point, System.Drawing">
+    <value>34, 13</value>
+  </data>
+  <data name="pictureBoxWord.Size" type="System.Drawing.Size, System.Drawing">
+    <value>56, 40</value>
+  </data>
+  <data name="pictureBoxWord.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
+    <value>Zoom</value>
+  </data>
+  <data name="pictureBoxWord.TabIndex" type="System.Int32, mscorlib">
+    <value>226</value>
+  </data>
+  <data name="&gt;&gt;pictureBoxWord.Name" xml:space="preserve">
+    <value>pictureBoxWord</value>
+  </data>
+  <data name="&gt;&gt;pictureBoxWord.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pictureBoxWord.Parent" xml:space="preserve">
+    <value>panel27</value>
+  </data>
+  <data name="&gt;&gt;pictureBoxWord.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="checkBox_winget.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBox_winget.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="checkBox_winget.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="checkBox_winget.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 140</value>
+  </data>
+  <data name="checkBox_winget.Size" type="System.Drawing.Size, System.Drawing">
+    <value>143, 25</value>
+  </data>
+  <data name="checkBox_winget.TabIndex" type="System.Int32, mscorlib">
+    <value>225</value>
+  </data>
+  <data name="checkBox_winget.Text" xml:space="preserve">
+    <value>                Winget</value>
+  </data>
+  <data name="&gt;&gt;checkBox_winget.Name" xml:space="preserve">
+    <value>checkBox_winget</value>
+  </data>
+  <data name="&gt;&gt;checkBox_winget.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBox_winget.Parent" xml:space="preserve">
+    <value>panel27</value>
+  </data>
+  <data name="&gt;&gt;checkBox_winget.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="checkBox_microsoftdefender.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBox_microsoftdefender.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="checkBox_microsoftdefender.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="checkBox_microsoftdefender.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 79</value>
+  </data>
+  <data name="checkBox_microsoftdefender.Size" type="System.Drawing.Size, System.Drawing">
+    <value>227, 25</value>
+  </data>
+  <data name="checkBox_microsoftdefender.TabIndex" type="System.Int32, mscorlib">
+    <value>224</value>
+  </data>
+  <data name="checkBox_microsoftdefender.Text" xml:space="preserve">
+    <value>                Microsoft Defender</value>
+  </data>
+  <data name="&gt;&gt;checkBox_microsoftdefender.Name" xml:space="preserve">
+    <value>checkBox_microsoftdefender</value>
+  </data>
+  <data name="&gt;&gt;checkBox_microsoftdefender.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBox_microsoftdefender.Parent" xml:space="preserve">
+    <value>panel27</value>
+  </data>
+  <data name="&gt;&gt;checkBox_microsoftdefender.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="checkBox_MicrosoftStore.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBox_MicrosoftStore.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="checkBox_MicrosoftStore.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="checkBox_MicrosoftStore.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 21</value>
+  </data>
+  <data name="checkBox_MicrosoftStore.Size" type="System.Drawing.Size, System.Drawing">
+    <value>199, 25</value>
+  </data>
+  <data name="checkBox_MicrosoftStore.TabIndex" type="System.Int32, mscorlib">
+    <value>223</value>
+  </data>
+  <data name="checkBox_MicrosoftStore.Text" xml:space="preserve">
+    <value>                Microsoft Store</value>
+  </data>
+  <data name="&gt;&gt;checkBox_MicrosoftStore.Name" xml:space="preserve">
+    <value>checkBox_MicrosoftStore</value>
+  </data>
+  <data name="&gt;&gt;checkBox_MicrosoftStore.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBox_MicrosoftStore.Parent" xml:space="preserve">
+    <value>panel27</value>
+  </data>
+  <data name="&gt;&gt;checkBox_MicrosoftStore.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="panel27.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 51</value>
+  </data>
+  <data name="panel27.Size" type="System.Drawing.Size, System.Drawing">
+    <value>302, 190</value>
+  </data>
+  <data name="panel27.TabIndex" type="System.Int32, mscorlib">
+    <value>229</value>
+  </data>
+  <data name="&gt;&gt;panel27.Name" xml:space="preserve">
+    <value>panel27</value>
+  </data>
+  <data name="&gt;&gt;panel27.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;panel27.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;panel27.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>664, 304</value>
+  </data>
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterScreen</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Installa componenti</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>FormInstallaComponenti</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+</root>

@@ -1,0 +1,277 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<UseWindowsForms>true</UseWindowsForms>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<ApplicationHighDpiMode>SystemAware</ApplicationHighDpiMode>
+		<ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
+		<AssemblyVersion>2.5.0.0</AssemblyVersion>
+		<FileVersion>2.5.0.0</FileVersion>
+		<ApplicationManifest>app.manifest</ApplicationManifest>
+		<Version>2.0.0</Version>
+		<ApplicationIcon>icoIconaWinHubX.ico</ApplicationIcon>
+		<Platforms>AnyCPU</Platforms>
+		<PlatformTarget>AnyCPU</PlatformTarget>
+		<DebugType>none</DebugType>
+		<DebugSymbols>false</DebugSymbols>
+		<Optimize>true</Optimize>
+		<Deterministic>true</Deterministic>
+		<IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+		<SuppressTrimAnalysisWarnings>true</SuppressTrimAnalysisWarnings>
+		<SatelliteResourceLanguages>it;en</SatelliteResourceLanguages>
+		<PublishSingleFile>true</PublishSingleFile>
+		<TrimMode>partial</TrimMode>
+		<EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+		<IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+		<EnableUnsafeBinaryFormatterSerialization>false</EnableUnsafeBinaryFormatterSerialization>
+		<EventSourceSupport>false</EventSourceSupport>
+		<StartupObject>WinHubX.Program</StartupObject>
+	</PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\en.json" />
+    <None Remove="Resources\Immagini\Form1\pngprocessi.png" />
+    <None Remove="Resources\Immagini\FormCreaISO\pngArchitettura.png" />
+    <None Remove="Resources\Immagini\FormCreaISO\pngbypass.png" />
+    <None Remove="Resources\Immagini\FormCreaISO\pngDefenderWin.png" />
+    <None Remove="Resources\Immagini\FormCreaISO\pngDomanda.png" />
+    <None Remove="Resources\Immagini\FormCreaISO\pngEdge.png" />
+    <None Remove="Resources\Immagini\FormHome\pngTelegram.png" />
+    <None Remove="Resources\Immagini\FormMonitoraggio\term_giallo.png" />
+    <None Remove="Resources\Immagini\FormMonitoraggio\term_rosso.png" />
+    <None Remove="Resources\Immagini\FormMonitoraggio\term_verde.png" />
+    <None Remove="Resources\Immagini\FormOffice\Office2019-2024\Microsoft_Office_Access_20192025.png" />
+    <None Remove="Resources\Immagini\FormOffice\Office2019-2024\Microsoft_Office_Excel_20192025.png" />
+    <None Remove="Resources\Immagini\FormOffice\Office2019-2024\Microsoft_Office_OneDrive_20192025.png" />
+    <None Remove="Resources\Immagini\FormOffice\Office2019-2024\Microsoft_Office_OneNote_20192025.png" />
+    <None Remove="Resources\Immagini\FormOffice\Office2019-2024\Microsoft_Office_Outlook_20182024.png" />
+    <None Remove="Resources\Immagini\FormOffice\Office2019-2024\Microsoft_Office_PowerPoint_20192025.png" />
+    <None Remove="Resources\Immagini\FormOffice\Office2019-2024\Microsoft_Office_Publisher_2019present.png" />
+    <None Remove="Resources\Immagini\FormOffice\Office2019-2024\Microsoft_Office_Teams_20192025.png" />
+    <None Remove="Resources\Immagini\FormOffice\Office2019-2024\Microsoft_Office_Visio_2019.png" />
+    <None Remove="Resources\Immagini\FormOffice\Office2019-2024\Microsoft_Office_Word_20192025.png" />
+    <None Remove="Resources\Immagini\FormOffice\Office2019-2024\Microsoft_Project_2019present.png" />
+    <None Remove="Resources\Immagini\FormOffice\Office365\Microsoft_Office_Excel_2025present.png" />
+    <None Remove="Resources\Immagini\FormOffice\Office365\Microsoft_Office_PowerPoint_2025present.png" />
+    <None Remove="Resources\Immagini\FormOffice\Office365\Microsoft_Office_Teams_2025present.png" />
+    <None Remove="Resources\Immagini\FormOffice\Office365\Microsoft_Office_Word_2025present.png" />
+    <None Remove="Resources\Immagini\FormOffice\Office365\Microsoft_OneDrive_Icon_2025present.png" />
+    <None Remove="Resources\Immagini\FormOffice\Office365\Microsoft_OneNote_Icon_2025present.png" />
+    <None Remove="Resources\Immagini\FormOffice\Office365\Microsoft_Outlook_Icon_2025present.png" />
+    <None Remove="Resources\Immagini\FormSettaggi\pngPersonalizzazione.png" />
+    <None Remove="Resources\Immagini\FormSettaggi\pngUpdateWin.png" />
+    <None Remove="Resources\Immagini\FormTools\pngDaRT.png" />
+    <None Remove="Resources\Immagini\FormTools\pngDriverRST.png" />
+    <None Remove="Resources\Immagini\FormTools\pngextWIMToolkit.png" />
+    <None Remove="Resources\Immagini\FormTools\pngKasperskyLive.png" />
+    <None Remove="Resources\Immagini\FormTools\pngMPM.png" />
+    <None Remove="Resources\Immagini\FormTools\pngWinHubXLiteOS.png" />
+    <None Remove="Resources\Immagini\pngXtndLogo_WinHubX.png" />
+    <None Remove="Resources\it.json" />
+    <None Remove="Resources\TSforge_Activation.cmd" />
+    <None Remove="Resources\TSforge_Activation_Office.cmd" />
+    <None Remove="Resources\WinCustomizer.ps1" />
+    <None Remove="Resources\WinHubXScrubber.cmd" />
+    <None Remove="Resources\WinHubXStatoAttivazione.cmd" />
+    <None Remove="Resources\WinHubXWSL.ps1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="icoIconaWinHubX.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\en.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Immagini\FormCreaISO\pngArchitettura.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Immagini\FormCreaISO\pngbypass.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Immagini\FormCreaISO\pngDefenderWin.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Immagini\FormCreaISO\pngDomanda.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Immagini\FormCreaISO\pngEdge.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Immagini\FormHome\pngTelegram.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Immagini\FormMonitoraggio\term_giallo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Immagini\FormMonitoraggio\term_rosso.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Immagini\FormMonitoraggio\term_verde.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Immagini\FormOffice\Office2019-2024\Microsoft_Office_Access_20192025.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Immagini\FormOffice\Office2019-2024\Microsoft_Office_Excel_20192025.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Immagini\FormOffice\Office2019-2024\Microsoft_Office_OneDrive_20192025.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Immagini\FormOffice\Office2019-2024\Microsoft_Office_OneNote_20192025.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Immagini\FormOffice\Office2019-2024\Microsoft_Office_Outlook_20182024.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Immagini\FormOffice\Office2019-2024\Microsoft_Office_PowerPoint_20192025.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Immagini\FormOffice\Office2019-2024\Microsoft_Office_Publisher_2019present.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Immagini\FormOffice\Office2019-2024\Microsoft_Office_Teams_20192025.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Immagini\FormOffice\Office2019-2024\Microsoft_Office_Visio_2019.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Immagini\FormOffice\Office2019-2024\Microsoft_Office_Word_20192025.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Immagini\FormOffice\Office2019-2024\Microsoft_Project_2019present.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Immagini\FormOffice\Office365\Microsoft_Office_Excel_2025present.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Immagini\FormOffice\Office365\Microsoft_Office_PowerPoint_2025present.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Immagini\FormOffice\Office365\Microsoft_Office_Teams_2025present.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Immagini\FormOffice\Office365\Microsoft_Office_Word_2025present.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Immagini\FormOffice\Office365\Microsoft_OneDrive_Icon_2025present.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Immagini\FormOffice\Office365\Microsoft_OneNote_Icon_2025present.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Immagini\FormOffice\Office365\Microsoft_Outlook_Icon_2025present.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Immagini\FormSettaggi\pngPersonalizzazione.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Immagini\FormSettaggi\pngUpdateWin.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Immagini\FormTools\pngDaRT.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Immagini\FormTools\pngDriverRST.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Immagini\FormTools\pngextWIMToolkit.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Immagini\FormTools\pngKasperskyLive.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Immagini\FormTools\pngMPM.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Immagini\FormTools\pngWinHubXLiteOS.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\it.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\OfficePersonalizzato\ConfigurazioneOffice2019x32.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\OfficePersonalizzato\ConfigurazioneOffice2019x64.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\OfficePersonalizzato\ConfigurazioneOffice2021x32.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\OfficePersonalizzato\ConfigurazioneOffice2021x64.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\OfficePersonalizzato\ConfigurazioneOffice2024x32.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\OfficePersonalizzato\ConfigurazioneOffice2024x64.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\OfficePersonalizzato\ConfigurazioneOffice365x32.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\OfficePersonalizzato\ConfigurazioneOffice365x64.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\OfficePersonalizzato\bin.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\WinHubXStatoAttivazione.cmd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\WinHubXWSL.ps1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CuoreUI.Winforms" Version="2025.10.18.1" />
+    <PackageReference Include="DiscUtils.Udf" Version="0.16.13" />
+    <PackageReference Include="LibreHardwareMonitorLib" Version="0.9.4" />
+    <PackageReference Include="Microsoft.PowerShell.Native" Version="7.4.0" />
+    <PackageReference Include="System.Management.Automation" Version="7.4.13" />
+    <PackageReference Include="System.ServiceProcess.ServiceController" Version="10.0.0" />
+    <PackageReference Include="TaskScheduler" Version="2.12.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Forms\DriverRST\FormDriverRST.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\ImpostazioniApp\FormImpostazioniApp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\InstallaComponenti\FormInstallaComponenti.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\Immagini\Black\FormHome\" />
+  </ItemGroup>
+
+</Project>

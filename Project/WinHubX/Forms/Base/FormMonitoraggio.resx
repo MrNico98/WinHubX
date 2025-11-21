@@ -1,0 +1,2853 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--
+    Microsoft ResX Schema
+
+    Version 2.0
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
+    associated with the data types.
+
+    Example:
+
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+
+    There are any number of "resheader" rows that contain simple
+    name/value pairs.
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
+    mimetype set.
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
+    extensible. For a given mimetype the value must be set accordingly:
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
+    read any of the formats listed below.
+
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <metadata name="tempMonitorTimer.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="tableLayoutPanel17.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="tableLayoutPanel17.ColumnCount" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;domainUpDown1.Name" xml:space="preserve">
+    <value>domainUpDown1</value>
+  </data>
+  <data name="&gt;&gt;domainUpDown1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DomainUpDown, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;domainUpDown1.Parent" xml:space="preserve">
+    <value>cuiPanel5</value>
+  </data>
+  <data name="&gt;&gt;domainUpDown1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;BarTEMPtext.Name" xml:space="preserve">
+    <value>BarTEMPtext</value>
+  </data>
+  <data name="&gt;&gt;BarTEMPtext.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BarTEMPtext.Parent" xml:space="preserve">
+    <value>cuiPanel5</value>
+  </data>
+  <data name="&gt;&gt;BarTEMPtext.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;BarTEMP.Name" xml:space="preserve">
+    <value>BarTEMP</value>
+  </data>
+  <data name="&gt;&gt;BarTEMP.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiCircleProgressBar, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BarTEMP.Parent" xml:space="preserve">
+    <value>cuiPanel5</value>
+  </data>
+  <data name="&gt;&gt;BarTEMP.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;label21.Name" xml:space="preserve">
+    <value>label21</value>
+  </data>
+  <data name="&gt;&gt;label21.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label21.Parent" xml:space="preserve">
+    <value>cuiPanel5</value>
+  </data>
+  <data name="&gt;&gt;label21.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;label3.Name" xml:space="preserve">
+    <value>label3</value>
+  </data>
+  <data name="&gt;&gt;label3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label3.Parent" xml:space="preserve">
+    <value>cuiPanel5</value>
+  </data>
+  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;label11.Name" xml:space="preserve">
+    <value>label11</value>
+  </data>
+  <data name="&gt;&gt;label11.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label11.Parent" xml:space="preserve">
+    <value>cuiPanel5</value>
+  </data>
+  <data name="&gt;&gt;label11.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;label12.Name" xml:space="preserve">
+    <value>label12</value>
+  </data>
+  <data name="&gt;&gt;label12.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label12.Parent" xml:space="preserve">
+    <value>cuiPanel5</value>
+  </data>
+  <data name="&gt;&gt;label12.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;btnSvuotaTemp.Name" xml:space="preserve">
+    <value>btnSvuotaTemp</value>
+  </data>
+  <data name="&gt;&gt;btnSvuotaTemp.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiButton, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;btnSvuotaTemp.Parent" xml:space="preserve">
+    <value>cuiPanel5</value>
+  </data>
+  <data name="&gt;&gt;btnSvuotaTemp.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;BarDISCOtext.Name" xml:space="preserve">
+    <value>BarDISCOtext</value>
+  </data>
+  <data name="&gt;&gt;BarDISCOtext.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BarDISCOtext.Parent" xml:space="preserve">
+    <value>cuiPanel5</value>
+  </data>
+  <data name="&gt;&gt;BarDISCOtext.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;BarDISCO.Name" xml:space="preserve">
+    <value>BarDISCO</value>
+  </data>
+  <data name="&gt;&gt;BarDISCO.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiCircleProgressBar, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BarDISCO.Parent" xml:space="preserve">
+    <value>cuiPanel5</value>
+  </data>
+  <data name="&gt;&gt;BarDISCO.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;label18.Name" xml:space="preserve">
+    <value>label18</value>
+  </data>
+  <data name="&gt;&gt;label18.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label18.Parent" xml:space="preserve">
+    <value>cuiPanel5</value>
+  </data>
+  <data name="&gt;&gt;label18.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="cuiPanel5.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="cuiPanel5.Location" type="System.Drawing.Point, System.Drawing">
+    <value>591, 3</value>
+  </data>
+  <data name="cuiPanel5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>289, 246</value>
+  </data>
+  <data name="cuiPanel5.TabIndex" type="System.Int32, mscorlib">
+    <value>118</value>
+  </data>
+  <data name="&gt;&gt;cuiPanel5.Name" xml:space="preserve">
+    <value>cuiPanel5</value>
+  </data>
+  <data name="&gt;&gt;cuiPanel5.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiPanel, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;cuiPanel5.Parent" xml:space="preserve">
+    <value>tableLayoutPanel17</value>
+  </data>
+  <data name="&gt;&gt;cuiPanel5.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;label17.Name" xml:space="preserve">
+    <value>label17</value>
+  </data>
+  <data name="&gt;&gt;label17.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label17.Parent" xml:space="preserve">
+    <value>cuiPanel1</value>
+  </data>
+  <data name="&gt;&gt;label17.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;label16.Name" xml:space="preserve">
+    <value>label16</value>
+  </data>
+  <data name="&gt;&gt;label16.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label16.Parent" xml:space="preserve">
+    <value>cuiPanel1</value>
+  </data>
+  <data name="&gt;&gt;label16.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;cuiSwitch_gradicpu.Name" xml:space="preserve">
+    <value>cuiSwitch_gradicpu</value>
+  </data>
+  <data name="&gt;&gt;cuiSwitch_gradicpu.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiSwitch, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;cuiSwitch_gradicpu.Parent" xml:space="preserve">
+    <value>cuiPanel1</value>
+  </data>
+  <data name="&gt;&gt;cuiSwitch_gradicpu.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;limiteCPU.Name" xml:space="preserve">
+    <value>limiteCPU</value>
+  </data>
+  <data name="&gt;&gt;limiteCPU.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;limiteCPU.Parent" xml:space="preserve">
+    <value>cuiPanel1</value>
+  </data>
+  <data name="&gt;&gt;limiteCPU.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;puliziaautomaticoCPU.Name" xml:space="preserve">
+    <value>puliziaautomaticoCPU</value>
+  </data>
+  <data name="&gt;&gt;puliziaautomaticoCPU.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiSwitch, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;puliziaautomaticoCPU.Parent" xml:space="preserve">
+    <value>cuiPanel1</value>
+  </data>
+  <data name="&gt;&gt;puliziaautomaticoCPU.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;label7.Name" xml:space="preserve">
+    <value>label7</value>
+  </data>
+  <data name="&gt;&gt;label7.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label7.Parent" xml:space="preserve">
+    <value>cuiPanel1</value>
+  </data>
+  <data name="&gt;&gt;label7.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;label6.Name" xml:space="preserve">
+    <value>label6</value>
+  </data>
+  <data name="&gt;&gt;label6.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label6.Parent" xml:space="preserve">
+    <value>cuiPanel1</value>
+  </data>
+  <data name="&gt;&gt;label6.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;label5.Name" xml:space="preserve">
+    <value>label5</value>
+  </data>
+  <data name="&gt;&gt;label5.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label5.Parent" xml:space="preserve">
+    <value>cuiPanel1</value>
+  </data>
+  <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;btnPulisciCPU.Name" xml:space="preserve">
+    <value>btnPulisciCPU</value>
+  </data>
+  <data name="&gt;&gt;btnPulisciCPU.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiButton, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;btnPulisciCPU.Parent" xml:space="preserve">
+    <value>cuiPanel1</value>
+  </data>
+  <data name="&gt;&gt;btnPulisciCPU.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;labelCpuTemp.Name" xml:space="preserve">
+    <value>labelCpuTemp</value>
+  </data>
+  <data name="&gt;&gt;labelCpuTemp.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;labelCpuTemp.Parent" xml:space="preserve">
+    <value>cuiPanel1</value>
+  </data>
+  <data name="&gt;&gt;labelCpuTemp.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;BarCPUtext.Name" xml:space="preserve">
+    <value>BarCPUtext</value>
+  </data>
+  <data name="&gt;&gt;BarCPUtext.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BarCPUtext.Parent" xml:space="preserve">
+    <value>cuiPanel1</value>
+  </data>
+  <data name="&gt;&gt;BarCPUtext.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;pic_termcpu.Name" xml:space="preserve">
+    <value>pic_termcpu</value>
+  </data>
+  <data name="&gt;&gt;pic_termcpu.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pic_termcpu.Parent" xml:space="preserve">
+    <value>cuiPanel1</value>
+  </data>
+  <data name="&gt;&gt;pic_termcpu.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;BarCPU.Name" xml:space="preserve">
+    <value>BarCPU</value>
+  </data>
+  <data name="&gt;&gt;BarCPU.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiCircleProgressBar, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BarCPU.Parent" xml:space="preserve">
+    <value>cuiPanel1</value>
+  </data>
+  <data name="&gt;&gt;BarCPU.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="&gt;&gt;label1.Name" xml:space="preserve">
+    <value>label1</value>
+  </data>
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+    <value>cuiPanel1</value>
+  </data>
+  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="&gt;&gt;label4.Name" xml:space="preserve">
+    <value>label4</value>
+  </data>
+  <data name="&gt;&gt;label4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label4.Parent" xml:space="preserve">
+    <value>cuiPanel1</value>
+  </data>
+  <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="cuiPanel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="cuiPanel1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="cuiPanel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>288, 246</value>
+  </data>
+  <data name="cuiPanel1.TabIndex" type="System.Int32, mscorlib">
+    <value>114</value>
+  </data>
+  <data name="&gt;&gt;cuiPanel1.Name" xml:space="preserve">
+    <value>cuiPanel1</value>
+  </data>
+  <data name="&gt;&gt;cuiPanel1.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiPanel, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;cuiPanel1.Parent" xml:space="preserve">
+    <value>tableLayoutPanel17</value>
+  </data>
+  <data name="&gt;&gt;cuiPanel1.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;limiteRAM.Name" xml:space="preserve">
+    <value>limiteRAM</value>
+  </data>
+  <data name="&gt;&gt;limiteRAM.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;limiteRAM.Parent" xml:space="preserve">
+    <value>cuiPanel2</value>
+  </data>
+  <data name="&gt;&gt;limiteRAM.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;puliziaautomaticRAM.Name" xml:space="preserve">
+    <value>puliziaautomaticRAM</value>
+  </data>
+  <data name="&gt;&gt;puliziaautomaticRAM.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiSwitch, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;puliziaautomaticRAM.Parent" xml:space="preserve">
+    <value>cuiPanel2</value>
+  </data>
+  <data name="&gt;&gt;puliziaautomaticRAM.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;label8.Name" xml:space="preserve">
+    <value>label8</value>
+  </data>
+  <data name="&gt;&gt;label8.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label8.Parent" xml:space="preserve">
+    <value>cuiPanel2</value>
+  </data>
+  <data name="&gt;&gt;label8.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;label9.Name" xml:space="preserve">
+    <value>label9</value>
+  </data>
+  <data name="&gt;&gt;label9.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label9.Parent" xml:space="preserve">
+    <value>cuiPanel2</value>
+  </data>
+  <data name="&gt;&gt;label9.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;label10.Name" xml:space="preserve">
+    <value>label10</value>
+  </data>
+  <data name="&gt;&gt;label10.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label10.Parent" xml:space="preserve">
+    <value>cuiPanel2</value>
+  </data>
+  <data name="&gt;&gt;label10.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;btnPulisciRam.Name" xml:space="preserve">
+    <value>btnPulisciRam</value>
+  </data>
+  <data name="&gt;&gt;btnPulisciRam.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiButton, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;btnPulisciRam.Parent" xml:space="preserve">
+    <value>cuiPanel2</value>
+  </data>
+  <data name="&gt;&gt;btnPulisciRam.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;BarRAMtext.Name" xml:space="preserve">
+    <value>BarRAMtext</value>
+  </data>
+  <data name="&gt;&gt;BarRAMtext.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BarRAMtext.Parent" xml:space="preserve">
+    <value>cuiPanel2</value>
+  </data>
+  <data name="&gt;&gt;BarRAMtext.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;BarRAM.Name" xml:space="preserve">
+    <value>BarRAM</value>
+  </data>
+  <data name="&gt;&gt;BarRAM.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiCircleProgressBar, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BarRAM.Parent" xml:space="preserve">
+    <value>cuiPanel2</value>
+  </data>
+  <data name="&gt;&gt;BarRAM.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;label14.Name" xml:space="preserve">
+    <value>label14</value>
+  </data>
+  <data name="&gt;&gt;label14.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label14.Parent" xml:space="preserve">
+    <value>cuiPanel2</value>
+  </data>
+  <data name="&gt;&gt;label14.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="cuiPanel2.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="cuiPanel2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>297, 3</value>
+  </data>
+  <data name="cuiPanel2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>288, 246</value>
+  </data>
+  <data name="cuiPanel2.TabIndex" type="System.Int32, mscorlib">
+    <value>112</value>
+  </data>
+  <data name="&gt;&gt;cuiPanel2.Name" xml:space="preserve">
+    <value>cuiPanel2</value>
+  </data>
+  <data name="&gt;&gt;cuiPanel2.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiPanel, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;cuiPanel2.Parent" xml:space="preserve">
+    <value>tableLayoutPanel17</value>
+  </data>
+  <data name="&gt;&gt;cuiPanel2.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;label22.Name" xml:space="preserve">
+    <value>label22</value>
+  </data>
+  <data name="&gt;&gt;label22.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label22.Parent" xml:space="preserve">
+    <value>cuiPanel3</value>
+  </data>
+  <data name="&gt;&gt;label22.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;label23.Name" xml:space="preserve">
+    <value>label23</value>
+  </data>
+  <data name="&gt;&gt;label23.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label23.Parent" xml:space="preserve">
+    <value>cuiPanel3</value>
+  </data>
+  <data name="&gt;&gt;label23.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;cuiSwitch_gputemperatura.Name" xml:space="preserve">
+    <value>cuiSwitch_gputemperatura</value>
+  </data>
+  <data name="&gt;&gt;cuiSwitch_gputemperatura.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiSwitch, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;cuiSwitch_gputemperatura.Parent" xml:space="preserve">
+    <value>cuiPanel3</value>
+  </data>
+  <data name="&gt;&gt;cuiSwitch_gputemperatura.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;label2.Name" xml:space="preserve">
+    <value>label2</value>
+  </data>
+  <data name="&gt;&gt;label2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
+    <value>cuiPanel3</value>
+  </data>
+  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;BarGPUtext.Name" xml:space="preserve">
+    <value>BarGPUtext</value>
+  </data>
+  <data name="&gt;&gt;BarGPUtext.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BarGPUtext.Parent" xml:space="preserve">
+    <value>cuiPanel3</value>
+  </data>
+  <data name="&gt;&gt;BarGPUtext.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;BarGPU.Name" xml:space="preserve">
+    <value>BarGPU</value>
+  </data>
+  <data name="&gt;&gt;BarGPU.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiCircleProgressBar, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BarGPU.Parent" xml:space="preserve">
+    <value>cuiPanel3</value>
+  </data>
+  <data name="&gt;&gt;BarGPU.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;labelGpuTemp.Name" xml:space="preserve">
+    <value>labelGpuTemp</value>
+  </data>
+  <data name="&gt;&gt;labelGpuTemp.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;labelGpuTemp.Parent" xml:space="preserve">
+    <value>cuiPanel3</value>
+  </data>
+  <data name="&gt;&gt;labelGpuTemp.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;pic_termgpu.Name" xml:space="preserve">
+    <value>pic_termgpu</value>
+  </data>
+  <data name="&gt;&gt;pic_termgpu.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pic_termgpu.Parent" xml:space="preserve">
+    <value>cuiPanel3</value>
+  </data>
+  <data name="&gt;&gt;pic_termgpu.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;label19.Name" xml:space="preserve">
+    <value>label19</value>
+  </data>
+  <data name="&gt;&gt;label19.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label19.Parent" xml:space="preserve">
+    <value>cuiPanel3</value>
+  </data>
+  <data name="&gt;&gt;label19.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;label20.Name" xml:space="preserve">
+    <value>label20</value>
+  </data>
+  <data name="&gt;&gt;label20.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label20.Parent" xml:space="preserve">
+    <value>cuiPanel3</value>
+  </data>
+  <data name="&gt;&gt;label20.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="cuiPanel3.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="cuiPanel3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 255</value>
+  </data>
+  <data name="cuiPanel3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>288, 159</value>
+  </data>
+  <data name="cuiPanel3.TabIndex" type="System.Int32, mscorlib">
+    <value>115</value>
+  </data>
+  <data name="&gt;&gt;cuiPanel3.Name" xml:space="preserve">
+    <value>cuiPanel3</value>
+  </data>
+  <data name="&gt;&gt;cuiPanel3.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiPanel, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;cuiPanel3.Parent" xml:space="preserve">
+    <value>tableLayoutPanel17</value>
+  </data>
+  <data name="&gt;&gt;cuiPanel3.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;label13.Name" xml:space="preserve">
+    <value>label13</value>
+  </data>
+  <data name="&gt;&gt;label13.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label13.Parent" xml:space="preserve">
+    <value>cuiPanel4</value>
+  </data>
+  <data name="&gt;&gt;label13.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;labelReteUtilizzo.Name" xml:space="preserve">
+    <value>labelReteUtilizzo</value>
+  </data>
+  <data name="&gt;&gt;labelReteUtilizzo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;labelReteUtilizzo.Parent" xml:space="preserve">
+    <value>cuiPanel4</value>
+  </data>
+  <data name="&gt;&gt;labelReteUtilizzo.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;progressbarRete.Name" xml:space="preserve">
+    <value>progressbarRete</value>
+  </data>
+  <data name="&gt;&gt;progressbarRete.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiCircleProgressBar, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;progressbarRete.Parent" xml:space="preserve">
+    <value>cuiPanel4</value>
+  </data>
+  <data name="&gt;&gt;progressbarRete.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;lblDonwload.Name" xml:space="preserve">
+    <value>lblDonwload</value>
+  </data>
+  <data name="&gt;&gt;lblDonwload.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblDonwload.Parent" xml:space="preserve">
+    <value>cuiPanel4</value>
+  </data>
+  <data name="&gt;&gt;lblDonwload.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;lblUpload.Name" xml:space="preserve">
+    <value>lblUpload</value>
+  </data>
+  <data name="&gt;&gt;lblUpload.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblUpload.Parent" xml:space="preserve">
+    <value>cuiPanel4</value>
+  </data>
+  <data name="&gt;&gt;lblUpload.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;labelVelocitaRete.Name" xml:space="preserve">
+    <value>labelVelocitaRete</value>
+  </data>
+  <data name="&gt;&gt;labelVelocitaRete.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;labelVelocitaRete.Parent" xml:space="preserve">
+    <value>cuiPanel4</value>
+  </data>
+  <data name="&gt;&gt;labelVelocitaRete.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;label15.Name" xml:space="preserve">
+    <value>label15</value>
+  </data>
+  <data name="&gt;&gt;label15.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label15.Parent" xml:space="preserve">
+    <value>cuiPanel4</value>
+  </data>
+  <data name="&gt;&gt;label15.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="cuiPanel4.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="cuiPanel4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>297, 255</value>
+  </data>
+  <data name="cuiPanel4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>288, 159</value>
+  </data>
+  <data name="cuiPanel4.TabIndex" type="System.Int32, mscorlib">
+    <value>117</value>
+  </data>
+  <data name="&gt;&gt;cuiPanel4.Name" xml:space="preserve">
+    <value>cuiPanel4</value>
+  </data>
+  <data name="&gt;&gt;cuiPanel4.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiPanel, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;cuiPanel4.Parent" xml:space="preserve">
+    <value>tableLayoutPanel17</value>
+  </data>
+  <data name="&gt;&gt;cuiPanel4.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="tableLayoutPanel17.Location" type="System.Drawing.Point, System.Drawing">
+    <value>1, 1</value>
+  </data>
+  <data name="tableLayoutPanel17.RowCount" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="tableLayoutPanel17.Size" type="System.Drawing.Size, System.Drawing">
+    <value>883, 417</value>
+  </data>
+  <data name="tableLayoutPanel17.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel17.Name" xml:space="preserve">
+    <value>tableLayoutPanel17</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel17.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel17.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel17.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tableLayoutPanel17.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="cuiPanel5" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="cuiPanel1" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="cuiPanel2" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="cuiPanel3" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="cuiPanel4" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,33,333332,Percent,33,333332,Percent,33,333332" /&gt;&lt;Rows Styles="Percent,60,570072,Percent,39,429928" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <data name="domainUpDown1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="domainUpDown1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>73, 192</value>
+  </data>
+  <data name="domainUpDown1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 23</value>
+  </data>
+  <data name="domainUpDown1.TabIndex" type="System.Int32, mscorlib">
+    <value>147</value>
+  </data>
+  <data name="domainUpDown1.Text" xml:space="preserve">
+    <value>4 GB</value>
+  </data>
+  <data name="&gt;&gt;domainUpDown1.Name" xml:space="preserve">
+    <value>domainUpDown1</value>
+  </data>
+  <data name="&gt;&gt;domainUpDown1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DomainUpDown, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;domainUpDown1.Parent" xml:space="preserve">
+    <value>cuiPanel5</value>
+  </data>
+  <data name="&gt;&gt;domainUpDown1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="BarTEMPtext.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="BarTEMPtext.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="BarTEMPtext.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.8pt</value>
+  </data>
+  <data name="BarTEMPtext.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BarTEMPtext.Location" type="System.Drawing.Point, System.Drawing">
+    <value>187, 96</value>
+  </data>
+  <data name="BarTEMPtext.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>595, 0</value>
+  </data>
+  <data name="BarTEMPtext.Size" type="System.Drawing.Size, System.Drawing">
+    <value>55, 20</value>
+  </data>
+  <data name="BarTEMPtext.TabIndex" type="System.Int32, mscorlib">
+    <value>146</value>
+  </data>
+  <data name="BarTEMPtext.Text" xml:space="preserve">
+    <value>5,32GB</value>
+  </data>
+  <data name="BarTEMPtext.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;BarTEMPtext.Name" xml:space="preserve">
+    <value>BarTEMPtext</value>
+  </data>
+  <data name="&gt;&gt;BarTEMPtext.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BarTEMPtext.Parent" xml:space="preserve">
+    <value>cuiPanel5</value>
+  </data>
+  <data name="&gt;&gt;BarTEMPtext.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="BarTEMP.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="BarTEMP.Location" type="System.Drawing.Point, System.Drawing">
+    <value>173, 65</value>
+  </data>
+  <data name="BarTEMP.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>24, 24</value>
+  </data>
+  <data name="BarTEMP.Size" type="System.Drawing.Size, System.Drawing">
+    <value>82, 82</value>
+  </data>
+  <data name="BarTEMP.TabIndex" type="System.Int32, mscorlib">
+    <value>145</value>
+  </data>
+  <data name="&gt;&gt;BarTEMP.Name" xml:space="preserve">
+    <value>BarTEMP</value>
+  </data>
+  <data name="&gt;&gt;BarTEMP.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiCircleProgressBar, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BarTEMP.Parent" xml:space="preserve">
+    <value>cuiPanel5</value>
+  </data>
+  <data name="&gt;&gt;BarTEMP.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="label21.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="label21.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label21.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.8pt</value>
+  </data>
+  <data name="label21.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label21.Location" type="System.Drawing.Point, System.Drawing">
+    <value>151, 42</value>
+  </data>
+  <data name="label21.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>595, 0</value>
+  </data>
+  <data name="label21.Size" type="System.Drawing.Size, System.Drawing">
+    <value>70, 20</value>
+  </data>
+  <data name="label21.TabIndex" type="System.Int32, mscorlib">
+    <value>135</value>
+  </data>
+  <data name="label21.Text" xml:space="preserve">
+    <value>%TEMP%</value>
+  </data>
+  <data name="label21.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;label21.Name" xml:space="preserve">
+    <value>label21</value>
+  </data>
+  <data name="&gt;&gt;label21.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label21.Parent" xml:space="preserve">
+    <value>cuiPanel5</value>
+  </data>
+  <data name="&gt;&gt;label21.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="label3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="label3.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label3.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.2pt</value>
+  </data>
+  <data name="label3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 193</value>
+  </data>
+  <data name="label3.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>595, 0</value>
+  </data>
+  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>59, 19</value>
+  </data>
+  <data name="label3.TabIndex" type="System.Int32, mscorlib">
+    <value>132</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>Imposta</value>
+  </data>
+  <data name="label3.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;label3.Name" xml:space="preserve">
+    <value>label3</value>
+  </data>
+  <data name="&gt;&gt;label3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label3.Parent" xml:space="preserve">
+    <value>cuiPanel5</value>
+  </data>
+  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="label11.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="label11.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label11.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.2pt</value>
+  </data>
+  <data name="label11.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label11.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 165</value>
+  </data>
+  <data name="label11.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>595, 0</value>
+  </data>
+  <data name="label11.Size" type="System.Drawing.Size, System.Drawing">
+    <value>82, 19</value>
+  </data>
+  <data name="label11.TabIndex" type="System.Int32, mscorlib">
+    <value>131</value>
+  </data>
+  <data name="label11.Text" xml:space="preserve">
+    <value>Soglia limite</value>
+  </data>
+  <data name="label11.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;label11.Name" xml:space="preserve">
+    <value>label11</value>
+  </data>
+  <data name="&gt;&gt;label11.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label11.Parent" xml:space="preserve">
+    <value>cuiPanel5</value>
+  </data>
+  <data name="&gt;&gt;label11.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="label12.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="label12.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label12.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.8pt</value>
+  </data>
+  <data name="label12.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label12.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 39</value>
+  </data>
+  <data name="label12.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>595, 0</value>
+  </data>
+  <data name="label12.Size" type="System.Drawing.Size, System.Drawing">
+    <value>34, 20</value>
+  </data>
+  <data name="label12.TabIndex" type="System.Int32, mscorlib">
+    <value>130</value>
+  </data>
+  <data name="label12.Text" xml:space="preserve">
+    <value>Uso</value>
+  </data>
+  <data name="label12.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;label12.Name" xml:space="preserve">
+    <value>label12</value>
+  </data>
+  <data name="&gt;&gt;label12.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label12.Parent" xml:space="preserve">
+    <value>cuiPanel5</value>
+  </data>
+  <data name="&gt;&gt;label12.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="btnSvuotaTemp.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="btnSvuotaTemp.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="btnSvuotaTemp.Location" type="System.Drawing.Point, System.Drawing">
+    <value>158, 6</value>
+  </data>
+  <data name="btnSvuotaTemp.Size" type="System.Drawing.Size, System.Drawing">
+    <value>126, 32</value>
+  </data>
+  <data name="btnSvuotaTemp.TabIndex" type="System.Int32, mscorlib">
+    <value>129</value>
+  </data>
+  <data name="&gt;&gt;btnSvuotaTemp.Name" xml:space="preserve">
+    <value>btnSvuotaTemp</value>
+  </data>
+  <data name="&gt;&gt;btnSvuotaTemp.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiButton, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;btnSvuotaTemp.Parent" xml:space="preserve">
+    <value>cuiPanel5</value>
+  </data>
+  <data name="&gt;&gt;btnSvuotaTemp.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="BarDISCOtext.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="BarDISCOtext.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="BarDISCOtext.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.8pt</value>
+  </data>
+  <data name="BarDISCOtext.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BarDISCOtext.Location" type="System.Drawing.Point, System.Drawing">
+    <value>58, 96</value>
+  </data>
+  <data name="BarDISCOtext.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>595, 0</value>
+  </data>
+  <data name="BarDISCOtext.Size" type="System.Drawing.Size, System.Drawing">
+    <value>37, 20</value>
+  </data>
+  <data name="BarDISCOtext.TabIndex" type="System.Int32, mscorlib">
+    <value>109</value>
+  </data>
+  <data name="BarDISCOtext.Text" xml:space="preserve">
+    <value>20%</value>
+  </data>
+  <data name="BarDISCOtext.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;BarDISCOtext.Name" xml:space="preserve">
+    <value>BarDISCOtext</value>
+  </data>
+  <data name="&gt;&gt;BarDISCOtext.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BarDISCOtext.Parent" xml:space="preserve">
+    <value>cuiPanel5</value>
+  </data>
+  <data name="&gt;&gt;BarDISCOtext.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="BarDISCO.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="BarDISCO.Location" type="System.Drawing.Point, System.Drawing">
+    <value>33, 65</value>
+  </data>
+  <data name="BarDISCO.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>24, 24</value>
+  </data>
+  <data name="BarDISCO.Size" type="System.Drawing.Size, System.Drawing">
+    <value>82, 82</value>
+  </data>
+  <data name="BarDISCO.TabIndex" type="System.Int32, mscorlib">
+    <value>108</value>
+  </data>
+  <data name="&gt;&gt;BarDISCO.Name" xml:space="preserve">
+    <value>BarDISCO</value>
+  </data>
+  <data name="&gt;&gt;BarDISCO.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiCircleProgressBar, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BarDISCO.Parent" xml:space="preserve">
+    <value>cuiPanel5</value>
+  </data>
+  <data name="&gt;&gt;BarDISCO.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="label18.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label18.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI Semibold, 13.8pt, style=Bold</value>
+  </data>
+  <data name="label18.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="label18.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label18.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 7</value>
+  </data>
+  <data name="label18.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>595, 0</value>
+  </data>
+  <data name="label18.Size" type="System.Drawing.Size, System.Drawing">
+    <value>89, 25</value>
+  </data>
+  <data name="label18.TabIndex" type="System.Int32, mscorlib">
+    <value>104</value>
+  </data>
+  <data name="label18.Text" xml:space="preserve">
+    <value>      Disco</value>
+  </data>
+  <data name="label18.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;label18.Name" xml:space="preserve">
+    <value>label18</value>
+  </data>
+  <data name="&gt;&gt;label18.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label18.Parent" xml:space="preserve">
+    <value>cuiPanel5</value>
+  </data>
+  <data name="&gt;&gt;label18.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="label17.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left</value>
+  </data>
+  <data name="label17.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label17.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 9pt</value>
+  </data>
+  <data name="label17.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label17.Location" type="System.Drawing.Point, System.Drawing">
+    <value>248, 112</value>
+  </data>
+  <data name="label17.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>595, 0</value>
+  </data>
+  <data name="label17.Size" type="System.Drawing.Size, System.Drawing">
+    <value>18, 15</value>
+  </data>
+  <data name="label17.TabIndex" type="System.Int32, mscorlib">
+    <value>148</value>
+  </data>
+  <data name="label17.Text" xml:space="preserve">
+    <value>°F</value>
+  </data>
+  <data name="label17.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;label17.Name" xml:space="preserve">
+    <value>label17</value>
+  </data>
+  <data name="&gt;&gt;label17.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label17.Parent" xml:space="preserve">
+    <value>cuiPanel1</value>
+  </data>
+  <data name="&gt;&gt;label17.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="label16.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left</value>
+  </data>
+  <data name="label16.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label16.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 9pt</value>
+  </data>
+  <data name="label16.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label16.Location" type="System.Drawing.Point, System.Drawing">
+    <value>201, 112</value>
+  </data>
+  <data name="label16.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>595, 0</value>
+  </data>
+  <data name="label16.Size" type="System.Drawing.Size, System.Drawing">
+    <value>20, 15</value>
+  </data>
+  <data name="label16.TabIndex" type="System.Int32, mscorlib">
+    <value>147</value>
+  </data>
+  <data name="label16.Text" xml:space="preserve">
+    <value>°C</value>
+  </data>
+  <data name="label16.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;label16.Name" xml:space="preserve">
+    <value>label16</value>
+  </data>
+  <data name="&gt;&gt;label16.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label16.Parent" xml:space="preserve">
+    <value>cuiPanel1</value>
+  </data>
+  <data name="&gt;&gt;label16.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="cuiSwitch_gradicpu.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left</value>
+  </data>
+  <data name="cuiSwitch_gradicpu.Location" type="System.Drawing.Point, System.Drawing">
+    <value>218, 109</value>
+  </data>
+  <data name="cuiSwitch_gradicpu.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>12, 8</value>
+  </data>
+  <data name="cuiSwitch_gradicpu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>31, 19</value>
+  </data>
+  <data name="cuiSwitch_gradicpu.TabIndex" type="System.Int32, mscorlib">
+    <value>146</value>
+  </data>
+  <data name="&gt;&gt;cuiSwitch_gradicpu.Name" xml:space="preserve">
+    <value>cuiSwitch_gradicpu</value>
+  </data>
+  <data name="&gt;&gt;cuiSwitch_gradicpu.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiSwitch, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;cuiSwitch_gradicpu.Parent" xml:space="preserve">
+    <value>cuiPanel1</value>
+  </data>
+  <data name="&gt;&gt;cuiSwitch_gradicpu.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="limiteCPU.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="limiteCPU.Location" type="System.Drawing.Point, System.Drawing">
+    <value>108, 196</value>
+  </data>
+  <data name="limiteCPU.Size" type="System.Drawing.Size, System.Drawing">
+    <value>42, 23</value>
+  </data>
+  <data name="limiteCPU.TabIndex" type="System.Int32, mscorlib">
+    <value>134</value>
+  </data>
+  <data name="&gt;&gt;limiteCPU.Name" xml:space="preserve">
+    <value>limiteCPU</value>
+  </data>
+  <data name="&gt;&gt;limiteCPU.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;limiteCPU.Parent" xml:space="preserve">
+    <value>cuiPanel1</value>
+  </data>
+  <data name="&gt;&gt;limiteCPU.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="puliziaautomaticoCPU.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="puliziaautomaticoCPU.Location" type="System.Drawing.Point, System.Drawing">
+    <value>123, 168</value>
+  </data>
+  <data name="puliziaautomaticoCPU.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>12, 8</value>
+  </data>
+  <data name="puliziaautomaticoCPU.Size" type="System.Drawing.Size, System.Drawing">
+    <value>41, 19</value>
+  </data>
+  <data name="puliziaautomaticoCPU.TabIndex" type="System.Int32, mscorlib">
+    <value>133</value>
+  </data>
+  <data name="&gt;&gt;puliziaautomaticoCPU.Name" xml:space="preserve">
+    <value>puliziaautomaticoCPU</value>
+  </data>
+  <data name="&gt;&gt;puliziaautomaticoCPU.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiSwitch, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;puliziaautomaticoCPU.Parent" xml:space="preserve">
+    <value>cuiPanel1</value>
+  </data>
+  <data name="&gt;&gt;puliziaautomaticoCPU.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="label7.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="label7.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label7.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.2pt</value>
+  </data>
+  <data name="label7.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label7.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 196</value>
+  </data>
+  <data name="label7.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>595, 0</value>
+  </data>
+  <data name="label7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>96, 19</value>
+  </data>
+  <data name="label7.TabIndex" type="System.Int32, mscorlib">
+    <value>132</value>
+  </data>
+  <data name="label7.Text" xml:space="preserve">
+    <value>Imposta limite</value>
+  </data>
+  <data name="label7.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;label7.Name" xml:space="preserve">
+    <value>label7</value>
+  </data>
+  <data name="&gt;&gt;label7.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label7.Parent" xml:space="preserve">
+    <value>cuiPanel1</value>
+  </data>
+  <data name="&gt;&gt;label7.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="label6.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="label6.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label6.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.2pt</value>
+  </data>
+  <data name="label6.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 168</value>
+  </data>
+  <data name="label6.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>595, 0</value>
+  </data>
+  <data name="label6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>119, 19</value>
+  </data>
+  <data name="label6.TabIndex" type="System.Int32, mscorlib">
+    <value>131</value>
+  </data>
+  <data name="label6.Text" xml:space="preserve">
+    <value>Pulizia automatica</value>
+  </data>
+  <data name="label6.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;label6.Name" xml:space="preserve">
+    <value>label6</value>
+  </data>
+  <data name="&gt;&gt;label6.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label6.Parent" xml:space="preserve">
+    <value>cuiPanel1</value>
+  </data>
+  <data name="&gt;&gt;label6.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="label5.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="label5.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label5.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.8pt</value>
+  </data>
+  <data name="label5.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 39</value>
+  </data>
+  <data name="label5.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>595, 0</value>
+  </data>
+  <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>34, 20</value>
+  </data>
+  <data name="label5.TabIndex" type="System.Int32, mscorlib">
+    <value>130</value>
+  </data>
+  <data name="label5.Text" xml:space="preserve">
+    <value>Uso</value>
+  </data>
+  <data name="label5.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;label5.Name" xml:space="preserve">
+    <value>label5</value>
+  </data>
+  <data name="&gt;&gt;label5.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label5.Parent" xml:space="preserve">
+    <value>cuiPanel1</value>
+  </data>
+  <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="btnPulisciCPU.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="btnPulisciCPU.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="btnPulisciCPU.Location" type="System.Drawing.Point, System.Drawing">
+    <value>157, 6</value>
+  </data>
+  <data name="btnPulisciCPU.Size" type="System.Drawing.Size, System.Drawing">
+    <value>126, 32</value>
+  </data>
+  <data name="btnPulisciCPU.TabIndex" type="System.Int32, mscorlib">
+    <value>129</value>
+  </data>
+  <data name="&gt;&gt;btnPulisciCPU.Name" xml:space="preserve">
+    <value>btnPulisciCPU</value>
+  </data>
+  <data name="&gt;&gt;btnPulisciCPU.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiButton, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;btnPulisciCPU.Parent" xml:space="preserve">
+    <value>cuiPanel1</value>
+  </data>
+  <data name="&gt;&gt;btnPulisciCPU.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="labelCpuTemp.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left</value>
+  </data>
+  <data name="labelCpuTemp.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="labelCpuTemp.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.8pt</value>
+  </data>
+  <data name="labelCpuTemp.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="labelCpuTemp.Location" type="System.Drawing.Point, System.Drawing">
+    <value>201, 80</value>
+  </data>
+  <data name="labelCpuTemp.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>595, 0</value>
+  </data>
+  <data name="labelCpuTemp.Size" type="System.Drawing.Size, System.Drawing">
+    <value>31, 20</value>
+  </data>
+  <data name="labelCpuTemp.TabIndex" type="System.Int32, mscorlib">
+    <value>110</value>
+  </data>
+  <data name="labelCpuTemp.Text" xml:space="preserve">
+    <value>90°</value>
+  </data>
+  <data name="labelCpuTemp.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;labelCpuTemp.Name" xml:space="preserve">
+    <value>labelCpuTemp</value>
+  </data>
+  <data name="&gt;&gt;labelCpuTemp.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;labelCpuTemp.Parent" xml:space="preserve">
+    <value>cuiPanel1</value>
+  </data>
+  <data name="&gt;&gt;labelCpuTemp.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="BarCPUtext.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="BarCPUtext.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="BarCPUtext.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.8pt</value>
+  </data>
+  <data name="BarCPUtext.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BarCPUtext.Location" type="System.Drawing.Point, System.Drawing">
+    <value>50, 96</value>
+  </data>
+  <data name="BarCPUtext.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>595, 0</value>
+  </data>
+  <data name="BarCPUtext.Size" type="System.Drawing.Size, System.Drawing">
+    <value>37, 20</value>
+  </data>
+  <data name="BarCPUtext.TabIndex" type="System.Int32, mscorlib">
+    <value>109</value>
+  </data>
+  <data name="BarCPUtext.Text" xml:space="preserve">
+    <value>20%</value>
+  </data>
+  <data name="BarCPUtext.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;BarCPUtext.Name" xml:space="preserve">
+    <value>BarCPUtext</value>
+  </data>
+  <data name="&gt;&gt;BarCPUtext.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BarCPUtext.Parent" xml:space="preserve">
+    <value>cuiPanel1</value>
+  </data>
+  <data name="&gt;&gt;BarCPUtext.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="pic_termcpu.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="pic_termcpu.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="pic_termcpu.Location" type="System.Drawing.Point, System.Drawing">
+    <value>142, 65</value>
+  </data>
+  <data name="pic_termcpu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>57, 83</value>
+  </data>
+  <data name="pic_termcpu.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
+    <value>Zoom</value>
+  </data>
+  <data name="pic_termcpu.TabIndex" type="System.Int32, mscorlib">
+    <value>106</value>
+  </data>
+  <data name="&gt;&gt;pic_termcpu.Name" xml:space="preserve">
+    <value>pic_termcpu</value>
+  </data>
+  <data name="&gt;&gt;pic_termcpu.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pic_termcpu.Parent" xml:space="preserve">
+    <value>cuiPanel1</value>
+  </data>
+  <data name="&gt;&gt;pic_termcpu.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="BarCPU.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="BarCPU.Location" type="System.Drawing.Point, System.Drawing">
+    <value>27, 65</value>
+  </data>
+  <data name="BarCPU.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>24, 24</value>
+  </data>
+  <data name="BarCPU.Size" type="System.Drawing.Size, System.Drawing">
+    <value>82, 82</value>
+  </data>
+  <data name="BarCPU.TabIndex" type="System.Int32, mscorlib">
+    <value>108</value>
+  </data>
+  <data name="&gt;&gt;BarCPU.Name" xml:space="preserve">
+    <value>BarCPU</value>
+  </data>
+  <data name="&gt;&gt;BarCPU.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiCircleProgressBar, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BarCPU.Parent" xml:space="preserve">
+    <value>cuiPanel1</value>
+  </data>
+  <data name="&gt;&gt;BarCPU.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="label1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label1.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>149, 38</value>
+  </data>
+  <data name="label1.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>595, 0</value>
+  </data>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>97, 21</value>
+  </data>
+  <data name="label1.TabIndex" type="System.Int32, mscorlib">
+    <value>105</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Temperatura</value>
+  </data>
+  <data name="label1.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;label1.Name" xml:space="preserve">
+    <value>label1</value>
+  </data>
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+    <value>cuiPanel1</value>
+  </data>
+  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="label4.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label4.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI Semibold, 13.8pt, style=Bold</value>
+  </data>
+  <data name="label4.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="label4.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 7</value>
+  </data>
+  <data name="label4.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>595, 0</value>
+  </data>
+  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>78, 25</value>
+  </data>
+  <data name="label4.TabIndex" type="System.Int32, mscorlib">
+    <value>104</value>
+  </data>
+  <data name="label4.Text" xml:space="preserve">
+    <value>      CPU</value>
+  </data>
+  <data name="label4.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;label4.Name" xml:space="preserve">
+    <value>label4</value>
+  </data>
+  <data name="&gt;&gt;label4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label4.Parent" xml:space="preserve">
+    <value>cuiPanel1</value>
+  </data>
+  <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="limiteRAM.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="limiteRAM.Location" type="System.Drawing.Point, System.Drawing">
+    <value>105, 192</value>
+  </data>
+  <data name="limiteRAM.Size" type="System.Drawing.Size, System.Drawing">
+    <value>45, 23</value>
+  </data>
+  <data name="limiteRAM.TabIndex" type="System.Int32, mscorlib">
+    <value>135</value>
+  </data>
+  <data name="&gt;&gt;limiteRAM.Name" xml:space="preserve">
+    <value>limiteRAM</value>
+  </data>
+  <data name="&gt;&gt;limiteRAM.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;limiteRAM.Parent" xml:space="preserve">
+    <value>cuiPanel2</value>
+  </data>
+  <data name="&gt;&gt;limiteRAM.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="puliziaautomaticRAM.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="puliziaautomaticRAM.Location" type="System.Drawing.Point, System.Drawing">
+    <value>121, 165</value>
+  </data>
+  <data name="puliziaautomaticRAM.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>12, 8</value>
+  </data>
+  <data name="puliziaautomaticRAM.Size" type="System.Drawing.Size, System.Drawing">
+    <value>41, 19</value>
+  </data>
+  <data name="puliziaautomaticRAM.TabIndex" type="System.Int32, mscorlib">
+    <value>133</value>
+  </data>
+  <data name="&gt;&gt;puliziaautomaticRAM.Name" xml:space="preserve">
+    <value>puliziaautomaticRAM</value>
+  </data>
+  <data name="&gt;&gt;puliziaautomaticRAM.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiSwitch, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;puliziaautomaticRAM.Parent" xml:space="preserve">
+    <value>cuiPanel2</value>
+  </data>
+  <data name="&gt;&gt;puliziaautomaticRAM.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="label8.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="label8.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label8.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.2pt</value>
+  </data>
+  <data name="label8.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label8.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 193</value>
+  </data>
+  <data name="label8.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>595, 0</value>
+  </data>
+  <data name="label8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>96, 19</value>
+  </data>
+  <data name="label8.TabIndex" type="System.Int32, mscorlib">
+    <value>132</value>
+  </data>
+  <data name="label8.Text" xml:space="preserve">
+    <value>Imposta limite</value>
+  </data>
+  <data name="label8.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;label8.Name" xml:space="preserve">
+    <value>label8</value>
+  </data>
+  <data name="&gt;&gt;label8.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label8.Parent" xml:space="preserve">
+    <value>cuiPanel2</value>
+  </data>
+  <data name="&gt;&gt;label8.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="label9.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="label9.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label9.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.2pt</value>
+  </data>
+  <data name="label9.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label9.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 165</value>
+  </data>
+  <data name="label9.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>595, 0</value>
+  </data>
+  <data name="label9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>119, 19</value>
+  </data>
+  <data name="label9.TabIndex" type="System.Int32, mscorlib">
+    <value>131</value>
+  </data>
+  <data name="label9.Text" xml:space="preserve">
+    <value>Pulizia automatica</value>
+  </data>
+  <data name="label9.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;label9.Name" xml:space="preserve">
+    <value>label9</value>
+  </data>
+  <data name="&gt;&gt;label9.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label9.Parent" xml:space="preserve">
+    <value>cuiPanel2</value>
+  </data>
+  <data name="&gt;&gt;label9.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="label10.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="label10.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label10.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.8pt</value>
+  </data>
+  <data name="label10.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label10.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 39</value>
+  </data>
+  <data name="label10.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>595, 0</value>
+  </data>
+  <data name="label10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>34, 20</value>
+  </data>
+  <data name="label10.TabIndex" type="System.Int32, mscorlib">
+    <value>130</value>
+  </data>
+  <data name="label10.Text" xml:space="preserve">
+    <value>Uso</value>
+  </data>
+  <data name="label10.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;label10.Name" xml:space="preserve">
+    <value>label10</value>
+  </data>
+  <data name="&gt;&gt;label10.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label10.Parent" xml:space="preserve">
+    <value>cuiPanel2</value>
+  </data>
+  <data name="&gt;&gt;label10.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="btnPulisciRam.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="btnPulisciRam.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="btnPulisciRam.Location" type="System.Drawing.Point, System.Drawing">
+    <value>158, 6</value>
+  </data>
+  <data name="btnPulisciRam.Size" type="System.Drawing.Size, System.Drawing">
+    <value>126, 32</value>
+  </data>
+  <data name="btnPulisciRam.TabIndex" type="System.Int32, mscorlib">
+    <value>129</value>
+  </data>
+  <data name="&gt;&gt;btnPulisciRam.Name" xml:space="preserve">
+    <value>btnPulisciRam</value>
+  </data>
+  <data name="&gt;&gt;btnPulisciRam.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiButton, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;btnPulisciRam.Parent" xml:space="preserve">
+    <value>cuiPanel2</value>
+  </data>
+  <data name="&gt;&gt;btnPulisciRam.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="BarRAMtext.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="BarRAMtext.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="BarRAMtext.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.8pt</value>
+  </data>
+  <data name="BarRAMtext.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BarRAMtext.Location" type="System.Drawing.Point, System.Drawing">
+    <value>53, 96</value>
+  </data>
+  <data name="BarRAMtext.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>595, 0</value>
+  </data>
+  <data name="BarRAMtext.Size" type="System.Drawing.Size, System.Drawing">
+    <value>37, 20</value>
+  </data>
+  <data name="BarRAMtext.TabIndex" type="System.Int32, mscorlib">
+    <value>109</value>
+  </data>
+  <data name="BarRAMtext.Text" xml:space="preserve">
+    <value>20%</value>
+  </data>
+  <data name="BarRAMtext.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;BarRAMtext.Name" xml:space="preserve">
+    <value>BarRAMtext</value>
+  </data>
+  <data name="&gt;&gt;BarRAMtext.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BarRAMtext.Parent" xml:space="preserve">
+    <value>cuiPanel2</value>
+  </data>
+  <data name="&gt;&gt;BarRAMtext.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="BarRAM.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="BarRAM.Location" type="System.Drawing.Point, System.Drawing">
+    <value>29, 65</value>
+  </data>
+  <data name="BarRAM.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>24, 24</value>
+  </data>
+  <data name="BarRAM.Size" type="System.Drawing.Size, System.Drawing">
+    <value>82, 82</value>
+  </data>
+  <data name="BarRAM.TabIndex" type="System.Int32, mscorlib">
+    <value>108</value>
+  </data>
+  <data name="&gt;&gt;BarRAM.Name" xml:space="preserve">
+    <value>BarRAM</value>
+  </data>
+  <data name="&gt;&gt;BarRAM.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiCircleProgressBar, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BarRAM.Parent" xml:space="preserve">
+    <value>cuiPanel2</value>
+  </data>
+  <data name="&gt;&gt;BarRAM.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="label14.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label14.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI Semibold, 13.8pt, style=Bold</value>
+  </data>
+  <data name="label14.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="label14.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label14.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 7</value>
+  </data>
+  <data name="label14.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>595, 0</value>
+  </data>
+  <data name="label14.Size" type="System.Drawing.Size, System.Drawing">
+    <value>85, 25</value>
+  </data>
+  <data name="label14.TabIndex" type="System.Int32, mscorlib">
+    <value>104</value>
+  </data>
+  <data name="label14.Text" xml:space="preserve">
+    <value>      RAM</value>
+  </data>
+  <data name="label14.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;label14.Name" xml:space="preserve">
+    <value>label14</value>
+  </data>
+  <data name="&gt;&gt;label14.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label14.Parent" xml:space="preserve">
+    <value>cuiPanel2</value>
+  </data>
+  <data name="&gt;&gt;label14.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="label22.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left</value>
+  </data>
+  <data name="label22.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label22.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 9pt</value>
+  </data>
+  <data name="label22.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label22.Location" type="System.Drawing.Point, System.Drawing">
+    <value>247, 116</value>
+  </data>
+  <data name="label22.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>595, 0</value>
+  </data>
+  <data name="label22.Size" type="System.Drawing.Size, System.Drawing">
+    <value>18, 15</value>
+  </data>
+  <data name="label22.TabIndex" type="System.Int32, mscorlib">
+    <value>156</value>
+  </data>
+  <data name="label22.Text" xml:space="preserve">
+    <value>°F</value>
+  </data>
+  <data name="label22.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;label22.Name" xml:space="preserve">
+    <value>label22</value>
+  </data>
+  <data name="&gt;&gt;label22.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label22.Parent" xml:space="preserve">
+    <value>cuiPanel3</value>
+  </data>
+  <data name="&gt;&gt;label22.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="label23.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left</value>
+  </data>
+  <data name="label23.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label23.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 9pt</value>
+  </data>
+  <data name="label23.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label23.Location" type="System.Drawing.Point, System.Drawing">
+    <value>200, 116</value>
+  </data>
+  <data name="label23.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>595, 0</value>
+  </data>
+  <data name="label23.Size" type="System.Drawing.Size, System.Drawing">
+    <value>20, 15</value>
+  </data>
+  <data name="label23.TabIndex" type="System.Int32, mscorlib">
+    <value>155</value>
+  </data>
+  <data name="label23.Text" xml:space="preserve">
+    <value>°C</value>
+  </data>
+  <data name="label23.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;label23.Name" xml:space="preserve">
+    <value>label23</value>
+  </data>
+  <data name="&gt;&gt;label23.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label23.Parent" xml:space="preserve">
+    <value>cuiPanel3</value>
+  </data>
+  <data name="&gt;&gt;label23.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="cuiSwitch_gputemperatura.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left</value>
+  </data>
+  <data name="cuiSwitch_gputemperatura.Location" type="System.Drawing.Point, System.Drawing">
+    <value>217, 113</value>
+  </data>
+  <data name="cuiSwitch_gputemperatura.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>12, 8</value>
+  </data>
+  <data name="cuiSwitch_gputemperatura.Size" type="System.Drawing.Size, System.Drawing">
+    <value>31, 19</value>
+  </data>
+  <data name="cuiSwitch_gputemperatura.TabIndex" type="System.Int32, mscorlib">
+    <value>154</value>
+  </data>
+  <data name="&gt;&gt;cuiSwitch_gputemperatura.Name" xml:space="preserve">
+    <value>cuiSwitch_gputemperatura</value>
+  </data>
+  <data name="&gt;&gt;cuiSwitch_gputemperatura.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiSwitch, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;cuiSwitch_gputemperatura.Parent" xml:space="preserve">
+    <value>cuiPanel3</value>
+  </data>
+  <data name="&gt;&gt;cuiSwitch_gputemperatura.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="label2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="label2.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label2.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.8pt</value>
+  </data>
+  <data name="label2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 40</value>
+  </data>
+  <data name="label2.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>595, 0</value>
+  </data>
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>34, 20</value>
+  </data>
+  <data name="label2.TabIndex" type="System.Int32, mscorlib">
+    <value>133</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>Uso</value>
+  </data>
+  <data name="label2.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;label2.Name" xml:space="preserve">
+    <value>label2</value>
+  </data>
+  <data name="&gt;&gt;label2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
+    <value>cuiPanel3</value>
+  </data>
+  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="BarGPUtext.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="BarGPUtext.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="BarGPUtext.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.8pt</value>
+  </data>
+  <data name="BarGPUtext.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BarGPUtext.Location" type="System.Drawing.Point, System.Drawing">
+    <value>54, 99</value>
+  </data>
+  <data name="BarGPUtext.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>595, 0</value>
+  </data>
+  <data name="BarGPUtext.Size" type="System.Drawing.Size, System.Drawing">
+    <value>37, 20</value>
+  </data>
+  <data name="BarGPUtext.TabIndex" type="System.Int32, mscorlib">
+    <value>132</value>
+  </data>
+  <data name="BarGPUtext.Text" xml:space="preserve">
+    <value>20%</value>
+  </data>
+  <data name="BarGPUtext.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;BarGPUtext.Name" xml:space="preserve">
+    <value>BarGPUtext</value>
+  </data>
+  <data name="&gt;&gt;BarGPUtext.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BarGPUtext.Parent" xml:space="preserve">
+    <value>cuiPanel3</value>
+  </data>
+  <data name="&gt;&gt;BarGPUtext.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="BarGPU.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="BarGPU.Location" type="System.Drawing.Point, System.Drawing">
+    <value>30, 68</value>
+  </data>
+  <data name="BarGPU.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>24, 24</value>
+  </data>
+  <data name="BarGPU.Size" type="System.Drawing.Size, System.Drawing">
+    <value>82, 82</value>
+  </data>
+  <data name="BarGPU.TabIndex" type="System.Int32, mscorlib">
+    <value>131</value>
+  </data>
+  <data name="&gt;&gt;BarGPU.Name" xml:space="preserve">
+    <value>BarGPU</value>
+  </data>
+  <data name="&gt;&gt;BarGPU.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiCircleProgressBar, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BarGPU.Parent" xml:space="preserve">
+    <value>cuiPanel3</value>
+  </data>
+  <data name="&gt;&gt;BarGPU.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="labelGpuTemp.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left</value>
+  </data>
+  <data name="labelGpuTemp.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="labelGpuTemp.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.8pt</value>
+  </data>
+  <data name="labelGpuTemp.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="labelGpuTemp.Location" type="System.Drawing.Point, System.Drawing">
+    <value>200, 83</value>
+  </data>
+  <data name="labelGpuTemp.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>595, 0</value>
+  </data>
+  <data name="labelGpuTemp.Size" type="System.Drawing.Size, System.Drawing">
+    <value>31, 20</value>
+  </data>
+  <data name="labelGpuTemp.TabIndex" type="System.Int32, mscorlib">
+    <value>110</value>
+  </data>
+  <data name="labelGpuTemp.Text" xml:space="preserve">
+    <value>90°</value>
+  </data>
+  <data name="labelGpuTemp.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;labelGpuTemp.Name" xml:space="preserve">
+    <value>labelGpuTemp</value>
+  </data>
+  <data name="&gt;&gt;labelGpuTemp.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;labelGpuTemp.Parent" xml:space="preserve">
+    <value>cuiPanel3</value>
+  </data>
+  <data name="&gt;&gt;labelGpuTemp.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="pic_termgpu.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="pic_termgpu.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="pic_termgpu.Location" type="System.Drawing.Point, System.Drawing">
+    <value>141, 67</value>
+  </data>
+  <data name="pic_termgpu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>57, 83</value>
+  </data>
+  <data name="pic_termgpu.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
+    <value>Zoom</value>
+  </data>
+  <data name="pic_termgpu.TabIndex" type="System.Int32, mscorlib">
+    <value>106</value>
+  </data>
+  <data name="&gt;&gt;pic_termgpu.Name" xml:space="preserve">
+    <value>pic_termgpu</value>
+  </data>
+  <data name="&gt;&gt;pic_termgpu.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pic_termgpu.Parent" xml:space="preserve">
+    <value>cuiPanel3</value>
+  </data>
+  <data name="&gt;&gt;pic_termgpu.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="label19.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="label19.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label19.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="label19.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label19.Location" type="System.Drawing.Point, System.Drawing">
+    <value>149, 39</value>
+  </data>
+  <data name="label19.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>595, 0</value>
+  </data>
+  <data name="label19.Size" type="System.Drawing.Size, System.Drawing">
+    <value>97, 21</value>
+  </data>
+  <data name="label19.TabIndex" type="System.Int32, mscorlib">
+    <value>105</value>
+  </data>
+  <data name="label19.Text" xml:space="preserve">
+    <value>Temperatura</value>
+  </data>
+  <data name="label19.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;label19.Name" xml:space="preserve">
+    <value>label19</value>
+  </data>
+  <data name="&gt;&gt;label19.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label19.Parent" xml:space="preserve">
+    <value>cuiPanel3</value>
+  </data>
+  <data name="&gt;&gt;label19.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="label20.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label20.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI Semibold, 13.8pt, style=Bold</value>
+  </data>
+  <data name="label20.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="label20.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label20.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 9</value>
+  </data>
+  <data name="label20.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>595, 0</value>
+  </data>
+  <data name="label20.Size" type="System.Drawing.Size, System.Drawing">
+    <value>79, 25</value>
+  </data>
+  <data name="label20.TabIndex" type="System.Int32, mscorlib">
+    <value>104</value>
+  </data>
+  <data name="label20.Text" xml:space="preserve">
+    <value>      GPU</value>
+  </data>
+  <data name="label20.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;label20.Name" xml:space="preserve">
+    <value>label20</value>
+  </data>
+  <data name="&gt;&gt;label20.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label20.Parent" xml:space="preserve">
+    <value>cuiPanel3</value>
+  </data>
+  <data name="&gt;&gt;label20.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="label13.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="label13.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label13.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.8pt</value>
+  </data>
+  <data name="label13.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label13.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 39</value>
+  </data>
+  <data name="label13.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>595, 0</value>
+  </data>
+  <data name="label13.Size" type="System.Drawing.Size, System.Drawing">
+    <value>34, 20</value>
+  </data>
+  <data name="label13.TabIndex" type="System.Int32, mscorlib">
+    <value>147</value>
+  </data>
+  <data name="label13.Text" xml:space="preserve">
+    <value>Uso</value>
+  </data>
+  <data name="label13.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;label13.Name" xml:space="preserve">
+    <value>label13</value>
+  </data>
+  <data name="&gt;&gt;label13.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label13.Parent" xml:space="preserve">
+    <value>cuiPanel4</value>
+  </data>
+  <data name="&gt;&gt;label13.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="labelReteUtilizzo.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="labelReteUtilizzo.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="labelReteUtilizzo.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="labelReteUtilizzo.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="labelReteUtilizzo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>50, 98</value>
+  </data>
+  <data name="labelReteUtilizzo.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>595, 0</value>
+  </data>
+  <data name="labelReteUtilizzo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>41, 21</value>
+  </data>
+  <data name="labelReteUtilizzo.TabIndex" type="System.Int32, mscorlib">
+    <value>146</value>
+  </data>
+  <data name="labelReteUtilizzo.Text" xml:space="preserve">
+    <value>20%</value>
+  </data>
+  <data name="labelReteUtilizzo.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;labelReteUtilizzo.Name" xml:space="preserve">
+    <value>labelReteUtilizzo</value>
+  </data>
+  <data name="&gt;&gt;labelReteUtilizzo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;labelReteUtilizzo.Parent" xml:space="preserve">
+    <value>cuiPanel4</value>
+  </data>
+  <data name="&gt;&gt;labelReteUtilizzo.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="progressbarRete.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="progressbarRete.Location" type="System.Drawing.Point, System.Drawing">
+    <value>29, 67</value>
+  </data>
+  <data name="progressbarRete.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>24, 24</value>
+  </data>
+  <data name="progressbarRete.Size" type="System.Drawing.Size, System.Drawing">
+    <value>82, 82</value>
+  </data>
+  <data name="progressbarRete.TabIndex" type="System.Int32, mscorlib">
+    <value>145</value>
+  </data>
+  <data name="&gt;&gt;progressbarRete.Name" xml:space="preserve">
+    <value>progressbarRete</value>
+  </data>
+  <data name="&gt;&gt;progressbarRete.Type" xml:space="preserve">
+    <value>CuoreUI.Controls.cuiCircleProgressBar, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;progressbarRete.Parent" xml:space="preserve">
+    <value>cuiPanel4</value>
+  </data>
+  <data name="&gt;&gt;progressbarRete.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="lblDonwload.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left</value>
+  </data>
+  <data name="lblDonwload.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblDonwload.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 9pt</value>
+  </data>
+  <data name="lblDonwload.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="lblDonwload.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblDonwload.Location" type="System.Drawing.Point, System.Drawing">
+    <value>137, 99</value>
+  </data>
+  <data name="lblDonwload.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>595, 0</value>
+  </data>
+  <data name="lblDonwload.Size" type="System.Drawing.Size, System.Drawing">
+    <value>88, 15</value>
+  </data>
+  <data name="lblDonwload.TabIndex" type="System.Int32, mscorlib">
+    <value>134</value>
+  </data>
+  <data name="lblDonwload.Text" xml:space="preserve">
+    <value>        Download:</value>
+  </data>
+  <data name="lblDonwload.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;lblDonwload.Name" xml:space="preserve">
+    <value>lblDonwload</value>
+  </data>
+  <data name="&gt;&gt;lblDonwload.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblDonwload.Parent" xml:space="preserve">
+    <value>cuiPanel4</value>
+  </data>
+  <data name="&gt;&gt;lblDonwload.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="lblUpload.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left</value>
+  </data>
+  <data name="lblUpload.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblUpload.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 9pt</value>
+  </data>
+  <data name="lblUpload.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="lblUpload.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblUpload.Location" type="System.Drawing.Point, System.Drawing">
+    <value>136, 124</value>
+  </data>
+  <data name="lblUpload.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>595, 0</value>
+  </data>
+  <data name="lblUpload.Size" type="System.Drawing.Size, System.Drawing">
+    <value>72, 15</value>
+  </data>
+  <data name="lblUpload.TabIndex" type="System.Int32, mscorlib">
+    <value>133</value>
+  </data>
+  <data name="lblUpload.Text" xml:space="preserve">
+    <value>        Upload:</value>
+  </data>
+  <data name="lblUpload.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;lblUpload.Name" xml:space="preserve">
+    <value>lblUpload</value>
+  </data>
+  <data name="&gt;&gt;lblUpload.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblUpload.Parent" xml:space="preserve">
+    <value>cuiPanel4</value>
+  </data>
+  <data name="&gt;&gt;lblUpload.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="labelVelocitaRete.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left</value>
+  </data>
+  <data name="labelVelocitaRete.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="labelVelocitaRete.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 9pt</value>
+  </data>
+  <data name="labelVelocitaRete.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="labelVelocitaRete.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="labelVelocitaRete.Location" type="System.Drawing.Point, System.Drawing">
+    <value>137, 74</value>
+  </data>
+  <data name="labelVelocitaRete.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>595, 0</value>
+  </data>
+  <data name="labelVelocitaRete.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 15</value>
+  </data>
+  <data name="labelVelocitaRete.TabIndex" type="System.Int32, mscorlib">
+    <value>131</value>
+  </data>
+  <data name="labelVelocitaRete.Text" xml:space="preserve">
+    <value>        Velocità:</value>
+  </data>
+  <data name="labelVelocitaRete.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;labelVelocitaRete.Name" xml:space="preserve">
+    <value>labelVelocitaRete</value>
+  </data>
+  <data name="&gt;&gt;labelVelocitaRete.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;labelVelocitaRete.Parent" xml:space="preserve">
+    <value>cuiPanel4</value>
+  </data>
+  <data name="&gt;&gt;labelVelocitaRete.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="label15.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label15.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI Semibold, 13.8pt, style=Bold</value>
+  </data>
+  <data name="label15.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="label15.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label15.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 9</value>
+  </data>
+  <data name="label15.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>595, 0</value>
+  </data>
+  <data name="label15.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 25</value>
+  </data>
+  <data name="label15.TabIndex" type="System.Int32, mscorlib">
+    <value>104</value>
+  </data>
+  <data name="label15.Text" xml:space="preserve">
+    <value>      Rete</value>
+  </data>
+  <data name="label15.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;label15.Name" xml:space="preserve">
+    <value>label15</value>
+  </data>
+  <data name="&gt;&gt;label15.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label15.Parent" xml:space="preserve">
+    <value>cuiPanel4</value>
+  </data>
+  <data name="&gt;&gt;label15.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <metadata name="$this.Language" type="System.Globalization.CultureInfo, System.Private.CoreLib, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+    <value>en</value>
+  </metadata>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>25</value>
+  </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>96, 96</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>885, 419</value>
+  </data>
+  <data name="&gt;&gt;tempMonitorTimer.Name" xml:space="preserve">
+    <value>tempMonitorTimer</value>
+  </data>
+  <data name="&gt;&gt;tempMonitorTimer.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Timer, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>FormMonitoraggio</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+</root>
