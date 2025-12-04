@@ -1,5 +1,5 @@
 {
-  "version": "2.5.0.2",
+  "version": "2.5.0.1",
   "releaseNotes": {
     "IT": [
       "Fix creazione ISO"
@@ -10,4 +10,5 @@
   },
   "updateUrl": "https://github.com/MrNico98/WinHubX/releases/download/WinHubX-v.2.5.0.1/WinHubX.exe"
 }
+
 
