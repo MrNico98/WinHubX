@@ -1,14 +1,17 @@
 {
-  "version": "2.5.0.3",
+  "version": "2.5.0.4",
   "releaseNotes": {
     "IT": [
-      "Correzione errore ricorsivo nella creazione ISO. Sistemato loop infinito",
-      "Riprisinto codice"
+      "Aggiunta modifica servizi con spiegazione e suggeriti",
+      "Aggiunto sezione gestione settaggi IA",
+      "Creazione di ISO solo con bypass (senza altre modifiche)"
     ],
     "EN": [
-      "Fixed a recursive error when creating ISO. Fixed an infinite loop.",
-      "Restore code"
+      "Added service modification with explanation and suggestions",
+      "Added IA settings management section",
+      "Create ISOs only with bypass (without other changes)"
     ]
   },
-  "updateUrl": "https://github.com/MrNico98/WinHubX/releases/download/WinHubX-v.2.5.0.3/WinHubX.exe"
+  "updateUrl": "https://github.com/MrNico98/WinHubX/releases/download/WinHubX-v.2.5.0.4/WinHubX.exe"
 }
+
