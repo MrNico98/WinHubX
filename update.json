@@ -1,5 +1,5 @@
 {
-  "version": "2.5.0.3",
+  "version": "2.5.0.4",
   "releaseNotes": {
     "IT": [
       "Aggiunta modifica servizi con spiegazione e suggeriti",
@@ -12,7 +12,8 @@
       "Create ISOs only with bypass (without other changes)"
     ]
   },
-  "updateUrl": "https://github.com/MrNico98/WinHubX/releases/download/WinHubX-v.2.5.0.3/WinHubX.exe"
+  "updateUrl": "https://github.com/MrNico98/WinHubX/releases/download/WinHubX-v.2.5.0.4/WinHubX.exe"
 }
+
 
 
