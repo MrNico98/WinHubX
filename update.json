@@ -1,19 +1,34 @@
 {
-  "version": "2.5.0.4",
+  "version": "2.5.0.5",
   "releaseNotes": {
     "IT": [
-      "Aggiunta modifica servizi con spiegazione e suggeriti",
-      "Aggiunto sezione gestione settaggi IA",
-      "Creazione di ISO solo con bypass (senza altre modifiche)"
+      "Schermata Home modificata",
+      "Aggiunto BSDOS dettagliato",
+      "Preferenza per l'accelerazione del mouse",
+      "Preferenza per il ritardo di apertura del menu",
+      "Suggerimenti per la schermata di blocco",
+      "Preferenza per il tick dinamico di Windows",
+      "Preferenza per Hags",
+      "Preferenza per la priorità Win32",
+      "Ottimizzazione dei giochi Windows",
+      "Rimozione dell'IA migliorata"
     ],
     "EN": [
-      "Added service modification with explanation and suggestions",
-      "Added IA settings management section",
-      "Create ISOs only with bypass (without other changes)"
+      "Modified Home screen",
+      "Added detailed BSDOS",
+      "Mouse acceleration preference",
+      "Menu opening delay preference",
+      "Lock screen hints",
+      "Dynamic Windows Tick preference",
+      "Hags preference",
+      "Win32 priority preference",
+      "Windows games optimization",
+      "Improved AI removal"
     ]
   },
-  "updateUrl": "https://github.com/MrNico98/WinHubX/releases/download/WinHubX-v.2.5.0.4/WinHubX.exe"
+  "updateUrl": "https://github.com/MrNico98/WinHubX/releases/download/WinHubX-v.2.5.0.5/WinHubX.exe"
 }
+
 
 
 
