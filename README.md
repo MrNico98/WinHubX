@@ -32,9 +32,9 @@
 ## 📊 Technical Overview
 | Linguaggio   | Percentuale |
 |--------------|-------------|
-| PowerShell   | 87.0%       |
-| C#           | 11.5%       |
-| Batchfile    | 1.5%        |
+| PowerShell   | 0.3%        |
+| C#           | 42.4%       |
+| Batchfile    | 57.3%       |
 
 ---
 
