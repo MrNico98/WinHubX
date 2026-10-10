@@ -913,7 +913,7 @@
     <value>progressBar_office</value>
   </data>
   <data name="&gt;&gt;progressBar_office.Type" xml:space="preserve">
-    <value>CuoreUI.Controls.cuiProgressBarHorizontal, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+    <value>HartUI.Controls.cuiProgressBarHorizontal, HartUI, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;progressBar_office.Parent" xml:space="preserve">
     <value>$this</value>
@@ -940,7 +940,7 @@
     <value>btn_CreaISOVerdi</value>
   </data>
   <data name="&gt;&gt;btn_CreaISOVerdi.Type" xml:space="preserve">
-    <value>CuoreUI.Controls.cuiButton, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+    <value>HartUI.Controls.cuiButton, HartUI, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;btn_CreaISOVerdi.Parent" xml:space="preserve">
     <value>$this</value>

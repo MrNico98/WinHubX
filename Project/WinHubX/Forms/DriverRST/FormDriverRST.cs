@@ -1,96 +1,35 @@
-﻿using Microsoft.Win32;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System.Diagnostics;
-using System.IO.Compression;
-using System.Management;
-using System.Security.Policy;
 using WinHubX.Impostazioni;
 
 namespace WinHubX.Forms.DriverRST
 {
     public partial class FormDriverRST : Form
     {
+        private const string IntelRstDownloadPage =
+            "https://www.intel.com/content/www/us/en/support/articles/000091087/technologies/intel-rapid-storage-technology-intel-rst.html";
+
         public FormDriverRST()
         {
             InitializeComponent();
             ThemeManager.ApplyThemeToControl(this, ThemeManager.IsDarkTheme);
         }
 
-        private async void btnDriverRSTPrinci_Click(object sender, EventArgs e)
+        private void btnDriverRSTPrinci_Click(object? sender, EventArgs e)
         {
             try
             {
-                using (var folderDialog = new FolderBrowserDialog())
+                Process.Start(new ProcessStartInfo
                 {
-                    folderDialog.Description = "Seleziona dove vuoi salvare il driver RST";
-                    folderDialog.ShowNewFolderButton = true;
-
-                    if (folderDialog.ShowDialog() == DialogResult.OK)
-                    {
-                        string destinationFolder = folderDialog.SelectedPath;
-                        string downloadUrl = await GetDriverRSTDownloadUrl();
-
-                        if (!string.IsNullOrEmpty(downloadUrl))
-                        {
-                            await DownloadAndExtractDriverRST(downloadUrl, destinationFolder);
-                            MessageBox.Show("Driver RST scaricato ed estratto con successo!", "Successo",
-                                          MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                        else
-                        {
-                            MessageBox.Show("Impossibile trovare l'URL di download del driver RST", "Errore",
-                                          MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                    }
-                }
+                    FileName = IntelRstDownloadPage,
+                    UseShellExecute = true
+                });
             }
-            catch (Exception ex)
+            catch (Exception ex) when (ex is System.ComponentModel.Win32Exception
+                or InvalidOperationException
+                or System.Security.SecurityException)
             {
-                MessageBox.Show($"Errore durante il download: {ex.Message}", "Errore",
-                              MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private async Task<string> GetDriverRSTDownloadUrl()
-        {
-            try
-            {
-                using (var httpClient = new HttpClient())
-                {
-                    string jsonContent = await httpClient.GetStringAsync(Dipendenze.GitHubConfigUrl);
-                    var jsonObject = Newtonsoft.Json.Linq.JObject.Parse(jsonContent);
-
-                    return jsonObject["Dialog"]?["DriverRST"]?.ToString();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Errore nel recupero dell'URL: {ex.Message}", "Errore",
-                              MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return null;
-            }
-        }
-
-        private async Task DownloadAndExtractDriverRST(string downloadUrl, string destinationFolder)
-        {
-            string tempZipPath = Path.Combine(Path.GetTempPath(), "DriverRST.zip");
-
-            try
-            {
-                using (var httpClient = new HttpClient())
-                {
-                    byte[] fileData = await httpClient.GetByteArrayAsync(downloadUrl);
-                    await File.WriteAllBytesAsync(tempZipPath, fileData);
-                }
-                System.IO.Compression.ZipFile.ExtractToDirectory(tempZipPath, destinationFolder, true);
-            }
-            finally
-            {
-                if (File.Exists(tempZipPath))
-                {
-                    File.Delete(tempZipPath);
-                }
+                MessageBox.Show($"Impossibile aprire la pagina ufficiale Intel: {ex.Message}", "Download driver RST",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

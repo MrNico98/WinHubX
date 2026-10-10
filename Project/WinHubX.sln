@@ -5,6 +5,8 @@ VisualStudioVersion = 17.8.34408.163
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinHubX", "WinHubX\WinHubX.csproj", "{D10BE9B5-EB77-4F88-99BE-64BC17961D27}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinHubX.Tests", "WinHubX.Tests\WinHubX.Tests.csproj", "{93AB7C2D-7F69-4F21-9E55-2E18CE7866A2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +22,14 @@ Global
 		{D10BE9B5-EB77-4F88-99BE-64BC17961D27}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D10BE9B5-EB77-4F88-99BE-64BC17961D27}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D10BE9B5-EB77-4F88-99BE-64BC17961D27}.Release|x64.ActiveCfg = Debug|x64
+		{93AB7C2D-7F69-4F21-9E55-2E18CE7866A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93AB7C2D-7F69-4F21-9E55-2E18CE7866A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93AB7C2D-7F69-4F21-9E55-2E18CE7866A2}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{93AB7C2D-7F69-4F21-9E55-2E18CE7866A2}.Debug|x64.Build.0 = Debug|Any CPU
+		{93AB7C2D-7F69-4F21-9E55-2E18CE7866A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93AB7C2D-7F69-4F21-9E55-2E18CE7866A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93AB7C2D-7F69-4F21-9E55-2E18CE7866A2}.Release|x64.ActiveCfg = Release|Any CPU
+		{93AB7C2D-7F69-4F21-9E55-2E18CE7866A2}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

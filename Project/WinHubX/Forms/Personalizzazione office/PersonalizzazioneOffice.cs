@@ -1,20 +1,38 @@
 ﻿using System.Diagnostics;
 using System.Reflection;
 using System.Xml;
+using System.Runtime.InteropServices;
 using WinHubX.Impostazioni;
 
 namespace WinHubX.Forms.Personalizzazione_office
 {
     public partial class PersonalizzazioneOffice : Form
     {
-        private Form1 form1;
-        private FormOffice formoffice;
+        private static bool IsExpectedOfficeInstallationFailure(Exception exception) =>
+            exception is IOException
+                or UnauthorizedAccessException
+                or System.Security.SecurityException
+                or System.ComponentModel.Win32Exception
+                or System.Runtime.InteropServices.COMException
+                or InvalidOperationException
+                or NotSupportedException
+                or ArgumentException
+                or OperationCanceledException
+                or TimeoutException
+                or XmlException;
+
+        private readonly Form1 form1;
+        private readonly FormOffice formoffice;
+        private CancellationTokenSource? _installationCancellation;
+        private Task? _installationTask;
+        private bool _closeAfterInstallation;
+        private bool _allowClose;
 
         public PersonalizzazioneOffice(Form1 form1, FormOffice formoffice)
         {
             InitializeComponent();
-            form1 = form1;
-            formoffice = formoffice;
+            this.form1 = form1;
+            this.formoffice = formoffice;
             ActiveControl = progressBar_office;
             ThemeManager.ApplyThemeToControl(this, ThemeManager.IsDarkTheme);
             btn_CreaISOVerdi.Content = LanguageManager.CurrentLanguage switch
@@ -25,10 +43,16 @@ namespace WinHubX.Forms.Personalizzazione_office
             };
         }
 
-        private void btn_avviainstallazione_Click(object sender, EventArgs e)
+        private async void btn_avviainstallazione_Click(object? sender, EventArgs e)
         {
+            if (_installationTask is { IsCompleted: false })
+            {
+                MessageBox.Show("È già in corso una personalizzazione di Office.");
+                return;
+            }
+
             progressBar_office.Visible = true;
-            string version = comboBoxVerOffice.SelectedItem?.ToString();
+            string version = comboBoxVerOffice.SelectedItem?.ToString() ?? string.Empty;
             string language = comboBox_Lingua.SelectedItem?.ToString()?.ToUpperInvariant() ?? "IT";
             string arch = GetArchitecture();
 
@@ -39,55 +63,103 @@ namespace WinHubX.Forms.Personalizzazione_office
             }
             string archLabel = (arch == "64" || arch == "ARM64") ? "x64" : "x32";
             string xmlFileName = $"Configurazione{version.Replace(" ", "")}{archLabel}.xml";
-            string xmlFilePath = Path.Combine(Path.GetTempPath(), xmlFileName);
-            ExtractAndSaveResource(xmlFileName, xmlFilePath);
-            if (language == "EN")
-                ModifyElementFromXml(xmlFilePath, "it-it", "en-gb");
-            if (checkBox_visio.Checked)
-                AddVisioElement(version, xmlFilePath);
-            if (checkBox_project.Checked)
-                AddProjectElement(version, xmlFilePath);
-            Dictionary<CheckBox, string> apps = new()
-    {
-        { checkBox_word, "Word" },
-        { checkBox_excel, "Excel" },
-        { checkBox_powerpoint, "PowerPoint" },
-        { checkBox_outlook, "Outlook" },
-        { checkBox_onenote, "OneNote" },
-        { checkBox_onedrive, "OneDrive" },
-        { checkBox_publisher, "Publisher" },
-        { checkBox_access, "Access" }
-    };
-
-            foreach (var kvp in apps)
+            string sessionDirectory = Path.Join(
+                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                "WinHubX",
+                "OfficePersonalizzato",
+                Guid.NewGuid().ToString("N"));
+            string xmlFilePath = Path.Join(sessionDirectory, xmlFileName);
+            try
             {
-                if (kvp.Key.Checked)
+                Directory.CreateDirectory(sessionDirectory);
+                ExtractAndSaveResource(xmlFileName, xmlFilePath);
+                if (language == "EN")
+                    ModifyElementFromXml(xmlFilePath, "it-it", "en-gb");
+                if (checkBox_visio.Checked)
+                    AddVisioElement(version, xmlFilePath);
+                if (checkBox_project.Checked)
+                    AddProjectElement(version, xmlFilePath);
+                Dictionary<CheckBox, string> apps = new()
+                {
+                    { checkBox_word, "Word" },
+                    { checkBox_excel, "Excel" },
+                    { checkBox_powerpoint, "PowerPoint" },
+                    { checkBox_outlook, "Outlook" },
+                    { checkBox_onenote, "OneNote" },
+                    { checkBox_onedrive, "OneDrive" },
+                    { checkBox_publisher, "Publisher" },
+                    { checkBox_access, "Access" }
+                };
+
+                foreach (var kvp in apps.Where(static pair => pair.Key.Checked))
+                {
                     RemoveElementFromXml(xmlFilePath, "ExcludeApp", kvp.Value);
+                }
+            }
+            catch (Exception ex) when (IsExpectedOfficeInstallationFailure(ex))
+            {
+                try
+                {
+                    if (Directory.Exists(sessionDirectory))
+                        Directory.Delete(sessionDirectory, recursive: true);
+                }
+                catch (Exception cleanupException) when (cleanupException is IOException or UnauthorizedAccessException)
+                {
+                    Debug.WriteLine($"Cleanup sessione Office fallito: {cleanupException}");
+                }
+
+                MessageBox.Show($"Preparazione installazione non riuscita: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
 
-            StartInstallation(xmlFilePath);
+            using CancellationTokenSource cancellation = new();
+            _installationCancellation = cancellation;
+            _installationTask = StartInstallationAsync(xmlFilePath, sessionDirectory, cancellation.Token);
+            try
+            {
+                await _installationTask;
+            }
+            finally
+            {
+                _installationTask = null;
+                _installationCancellation = null;
+                if (_closeAfterInstallation && !IsDisposed && IsHandleCreated)
+                {
+                    _allowClose = true;
+                    BeginInvoke(new Action(Close));
+                }
+            }
         }
 
         private string GetArchitecture()
         {
             try
             {
-                string path = Path.Combine(
+                string path = Path.Join(
                     Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                     "WinHubX", "Computer", "osehardware.json");
 
                 if (File.Exists(path))
                 {
-                    dynamic json = Newtonsoft.Json.JsonConvert.DeserializeObject(File.ReadAllText(path));
-                    string arch = json?.Architettura?.ToString()?.ToUpperInvariant();
+                    var json = Newtonsoft.Json.JsonConvert.DeserializeObject<Newtonsoft.Json.Linq.JObject>(File.ReadAllText(path));
+                    string? arch = json?["Architettura"]?.ToObject<string>()?.ToUpperInvariant();
                     if (arch == "ARM64" || arch == "64")
                         return "64";
                     if (arch == "32" || arch == "X86")
                         return "32";
                 }
             }
-            catch { }
-            return "64";
+            catch (Exception ex) when (IsExpectedOfficeInstallationFailure(ex))
+            {
+                Debug.WriteLine($"Lettura architettura hardware non riuscita; uso l'architettura OS: {ex}");
+            }
+
+            return RuntimeInformation.OSArchitecture switch
+            {
+                Architecture.X86 => "32",
+                Architecture.X64 or Architecture.Arm64 => "64",
+                _ => throw new PlatformNotSupportedException($"Architettura non supportata: {RuntimeInformation.OSArchitecture}.")
+            };
         }
 
         private void AddVisioElement(string version, string xmlFilePath)
@@ -98,10 +170,10 @@ namespace WinHubX.Forms.Personalizzazione_office
                 "Office 2021" => CreateVisioXml(),
                 "Office 2024" => CreateVisioXml24(),
                 "Office 365" => CreateVisioXml365(),
-                _ => null
+                _ => string.Empty
             };
 
-            if (xmlToAdd != null)
+            if (!string.IsNullOrEmpty(xmlToAdd))
                 AddElementByVersion(version, xmlFilePath, xmlToAdd);
         }
 
@@ -113,7 +185,7 @@ namespace WinHubX.Forms.Personalizzazione_office
                 "Office 2021" => CreateProjectXml(),
                 "Office 2024" => CreateProjectXml24(),
                 "Office 365" => CreateProjectXml365(),
-                _ => null
+                _ => string.Empty
             };
 
             if (xmlToAdd != null)
@@ -128,7 +200,7 @@ namespace WinHubX.Forms.Personalizzazione_office
             foreach (XmlNode node in doc.GetElementsByTagName("Language"))
             {
                 var attr = node.Attributes?["ID"];
-                if (attr?.Value == oldLang)
+                if (attr is not null && attr.Value == oldLang)
                     attr.Value = newLang;
             }
 
@@ -143,10 +215,10 @@ namespace WinHubX.Forms.Personalizzazione_office
                 "Office 2021" => "ProPlus2021Volume",
                 "Office 2024" => "ProPlus2024Volume",
                 "Office 365" => "O365BusinessRetail",
-                _ => null
+                _ => string.Empty
             };
 
-            if (productId == null)
+            if (string.IsNullOrEmpty(productId))
             {
                 MessageBox.Show($"Versione '{version}' non riconosciuta.", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -167,10 +239,10 @@ namespace WinHubX.Forms.Personalizzazione_office
                 var fragment = xmlDoc.CreateDocumentFragment();
                 fragment.InnerXml = xmlToAdd;
 
-                targetNode.ParentNode.InsertAfter(fragment, targetNode);
+                targetNode.ParentNode?.InsertAfter(fragment, targetNode);
                 xmlDoc.Save(xmlFilePath);
             }
-            catch (Exception ex)
+            catch (Exception ex) when (IsExpectedOfficeInstallationFailure(ex))
             {
                 MessageBox.Show($"Errore durante la modifica di '{xmlFilePath}': {ex.Message}", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -191,11 +263,11 @@ namespace WinHubX.Forms.Personalizzazione_office
                 }
 
                 foreach (XmlNode node in nodes)
-                    node.ParentNode.RemoveChild(node);
+                    node.ParentNode?.RemoveChild(node);
 
                 xmlDoc.Save(xmlFilePath);
             }
-            catch (Exception ex)
+            catch (Exception ex) when (IsExpectedOfficeInstallationFailure(ex))
             {
                 MessageBox.Show($"Errore durante la rimozione: {ex.Message}", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -213,7 +285,7 @@ namespace WinHubX.Forms.Personalizzazione_office
                 resourceStream.CopyTo(fileStream);
 
             }
-            catch (Exception ex)
+            catch (Exception ex) when (IsExpectedOfficeInstallationFailure(ex))
             {
                 MessageBox.Show($"Errore durante l'estrazione di '{resourceName}': {ex.Message}", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -336,80 +408,91 @@ namespace WinHubX.Forms.Personalizzazione_office
   <ExcludeApp ID=""Word"" />
 </Product>";
 
-        private async void StartInstallation(string xmlFilePath)
+        private async Task StartInstallationAsync(
+            string xmlFilePath,
+            string sessionDirectory,
+            CancellationToken cancellationToken)
         {
             try
             {
                 progressBar_office.Value = 0;
-                string tempPath = Path.Combine(Path.GetTempPath(), "OfficePersonalizzato");
-                Directory.CreateDirectory(tempPath);
-                string binExePath = Path.Combine(tempPath, "bin.exe");
+                string binExePath = Path.Join(sessionDirectory, "bin.exe");
                 ExtractAndSaveResource("bin.exe", binExePath);
 
                 progressBar_office.Value = 15;
-                await Task.Delay(5000);
 
                 if (!File.Exists(binExePath))
                     throw new FileNotFoundException("Executable not found.", binExePath);
 
                 progressBar_office.Value = 30;
-                await Task.Delay(3000);
+                cancellationToken.ThrowIfCancellationRequested();
 
-                string arguments = $"/configure \"{xmlFilePath}\"";
                 ProcessStartInfo startInfo = new ProcessStartInfo
                 {
                     FileName = binExePath,
-                    Arguments = arguments,
-                    WorkingDirectory = tempPath,
+                    WorkingDirectory = sessionDirectory,
                     UseShellExecute = false,
                     CreateNoWindow = true
                 };
-                using (Process process = Process.Start(startInfo))
+                startInfo.ArgumentList.Add("/configure");
+                startInfo.ArgumentList.Add(xmlFilePath);
+                using (Process process = Process.Start(startInfo)
+                    ?? throw new InvalidOperationException("Impossibile avviare l'installazione di Office."))
                 {
                     progressBar_office.Value = 50;
-                    await Task.Delay(6000);
-
-                    if (process != null)
-                        await Task.Run(() => process.WaitForExit());
+                    // Il setup usa i file della sessione: attendere la sua uscita prima del cleanup.
+                    await process.WaitForExitAsync(CancellationToken.None);
+                    if (process.ExitCode != 0)
+                    {
+                        throw new InvalidOperationException(
+                            $"Il programma di installazione di Office è terminato con codice {process.ExitCode}.");
+                    }
                 }
 
                 progressBar_office.Value = 75;
-                await Task.Delay(4000);
-
-                File.Delete(xmlFilePath);
-                if (Directory.Exists(tempPath))
-                {
-                    Directory.Delete(tempPath, true);
-                }
                 progressBar_office.Value = 100;
             }
-            catch (Exception ex)
+            catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
             {
-                _ = MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Debug.WriteLine("Personalizzazione Office annullata prima dell'avvio del setup.");
             }
-        }
-
-        private void PersonalizzazioneOffice_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            string tempPath = Path.Combine(Environment.GetEnvironmentVariable("TEMP"), "OfficePersonalizzato");
-            if (Directory.Exists(tempPath))
+            catch (Exception ex) when (IsExpectedOfficeInstallationFailure(ex))
+            {
+                _ = MessageBox.Show($"Installazione Office non riuscita: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
             {
                 try
                 {
-                    Directory.Delete(tempPath, true);
+                    if (Directory.Exists(sessionDirectory))
+                        Directory.Delete(sessionDirectory, recursive: true);
                 }
-                catch (Exception ex)
+                catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
                 {
-                    _ = MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Debug.WriteLine($"Cleanup sessione personalizzazione Office non riuscito: {ex}");
                 }
             }
         }
 
-        private void comboBoxVerOffice_SelectedIndexChanged(object sender, EventArgs e)
+        private void PersonalizzazioneOffice_FormClosing(object? sender, FormClosingEventArgs e)
+        {
+            if (_allowClose || _installationTask is not { IsCompleted: false })
+                return;
+
+            e.Cancel = true;
+            _closeAfterInstallation = true;
+            _installationCancellation?.Cancel();
+            if (!IsDisposed)
+            {
+                Debug.WriteLine("Chiusura rinviata finché il processo Office non ha terminato e la sessione non è pulita.");
+            }
+        }
+
+        private void comboBoxVerOffice_SelectedIndexChanged(object? sender, EventArgs e)
         {
             panel7.Visible = true;
 
-            string selected = comboBoxVerOffice.SelectedItem?.ToString();
+            string? selected = comboBoxVerOffice.SelectedItem?.ToString();
 
             if (selected == null) return;
 
@@ -443,7 +526,7 @@ namespace WinHubX.Forms.Personalizzazione_office
             }
         }
 
-        private void PersonalizzazioneOffice_Load(object sender, EventArgs e)
+        private void PersonalizzazioneOffice_Load(object? sender, EventArgs e)
         {
             pictureBoxWord.Tag = checkBox_word;
             pictureBoxExcel.Tag = checkBox_excel;
@@ -467,7 +550,7 @@ namespace WinHubX.Forms.Personalizzazione_office
             pictureBoxPublisher.Click += PictureBox_Click;
 
         }
-        private void PictureBox_Click(object sender, EventArgs e)
+        private void PictureBox_Click(object? sender, EventArgs e)
         {
             if (sender is PictureBox pb && pb.Tag is CheckBox cb)
             {

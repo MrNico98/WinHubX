@@ -144,7 +144,7 @@
     <value>label3</value>
   </data>
   <data name="&gt;&gt;btnInstallaVerdi.Type" xml:space="preserve">
-    <value>CuoreUI.Controls.cuiButton, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+    <value>HartUI.Controls.cuiButton, HartUI, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
     <value>2</value>

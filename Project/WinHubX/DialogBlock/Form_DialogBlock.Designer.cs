@@ -1,25 +1,7 @@
-﻿namespace WinHubX.DialogBlock
+namespace WinHubX.DialogBlock
 {
     partial class Form_DialogBlock
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
-
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -29,12 +11,12 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_DialogBlock));
-            btnVerificaVerdi = new CuoreUI.Controls.cuiButton();
+            btnVerificaVerdi = new HartUI.Controls.cuiButton();
             btnClose = new Button();
             label4 = new Label();
             label3 = new Label();
             pictureBox1 = new PictureBox();
-            cuiFormRounder1 = new CuoreUI.Components.cuiFormRounder();
+            cuiFormRounder1 = new HartUI.Components.cuiFormRounder();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -55,9 +37,7 @@
             btnVerificaVerdi.HoverImageTint = Color.White;
             btnVerificaVerdi.HoverOutline = Color.FromArgb(46, 125, 50);
             btnVerificaVerdi.Image = Properties.Resources.pngclick;
-            btnVerificaVerdi.ImageAutoCenter = true;
             btnVerificaVerdi.ImageExpand = new Point(0, 0);
-            btnVerificaVerdi.ImageOffset = new Point(0, 0);
             btnVerificaVerdi.Name = "btnVerificaVerdi";
             btnVerificaVerdi.NormalBackground = Color.FromArgb(50, 50, 50);
             btnVerificaVerdi.NormalForeColor = Color.White;
@@ -70,7 +50,6 @@
             btnVerificaVerdi.PressedOutline = Color.FromArgb(46, 125, 50);
             btnVerificaVerdi.Rounding = new Padding(8);
             btnVerificaVerdi.TextAlignment = StringAlignment.Center;
-            btnVerificaVerdi.TextOffset = new Point(0, 0);
             btnVerificaVerdi.Click += btnVerificaVerdi_Click;
             // 
             // btnClose
@@ -112,7 +91,7 @@
             // Form_DialogBlock
             // 
             resources.ApplyResources(this, "$this");
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.FromArgb(50, 50, 50);
             Controls.Add(btnVerificaVerdi);
             Controls.Add(btnClose);
@@ -128,11 +107,11 @@
 
         #endregion
 
-        private CuoreUI.Controls.cuiButton btnVerificaVerdi;
+        private HartUI.Controls.cuiButton btnVerificaVerdi;
         private Button btnClose;
         private Label label4;
         private Label label3;
         private PictureBox pictureBox1;
-        private CuoreUI.Components.cuiFormRounder cuiFormRounder1;
+        private HartUI.Components.cuiFormRounder cuiFormRounder1;
     }
 }

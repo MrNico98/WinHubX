@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using System.Diagnostics;
 using WinHubX.Impostazioni;
 
 namespace WinHubX.Forms.Settaggi
@@ -9,8 +10,6 @@ namespace WinHubX.Forms.Settaggi
         {
             InitializeComponent();
             LoadExplorerSettings();
-            Font = new Font("Segoe UI", 9f, FontStyle.Regular);
-            ThemeManager.ApplyThemeToControl(this, ThemeManager.IsDarkTheme);
             btnApplyVerdi.Content = LanguageManager.CurrentLanguage switch
             {
                 "it" => "  Avvia",
@@ -19,11 +18,18 @@ namespace WinHubX.Forms.Settaggi
             };
         }
 
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            Font = new Font("Segoe UI", 9f, FontStyle.Regular);
+            ThemeManager.ApplyThemeToControl(this, ThemeManager.IsDarkTheme);
+        }
+
         private void LoadExplorerSettings()
         {
             try
             {
-                using (RegistryKey explorerKey = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"))
+                using (RegistryKey? explorerKey = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"))
                 {
                     if (explorerKey != null)
                     {
@@ -40,14 +46,20 @@ namespace WinHubX.Forms.Settaggi
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex) when (ex is IOException
+                or UnauthorizedAccessException
+                or System.Security.SecurityException
+                or FormatException
+                or InvalidCastException
+                or OverflowException)
             {
+                Debug.WriteLine($"Caricamento preferenze Esplora file non riuscito: {ex}");
             }
         }
 
         private int GetRegistryValue(RegistryKey key, string valueName, int defaultValue)
         {
-            object value = key.GetValue(valueName, defaultValue);
+            object? value = key.GetValue(valueName, defaultValue);
             return value != null ? Convert.ToInt32(value) : defaultValue;
         }
 
@@ -55,7 +67,7 @@ namespace WinHubX.Forms.Settaggi
         {
             try
             {
-                using (RegistryKey explorerKey = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", true))
+                using (RegistryKey? explorerKey = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", true))
                 {
                     if (explorerKey != null)
                     {
@@ -72,8 +84,19 @@ namespace WinHubX.Forms.Settaggi
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex) when (ex is IOException
+                or UnauthorizedAccessException
+                or System.Security.SecurityException
+                or FormatException
+                or InvalidCastException
+                or OverflowException)
             {
+                Debug.WriteLine($"Applicazione preferenze Esplora file non riuscita: {ex}");
+                MessageBox.Show(
+                    $"Impossibile applicare le preferenze di Esplora file. Alcune impostazioni potrebbero essere state aggiornate.\n{ex.Message}",
+                    "WinHubX",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
         }
     }

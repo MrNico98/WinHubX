@@ -1,5 +1,8 @@
 ﻿using Newtonsoft.Json;
 
+using System.Diagnostics;
+using System.Text;
+
 namespace WinHubX
 {
     public class ThemeConfig
@@ -10,35 +13,60 @@ namespace WinHubX
         public bool LanguageManuallySet { get; set; } = false;
 
         private static readonly string ConfigPath =
-            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+            Path.Join(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
             "WinHubX", "Impostazioni", "Tema.json");
 
-        public static ThemeConfig Load()
+        public static ThemeConfig Load() => Load(ConfigPath);
+
+        internal static ThemeConfig Load(string path)
         {
             try
             {
-                if (!File.Exists(ConfigPath))
+                ArgumentException.ThrowIfNullOrWhiteSpace(path);
+                if (!File.Exists(path))
                 {
-                    Directory.CreateDirectory(Path.GetDirectoryName(ConfigPath)!);
-                    var def = new ThemeConfig();
-                    def.Save();
-                    return def;
+                    var defaults = new ThemeConfig();
+                    defaults.Save(path);
+                    return defaults;
                 }
 
-                string json = File.ReadAllText(ConfigPath);
+                string json = File.ReadAllText(path);
                 return JsonConvert.DeserializeObject<ThemeConfig>(json) ?? new ThemeConfig();
             }
-            catch
+            catch (Exception ex) when (ex is IOException
+                or UnauthorizedAccessException
+                or System.Security.SecurityException
+                or Newtonsoft.Json.JsonException
+                or ArgumentException
+                or NotSupportedException)
             {
+                Debug.WriteLine($"Unable to read theme settings; defaults will be used: {ex}");
                 return new ThemeConfig();
             }
         }
 
-        public void Save()
+        public void Save() => Save(ConfigPath);
+
+        internal void Save(string path)
         {
+            ArgumentException.ThrowIfNullOrWhiteSpace(path);
+            string fullPath = Path.GetFullPath(path);
+            string directory = Path.GetDirectoryName(fullPath)!;
+            Directory.CreateDirectory(directory);
+
             string json = JsonConvert.SerializeObject(this, Formatting.Indented);
-            Directory.CreateDirectory(Path.GetDirectoryName(ConfigPath)!);
-            File.WriteAllText(ConfigPath, json);
+            string temporaryPath = Path.Join(directory, $".{Path.GetFileName(fullPath)}.{Guid.NewGuid():N}.tmp");
+
+            try
+            {
+                File.WriteAllText(temporaryPath, json, new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
+                File.Move(temporaryPath, fullPath, overwrite: true);
+            }
+            finally
+            {
+                if (File.Exists(temporaryPath))
+                    File.Delete(temporaryPath);
+            }
         }
     }
 }

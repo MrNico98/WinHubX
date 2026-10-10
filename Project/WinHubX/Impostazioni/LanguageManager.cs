@@ -1,229 +1,126 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
+using System.Text;
+
 public static class LanguageManager
 {
-    private static Dictionary<string, Dictionary<string, string>>? translations;
-    public static string CurrentLanguage { get; private set; } = "it";
+    private sealed record LanguageSnapshot(
+        string Language,
+        IReadOnlyDictionary<string, IReadOnlyDictionary<string, string>> Catalog);
 
-    private static readonly string LocalAppDataPath = Path.Combine(
-        Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-        "WinHubX", "Lingue");
+    private static LanguageSnapshot currentSnapshot = new("it", LoadEmbeddedCatalog("it"));
 
-    private static readonly string SettingsPath = Path.Combine(
-        Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-        "WinHubX", "Impostazioni", "Tema.json");
-
-    // Ensure directories exist on static initialization
-    static LanguageManager()
-    {
-        EnsureDirectoriesExist();
-    }
-
-    private static void EnsureDirectoriesExist()
-    {
-        try
-        {
-            Directory.CreateDirectory(LocalAppDataPath);
-            Directory.CreateDirectory(Path.GetDirectoryName(SettingsPath)!);
-        }
-        catch (Exception ex)
-        {
-        }
-    }
+    public static string CurrentLanguage => Volatile.Read(ref currentSnapshot).Language;
 
     public static void LoadLanguageFromSettings()
     {
-        try
-        {
-            EnsureDirectoriesExist(); // Double-check directories exist
-
-            if (!File.Exists(SettingsPath))
-            {
-                // Create default settings if they don't exist
-                CreateDefaultSettings();
-                return;
-            }
-
-            string json = File.ReadAllText(SettingsPath);
-            var settings = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
-
-            if (settings == null || !settings.ContainsKey("Language"))
-            {
-                return;
-            }
-
-            string lang = settings["Language"].ToString() ?? "it";
-            ApplyCulture(lang);
-            SetLanguage(lang);
-        }
-        catch (Exception ex)
-        {
-
-        }
+        WinHubX.ThemeConfig settings = WinHubX.ThemeConfig.Load();
+        string language = NormalizeLanguage(settings.Language);
+        ApplyCulture(language);
+        SetLanguage(language);
     }
 
-    private static void CreateDefaultSettings()
+    public static void ApplyCulture(string language)
     {
-        try
-        {
-            var defaultSettings = new Dictionary<string, object>
-            {
-                ["Language"] = "it",
-                ["DarkTheme"] = false,
-                ["LanguageManuallySet"] = false,
-                ["ThemeManuallySet"] = false
-            };
-
-            string json = JsonConvert.SerializeObject(defaultSettings, Formatting.Indented);
-            File.WriteAllText(SettingsPath, json);
-        }
-        catch (Exception ex)
-        {
-        }
+        CultureInfo culture = CultureInfo.GetCultureInfo(NormalizeLanguage(language));
+        Thread.CurrentThread.CurrentUICulture = culture;
+        Thread.CurrentThread.CurrentCulture = culture;
     }
 
-    public static void ApplyCulture(string lang)
+    public static void LoadTranslations() => SetLanguage(CurrentLanguage);
+
+    public static void SetLanguage(string language)
     {
+        string supportedLanguage = NormalizeLanguage(language);
+        IReadOnlyDictionary<string, IReadOnlyDictionary<string, string>> loadedCatalog;
+
         try
         {
-            var culture = new CultureInfo(lang);
-            Thread.CurrentThread.CurrentUICulture = culture;
-            Thread.CurrentThread.CurrentCulture = culture;
+            loadedCatalog = LoadEmbeddedCatalog(supportedLanguage);
         }
-        catch (Exception ex)
+        catch (Exception ex) when (ex is IOException
+            or InvalidDataException
+            or Newtonsoft.Json.JsonException
+            or ArgumentException)
         {
-        }
-    }
+            Debug.WriteLine($"Unable to load the {supportedLanguage} localization resource: {ex}");
+            supportedLanguage = "it";
 
-    public static void LoadTranslations()
-    {
-        try
-        {
-            EnsureDirectoriesExist(); // Ensure directory exists
-
-            string filePath = Path.Combine(LocalAppDataPath, $"{CurrentLanguage}.json");
-
-            if (!File.Exists(filePath))
+            try
             {
-                ExtractEmbeddedResource($"WinHubX.Resources.{CurrentLanguage}.json", filePath);
+                loadedCatalog = LoadEmbeddedCatalog(supportedLanguage);
             }
-
-            if (File.Exists(filePath))
+            catch (Exception fallbackException) when (fallbackException is IOException
+                or InvalidDataException
+                or Newtonsoft.Json.JsonException
+                or ArgumentException)
             {
-                string json = File.ReadAllText(filePath);
-                translations = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(json);
-            }
-            else
-            {
-                LoadFromEmbeddedResource();
+                Debug.WriteLine($"Unable to load the fallback localization resource: {fallbackException}");
+                loadedCatalog = new ReadOnlyDictionary<string, IReadOnlyDictionary<string, string>>(
+                    new Dictionary<string, IReadOnlyDictionary<string, string>>(StringComparer.Ordinal));
             }
         }
-        catch (Exception ex)
-        {
-            LoadFromEmbeddedResource();
-        }
-    }
 
-    private static void LoadFromEmbeddedResource()
-    {
-        try
-        {
-            var assembly = Assembly.GetExecutingAssembly();
-            string resourceName = $"WinHubX.Resources.{CurrentLanguage}.json";
-
-            using Stream? stream = assembly.GetManifestResourceStream(resourceName);
-            if (stream != null)
-            {
-                using StreamReader reader = new StreamReader(stream);
-                string json = reader.ReadToEnd();
-                translations = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(json);
-            }
-        }
-        catch (Exception ex)
-        {
-        }
-    }
-
-    private static void ExtractEmbeddedResource(string resourceName, string outputPath)
-    {
-        try
-        {
-            EnsureDirectoriesExist(); // Ensure directory exists before creating file
-
-            var assembly = Assembly.GetExecutingAssembly();
-            using Stream? stream = assembly.GetManifestResourceStream(resourceName);
-
-            if (stream == null)
-            {
-
-                return;
-            }
-
-            using var fileStream = new FileStream(outputPath, FileMode.Create, FileAccess.Write);
-            stream.CopyTo(fileStream);
-        }
-        catch (Exception ex)
-        {
-            throw;
-        }
-    }
-
-    public static void SetLanguage(string lang)
-    {
-        try
-        {
-            EnsureDirectoriesExist();
-
-            string newLangPath = Path.Combine(LocalAppDataPath, $"{lang}.json");
-            string embeddedName = $"WinHubX.Resources.{lang}.json";
-
-            if (!File.Exists(newLangPath))
-            {
-                ExtractEmbeddedResource(embeddedName, newLangPath);
-            }
-
-            if (File.Exists(newLangPath) || TryLoadFromEmbedded(embeddedName))
-            {
-                CurrentLanguage = lang;
-                LoadTranslations();
-            }
-            else
-            {
-                if (lang != "it")
-                {
-                    SetLanguage("it");
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-        }
-    }
-
-    private static bool TryLoadFromEmbedded(string resourceName)
-    {
-        try
-        {
-            var assembly = Assembly.GetExecutingAssembly();
-            using Stream? stream = assembly.GetManifestResourceStream(resourceName);
-            return stream != null;
-        }
-        catch
-        {
-            return false;
-        }
+        Volatile.Write(ref currentSnapshot, new LanguageSnapshot(supportedLanguage, loadedCatalog));
     }
 
     public static string GetTranslation(string formName, string key)
     {
-        if (translations != null &&
-            translations.ContainsKey(formName) &&
-            translations[formName].ContainsKey(key))
+        LanguageSnapshot snapshot = Volatile.Read(ref currentSnapshot);
+
+        if (snapshot.Catalog.TryGetValue(formName, out IReadOnlyDictionary<string, string>? section) &&
+            section.TryGetValue(key, out string? value))
         {
-            return translations[formName][key];
+            return value;
         }
 
-        return key; // fallback
+        return key;
     }
+
+    public static string FormatTranslation(string formName, string key, params object?[] arguments)
+    {
+        return Format(GetTranslation(formName, key), arguments);
+    }
+
+    public static string Format(string format, params object?[] arguments)
+    {
+        ArgumentNullException.ThrowIfNull(format);
+        ArgumentNullException.ThrowIfNull(arguments);
+
+        CompositeFormat compositeFormat = CompositeFormat.Parse(format);
+        if (compositeFormat.MinimumArgumentCount != arguments.Length)
+        {
+            throw new FormatException(
+                $"Format string expects {compositeFormat.MinimumArgumentCount} arguments, but received {arguments.Length}.");
+        }
+
+        return string.Format(CultureInfo.CurrentCulture, compositeFormat, arguments);
+    }
+
+    private static IReadOnlyDictionary<string, IReadOnlyDictionary<string, string>> LoadEmbeddedCatalog(string language)
+    {
+        string resourceName = $"WinHubX.Resources.{language}.json";
+        Assembly assembly = Assembly.GetExecutingAssembly();
+
+        using Stream stream = assembly.GetManifestResourceStream(resourceName)
+            ?? throw new InvalidDataException($"Embedded localization resource '{resourceName}' was not found.");
+        using StreamReader reader = new(stream);
+
+        Dictionary<string, Dictionary<string, string>> catalog =
+            JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(reader.ReadToEnd())
+            ?? throw new InvalidDataException($"Embedded localization resource '{resourceName}' is empty or invalid.");
+
+        var immutableSections = catalog.ToDictionary(
+            entry => entry.Key,
+            entry => (IReadOnlyDictionary<string, string>)new ReadOnlyDictionary<string, string>(entry.Value),
+            StringComparer.Ordinal);
+
+        return new ReadOnlyDictionary<string, IReadOnlyDictionary<string, string>>(immutableSections);
+    }
+
+    private static string NormalizeLanguage(string? language) =>
+        string.Equals(language, "en", StringComparison.OrdinalIgnoreCase) ? "en" : "it";
 }

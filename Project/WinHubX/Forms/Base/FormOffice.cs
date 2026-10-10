@@ -1,9 +1,7 @@
-﻿using CuoreUI.Controls;
+using HartUI.Controls;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Diagnostics;
-using System.IO.Compression;
-using System.Net;
 using System.Text.RegularExpressions;
 using WinHubX.Forms.Personalizzazione_office;
 using WinHubX.Impostazioni;
@@ -12,14 +10,47 @@ namespace WinHubX
 {
     public partial class FormOffice : Form
     {
-        private Form1 form1;
-        private NotifyIcon notifyIcon;
-        private List<OfficeVersion> officeVersions;
-        private string selectedOfficeVersion;
-        private string selectedLanguage;
-        private string selectedInstallationType;
-        private string percorsoCompleto;
-        private CancellationTokenSource _cts;
+        private static bool IsExpectedOfficeOperationFailure(Exception exception) =>
+            exception is IOException
+                or HttpRequestException
+                or UnauthorizedAccessException
+                or System.Security.SecurityException
+                or System.ComponentModel.Win32Exception
+                or System.Runtime.InteropServices.COMException
+                or System.Management.ManagementException
+                or InvalidOperationException
+                or NotSupportedException
+                or OperationCanceledException
+                or TimeoutException
+                or ArgumentException;
+
+        private readonly Form1 form1;
+        private readonly NotifyIcon notifyIcon;
+        private List<OfficeVersion> officeVersions = new();
+        private string selectedOfficeVersion = string.Empty;
+        private string selectedLanguage = string.Empty;
+        private string selectedInstallationType = string.Empty;
+        private string percorsoCompleto = string.Empty;
+        private CancellationTokenSource? _cts;
+        private readonly CancellationTokenSource _lifetimeCancellation = new();
+        private int _activeLifetimeOperations;
+        private int _lifetimeDisposalRequested;
+        private int _lifetimeDisposed;
+        private static readonly HttpClient ResourceClient = CreateResourceClient();
+        private readonly Action<int> _downloadProgressHandler;
+        private readonly Action<bool> _downloadStateHandler;
+
+        private static HttpClient CreateResourceClient()
+        {
+            var handler = new SocketsHttpHandler
+            {
+                AllowAutoRedirect = false,
+                MaxConnectionsPerServer = 4,
+                AutomaticDecompression = System.Net.DecompressionMethods.None,
+                PooledConnectionLifetime = TimeSpan.FromMinutes(5)
+            };
+            return new HttpClient(handler) { Timeout = TimeSpan.FromMinutes(2) };
+        }
 
         public FormOffice(Form1 form1)
         {
@@ -30,28 +61,19 @@ namespace WinHubX
                 Visible = false
             };
             this.form1 = form1;
+            _downloadProgressHandler = HandleDownloadProgressChanged;
+            _downloadStateHandler = HandleDownloadStateChanged;
+            FormClosed += FormOffice_FormClosed;
 
             ThemeManager.ApplyThemeToControl(this, ThemeManager.IsDarkTheme);
-            string downloadPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
+            string downloadPath = Path.Join(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
             labelpercorso.Text = $"{downloadPath}";
             toolTip1.SetToolTip(labelpercorso, downloadPath);
             percorsoCompleto = downloadPath;
             AggiornaPercorsoLabel(downloadPath);
 
-            WinHubX.Impostazioni.DownloadManager.ProgressChanged += progress =>
-            {
-                if (InvokeRequired)
-                    Invoke(new Action(() => UpdateProgress(progress)));
-                else
-                    UpdateProgress(progress);
-            };
-            WinHubX.Impostazioni.DownloadManager.DownloadStateChanged += isDownloading =>
-            {
-                if (InvokeRequired)
-                    Invoke(new Action(() => SetDownloadButtonStyle(isDownloading)));
-                else
-                    SetDownloadButtonStyle(isDownloading);
-            };
+            WinHubX.Impostazioni.DownloadManager.ProgressChanged += _downloadProgressHandler;
+            WinHubX.Impostazioni.DownloadManager.DownloadStateChanged += _downloadStateHandler;
             SetDownloadButtonStyle(WinHubX.Impostazioni.DownloadManager.IsDownloading);
             if (WinHubX.Impostazioni.DownloadManager.IsDownloading)
             {
@@ -84,6 +106,88 @@ namespace WinHubX
                 _ => btnAggRimAppOfficePrinci.Content
             };
         }
+
+        private void HandleDownloadProgressChanged(int progress)
+        {
+            if (IsDisposed || !IsHandleCreated)
+            {
+                return;
+            }
+
+            if (InvokeRequired)
+            {
+                try
+                {
+                    BeginInvoke(new Action(() => UpdateProgress(progress)));
+                }
+                catch (InvalidOperationException ex)
+                {
+                    Debug.WriteLine($"Aggiornamento progresso Office ignorato dopo la chiusura: {ex.Message}");
+                }
+                return;
+            }
+
+            UpdateProgress(progress);
+        }
+
+        private void HandleDownloadStateChanged(bool isDownloading)
+        {
+            if (IsDisposed || !IsHandleCreated)
+            {
+                return;
+            }
+
+            if (InvokeRequired)
+            {
+                try
+                {
+                    BeginInvoke(new Action(() => SetDownloadButtonStyle(isDownloading)));
+                }
+                catch (InvalidOperationException ex)
+                {
+                    Debug.WriteLine($"Aggiornamento stato Office ignorato dopo la chiusura: {ex.Message}");
+                }
+                return;
+            }
+
+            SetDownloadButtonStyle(isDownloading);
+        }
+
+        private void FormOffice_FormClosed(object? sender, FormClosedEventArgs e)
+        {
+            if (Interlocked.Exchange(ref _lifetimeDisposalRequested, 1) == 0)
+                _lifetimeCancellation.Cancel();
+            _cts?.Cancel();
+            WinHubX.Impostazioni.DownloadManager.ProgressChanged -= _downloadProgressHandler;
+            WinHubX.Impostazioni.DownloadManager.DownloadStateChanged -= _downloadStateHandler;
+            notifyIcon.Dispose();
+            DisposeLifetimeCancellationIfIdle();
+        }
+
+        private CancellationToken BeginLifetimeOperation()
+        {
+            if (Volatile.Read(ref _lifetimeDisposalRequested) != 0)
+                throw new OperationCanceledException("La finestra Office è in chiusura.");
+
+            Interlocked.Increment(ref _activeLifetimeOperations);
+            return _lifetimeCancellation.Token;
+        }
+
+        private void EndLifetimeOperation()
+        {
+            if (Interlocked.Decrement(ref _activeLifetimeOperations) == 0)
+                DisposeLifetimeCancellationIfIdle();
+        }
+
+        private void DisposeLifetimeCancellationIfIdle()
+        {
+            if (Volatile.Read(ref _lifetimeDisposalRequested) != 0 &&
+                Volatile.Read(ref _activeLifetimeOperations) == 0 &&
+                Interlocked.Exchange(ref _lifetimeDisposed, 1) == 0)
+            {
+                _lifetimeCancellation.Dispose();
+            }
+        }
         private void UpdateProgress(int progress)
         {
             progressBar1.Visible = true;
@@ -92,164 +196,75 @@ namespace WinHubX
             label2.Text = $"{progress}%";
         }
         #region AttivaOffice
-        private async void btnAttivaOffice_Click(object sender, EventArgs e)
+        private void btnAttivaOffice_Click(object? sender, EventArgs e)
         {
-            string primaryURL = string.Empty;
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-
             try
             {
-                if (IsInternetAvailable())
-                {
-                    try
-                    {
-                        using (HttpClient client = new HttpClient())
-                        {
-                            var jsonResponse = await client.GetStringAsync(Dipendenze.GitHubConfigUrl);
-                            var jsonObject = JObject.Parse(jsonResponse);
-                            primaryURL = jsonObject["AttivatoreOffice"]["primaryURL"]?.ToString();
-
-                            if (string.IsNullOrEmpty(primaryURL))
-                                throw new Exception(LanguageManager.GetTranslation("FormOffice", "url_non_trovato_github"));
-                        }
-                    }
-                    catch
-                    {
-
-                    }
-                    await ExecuteScriptFromUrl(primaryURL);
-                }
-                else
-                {
-                    MessageBox.Show(
-                        LanguageManager.GetTranslation("Global", "nointernet"),
-                        LanguageManager.GetTranslation("FormOffice", "errore"),
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning
-                    );
-                    ExtractAndExecuteLocalScript();
-                }
+                Process.Start(new ProcessStartInfo("https://account.microsoft.com/services") { UseShellExecute = true });
             }
-            catch (Exception ex)
+            catch (Exception ex) when (IsExpectedOfficeOperationFailure(ex))
             {
-                MessageBox.Show(
-                    $"{LanguageManager.GetTranslation("FormOffice", "errore_generico")} {ex.Message}",
-                    LanguageManager.GetTranslation("FormOffice", "errore"),
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error
-                );
+                MessageBox.Show($"Impossibile aprire la gestione ufficiale dell’abbonamento Office: {ex.Message}",
+                    "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        public static async Task ExecuteScriptFromUrl(string url)
+        private static async Task<bool> IsInternetAvailableAsync(CancellationToken cancellationToken)
         {
             try
             {
-                using (HttpClient client = new HttpClient())
-                {
-                    var scriptContent = await client.GetStringAsync(url);
-                    string patchedContent = scriptContent
-                        .Replace(
-                            @"echo ""!_batf!"" | find /i ""!_ttemp!"" %nul1% && (
-if /i not ""!_work!""==""!_ttemp!"" (
-%eline%
-echo The script was launched from the temp folder.
-echo You are most likely running the script directly from the archive file.
-echo:
-echo Extract the archive file and launch the script from the extracted folder.
-goto dk_done
-)
-)",
-                            @"rem [BYPASSED BY WinhubX] Complete temp check disabled
-rem echo ""!_batf!"" | find /i ""!_ttemp!"" %nul1% && (
-rem if /i not ""!_work!""==""!_ttemp!"" (
-rem %eline%
-rem echo The script was launched from the temp folder.
-rem echo You are most likely running the script directly from the archive file.
-rem echo:
-rem echo Extract the archive file and launch the script from the extracted folder.
-rem goto dk_done
-rem )
-rem )")
-                        .Replace(
-                            @"set _act=0",
-                            @"set _act=1");
-
-                    string tempFilePath = Path.Combine(Path.GetTempPath(), "Ohook_Activation_AIO.cmd");
-                    File.WriteAllText(tempFilePath, patchedContent);
-
-                    _ = Process.Start(new ProcessStartInfo
-                    {
-                        FileName = tempFilePath,
-                        UseShellExecute = true,
-                        Verb = "runas"
-                    });
-                }
+                using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+                using var linkedToken = CancellationTokenSource.CreateLinkedTokenSource(
+                    cancellationToken,
+                    timeout.Token);
+                using HttpResponseMessage result = await TrustedHttpsClient.GetAsync(
+                    ResourceClient, "https://www.microsoft.com/", linkedToken.Token);
+                return result.IsSuccessStatusCode;
             }
-            catch (Exception ex)
+            catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
             {
-                _ = MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                throw;
             }
-        }
-
-        private bool IsInternetAvailable()
-        {
-            try
+            catch (Exception ex) when (IsExpectedOfficeOperationFailure(ex))
             {
-                using (var client = new HttpClient())
-                {
-                    var result = client.GetAsync("https://www.google.com").Result;
-                    return result.IsSuccessStatusCode;
-                }
-            }
-            catch
-            {
+                Debug.WriteLine($"Verifica connettività Office non riuscita: {ex}");
                 return false;
             }
         }
 
-        private void ExtractAndExecuteLocalScript()
-        {
-            try
-            {
-                string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                string scriptPath = Path.Combine(documentsPath, "TSforge_Activation.cmd");
-                byte[] scriptBytes = Properties.Resources.Ohook_Activation_AIO;
-
-                File.WriteAllBytes(scriptPath, scriptBytes);
-                _ = Process.Start(new ProcessStartInfo
-                {
-                    FileName = scriptPath,
-                    UseShellExecute = true,
-                    Verb = "runas"
-                });
-            }
-            catch (Exception ex)
-            {
-                _ = MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
         #endregion
 
-        private async Task<string> OttieniURL(string jsonUrl)
+        private async Task<string> OttieniURL(string jsonUrl, CancellationToken cancellationToken)
         {
-            using (HttpClient client = new HttpClient())
-            {
-                var response = await client.GetStringAsync(jsonUrl);
-                var json = JObject.Parse(response);
-                return json["FormOffice"]["scrubber"].ToString();
-            }
+            var response = await TrustedHttpsClient.GetStringAsync(ResourceClient, jsonUrl, cancellationToken);
+            var json = JObject.Parse(response);
+            string url = json["FormOffice"]?["scrubber"]?.Value<string>()
+                ?? throw new InvalidOperationException("URL scrubber non presente nella configurazione.");
+            if (!Uri.TryCreate(url, UriKind.Absolute, out Uri? uri) || uri.Scheme != Uri.UriSchemeHttps)
+                throw new InvalidOperationException("URL scrubber non valido: è richiesto HTTPS.");
+            return uri.ToString();
         }
 
-        private async void btnScrubber_Click(object sender, EventArgs e)
+        private async void btnScrubber_Click(object? sender, EventArgs e)
         {
+            string? tempFolder = null;
+            CancellationToken cancellationToken;
+            try
+            {
+                cancellationToken = BeginLifetimeOperation();
+            }
+            catch (OperationCanceledException)
+            {
+                return;
+            }
+
             try
             {
                 string zipFileUrl = string.Empty;
 
-                if (IsInternetAvailable())
+                if (await IsInternetAvailableAsync(cancellationToken))
                 {
-                    zipFileUrl = await OttieniURL(Dipendenze.GitHubConfigUrl);
+                    zipFileUrl = await OttieniURL(Dipendenze.GitHubConfigUrl, cancellationToken);
 
                     if (string.IsNullOrEmpty(zipFileUrl))
                         throw new Exception(LanguageManager.GetTranslation("FormOffice", "url_non_trovato_github"));
@@ -264,20 +279,15 @@ rem )")
                     );
                     return;
                 }
-                string tempFolder = Path.Combine(Path.GetTempPath(), "OfficeScrubber");
-                string tempZipPath = Path.Combine(tempFolder, "OfficeScrubber.zip");
+                tempFolder = PrivateUserWorkspace.CreateSession();
+                string tempZipPath = Path.Join(tempFolder, "OfficeScrubber.zip");
+                string extractionFolder = Path.Join(tempFolder, "extracted");
 
-                if (Directory.Exists(tempFolder))
-                    Directory.Delete(tempFolder, true);
                 Directory.CreateDirectory(tempFolder);
-                using (HttpClient client = new HttpClient())
-                using (HttpResponseMessage response = await client.GetAsync(zipFileUrl))
-                using (FileStream fs = new FileStream(tempZipPath, FileMode.Create, FileAccess.Write))
-                {
-                    await response.Content.CopyToAsync(fs);
-                }
-                ZipFile.ExtractToDirectory(tempZipPath, tempFolder);
-                string cmdPath = Path.Combine(tempFolder, "OfficeScrubber.cmd");
+                await DownloadManager.DownloadFileAsync(zipFileUrl, tempZipPath,
+                    cancellationToken, autoParallel: false);
+                SafeZipExtractor.ExtractToFreshDirectory(tempZipPath, extractionFolder);
+                string cmdPath = Path.Join(extractionFolder, "OfficeScrubber.cmd");
 
                 if (!File.Exists(cmdPath))
                 {
@@ -290,24 +300,30 @@ rem )")
                     return;
                 }
 
-                Process process = new Process
+                using Process process = new Process
                 {
                     StartInfo = new ProcessStartInfo
                     {
-                        FileName = "cmd.exe",
-                        Arguments = $"/c \"{cmdPath}\"",
-                        WorkingDirectory = tempFolder,
+                        FileName = Path.Join(Environment.SystemDirectory, "cmd.exe"),
+                        WorkingDirectory = extractionFolder,
                         Verb = "runas",
                         UseShellExecute = true
                     }
                 };
+                process.StartInfo.ArgumentList.Add("/d");
+                process.StartInfo.ArgumentList.Add("/c");
+                process.StartInfo.ArgumentList.Add(cmdPath);
 
                 process.Start();
-                await Task.Run(() => process.WaitForExit());
-                await Task.Run(() => AttendiScrubberConTitolo("Office Scrubber v12"));
-                Directory.Delete(tempFolder, true);
+                // Il processo usa gli script estratti: attendi prima di rimuovere la directory temporanea.
+                await process.WaitForExitAsync(CancellationToken.None);
+                await AttendiScrubberConTitolo("Office Scrubber v12", CancellationToken.None);
             }
-            catch (Exception ex)
+            catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+            {
+                Debug.WriteLine("Operazione Scrubber annullata durante la chiusura della finestra Office.");
+            }
+            catch (Exception ex) when (IsExpectedOfficeOperationFailure(ex))
             {
                 MessageBox.Show(
                     $"{LanguageManager.GetTranslation("FormOffice", "errore_generico_scrubber")} {ex.Message}",
@@ -316,44 +332,108 @@ rem )")
                     MessageBoxIcon.Error
                 );
             }
+            finally
+            {
+                try
+                {
+                    if (tempFolder is not null)
+                    {
+                        try
+                        {
+                            if (Directory.Exists(tempFolder))
+                                Directory.Delete(tempFolder, recursive: true);
+                        }
+                        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+                        {
+                            Debug.WriteLine($"Directory temporanea Scrubber non rimossa: {ex}");
+                        }
+                    }
+                }
+                finally
+                {
+                    EndLifetimeOperation();
+                }
+            }
         }
 
-        private async Task AttendiScrubberConTitolo(string titolo, int timeoutMs = 10 * 60 * 1000)
+        private async Task AttendiScrubberConTitolo(
+            string titolo,
+            CancellationToken cancellationToken,
+            int timeoutMs = 10 * 60 * 1000)
         {
-            int waited = 0;
-            Process? scrubberProc = null;
-
-            while (waited < timeoutMs)
+            var stopwatch = Stopwatch.StartNew();
+            while (stopwatch.ElapsedMilliseconds < timeoutMs)
             {
-                scrubberProc = Process.GetProcessesByName("powershell")
-                    .FirstOrDefault(p => p.MainWindowTitle.Contains(titolo));
+                int? processId = await Task.Run(
+                    () => FindScrubberProcessId(titolo),
+                    cancellationToken);
+                if (processId is int id)
+                {
+                    try
+                    {
+                        using Process scrubberProcess = Process.GetProcessById(id);
+                        await scrubberProcess.WaitForExitAsync(cancellationToken);
+                    }
+                    catch (ArgumentException)
+                    {
+                        // Il processo può terminare fra la ricerca e il recupero del PID.
+                    }
+                    return;
+                }
 
-                if (scrubberProc != null)
-                    break;
-
-                await Task.Delay(1000);
-                waited += 1000;
+                await Task.Delay(1000, cancellationToken);
             }
 
-            scrubberProc?.WaitForExit();
+            throw new TimeoutException($"Il processo {titolo} non è comparso entro il tempo previsto.");
         }
 
-        private void PictureBox3_Click_BackToOffice(object sender, EventArgs e)
+        private static int? FindScrubberProcessId(string title)
         {
-            Form1 mainForm = Application.OpenForms["Form1"] as Form1;
+            foreach (Process process in Process.GetProcessesByName("powershell"))
+            {
+                using (process)
+                {
+                    try
+                    {
+                        if (process.MainWindowTitle.Contains(title, StringComparison.OrdinalIgnoreCase))
+                        {
+                            return process.Id;
+                        }
+                    }
+                    catch (InvalidOperationException ex)
+                    {
+                        Debug.WriteLine($"Processo PowerShell terminato durante l'ispezione: {ex.Message}");
+                    }
+                    catch (System.ComponentModel.Win32Exception ex)
+                    {
+                        Debug.WriteLine($"Titolo finestra PowerShell non accessibile: {ex.Message}");
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        private void PictureBox3_Click_BackToOffice(object? sender, EventArgs e)
+        {
+            Form1? mainForm = Application.OpenForms["Form1"] as Form1;
             if (mainForm == null) return;
 
             mainForm.pictureBox3.Visible = false;
             mainForm.LoadForm(new FormOffice(mainForm), mainForm.btnOffice, "Office");
         }
 
-        private async Task<List<OfficeVersion>> CaricaOfficeVersions(string jsonUrl)
+        private async Task<List<OfficeVersion>> CaricaOfficeVersions(
+            string jsonUrl,
+            CancellationToken cancellationToken)
         {
-            List<OfficeVersion> officeVersions = new List<OfficeVersion>();
+            List<OfficeVersion> loadedOfficeVersions = new();
 
-            using (HttpClient client = new HttpClient())
             {
-                string jsonResponse = await client.GetStringAsync(jsonUrl);
+                string jsonResponse = await TrustedHttpsClient.GetStringAsync(
+                    ResourceClient,
+                    jsonUrl,
+                    cancellationToken);
                 var jsonObject = JObject.Parse(jsonResponse);
                 foreach (var prop in jsonObject.Properties().Where(p => p.Name.StartsWith("Office")))
                 {
@@ -375,7 +455,9 @@ rem )")
                         foreach (var kvp in (JObject)lang.Value)
                         {
                             string chiave = kvp.Key;
-                            string url = kvp.Value.ToString();
+                            string? url = kvp.Value?.ToString();
+                            if (string.IsNullOrWhiteSpace(url))
+                                continue;
                             if (chiave.Equals("Officex64", StringComparison.OrdinalIgnoreCase) ||
                                 chiave.Equals("Officex32", StringComparison.OrdinalIgnoreCase))
                                 chiave = "Online";
@@ -390,17 +472,17 @@ rem )")
                         office.Lingue.Add(lang.Name, links);
                     }
 
-                    officeVersions.Add(office);
+                    loadedOfficeVersions.Add(office);
                 }
             }
 
-            return officeVersions;
+            return loadedOfficeVersions;
         }
 
 
-        private void comboBoxVerOffice_SelectedIndexChanged(object sender, EventArgs e)
+        private void comboBoxVerOffice_SelectedIndexChanged(object? sender, EventArgs e)
         {
-            selectedOfficeVersion = comboBoxVerOffice.SelectedItem?.ToString();
+            selectedOfficeVersion = comboBoxVerOffice.SelectedItem?.ToString() ?? string.Empty;
 
             comboBox_Lingua.Items.Clear();
             if (!string.IsNullOrEmpty(selectedOfficeVersion))
@@ -414,9 +496,9 @@ rem )")
         }
 
 
-        private void comboBox_Lingua_SelectedIndexChanged(object sender, EventArgs e)
+        private void comboBox_Lingua_SelectedIndexChanged(object? sender, EventArgs e)
         {
-            selectedLanguage = comboBox_Lingua.SelectedItem?.ToString();
+            selectedLanguage = comboBox_Lingua.SelectedItem?.ToString() ?? string.Empty;
 
             comboBoxInstallazione.Items.Clear();
             if (!string.IsNullOrEmpty(selectedOfficeVersion) && !string.IsNullOrEmpty(selectedLanguage))
@@ -432,7 +514,7 @@ rem )")
         {
             string selezione = comboBoxInstallazione.SelectedItem?.ToString() ?? "";
             selectedInstallationType = selezione;
-            selectedOfficeVersion = comboBoxVerOffice.SelectedItem?.ToString();
+            selectedOfficeVersion = comboBoxVerOffice.SelectedItem?.ToString() ?? string.Empty;
             labelavviso.Visible = selezione.Equals("Online", StringComparison.OrdinalIgnoreCase);
             Checkbox_Salva.Visible = selezione.Equals("Offline", StringComparison.OrdinalIgnoreCase);
             Checkbox_Installa.Visible = selezione.Equals("Offline", StringComparison.OrdinalIgnoreCase);
@@ -445,7 +527,7 @@ rem )")
         {
             try
             {
-                string hwPath = Path.Combine(
+                string hwPath = Path.Join(
                     Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                     "WinHubX", "Computer", "osehardware.json");
 
@@ -454,7 +536,7 @@ rem )")
                     var json = File.ReadAllText(hwPath);
                     var hwInfo = JsonConvert.DeserializeObject<WinHubX.Impostazioni.HardwareInfo>(json);
 
-                    string arch = hwInfo?.Architettura?.Trim()?.ToLowerInvariant();
+                    string? arch = hwInfo?.Architettura?.Trim()?.ToLowerInvariant();
                     if (arch != null)
                     {
                         if (arch.Contains("arm64")) return "x64";
@@ -463,14 +545,17 @@ rem )")
                     }
                 }
             }
-            catch { }
+            catch (Exception ex) when (IsExpectedOfficeOperationFailure(ex))
+            {
+                Debug.WriteLine($"Rilevamento architettura Office non riuscito; uso l'architettura del sistema: {ex}");
+            }
 
             return Environment.Is64BitOperatingSystem ? "x64" : "x32";
         }
 
-        private async void btnDownload_Click(object sender, EventArgs e)
+        private async void btnDownload_Click(object? sender, EventArgs e)
         {
-            string hardwarePath = Path.Combine(
+            string hardwarePath = Path.Join(
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                 "WinHubX", "Computer", "osehardware.json");
 
@@ -492,7 +577,7 @@ rem )")
             {
                 _cts?.Cancel();
                 WinHubX.Impostazioni.DownloadManager.ForceStopDownload();
-                await Task.Delay(1000);
+                await Task.Delay(1000, CancellationToken.None);
                 SetDownloadButtonStyle(false);
                 return;
             }
@@ -505,14 +590,16 @@ rem )")
                 return;
             }
 
-            string tempFile = null;
-            string savePath = null;
+            string? tempFile = null;
+            string? privateWorkspacePath = null;
+            string? savePath = null;
             SetDownloadButtonStyle(true);
-            _cts = new CancellationTokenSource();
+            using CancellationTokenSource downloadCancellation = new();
+            _cts = downloadCancellation;
 
             try
             {
-                _cts.Token.ThrowIfCancellationRequested();
+                downloadCancellation.Token.ThrowIfCancellationRequested();
 
                 var office = officeVersions.FirstOrDefault(o => o.Nome == selectedOfficeVersion);
                 if (office == null)
@@ -522,7 +609,7 @@ rem )")
                     throw new Exception(LanguageManager.GetTranslation("FormOffice", "lingua_non_trovata"));
 
                 string arch = GetHardwareArchitecture();
-                string url = null;
+                string? url = null;
 
                 if (selectedInstallationType.Equals("Offline", StringComparison.OrdinalIgnoreCase))
                 {
@@ -530,12 +617,9 @@ rem )")
                 }
                 else if (selectedInstallationType.Equals("Online", StringComparison.OrdinalIgnoreCase))
                 {
-                    if (arch == "x64")
-                        url = links.FirstOrDefault(k => k.Key.Contains("x64", StringComparison.OrdinalIgnoreCase)).Value
-                              ?? links.GetValueOrDefault("Online");
-                    else
-                        url = links.FirstOrDefault(k => k.Key.Contains("x32", StringComparison.OrdinalIgnoreCase)).Value
-                              ?? links.GetValueOrDefault("Online");
+                    string architectureToken = arch == "x64" ? "x64" : "x32";
+                    url = links.FirstOrDefault(link => link.Key.Contains(architectureToken, StringComparison.OrdinalIgnoreCase)).Value
+                          ?? links.GetValueOrDefault("Online");
                 }
 
                 if (string.IsNullOrEmpty(url))
@@ -552,9 +636,9 @@ rem )")
                     bool installa = Checkbox_Installa.Checked;
                     if (!salva && !installa)
                         throw new Exception("Seleziona almeno una delle opzioni: Salva o Installa.");
-                    savePath = Path.Combine(percorsoCompleto, Path.GetFileName(url));
-                    await WinHubX.Impostazioni.DownloadManager.DownloadFileAsync(url, savePath, _cts.Token);
-                    _cts.Token.ThrowIfCancellationRequested();
+                    savePath = Path.Join(percorsoCompleto, Path.GetFileName(url));
+                    await WinHubX.Impostazioni.DownloadManager.DownloadFileAsync(url, savePath, downloadCancellation.Token);
+                    downloadCancellation.Token.ThrowIfCancellationRequested();
                     if (installa)
                     {
                         WinHubX.Impostazioni.OfficeSettings.LastDownloadedFile = savePath;
@@ -566,8 +650,8 @@ rem )")
 
                 else
                 {
-                    string tempDir = Path.Combine(Path.GetTempPath());
-                    Directory.CreateDirectory(tempDir);
+                    privateWorkspacePath = PrivateUserWorkspace.CreateSession();
+                    string tempDir = privateWorkspacePath;
                     string platform = arch == "x32" ? "x86" : "x64";
 
                     url = links.FirstOrDefault(k => k.Key.Contains($"Officex{(platform == "x64" ? "64" : "32")}", StringComparison.OrdinalIgnoreCase)).Value
@@ -585,9 +669,9 @@ rem )")
                     string version = parameters["version"] ?? "O16GA";
 
                     string cleanFileName = $"OfficeSetup_{product}_{platform}_{lang}_{version}.exe";
-                    tempFile = Path.Combine(tempDir, cleanFileName);
-                    await WinHubX.Impostazioni.DownloadManager.DownloadFileAsync(url, tempFile, _cts.Token);
-                    _cts.Token.ThrowIfCancellationRequested();
+                    tempFile = SafePathResolver.ResolveContainedPath(tempDir, cleanFileName);
+                    await WinHubX.Impostazioni.DownloadManager.DownloadFileAsync(url, tempFile, downloadCancellation.Token);
+                    downloadCancellation.Token.ThrowIfCancellationRequested();
                     WinHubX.Impostazioni.OfficeSettings.LastDownloadedFile = tempFile;
                     WinHubX.Impostazioni.OfficeSettings.HasPendingInstallation = true;
                     WinHubX.Impostazioni.OfficeSettings.InstallationType = "Online";
@@ -600,7 +684,7 @@ rem )")
                 WinHubX.Impostazioni.OfficeSettings.LastDownloadedFile = null;
                 MessageBox.Show("Download annullato dall'utente.");
             }
-            catch (Exception ex)
+            catch (Exception ex) when (IsExpectedOfficeOperationFailure(ex))
             {
                 WinHubX.Impostazioni.OfficeSettings.HasPendingInstallation = false;
                 WinHubX.Impostazioni.OfficeSettings.LastDownloadedFile = null;
@@ -608,30 +692,50 @@ rem )")
             }
             finally
             {
-                progressBar1.Visible = false;
-                label2.Visible = false;
-                SetDownloadButtonStyle(false);
                 try
                 {
-                    if (!string.IsNullOrEmpty(tempFile) && File.Exists(tempFile))
-                        File.Delete(tempFile);
-                    if (!string.IsNullOrEmpty(savePath) && File.Exists(savePath) &&
-                        !WinHubX.Impostazioni.DownloadManager.IsDownloading &&
-                        selectedInstallationType.Contains("Offline"))
+                    if (!IsDisposed && !Disposing)
                     {
-                        bool salva = Checkbox_Salva.Checked;
-                        bool installa = Checkbox_Installa.Checked;
-                        if (!salva && !installa)
+                        progressBar1.Visible = false;
+                        label2.Visible = false;
+                        SetDownloadButtonStyle(false);
+                    }
+
+                    try
+                    {
+                        if (!string.IsNullOrEmpty(tempFile) && File.Exists(tempFile))
+                            File.Delete(tempFile);
+                        if (privateWorkspacePath is not null)
+                            PrivateUserWorkspace.DeleteSession(privateWorkspacePath);
+                        if (!IsDisposed && !Disposing &&
+                            !string.IsNullOrEmpty(savePath) && File.Exists(savePath) &&
+                            !WinHubX.Impostazioni.DownloadManager.IsDownloading &&
+                            selectedInstallationType.Contains("Offline"))
                         {
-                            File.Delete(savePath);
+                            bool salva = Checkbox_Salva.Checked;
+                            bool installa = Checkbox_Installa.Checked;
+                            if (!salva && !installa)
+                            {
+                                File.Delete(savePath);
+                            }
                         }
                     }
+                    catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or System.Security.SecurityException)
+                    {
+                        Debug.WriteLine($"Pulizia file temporaneo/destinazione Office non riuscita: {ex}");
+                    }
                 }
-                catch { }
+                finally
+                {
+                    if (ReferenceEquals(_cts, downloadCancellation))
+                        _cts = null;
+                }
             }
         }
         private async Task StartInstallation(string savePath, bool salva)
         {
+            bool mounted = false;
+            bool installationSucceeded = false;
             try
             {
                 if (!await MountIsoAsync(savePath))
@@ -639,13 +743,15 @@ rem )")
                     MessageBox.Show("Errore durante il montaggio dell'immagine ISO.", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+                mounted = true;
 
-                string driveLetter = null;
+                string? driveLetter = null;
                 for (int i = 0; i < 10; i++)
                 {
+                    _cts?.Token.ThrowIfCancellationRequested();
                     driveLetter = await GetIsoDriveLetterAsync(savePath);
                     if (!string.IsNullOrWhiteSpace(driveLetter)) break;
-                    await Task.Delay(1000);
+                    await Task.Delay(1000, _cts?.Token ?? CancellationToken.None);
                 }
 
                 if (string.IsNullOrWhiteSpace(driveLetter))
@@ -655,77 +761,110 @@ rem )")
                 }
 
                 string drivePath = driveLetter + @":\";
-
-                try
+                string[] possibleSetups = await Task.Run(() => FindSetupExecutables(drivePath), _cts?.Token ?? CancellationToken.None);
+                if (possibleSetups.Length == 0)
                 {
-                    var possibleSetups = Directory.GetFiles(drivePath, "*.exe", SearchOption.AllDirectories)
-                        .Where(f => f.Contains("setup", StringComparison.OrdinalIgnoreCase)
-                                 || f.Contains("install", StringComparison.OrdinalIgnoreCase)
-                                 || f.Contains("autorun", StringComparison.OrdinalIgnoreCase))
-                        .ToList();
-
-                    if (possibleSetups.Count == 0)
-                    {
-                        MessageBox.Show("Nessun file di installazione trovato.", "Attenzione", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-
-                    await Task.Delay(2000);
-                    string setupExe = possibleSetups.First();
-                    await Task.Delay(2000);
-
-                    var proc = Process.Start(new ProcessStartInfo(setupExe)
-                    {
-                        UseShellExecute = true,
-                        WorkingDirectory = Path.GetDirectoryName(setupExe)
-                    });
-
-                    if (proc != null)
-                    {
-                        await proc.WaitForExitAsync();
-                        await Task.Delay(3000);
-                        while (Process.GetProcesses().Any(p => p.ProcessName.Contains("setup", StringComparison.OrdinalIgnoreCase)))
-                            await Task.Delay(2000);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Errore durante l'esecuzione del setup:\n{ex.Message}", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                finally
-                {
-                    await RunPowerShellAsync($"Dismount-DiskImage -ImagePath '{savePath}'");
+                    MessageBox.Show("Nessun file di installazione trovato.", "Attenzione", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
 
-                if (!salva)
+                string setupExe = possibleSetups[0];
+                using Process setupProcess = Process.Start(new ProcessStartInfo(setupExe)
                 {
-                    try { File.Delete(savePath); } catch { }
-                }
-                WinHubX.Impostazioni.OfficeSettings.HasPendingInstallation = false;
-                WinHubX.Impostazioni.OfficeSettings.LastDownloadedFile = null;
+                    UseShellExecute = true,
+                    WorkingDirectory = Path.GetDirectoryName(setupExe)
+                }) ?? throw new InvalidOperationException("Impossibile avviare il setup trovato nell'immagine.");
+                // Non interrompere l'attesa dopo l'avvio: il processo può continuare e usare il supporto montato.
+                await setupProcess.WaitForExitAsync(CancellationToken.None);
+                if (setupProcess.ExitCode != 0)
+                    throw new InvalidOperationException($"Il setup è terminato con codice {setupProcess.ExitCode}.");
+
+                installationSucceeded = true;
             }
-            catch (Exception ex)
+            catch (Exception ex) when (IsExpectedOfficeOperationFailure(ex))
             {
+                Debug.WriteLine($"Installazione offline Office non riuscita: {ex}");
                 MessageBox.Show($"Errore durante l'installazione: {ex.Message}", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                WinHubX.Impostazioni.OfficeSettings.HasPendingInstallation = false;
             }
+            finally
+            {
+                if (mounted)
+                {
+                    bool dismounted = false;
+                    try
+                    {
+                        int exitCode = await RunPowerShellAsync($"Dismount-DiskImage -ImagePath '{EscapePowerShellLiteral(savePath)}'");
+                        if (exitCode != 0)
+                        {
+                            MessageBox.Show($"L'immagine Office è ancora montata (codice DISM {exitCode}).", "Avviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                        else
+                        {
+                            dismounted = true;
+                        }
+                    }
+                    catch (Exception ex) when (IsExpectedOfficeOperationFailure(ex))
+                    {
+                        Debug.WriteLine($"Smontaggio immagine Office non riuscito: {ex}");
+                        MessageBox.Show($"Impossibile smontare l'immagine Office: {ex.Message}", "Avviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+
+                    if (installationSucceeded && dismounted)
+                    {
+                        bool cleaned = salva || TryDeleteOfficeFile(savePath, "immagine Office temporanea");
+                        if (cleaned)
+                        {
+                            WinHubX.Impostazioni.OfficeSettings.HasPendingInstallation = false;
+                            WinHubX.Impostazioni.OfficeSettings.LastDownloadedFile = null;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Installazione completata, ma l'immagine ISO non è stata rimossa.", "Avviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                    }
+                }
+            }
+        }
+
+        private static string[] FindSetupExecutables(string drivePath)
+        {
+            return Directory.EnumerateFiles(drivePath, "*.exe", SearchOption.AllDirectories)
+                .Where(path =>
+                {
+                    string fileName = Path.GetFileNameWithoutExtension(path);
+                    return fileName.Contains("setup", StringComparison.OrdinalIgnoreCase)
+                        || fileName.Contains("install", StringComparison.OrdinalIgnoreCase)
+                        || fileName.Contains("autorun", StringComparison.OrdinalIgnoreCase);
+                })
+                .OrderByDescending(path => string.Equals(Path.GetFileName(path), "setup.exe", StringComparison.OrdinalIgnoreCase))
+                .ThenBy(path => path, StringComparer.OrdinalIgnoreCase)
+                .ToArray();
         }
 
         private async Task StartOnlineInstallation(string tempFile)
         {
             try
             {
-                var setup = Process.Start(new ProcessStartInfo(tempFile) { UseShellExecute = true });
-                await Task.Run(() => setup.WaitForExit(), _cts.Token);
+                using Process setup = Process.Start(new ProcessStartInfo(tempFile) { UseShellExecute = true })
+                    ?? throw new InvalidOperationException("Impossibile avviare il programma di installazione di Office.");
+                // Mantieni il file disponibile finché il setup avviato non è realmente terminato.
+                await setup.WaitForExitAsync(CancellationToken.None);
+                if (setup.ExitCode != 0)
+                    throw new InvalidOperationException($"Il setup Office è terminato con codice {setup.ExitCode}.");
 
-                try { File.Delete(tempFile); } catch { }
-                WinHubX.Impostazioni.OfficeSettings.HasPendingInstallation = false;
-                WinHubX.Impostazioni.OfficeSettings.LastDownloadedFile = null;
+                if (TryDeleteOfficeFile(tempFile, "installer Office temporaneo"))
+                {
+                    WinHubX.Impostazioni.OfficeSettings.HasPendingInstallation = false;
+                    WinHubX.Impostazioni.OfficeSettings.LastDownloadedFile = null;
+                }
+                else
+                {
+                    MessageBox.Show("Installazione completata, ma l'installer temporaneo non è stato rimosso.", "Avviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
-            catch (Exception ex)
+            catch (Exception ex) when (IsExpectedOfficeOperationFailure(ex))
             {
                 MessageBox.Show($"Errore durante l'installazione: {ex.Message}", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                WinHubX.Impostazioni.OfficeSettings.HasPendingInstallation = false;
             }
         }
 
@@ -767,18 +906,19 @@ rem )")
             }
         }
 
-        private void Checkbox_Salva_CheckedChanged(object sender, EventArgs e)
+        private void Checkbox_Salva_CheckedChanged(object? sender, EventArgs e)
         {
             WinHubX.Impostazioni.OfficeSettings.SalvaFile = Checkbox_Salva.Checked;
         }
 
-        private void Checkbox_Installa_CheckedChanged(object sender, EventArgs e)
+        private void Checkbox_Installa_CheckedChanged(object? sender, EventArgs e)
         {
             WinHubX.Impostazioni.OfficeSettings.Installa = Checkbox_Installa.Checked;
         }
 
-        private async Task CheckPendingInstallation()
+        private async Task CheckPendingInstallation(CancellationToken cancellationToken)
         {
+            cancellationToken.ThrowIfCancellationRequested();
             if (WinHubX.Impostazioni.OfficeSettings.HasPendingInstallation &&
                 !string.IsNullOrEmpty(WinHubX.Impostazioni.OfficeSettings.LastDownloadedFile) &&
                 File.Exists(WinHubX.Impostazioni.OfficeSettings.LastDownloadedFile))
@@ -793,7 +933,11 @@ rem )")
                 if (result == DialogResult.Yes)
                 {
                     SetDownloadButtonStyle(true); 
-
+                    using CancellationTokenSource pendingInstallationCancellation =
+                        CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+                    if (_cts is not null)
+                        throw new InvalidOperationException("È già in corso un'operazione Office.");
+                    _cts = pendingInstallationCancellation;
                     try
                     {
                         if (WinHubX.Impostazioni.OfficeSettings.InstallationType == "Offline")
@@ -808,7 +952,9 @@ rem )")
                     }
                     finally
                     {
-                        SetDownloadButtonStyle(false);
+                        _cts = null;
+                        if (!IsDisposed && !Disposing)
+                            SetDownloadButtonStyle(false);
                     }
                 }
                 else
@@ -820,13 +966,13 @@ rem )")
         }
         private static async Task<bool> MountIsoAsync(string isoPath)
         {
-            return await RunPowerShellAsync($"Mount-DiskImage -ImagePath '{isoPath}'") == 0;
+            return await RunPowerShellAsync($"Mount-DiskImage -ImagePath '{EscapePowerShellLiteral(isoPath)}'") == 0;
         }
 
         private static async Task<string> GetIsoDriveLetterAsync(string isoPath)
         {
             string result = await RunPowerShellOutputAsync(
-                $"(Get-DiskImage -ImagePath '{isoPath}' | Get-Volume).DriveLetter"
+                $"(Get-DiskImage -ImagePath '{EscapePowerShellLiteral(isoPath)}' | Get-Volume).DriveLetter"
             );
             return result.Trim();
         }
@@ -834,18 +980,19 @@ rem )")
         {
             using var process = new Process
             {
-                StartInfo = new ProcessStartInfo
-                {
-                    FileName = "powershell.exe",
-                    Arguments = $"-Command \"{command}\"",
-                    UseShellExecute = false,
-                    CreateNoWindow = true,
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true
-                }
+                StartInfo = CreatePowerShellStartInfo(command)
             };
             process.Start();
+            Task<string> standardOutput = process.StandardOutput.ReadToEndAsync();
+            Task<string> standardError = process.StandardError.ReadToEndAsync();
             await process.WaitForExitAsync();
+
+            string[] capturedOutput = await Task.WhenAll(standardOutput, standardError);
+            if (process.ExitCode != 0)
+            {
+                Debug.WriteLine($"PowerShell terminato con codice {process.ExitCode}: {capturedOutput[1]}");
+            }
+
             return process.ExitCode;
         }
 
@@ -853,41 +1000,119 @@ rem )")
         {
             using var process = new Process
             {
-                StartInfo = new ProcessStartInfo
-                {
-                    FileName = "powershell.exe",
-                    Arguments = $"-Command \"{command}\"",
-                    UseShellExecute = false,
-                    CreateNoWindow = true,
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true
-                }
+                StartInfo = CreatePowerShellStartInfo(command)
             };
             process.Start();
-            string output = await process.StandardOutput.ReadToEndAsync();
+            Task<string> standardOutput = process.StandardOutput.ReadToEndAsync();
+            Task<string> standardError = process.StandardError.ReadToEndAsync();
             await process.WaitForExitAsync();
-            return output;
+            string[] capturedOutput = await Task.WhenAll(standardOutput, standardError);
+
+            if (process.ExitCode != 0)
+            {
+                throw new InvalidOperationException($"PowerShell terminato con codice {process.ExitCode}: {capturedOutput[1]}");
+            }
+
+            return capturedOutput[0];
         }
 
-        private async void FormOffice_Load(object sender, EventArgs e)
+        private static ProcessStartInfo CreatePowerShellStartInfo(string command)
+        {
+            var startInfo = new ProcessStartInfo
+            {
+                FileName = Path.Join(Environment.SystemDirectory, "WindowsPowerShell", "v1.0", "powershell.exe"),
+                UseShellExecute = false,
+                CreateNoWindow = true,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true
+            };
+            startInfo.ArgumentList.Add("-NoProfile");
+            startInfo.ArgumentList.Add("-NonInteractive");
+            startInfo.ArgumentList.Add("-Command");
+            startInfo.ArgumentList.Add(command);
+            return startInfo;
+        }
+
+        private static string EscapePowerShellLiteral(string value) => value.Replace("'", "''", StringComparison.Ordinal);
+
+        private static bool TryDeleteOfficeFile(string path, string description)
         {
             try
             {
-                officeVersions = await CaricaOfficeVersions(Dipendenze.GitHubConfigUrl);
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
+                return true;
+            }
+            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+            {
+                Debug.WriteLine($"Rimozione {description} non riuscita: {ex}");
+                return false;
+            }
+        }
+
+        private async void FormOffice_Load(object? sender, EventArgs e)
+        {
+            CancellationToken cancellationToken;
+            try
+            {
+                cancellationToken = BeginLifetimeOperation();
+            }
+            catch (OperationCanceledException)
+            {
+                return;
+            }
+
+            try
+            {
+                try
+                {
+                    officeVersions = await CaricaOfficeVersions(
+                        Dipendenze.GitHubConfigUrl,
+                        cancellationToken);
+                }
+                catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+                {
+                    return;
+                }
+                catch (Exception ex) when (IsExpectedOfficeOperationFailure(ex))
+                {
+                    Debug.WriteLine($"Caricamento catalogo Office non riuscito: {ex}");
+                    if (!IsDisposed && !Disposing)
+                    {
+                        MessageBox.Show(
+                            $"Impossibile caricare il catalogo Office. Verifica la connessione e riprova.\n{ex.Message}",
+                            "WinHubX",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning);
+                    }
+
+                    return;
+                }
+
+                if (cancellationToken.IsCancellationRequested || IsDisposed || Disposing)
+                    return;
+
                 comboBoxVerOffice.Items.Clear();
 
                 foreach (var office in officeVersions)
                 {
                     comboBoxVerOffice.Items.Add(office.Nome);
                 }
-            }
-            catch
-            {
 
+                Checkbox_Salva.Checked = WinHubX.Impostazioni.OfficeSettings.SalvaFile;
+                Checkbox_Installa.Checked = WinHubX.Impostazioni.OfficeSettings.Installa;
+                await CheckPendingInstallation(cancellationToken);
             }
-            Checkbox_Salva.Checked = WinHubX.Impostazioni.OfficeSettings.SalvaFile;
-            Checkbox_Installa.Checked = WinHubX.Impostazioni.OfficeSettings.Installa;
-            await CheckPendingInstallation();
+            catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+            {
+                Debug.WriteLine("Caricamento Office annullato durante la chiusura della finestra.");
+            }
+            finally
+            {
+                EndLifetimeOperation();
+            }
         }
 
         private void AggiornaPercorsoLabel(string downloadPath)
@@ -912,7 +1137,7 @@ rem )")
 
             labelpercorso.Text = path + "...";
         }
-        private void btn_cambia_Click(object sender, EventArgs e)
+        private void btn_cambia_Click(object? sender, EventArgs e)
         {
             using (var dialog = new FolderBrowserDialog())
             {
@@ -923,19 +1148,19 @@ rem )")
             }
         }
 
-        private void panel50_Resize(object sender, EventArgs e) => AggiornaPercorsoLabel(percorsoCompleto);
-        private void panel70_Resize(object sender, EventArgs e) => AggiornaPercorsoLabel(percorsoCompleto);
-        private void tableLayoutPanel50_Resize(object sender, EventArgs e) => AggiornaPercorsoLabel(percorsoCompleto);
-        private void FormOffice_Resize(object sender, EventArgs e) => AggiornaPercorsoLabel(percorsoCompleto);
+        private void panel50_Resize(object? sender, EventArgs e) => AggiornaPercorsoLabel(percorsoCompleto);
+        private void panel70_Resize(object? sender, EventArgs e) => AggiornaPercorsoLabel(percorsoCompleto);
+        private void tableLayoutPanel50_Resize(object? sender, EventArgs e) => AggiornaPercorsoLabel(percorsoCompleto);
+        private void FormOffice_Resize(object? sender, EventArgs e) => AggiornaPercorsoLabel(percorsoCompleto);
 
-        private void btnAggRimAppOffice_Click(object sender, EventArgs e)
+        private void btnAggRimAppOffice_Click(object? sender, EventArgs e)
         {
             MostraFormInPanel<FormAggiungiRimuoviAppOffice>("AggiungiRimuoviApp", btnAggRimAppOfficePrinci);
         }
 
-        private void btnPersonalizzaOffice_Click(object sender, EventArgs e)
+        private void btnPersonalizzaOffice_Click(object? sender, EventArgs e)
         {
-            string hardwarePath = Path.Combine(
+            string hardwarePath = Path.Join(
     Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
     "WinHubX", "Computer", "osehardware.json");
 
@@ -959,7 +1184,7 @@ rem )")
         {
             panel50.Controls.Clear();
 
-            Form1 mainForm = Application.OpenForms["Form1"] as Form1;
+            Form1? mainForm = Application.OpenForms["Form1"] as Form1;
             if (mainForm == null) return;
 
             mainForm.pictureBox3.Visible = true;
@@ -969,7 +1194,8 @@ rem )")
 
             mainForm.lblPanelTitle.Text = LanguageManager.GetTranslation("FormPersonallizatoOffice", titoloTraduzione);
             mainForm.pictureBoxlblalto.Image = button.Image;
-            Form form = (Form)Activator.CreateInstance(typeof(T), mainForm, this);
+            Form form = Activator.CreateInstance(typeof(T), mainForm, this) as Form
+                ?? throw new InvalidOperationException($"Impossibile creare il form {typeof(T).Name}.");
             form.TopLevel = false;
             form.FormBorderStyle = FormBorderStyle.None;
             form.Dock = DockStyle.Fill;

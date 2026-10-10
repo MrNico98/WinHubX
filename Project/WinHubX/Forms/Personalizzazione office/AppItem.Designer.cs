@@ -2,25 +2,8 @@
 {
     partial class AppItem
     {
-        /// <summary> 
-        /// Variabile di progettazione necessaria.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
-
         private PictureBox pictureBoxApp;
         private Label lblName;
-
-        /// <summary> 
-        /// Pulire le risorse in uso.
-        /// </summary>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
 
         #region Codice generato da Progettazione componenti
 

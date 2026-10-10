@@ -160,7 +160,7 @@
     <value>132</value>
   </data>
   <data name="&gt;&gt;progressBar1.Type" xml:space="preserve">
-    <value>CuoreUI.Controls.cuiProgressBarHorizontal, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+    <value>HartUI.Controls.cuiProgressBarHorizontal, HartUI, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="label1.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleLeft</value>
@@ -190,7 +190,7 @@
     <value>677, 362</value>
   </data>
   <data name="&gt;&gt;progressBar2.Type" xml:space="preserve">
-    <value>CuoreUI.Controls.cuiProgressBarHorizontal, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+    <value>HartUI.Controls.cuiProgressBarHorizontal, HartUI, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;label3.Name" xml:space="preserve">
     <value>label3</value>
@@ -298,7 +298,7 @@
     <value>875, 271</value>
   </data>
   <data name="&gt;&gt;btnStopVerdi.Type" xml:space="preserve">
-    <value>CuoreUI.Controls.cuiButton, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+    <value>HartUI.Controls.cuiButton, HartUI, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="btnStopVerdi.Size" type="System.Drawing.Size, System.Drawing">
     <value>196, 45</value>

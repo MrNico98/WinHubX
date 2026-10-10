@@ -1,41 +1,74 @@
-﻿using CuoreUI.Controls;
+using HartUI.Controls;
 using LibreHardwareMonitor.Hardware;
 using System.Diagnostics;
 using System.Net.NetworkInformation;
-using System.Runtime.InteropServices;
 using WinHubX.Impostazioni;
 
 namespace WinHubX.Forms.Base
 {
     public partial class FormMonitoraggio : Form
     {
+        private static bool IsExpectedMonitoringFailure(Exception exception) =>
+            exception is IOException
+                or UnauthorizedAccessException
+                or System.Security.SecurityException
+                or System.ComponentModel.Win32Exception
+                or System.Runtime.InteropServices.COMException
+                or System.Management.ManagementException
+                or InvalidOperationException
+                or NotSupportedException
+                or ArgumentException
+                or TimeoutException;
+
+        private sealed record HardwareSnapshot(string CpuTemperature, string GpuTemperature, double GpuUsage)
+        {
+            public static HardwareSnapshot Empty { get; } = new("N/A", "N/A", 0);
+        }
+
         #region Constants and Fields
         private const string RegistryKey = @"Software\WinHubX-Monitor";
         private const string RegistryValueMonitoraggio = "IsMonitoringOn";
         private const string RegistryValueTemperature = "isTemperatureOn";
-        private string monitoraggioPath =
-    Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+        private static readonly TimeSpan TempDirectoryRefreshInterval = TimeSpan.FromMinutes(1);
+        private static readonly TimeSpan NetworkInterfaceRefreshInterval = TimeSpan.FromMinutes(1);
+        private readonly string monitoraggioPath =
+    Path.Join(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
     "WinHubX", "Impostazioni", "Monitoraggio.json");
 
-        private const uint PROCESS_SET_QUOTA = 0x0100;
-        private const uint PROCESS_QUERY_INFORMATION = 0x0400;
-
-        private NetworkInterface[] networkInterfaces;
-        private DateTime lastUpdateTime;
+        private NetworkInterface[] networkInterfaces = Array.Empty<NetworkInterface>();
+        private string[] networkInterfaceIds = Array.Empty<string>();
+        private readonly object _hardwareSync = new();
+        private readonly SemaphoreSlim _monitorSettingsWriteLock = new(1, 1);
+        private HardwareSnapshot _latestHardwareSnapshot = HardwareSnapshot.Empty;
+        private long lastUpdateTimestamp;
         private long lastBytesSent;
         private long lastBytesReceived;
+        private double networkCapacityKB;
+        private long _lastNetworkInterfaceRefreshTimestamp;
+        private int _networkTopologyChanged;
+        private int _networkChangeEventsSubscribed;
 
 
         private readonly Form1 _mainForm;
-        private Computer _computer;
-        private System.Windows.Forms.Timer _monitoringTimer;
-        private System.Windows.Forms.Timer _tempMonitorTimer;
-        private PerformanceCounter _cpuCounter;
+        private Computer _computer = new();
+        private System.Windows.Forms.Timer? _ramMonitorTimer;
+        private PerformanceCounter? _cpuCounter;
+        private PerformanceCounter? _diskUsageCounter;
+        private Task? _ramCleanupTask;
+        private Task? _manualRamCleanupTask;
+        private Task? _manualCpuCleanupTask;
+        private readonly CancellationTokenSource _monitoringCancellation = new();
+        private readonly CancellationToken _monitoringToken;
+        private Task[] _monitoringTasks = Array.Empty<Task>();
+        private Task? _initializationTask;
+        private bool _monitoringStarted;
+        private bool _shutdownRequested;
+        private bool _closeAfterMonitoringStops;
+        private Task? _cleanupTask;
+        private int _ramCleanupRunning;
+        private DateTime _lastAutomaticRamCleanupUtc = DateTime.MinValue;
 
-        private bool _isMonitoringOn = false;
-        private bool _isTemperatureOn = false;
-        private bool _notificationAlreadyShown = false;
-        private NotifyIcon _notifyIcon;
+        private NotifyIcon? _notifyIcon;
         #endregion
 
         #region Constructor
@@ -43,39 +76,73 @@ namespace WinHubX.Forms.Base
         {
             InitializeComponent();
             _mainForm = mainForm;
+            _monitoringToken = _monitoringCancellation.Token;
+
+            // Riduce tearing e ridisegni parziali durante gli aggiornamenti dei monitor.
+            SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
+            UpdateStyles();
 
             this.Shown += FormMonitoraggio_Shown;
         }
 
         private async void FormMonitoraggio_Shown(object? sender, EventArgs e)
         {
-            Cursor = Cursors.WaitCursor;
-            await Task.Delay(50);
+            if (_monitoringStarted)
+                return;
 
+            _monitoringStarted = true;
+            Cursor = Cursors.WaitCursor;
             try
             {
+                await Task.Delay(50, _monitoringToken);
+                if (_shutdownRequested || IsDisposed || !IsHandleCreated)
+                {
+                    return;
+                }
+
                 LanguageManager.LoadLanguageFromSettings();
 
                 btnPulisciCPU.Content = LanguageManager.CurrentLanguage == "it" ? "  Pulizia" : "  Clean";
                 btnPulisciRam.Content = LanguageManager.CurrentLanguage == "it" ? "  Pulizia" : "  Clean";
                 btnSvuotaTemp.Content = LanguageManager.CurrentLanguage == "it" ? "  Svuota" : "  Empty";
 
-                InitializeComputer();
-                InitializeTimers();
+                _initializationTask = Task.Run(InitializeComputer, _monitoringToken);
+                await _initializationTask;
+                if (_monitoringToken.IsCancellationRequested || IsDisposed || !IsHandleCreated)
+                {
+                    return;
+                }
+
                 InitializePerformanceCounter();
                 InitializeNotificationIcon();
                 ApplyTheme();
-                StartCpuMonitoring();
                 StartRamMonitoring();
-                StartReteMonitoring();
-                StartGPUMonitoring();
-                StartDiscoMonitoring();
-                StartTEMPMonitoring();
-                LoadMonitoraggioSettings();
+                _monitoringTasks =
+                [
+                    StartCpuMonitoring(),
+                    StartReteMonitoring(),
+                    StartHardwareMonitoring(),
+                    StartDiscoMonitoring(),
+                    StartTEMPMonitoring()
+                ];
+                await LoadMonitoraggioSettingsAsync();
+            }
+            catch (OperationCanceledException) when (_monitoringToken.IsCancellationRequested)
+            {
+                return;
+            }
+            catch (Exception ex) when (IsExpectedMonitoringFailure(ex))
+            {
+                Debug.WriteLine($"Avvio monitoraggio non riuscito: {ex}");
+                ShowErrorMessage($"Impossibile avviare il monitoraggio:\n{ex.Message}");
+                Close();
             }
             finally
             {
-                Cursor = Cursors.Default;
+                if (!IsDisposed)
+                {
+                    Cursor = Cursors.Default;
+                }
             }
         }
         #endregion
@@ -83,26 +150,18 @@ namespace WinHubX.Forms.Base
         #region Initialization Methods
         private void InitializeComputer()
         {
-            _computer = new Computer
+            lock (_hardwareSync)
             {
-                IsCpuEnabled = true,
-                IsGpuEnabled = true,
-                IsStorageEnabled = true,
-                IsMotherboardEnabled = true,
-                IsControllerEnabled = true
-            };
-            _computer.Open();
-        }
-
-        private void InitializeTimers()
-        {
-            _monitoringTimer = new System.Windows.Forms.Timer { Interval = 1000 };
-            _monitoringTimer.Tick += MonitoringTimer_Tick;
-            _monitoringTimer.Start();
-
-            _tempMonitorTimer = new System.Windows.Forms.Timer { Interval = 5000 };
-            _tempMonitorTimer.Tick += TempMonitorTimer_Tick;
-            _tempMonitorTimer.Start();
+                _computer = new Computer
+                {
+                    IsCpuEnabled = true,
+                    IsGpuEnabled = true,
+                    IsStorageEnabled = false,
+                    IsMotherboardEnabled = false,
+                    IsControllerEnabled = false
+                };
+                _computer.Open();
+            }
         }
 
         private void InitializePerformanceCounter()
@@ -120,18 +179,23 @@ namespace WinHubX.Forms.Base
             };
         }
 
-        private void LoadMonitoraggioSettings()
+        private async Task LoadMonitoraggioSettingsAsync()
         {
             try
             {
                 if (!File.Exists(monitoraggioPath))
                 {
-                    Directory.CreateDirectory(Path.GetDirectoryName(monitoraggioPath));
-                    File.WriteAllText(monitoraggioPath, "{ \"LimiteGB\": 2, \"ShowFahrenheitcpu\": false, \"ShowFahrenheitgpu\": false }");
+                    Directory.CreateDirectory(Path.GetDirectoryName(monitoraggioPath)
+                        ?? throw new InvalidOperationException("Percorso monitoraggio non valido."));
+                    await File.WriteAllTextAsync(
+                        monitoraggioPath,
+                        "{ \"LimiteGB\": 2, \"ShowFahrenheitcpu\": false, \"ShowFahrenheitgpu\": false }",
+                        _monitoringToken);
                 }
 
-                string json = File.ReadAllText(monitoraggioPath);
-                var obj = System.Text.Json.JsonSerializer.Deserialize<MonitoraggioConfig>(json);
+                string json = await File.ReadAllTextAsync(monitoraggioPath, _monitoringToken);
+                var obj = System.Text.Json.JsonSerializer.Deserialize<MonitoraggioConfig>(json)
+                    ?? new MonitoraggioConfig();
                 domainUpDown1.Text = $"{obj.LimiteGB} GB";
                 MonitorSettings.ShowFahrenheitcpu = obj.ShowFahrenheitcpu;
                 cuiSwitch_gradicpu.Checked = obj.ShowFahrenheitcpu;
@@ -139,10 +203,17 @@ namespace WinHubX.Forms.Base
                 MonitorSettings.ShowFahrenheitgpu = obj.ShowFahrenheitgpu;
                 cuiSwitch_gputemperatura.Checked = obj.ShowFahrenheitgpu;
             }
-            catch
+            catch (OperationCanceledException) when (_monitoringToken.IsCancellationRequested)
             {
+                Debug.WriteLine("Caricamento impostazioni monitoraggio annullato durante la chiusura.");
+            }
+            catch (Exception ex) when (IsExpectedMonitoringFailure(ex))
+            {
+                Debug.WriteLine($"Lettura impostazioni monitoraggio non riuscita: {ex}");
                 domainUpDown1.Text = "2 GB";
+                MonitorSettings.ShowFahrenheitcpu = false;
                 cuiSwitch_gradicpu.Checked = false;
+                MonitorSettings.ShowFahrenheitgpu = false;
                 cuiSwitch_gputemperatura.Checked = false;
             }
         }
@@ -150,15 +221,10 @@ namespace WinHubX.Forms.Base
         #endregion
 
         #region Temperature Monitoring
-        private void MonitoringTimer_Tick(object sender, EventArgs e)
-        {
-            UpdateTemperatureDisplays();
-        }
-
         private void UpdateTemperatureDisplays()
         {
-            var cpuTemperature = GetTemperature(HardwareType.Cpu)?.ToString("0") ?? "N/A";
-            var gpuTemperature = GetGpuTemperature() ?? "N/A";
+            string cpuTemperature = _latestHardwareSnapshot.CpuTemperature;
+            string gpuTemperature = _latestHardwareSnapshot.GpuTemperature;
             var displayCpuTemp = ConvertTemperature(cpuTemperature, MonitorSettings.ShowFahrenheitcpu);
             var displayGpuTemp = ConvertTemperature(gpuTemperature, MonitorSettings.ShowFahrenheitgpu);
 
@@ -169,12 +235,11 @@ namespace WinHubX.Forms.Base
             UpdateTemperatureImage(pic_termgpu, gpuTemperature, UpdateGpuTemperatureImage);
         }
 
-        private string GetGpuTemperature()
+        private string? GetGpuTemperature()
         {
             return GetTemperature(HardwareType.GpuNvidia)?.ToString("0")
                    ?? GetTemperature(HardwareType.GpuAmd)?.ToString("0")
-                   ?? GetTemperature(HardwareType.Cpu)?.ToString("0")
-                   ?? "N/A";
+                   ?? GetTemperature(HardwareType.GpuIntel)?.ToString("0");
         }
 
         private float? GetTemperature(HardwareType hardwareType)
@@ -183,10 +248,11 @@ namespace WinHubX.Forms.Base
             {
                 if (hardware.HardwareType == hardwareType)
                 {
-                    hardware.Update();
-                    var sensor = hardware.Sensors
-                        .FirstOrDefault(s => s.SensorType == SensorType.Temperature);
-                    return sensor?.Value;
+                    IEnumerable<float?> readings = hardware.Sensors
+                        .Where(sensor => sensor.SensorType == SensorType.Temperature)
+                        .OrderBy(sensor => sensor.IsDefaultHidden)
+                        .Select(sensor => sensor.Value);
+                    return HardwareSensorReading.SelectTemperature(readings);
                 }
             }
             return null;
@@ -245,101 +311,113 @@ namespace WinHubX.Forms.Base
         #region RAM Monitoring and Management
         private void StartRamMonitoring()
         {
-            var timer = new System.Windows.Forms.Timer { Interval = 3000 };
-            timer.Tick += (sender, e) =>
-            {
-                MEMORYSTATUSEX memStatus = GetMemoryStatus();
-                double ramUsagePercentage = ((double)(memStatus.ullTotalPhys - memStatus.ullAvailPhys) / memStatus.ullTotalPhys) * 100;
-
-                BarRAM.ProgressValue = Math.Min((int)ramUsagePercentage, 100);
-                BarRAMtext.Text = $"{ramUsagePercentage:0}%";
-                if (MonitorSettings.PuliziaAutomaticaRAM && ramUsagePercentage > (double)MonitorSettings.LimiteRAM)
-                {
-                    CleanMemory();
-                    CpuReduce();
-                    OptimizeMemory();
-                }
-            };
-            timer.Start();
+            _ramMonitorTimer = new System.Windows.Forms.Timer { Interval = 3000 };
+            _ramMonitorTimer.Tick += RamMonitorTimer_Tick;
+            _ramMonitorTimer.Start();
         }
 
-        private void CleanMemory()
+        private async void RamMonitorTimer_Tick(object? sender, EventArgs e)
         {
-            var processes = Process.GetProcesses();
-
-            foreach (var process in processes)
+            (ulong totalPhysicalMemory, ulong availablePhysicalMemory) = GetMemoryStatus();
+            if (totalPhysicalMemory == 0)
             {
-                try
-                {
-                    CleanProcessMemory(process);
-                }
-                catch (Exception)
-                {
-                }
+                Debug.WriteLine("Impossibile leggere la memoria fisica totale.");
+                return;
             }
-        }
 
-        private void CleanProcessMemory(Process process)
-        {
-            IntPtr processHandle = OpenProcess(PROCESS_SET_QUOTA | PROCESS_QUERY_INFORMATION, false, process.Id);
+            double ramUsagePercentage = ((double)(totalPhysicalMemory - availablePhysicalMemory) / totalPhysicalMemory) * 100;
+            BarRAM.ProgressValue = Math.Min((int)ramUsagePercentage, 100);
+            BarRAMtext.Text = $"{ramUsagePercentage:0}%";
 
-            if (processHandle != IntPtr.Zero)
+            if (!MonitorSettings.PuliziaAutomaticaRAM ||
+                ramUsagePercentage <= (double)MonitorSettings.LimiteRAM ||
+                DateTime.UtcNow - _lastAutomaticRamCleanupUtc < TimeSpan.FromSeconds(30) ||
+                Interlocked.Exchange(ref _ramCleanupRunning, 1) != 0)
             {
-                try
-                {
-                    _ = SetProcessWorkingSetSize(processHandle, IntPtr.Zero, IntPtr.Zero);
-                    _ = EmptyWorkingSet(processHandle);
-                }
-                finally
-                {
-                    _ = CloseHandle(processHandle);
-                }
+                return;
             }
-        }
 
-        private bool ReduceMemoryUse(int processId)
-        {
-            IntPtr processHandle = OpenProcess(PROCESS_SET_QUOTA | PROCESS_QUERY_INFORMATION, false, processId);
-
-            if (processHandle == IntPtr.Zero)
-                return false;
-
+            _lastAutomaticRamCleanupUtc = DateTime.UtcNow;
             try
             {
-                return EmptyWorkingSet(processHandle);
+                _ramCleanupTask = Task.Run(() =>
+                {
+                    CollectManagedMemory();
+                    CpuReduce();
+                }, _monitoringToken);
+                await _ramCleanupTask;
+            }
+            catch (OperationCanceledException) when (_monitoringCancellation.IsCancellationRequested)
+            {
+                return;
+            }
+            catch (Exception ex) when (IsExpectedMonitoringFailure(ex))
+            {
+                Debug.WriteLine($"Pulizia automatica della memoria non riuscita: {ex}");
             }
             finally
             {
-                _ = CloseHandle(processHandle);
+                _ramCleanupTask = null;
+                Interlocked.Exchange(ref _ramCleanupRunning, 0);
             }
+        }
+
+        private static void CollectManagedMemory()
+        {
+            GC.Collect(GC.MaxGeneration, GCCollectionMode.Optimized, blocking: false, compacting: false);
         }
         #endregion
 
         #region CPU Monitoring and Management
-        private async void StartTEMPMonitoring()
+        private async Task StartTEMPMonitoring()
         {
             string tempPath = Path.GetTempPath();
 
-            while (true)
+            try
             {
-                try
+                while (!_monitoringCancellation.IsCancellationRequested)
                 {
-                    long totalBytes = GetDirectorySize(tempPath);
+                    try
+                    {
+                        // La scansione ricorsiva può attraversare migliaia di file: mai eseguirla sul thread UI.
+                        long totalBytes = await Task.Run(
+                            () => TempDirectorySizeCalculator.Calculate(tempPath, _monitoringToken),
+                            _monitoringToken);
+                        if (_monitoringCancellation.IsCancellationRequested || IsDisposed || !IsHandleCreated)
+                        {
+                            return;
+                        }
 
-                    double usedGB = Math.Round(totalBytes / 1024.0 / 1024.0 / 1024.0, 2);
-                    double limitGB = GetSelectedGB();
+                        double usedGB = Math.Round(totalBytes / 1024.0 / 1024.0 / 1024.0, 2);
+                        double limitGB = GetSelectedGB();
 
-                    BarTEMPtext.Text = $"{usedGB}GB";
+                        BarTEMPtext.Text = $"{usedGB}GB";
 
-                    int percent = (int)Math.Min((usedGB / limitGB) * 100, 100);
-                    BarTEMP.ProgressValue = percent;
-                    BarTEMP.ProgressColor = usedGB <= limitGB ? Color.Green : Color.Red;
+                        int percent = (int)Math.Min((usedGB / limitGB) * 100, 100);
+                        BarTEMP.ProgressValue = percent;
+                        BarTEMP.ProgressColor = usedGB <= limitGB ? Color.Green : Color.Red;
+                    }
+                    catch (OperationCanceledException) when (_monitoringCancellation.IsCancellationRequested)
+                    {
+                        return;
+                    }
+                    catch (Exception ex) when (IsExpectedMonitoringFailure(ex))
+                    {
+                        Debug.WriteLine($"Lettura cartella temporanea non riuscita: {ex}");
+                    }
+
+                    // La dimensione TEMP richiede una scansione ricorsiva; aggiornarla ogni minuto evita
+                    // di saturare un core mentre la scheda è aperta senza rallentare gli altri indicatori.
+                    await Task.Delay(TempDirectoryRefreshInterval, _monitoringToken);
                 }
-                catch
-                {
-                }
-
-                await Task.Delay(2000);
+            }
+            catch (OperationCanceledException) when (_monitoringCancellation.IsCancellationRequested)
+            {
+                return;
+            }
+            catch (Exception ex) when (IsExpectedMonitoringFailure(ex))
+            {
+                Debug.WriteLine($"Monitoraggio cartella temporanea terminato con errore: {ex}");
             }
         }
         private int GetSelectedGB()
@@ -351,71 +429,84 @@ namespace WinHubX.Forms.Base
             return 2; 
         }
 
-        private long GetDirectorySize(string folderPath)
-        {
-            long size = 0;
-
-            DirectoryInfo dir = new DirectoryInfo(folderPath);
-
-            foreach (FileInfo file in dir.GetFiles("*", SearchOption.AllDirectories))
-            {
-                size += file.Length;
-            }
-
-            return size;
-        }
-
-
-        private async void StartDiscoMonitoring()
-        {
-            await Task.Run(async () =>
-            {
-                while (true)
-                {
-                    try
-                    {
-                        double discoUsage = GetDiscoUsagePercentage();
-                        UpdateDiscoUI(discoUsage);
-                        await Task.Delay(3000);
-                    }
-                    catch (Exception)
-                    {
-                        UpdateDiscoUI(0);
-                        await Task.Delay(3000);
-                    }
-                }
-            });
-        }
-        private double GetDiscoUsagePercentage()
+        private async Task StartDiscoMonitoring()
         {
             try
             {
-                using (var diskCounter = new PerformanceCounter("PhysicalDisk", "% Disk Time", "_Total"))
+                while (!_monitoringCancellation.IsCancellationRequested)
                 {
-                    diskCounter.NextValue();
-                    System.Threading.Thread.Sleep(1000);
-                    float diskUsage = diskCounter.NextValue();
-
-                    return Math.Min(diskUsage, 100);
-                }
-            }
-            catch (Exception)
-            {
-                try
-                {
-                    using (var diskCounter = new PerformanceCounter("LogicalDisk", "% Disk Time", "_Total"))
+                    try
                     {
-                        diskCounter.NextValue();
-                        System.Threading.Thread.Sleep(1000);
-                        float diskUsage = diskCounter.NextValue();
-                        return Math.Min(diskUsage, 100);
+                        double discoUsage = await GetDiscoUsagePercentageAsync();
+                        if (IsDisposed || !IsHandleCreated)
+                        {
+                            return;
+                        }
+
+                        UpdateDiscoUI(discoUsage);
+                        await Task.Delay(3000, _monitoringToken);
+                    }
+                    catch (OperationCanceledException) when (_monitoringCancellation.IsCancellationRequested)
+                    {
+                        return;
+                    }
+                    catch (Exception ex) when (IsExpectedMonitoringFailure(ex))
+                    {
+                        Debug.WriteLine($"Lettura utilizzo disco non riuscita: {ex}");
+                        await Task.Delay(3000, _monitoringToken);
                     }
                 }
-                catch
+            }
+            catch (OperationCanceledException) when (_monitoringCancellation.IsCancellationRequested)
+            {
+                return;
+            }
+            catch (Exception ex) when (IsExpectedMonitoringFailure(ex))
+            {
+                Debug.WriteLine($"Monitoraggio disco terminato con errore: {ex}");
+            }
+        }
+        private async Task<double> GetDiscoUsagePercentageAsync()
+        {
+            try
+            {
+                _diskUsageCounter ??= new PerformanceCounter("PhysicalDisk", "% Disk Time", "_Total");
+                return await SampleDiskCounterAsync(_diskUsageCounter);
+            }
+            catch (OperationCanceledException) when (_monitoringCancellation.IsCancellationRequested)
+            {
+                throw;
+            }
+            catch (Exception ex) when (IsExpectedMonitoringFailure(ex))
+            {
+                Debug.WriteLine($"Contatore PhysicalDisk non disponibile: {ex.Message}");
+                _diskUsageCounter?.Dispose();
+                _diskUsageCounter = null;
+
+                try
                 {
+                    _diskUsageCounter = new PerformanceCounter("LogicalDisk", "% Disk Time", "_Total");
+                    return await SampleDiskCounterAsync(_diskUsageCounter);
+                }
+                catch (OperationCanceledException) when (_monitoringCancellation.IsCancellationRequested)
+                {
+                    throw;
+                }
+                catch (Exception fallbackException) when (IsExpectedMonitoringFailure(fallbackException))
+                {
+                    Debug.WriteLine($"Contatore LogicalDisk non disponibile: {fallbackException.Message}");
+                    _diskUsageCounter?.Dispose();
+                    _diskUsageCounter = null;
                     return 0;
                 }
             }
+        }
+
+        private async Task<double> SampleDiskCounterAsync(PerformanceCounter counter)
+        {
+            _ = counter.NextValue();
+            await Task.Delay(1000, _monitoringToken);
+            return Math.Clamp(counter.NextValue(), 0, 100);
         }
 
         private void UpdateDiscoUI(double discoUsage)
@@ -438,64 +529,121 @@ namespace WinHubX.Forms.Base
                 {
                     BarDISCOtext.Text = $"{discoUsage:0}%";
                 }
-                BarDISCO?.Refresh();
-                BarDISCOtext?.Refresh();
             }
-            catch (Exception)
+            catch (Exception ex) when (IsExpectedMonitoringFailure(ex))
             {
-            }
-        }
-
-        private async void StartCpuMonitoring()
-        {
-            while (true)
-            {
-                double cpuUsagePercentage = await GetCpuUsagePercentageAsync();
-                BarCPU.ProgressValue = (int)cpuUsagePercentage;
-                BarCPUtext.Text = $"{cpuUsagePercentage:0}%";
-                if (MonitorSettings.PuliziaAutomaticaCPU && cpuUsagePercentage > (double)MonitorSettings.LimiteCPU)
-                {
-                    CpuReduce();
-                }
-
-                await Task.Delay(2000);
+                Debug.WriteLine($"Aggiornamento UI utilizzo disco non riuscito: {ex}");
             }
         }
 
-        private async void StartGPUMonitoring()
+        private async Task StartCpuMonitoring()
         {
-            await Task.Run(async () =>
+            try
             {
-                while (true)
+                while (!_monitoringCancellation.IsCancellationRequested)
                 {
-                    double gpuUsage = GetGpuLoadPercentage() ?? 0;
-                    UpdateGpuUI(gpuUsage);
-                    await Task.Delay(2000);
+                    double cpuUsagePercentage = await GetCpuUsagePercentageAsync();
+                    if (_monitoringCancellation.IsCancellationRequested || IsDisposed || !IsHandleCreated)
+                    {
+                        return;
+                    }
+
+                    BarCPU.ProgressValue = (int)cpuUsagePercentage;
+                    BarCPUtext.Text = $"{cpuUsagePercentage:0}%";
+                    if (MonitorSettings.PuliziaAutomaticaCPU && cpuUsagePercentage > (double)MonitorSettings.LimiteCPU)
+                    {
+                        await Task.Run(CpuReduce, _monitoringToken);
+                    }
+
+                    await Task.Delay(2000, _monitoringToken);
                 }
-            });
+            }
+            catch (OperationCanceledException) when (_monitoringCancellation.IsCancellationRequested)
+            {
+                return;
+            }
+            catch (Exception ex) when (IsExpectedMonitoringFailure(ex))
+            {
+                Debug.WriteLine($"Monitoraggio CPU terminato con errore: {ex}");
+            }
+        }
+
+        private async Task StartHardwareMonitoring()
+        {
+            try
+            {
+                while (!_monitoringCancellation.IsCancellationRequested)
+                {
+                    try
+                    {
+                        HardwareSnapshot snapshot = await Task.Run(PollHardware, _monitoringToken);
+                        if (IsDisposed || !IsHandleCreated)
+                        {
+                            return;
+                        }
+
+                        _latestHardwareSnapshot = snapshot;
+                        UpdateTemperatureDisplays();
+                        UpdateGpuUI(snapshot.GpuUsage);
+                    }
+                    catch (OperationCanceledException) when (_monitoringCancellation.IsCancellationRequested)
+                    {
+                        return;
+                    }
+                    catch (Exception ex) when (IsExpectedMonitoringFailure(ex))
+                    {
+                        Debug.WriteLine($"Lettura sensori hardware non riuscita: {ex}");
+                    }
+
+                    await Task.Delay(1000, _monitoringToken);
+                }
+            }
+            catch (OperationCanceledException) when (_monitoringCancellation.IsCancellationRequested)
+            {
+                return;
+            }
+            catch (Exception ex) when (IsExpectedMonitoringFailure(ex))
+            {
+                Debug.WriteLine($"Lettura sensori hardware non riuscita: {ex}");
+            }
+        }
+
+        private HardwareSnapshot PollHardware()
+        {
+            lock (_hardwareSync)
+            {
+                foreach (IHardware hardware in _computer.Hardware.Where(static hardware =>
+                    hardware.HardwareType is HardwareType.Cpu or HardwareType.GpuNvidia or HardwareType.GpuAmd or HardwareType.GpuIntel))
+                {
+                    hardware.Update();
+                }
+
+                string cpuTemperature = GetTemperature(HardwareType.Cpu)?.ToString("0") ?? "N/A";
+                string gpuTemperature = GetGpuTemperature() ?? "N/A";
+                double gpuUsage = GetGpuLoadPercentage() ?? 0;
+                return new HardwareSnapshot(cpuTemperature, gpuTemperature, gpuUsage);
+            }
         }
 
         private double? GetGpuLoadPercentage()
         {
-            foreach (var hardware in _computer.Hardware)
-            {
-                if (hardware.HardwareType == HardwareType.GpuNvidia ||
-                    hardware.HardwareType == HardwareType.GpuAmd ||
-                    hardware.HardwareType == HardwareType.GpuIntel)
-                {
-                    hardware.Update();
-                    var loadSensor = hardware.Sensors.FirstOrDefault(s =>
-                        s.SensorType == SensorType.Load &&
-                        (s.Name.Contains("Core") ||
-                         s.Name.Contains("GPU Core") ||
-                         s.Name.Contains("D3D 3D") ||
-                         s.Name.Contains("Utilization")));
+            return _computer.Hardware
+                .Where(static hardware => hardware.HardwareType is HardwareType.GpuNvidia or HardwareType.GpuAmd or HardwareType.GpuIntel)
+                .Select(GetHardwareGpuLoadPercentage)
+                .FirstOrDefault(static usage => usage.HasValue);
+        }
 
-                    if (loadSensor != null && loadSensor.Value.HasValue)
-                        return loadSensor.Value;
-                }
-            }
-            return null;
+        private static double? GetHardwareGpuLoadPercentage(IHardware hardware)
+        {
+            IEnumerable<float?> readings = hardware.Sensors
+                .Where(static sensor => sensor.SensorType == SensorType.Load &&
+                    (sensor.Name.Contains("Core", StringComparison.Ordinal) ||
+                     sensor.Name.Contains("GPU Core", StringComparison.Ordinal) ||
+                     sensor.Name.Contains("D3D 3D", StringComparison.Ordinal) ||
+                     sensor.Name.Contains("Utilization", StringComparison.Ordinal)))
+                .Select(static sensor => sensor.Value);
+
+            return HardwareSensorReading.SelectPercentage(readings);
         }
 
         private void UpdateGpuUI(double gpuUsage)
@@ -506,118 +654,188 @@ namespace WinHubX.Forms.Base
                 return;
             }
 
-            BarGPU.ProgressValue = (int)Math.Round(gpuUsage);
-            BarGPUtext.Text = $"{gpuUsage:0}%";
+            double normalizedUsage = double.IsFinite(gpuUsage) ? Math.Clamp(gpuUsage, 0d, 100d) : 0d;
+            BarGPU.ProgressValue = (int)Math.Round(normalizedUsage);
+            BarGPUtext.Text = $"{normalizedUsage:0}%";
         }
-        private async void StartReteMonitoring()
+        private async Task StartReteMonitoring()
         {
-            networkInterfaces = NetworkInterface.GetAllNetworkInterfaces()
-                .Where(n => n.OperationalStatus == OperationalStatus.Up &&
-                           n.NetworkInterfaceType != NetworkInterfaceType.Loopback)
-                .ToArray();
-
-            if (networkInterfaces.Length == 0)
+            try
             {
-                labelReteUtilizzo.Text = "Nessuna interfaccia attiva";
-                labelVelocitaRete.Text = "0 KB/s";
+                SubscribeToNetworkChanges();
+                await Task.Run(RefreshNetworkInterfaces, _monitoringToken);
+
+                if (networkInterfaces.Length == 0)
+                {
+                    labelReteUtilizzo.Text = "Nessuna interfaccia attiva";
+                    labelVelocitaRete.Text = "0 KB/s";
+                }
+                lastUpdateTimestamp = Stopwatch.GetTimestamp();
+                lastBytesSent = networkInterfaces.Sum(n => n.GetIPv4Statistics().BytesSent);
+                lastBytesReceived = networkInterfaces.Sum(n => n.GetIPv4Statistics().BytesReceived);
+                while (!_monitoringCancellation.IsCancellationRequested)
+                {
+                    await Task.Delay(1000, _monitoringToken);
+
+                    try
+                    {
+                        await UpdateNetworkStats();
+                    }
+                    catch (Exception ex) when (IsExpectedMonitoringFailure(ex))
+                    {
+                        Debug.WriteLine($"Lettura statistiche di rete non riuscita: {ex}");
+                    }
+                }
+            }
+            catch (OperationCanceledException) when (_monitoringCancellation.IsCancellationRequested)
+            {
                 return;
             }
-            lastUpdateTime = DateTime.Now;
-            lastBytesSent = networkInterfaces.Sum(n => n.GetIPv4Statistics().BytesSent);
-            lastBytesReceived = networkInterfaces.Sum(n => n.GetIPv4Statistics().BytesReceived);
-            while (true)
+            catch (Exception ex) when (IsExpectedMonitoringFailure(ex))
             {
-                await Task.Delay(1000);
-
-                try
-                {
-                    await UpdateNetworkStats();
-                }
-                catch (Exception)
-                {
-                }
+                Debug.WriteLine($"Monitoraggio rete terminato con errore: {ex}");
             }
         }
 
         private async Task UpdateNetworkStats()
         {
-            var currentTime = DateTime.Now;
-            var timeDiff = (currentTime - lastUpdateTime).TotalSeconds;
-
-            if (timeDiff <= 0) return;
-            long currentBytesSent = 0;
-            long currentBytesReceived = 0;
-            long totalBytes = 0;
-
-            foreach (var netInterface in networkInterfaces)
+            string[] previousInterfaceIds = networkInterfaceIds;
+            long refreshCheckTimestamp = Stopwatch.GetTimestamp();
+            bool networkChangeObserved = Interlocked.Exchange(ref _networkTopologyChanged, 0) != 0;
+            if (NetworkInterfaceRefreshPolicy.ShouldRefresh(
+                    networkChangeObserved,
+                    _lastNetworkInterfaceRefreshTimestamp,
+                    refreshCheckTimestamp,
+                    NetworkInterfaceRefreshInterval))
             {
-                var stats = netInterface.GetIPv4Statistics();
-                currentBytesSent += stats.BytesSent;
-                currentBytesReceived += stats.BytesReceived;
-                totalBytes += stats.BytesSent + stats.BytesReceived;
+                await Task.Run(RefreshNetworkInterfaces, _monitoringToken);
             }
 
-            double sentKB = (currentBytesSent - lastBytesSent) / timeDiff / 1024;
-            double receivedKB = (currentBytesReceived - lastBytesReceived) / timeDiff / 1024;
+            long currentBytesSent = 0;
+            long currentBytesReceived = 0;
+
+            foreach (var stats in networkInterfaces.Select(static netInterface => netInterface.GetIPv4Statistics()))
+            {
+                currentBytesSent += stats.BytesSent;
+                currentBytesReceived += stats.BytesReceived;
+            }
+
+            long currentTimestamp = Stopwatch.GetTimestamp();
+            bool topologyChanged = !previousInterfaceIds.SequenceEqual(networkInterfaceIds, StringComparer.Ordinal);
+            bool countersReset = currentBytesSent < lastBytesSent || currentBytesReceived < lastBytesReceived;
+            if (topologyChanged || countersReset)
+            {
+                lastBytesSent = currentBytesSent;
+                lastBytesReceived = currentBytesReceived;
+                lastUpdateTimestamp = currentTimestamp;
+                await UpdateUI(0, 0, 0, 0);
+                return;
+            }
+
+            double timeDiff = Stopwatch.GetElapsedTime(lastUpdateTimestamp, currentTimestamp).TotalSeconds;
+            if (timeDiff <= 0)
+            {
+                return;
+            }
+
+            double sentKB = (currentBytesSent - lastBytesSent) / timeDiff / 1024d;
+            double receivedKB = (currentBytesReceived - lastBytesReceived) / timeDiff / 1024d;
             double totalSpeedKB = sentKB + receivedKB;
             double networkUsage = CalculateNetworkUsage(totalSpeedKB);
             await UpdateUI(sentKB, receivedKB, totalSpeedKB, networkUsage);
             lastBytesSent = currentBytesSent;
             lastBytesReceived = currentBytesReceived;
-            lastUpdateTime = currentTime;
+            lastUpdateTimestamp = currentTimestamp;
+        }
+
+        private void RefreshNetworkInterfaces()
+        {
+            networkInterfaces = NetworkInterface.GetAllNetworkInterfaces()
+                .Where(n => n.OperationalStatus == OperationalStatus.Up &&
+                            n.NetworkInterfaceType != NetworkInterfaceType.Loopback)
+                .ToArray();
+            networkInterfaceIds = networkInterfaces
+                .Select(n => n.Id)
+                .OrderBy(id => id, StringComparer.Ordinal)
+                .ToArray();
+            // NetworkInterface.Speed è espresso in bit/s; convertiamo la capacità aggregata in KB/s.
+            networkCapacityKB = NetworkUsageCalculator.CalculateCapacityKilobytesPerSecond(
+                networkInterfaces.Select(n => n.Speed));
+            _lastNetworkInterfaceRefreshTimestamp = Stopwatch.GetTimestamp();
+        }
+
+        private void SubscribeToNetworkChanges()
+        {
+            if (Interlocked.CompareExchange(ref _networkChangeEventsSubscribed, 1, 0) != 0)
+            {
+                return;
+            }
+
+            NetworkChange.NetworkAddressChanged += NetworkAddressChanged;
+            NetworkChange.NetworkAvailabilityChanged += NetworkAvailabilityChanged;
+        }
+
+        private void UnsubscribeFromNetworkChanges()
+        {
+            if (Interlocked.Exchange(ref _networkChangeEventsSubscribed, 0) == 0)
+            {
+                return;
+            }
+
+            NetworkChange.NetworkAddressChanged -= NetworkAddressChanged;
+            NetworkChange.NetworkAvailabilityChanged -= NetworkAvailabilityChanged;
+        }
+
+        private void NetworkAddressChanged(object? sender, EventArgs e)
+        {
+            Interlocked.Exchange(ref _networkTopologyChanged, 1);
+        }
+
+        private void NetworkAvailabilityChanged(object? sender, NetworkAvailabilityEventArgs e)
+        {
+            Interlocked.Exchange(ref _networkTopologyChanged, 1);
         }
 
         private double CalculateNetworkUsage(double currentSpeedKB)
         {
-            double maxCapacityKB = 10000;
-
-            double usage = (currentSpeedKB / maxCapacityKB) * 100;
-            return Math.Min(usage, 100);
+            return NetworkUsageCalculator.CalculateUsagePercentage(currentSpeedKB, networkCapacityKB);
         }
 
         private async Task UpdateUI(double sentKB, double receivedKB, double totalSpeedKB, double networkUsage)
         {
             if (InvokeRequired)
             {
-                Invoke(new Action(() => UpdateUI(sentKB, receivedKB, totalSpeedKB, networkUsage)));
+                BeginInvoke(new Action(() => _ = UpdateUI(sentKB, receivedKB, totalSpeedKB, networkUsage)));
                 return;
             }
 
             try
             {
-                lblUpload.Text = "        " + string.Format(
-                    LanguageManager.GetTranslation("FormMonitoraggio", "upload"),
-                    sentKB.ToString("0.00")
-                );
+                lblUpload.Text = "        " + LanguageManager.FormatTranslation("FormMonitoraggio", "upload", sentKB.ToString("0.00"));
 
-                lblDonwload.Text = "        " + string.Format(
-                    LanguageManager.GetTranslation("FormMonitoraggio", "download"),
-                    receivedKB.ToString("0.00")
-                );
+                lblDonwload.Text = "        " + LanguageManager.FormatTranslation("FormMonitoraggio", "download", receivedKB.ToString("0.00"));
 
-                labelVelocitaRete.Text = "        " + string.Format(
-                    LanguageManager.GetTranslation("FormMonitoraggio", "velocita"),
-                    totalSpeedKB.ToString("0.00")
-                );
+                labelVelocitaRete.Text = "        " + LanguageManager.FormatTranslation("FormMonitoraggio", "velocita", totalSpeedKB.ToString("0.00"));
 
-                labelReteUtilizzo.Text = $"{networkUsage:0.0}%";
+                labelReteUtilizzo.Text = networkInterfaces.Length == 0
+                    ? "Nessuna interfaccia attiva"
+                    : networkCapacityKB > 0 ? $"{networkUsage:0.0}%" : "—";
                 progressbarRete.ProgressValue = (int)Math.Round(networkUsage);
             }
-            catch (Exception)
+            catch (Exception ex) when (IsExpectedMonitoringFailure(ex))
             {
-
+                Debug.WriteLine($"Aggiornamento UI statistiche di rete non riuscito: {ex}");
             }
         }
 
 
         private async Task<double> GetCpuUsagePercentageAsync()
         {
-            return await Task.Run(() =>
-            {
-                _ = _cpuCounter.NextValue();
-                Thread.Sleep(1000);
-                return _cpuCounter.NextValue();
-            });
+            PerformanceCounter cpuCounter = _cpuCounter
+                ?? throw new InvalidOperationException("Contatore CPU non inizializzato.");
+            _ = cpuCounter.NextValue();
+            await Task.Delay(1000, _monitoringToken);
+            return cpuCounter.NextValue();
         }
 
         private void CpuReduce()
@@ -626,25 +844,25 @@ namespace WinHubX.Forms.Base
 
             foreach (var process in processes)
             {
-                try
+                using (process)
                 {
-                    ManageProcess(process);
-                }
-                catch (Exception)
-                {
+                    try
+                    {
+                        ManageProcess(process);
+                    }
+                    catch (Exception ex) when (IsExpectedMonitoringFailure(ex))
+                    {
+                        Debug.WriteLine($"Ottimizzazione del processo {process.Id} non riuscita: {ex.Message}");
+                    }
                 }
             }
         }
 
         private void ManageProcess(Process process)
         {
-            if (ShouldOptimizeProcess(process))
+            if (process.Id != Environment.ProcessId && ShouldOptimizeProcess(process))
             {
                 OptimizeProcess(process);
-            }
-            else if (ShouldTerminateProcess(process))
-            {
-                TerminateProcess(process);
             }
         }
 
@@ -654,154 +872,170 @@ namespace WinHubX.Forms.Base
                    process.WorkingSet64 > 200 * 1024 * 1024;
         }
 
-        private bool ShouldTerminateProcess(Process process)
-        {
-            return process.TotalProcessorTime > TimeSpan.FromSeconds(10) &&
-                   process.WorkingSet64 > 500 * 1024 * 1024;
-        }
-
         private void OptimizeProcess(Process process)
         {
             process.PriorityClass = ProcessPriorityClass.BelowNormal;
-        }
-
-        private void TerminateProcess(Process process)
-        {
-            process.Kill();
-        }
-        #endregion
-
-        #region TEMP Folder Management
-        private void TempMonitorTimer_Tick(object sender, EventArgs e)
-        {
-            UpdateTempFolderStatus();
-        }
-
-        private void UpdateTempFolderStatus()
-        {
-
-        }
-
-        private long GetFolderSize(DirectoryInfo dir)
-        {
-            long size = 0;
-            try
-            {
-                foreach (FileInfo file in dir.GetFiles())
-                {
-                    size += file.Length;
-                }
-
-                foreach (DirectoryInfo subDir in dir.GetDirectories())
-                {
-                    size += GetFolderSize(subDir);
-                }
-            }
-            catch (Exception)
-            {
-            }
-            return size;
-        }
-
-        private void CleanTempFolder()
-        {
-            string tempPath = Path.GetTempPath();
-
-            try
-            {
-                var di = new DirectoryInfo(tempPath);
-
-                CleanTempFiles(di);
-                CleanTempDirectories(di);
-
-                UpdateTempFolderStatus();
-            }
-            catch (Exception ex)
-            {
-                ShowErrorMessage($"Error cleaning TEMP folder:\n{ex.Message}");
-            }
-        }
-
-        private void CleanTempFiles(DirectoryInfo directory)
-        {
-            foreach (FileInfo file in directory.GetFiles())
-            {
-                try
-                {
-                    file.Delete();
-                }
-                catch (Exception)
-                {
-                }
-            }
-        }
-
-        private void CleanTempDirectories(DirectoryInfo directory)
-        {
-            foreach (DirectoryInfo dir in directory.GetDirectories())
-            {
-                try
-                {
-                    dir.Delete(true);
-                }
-                catch (Exception)
-                {
-                }
-            }
         }
         #endregion
 
         #region Event Handlers
 
-        private void FormMonitoraggio_FormClosing(object sender, FormClosingEventArgs e)
+        private async void FormMonitoraggio_FormClosing(object? sender, FormClosingEventArgs e)
         {
-            CleanupResources();
-            e.Cancel = false;
+            if (_closeAfterMonitoringStops)
+            {
+                return;
+            }
+
+            e.Cancel = true;
+            _shutdownRequested = true;
+            await CleanupResourcesAsync();
+            if (!IsDisposed)
+            {
+                _closeAfterMonitoringStops = true;
+                Close();
+            }
         }
 
-        private void btn_pulisciram_Click(object sender, EventArgs e)
+        private async void btn_pulisciram_Click(object sender, EventArgs e)
         {
-            CleanMemory();
-            OptimizeMemory();
+            btnPulisciRam.Enabled = false;
+            try
+            {
+                _manualRamCleanupTask = Task.Run(() =>
+                {
+                    CollectManagedMemory();
+                }, _monitoringToken);
+                await _manualRamCleanupTask;
+            }
+            catch (OperationCanceledException) when (_monitoringToken.IsCancellationRequested)
+            {
+                return;
+            }
+            catch (Exception ex) when (IsExpectedMonitoringFailure(ex))
+            {
+                ShowErrorMessage($"Pulizia RAM non riuscita:\n{ex.Message}");
+            }
+            finally
+            {
+                _manualRamCleanupTask = null;
+                if (!IsDisposed)
+                {
+                    btnPulisciRam.Enabled = true;
+                }
+            }
         }
 
-        private void btn_puliscicpu_Click(object sender, EventArgs e)
+        private async void btn_puliscicpu_Click(object sender, EventArgs e)
         {
-            CpuReduce();
+            btnPulisciCPU.Enabled = false;
+            try
+            {
+                _manualCpuCleanupTask = Task.Run(CpuReduce, _monitoringToken);
+                await _manualCpuCleanupTask;
+            }
+            catch (OperationCanceledException) when (_monitoringToken.IsCancellationRequested)
+            {
+                return;
+            }
+            catch (Exception ex) when (IsExpectedMonitoringFailure(ex))
+            {
+                ShowErrorMessage($"Ottimizzazione CPU non riuscita:\n{ex.Message}");
+            }
+            finally
+            {
+                _manualCpuCleanupTask = null;
+                if (!IsDisposed)
+                {
+                    btnPulisciCPU.Enabled = true;
+                }
+            }
         }
 
-        private void btnPulisciTemp_Click(object sender, EventArgs e)
-        {
-            CleanTempFolder();
-        }
         #endregion
 
         #region Utility Methods
-        private void OptimizeMemory()
+        private static (ulong TotalPhysicalMemory, ulong AvailablePhysicalMemory) GetMemoryStatus()
         {
-            var currentProcess = Process.GetCurrentProcess();
-            _ = ReduceMemoryUse(currentProcess.Id);
-        }
-
-        private MEMORYSTATUSEX GetMemoryStatus()
-        {
-            MEMORYSTATUSEX memStatus = new MEMORYSTATUSEX();
-            memStatus.dwLength = (uint)Marshal.SizeOf(typeof(MEMORYSTATUSEX));
-            _ = GlobalMemoryStatusEx(ref memStatus);
-            return memStatus;
+            Microsoft.VisualBasic.Devices.ComputerInfo memoryInfo = new();
+            return (memoryInfo.TotalPhysicalMemory, memoryInfo.AvailablePhysicalMemory);
         }
         private void ApplyTheme()
         {
             ThemeManager.ApplyThemeToControl(this, ThemeManager.IsDarkTheme);
         }
 
-        public void CleanupResources()
+        public Task CleanupResourcesAsync()
         {
-            _computer?.Close();
-            _cpuCounter?.Dispose();
-            _monitoringTimer?.Dispose();
-            _tempMonitorTimer?.Dispose();
-            _notifyIcon?.Dispose();
+            if (_cleanupTask is not null)
+            {
+                return _cleanupTask;
+            }
+
+            _monitoringCancellation.Cancel();
+            _cleanupTask = CleanupResourcesCoreAsync();
+            return _cleanupTask;
+        }
+
+        private async Task CleanupResourcesCoreAsync()
+        {
+            UnsubscribeFromNetworkChanges();
+            _ramMonitorTimer?.Stop();
+            try
+            {
+                if (_initializationTask is not null)
+                {
+                    await _initializationTask;
+                }
+
+                await Task.WhenAll(_monitoringTasks);
+                Task[] cleanupTasks = new Task?[]
+                    { _ramCleanupTask, _manualRamCleanupTask, _manualCpuCleanupTask }
+                    .OfType<Task>()
+                    .ToArray();
+                if (cleanupTasks.Length > 0)
+                {
+                    await Task.WhenAll(cleanupTasks);
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                // La cancellazione è il normale percorso di arresto dei monitor.
+            }
+            catch (Exception ex) when (IsExpectedMonitoringFailure(ex))
+            {
+                Debug.WriteLine($"Arresto dei monitor non riuscito: {ex}");
+            }
+
+            try
+            {
+                lock (_hardwareSync)
+                {
+                    _computer?.Close();
+                }
+            }
+            catch (Exception ex) when (IsExpectedMonitoringFailure(ex))
+            {
+                Debug.WriteLine($"Chiusura del monitor hardware non riuscita: {ex}");
+            }
+
+            DisposeMonitoringResource(_cpuCounter, "contatore CPU");
+            DisposeMonitoringResource(_diskUsageCounter, "contatore disco");
+            DisposeMonitoringResource(_ramMonitorTimer, "timer RAM");
+            DisposeMonitoringResource(_notifyIcon, "icona notifiche");
+            DisposeMonitoringResource(_monitoringCancellation, "cancellazione monitoraggio");
+        }
+
+        private static void DisposeMonitoringResource(IDisposable? resource, string resourceName)
+        {
+            try
+            {
+                resource?.Dispose();
+            }
+            catch (Exception ex) when (IsExpectedMonitoringFailure(ex))
+            {
+                Debug.WriteLine($"Rilascio di {resourceName} non riuscito: {ex}");
+            }
         }
 
         private void ShowErrorMessage(string message)
@@ -811,39 +1045,6 @@ namespace WinHubX.Forms.Base
 
         #endregion
 
-        #region Native Methods
-        [StructLayout(LayoutKind.Sequential)]
-        public struct MEMORYSTATUSEX
-        {
-            public uint dwLength;
-            public uint dwMemoryLoad;
-            public ulong ullTotalPhys;
-            public ulong ullAvailPhys;
-            public ulong ullTotalPageFile;
-            public ulong ullAvailPageFile;
-            public ulong ullTotalVirtual;
-            public ulong ullAvailVirtual;
-            public ulong ullAvailExtendedVirtual;
-        }
-
-        [DllImport("kernel32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool GlobalMemoryStatusEx(ref MEMORYSTATUSEX lpBuffer);
-
-        [DllImport("kernel32.dll")]
-        private static extern IntPtr OpenProcess(uint dwDesiredAccess, bool bInheritHandle, int dwProcessId);
-
-        [DllImport("kernel32.dll", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool CloseHandle(IntPtr hObject);
-
-        [DllImport("psapi.dll")]
-        private static extern bool EmptyWorkingSet(IntPtr hProcess);
-
-        [DllImport("kernel32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool SetProcessWorkingSetSize(IntPtr hProcess, IntPtr dwMinimumWorkingSetSize, IntPtr dwMaximumWorkingSetSize);
-        #endregion
         private void puliziaautomaticoCPU_Click(object sender, EventArgs e)
         {
             puliziaautomaticoCPU.Checked = !puliziaautomaticoCPU.Checked;
@@ -869,67 +1070,100 @@ namespace WinHubX.Forms.Base
             MonitorSettings.LimiteRAM = limiteRAM.Value;
         }
 
-        private void btnSvuotaTemp_Click(object sender, EventArgs e)
+        private async void btnSvuotaTemp_Click(object sender, EventArgs e)
         {
-            string tempPath = Path.GetTempPath();
+            btnSvuotaTemp.Enabled = false;
             int deletedFiles = 0;
             int deletedFolders = 0;
+            int failures = 0;
 
             try
             {
-                DirectoryInfo dir = new DirectoryInfo(tempPath);
-                foreach (FileInfo file in dir.GetFiles("*", SearchOption.TopDirectoryOnly))
-                {
-                    try
-                    {
-                        file.Delete();
-                        deletedFiles++;
-                    }
-                    catch
-                    {
+                (deletedFiles, deletedFolders, failures) = await Task.Run(() => CleanTempDirectory(_monitoringToken), _monitoringToken);
 
-                    }
-                }
-
-                foreach (DirectoryInfo folder in dir.GetDirectories())
-                {
-                    try
-                    {
-                        folder.Delete(true);
-                        deletedFolders++;
-                    }
-                    catch
-                    {
-
-                    }
-                }
+                string resultMessage =
+                    $"File eliminati: {deletedFiles}\nCartelle eliminate: {deletedFolders}" +
+                    (failures > 0 ? $"\nElementi non eliminati: {failures}" : string.Empty);
 
                 MessageBox.Show(
-                    $"Pulizia completata!\n\n" +
-                    $"File eliminati: {deletedFiles}\n" +
-                    $"Cartelle eliminate: {deletedFolders}",
-                    "Temp svuotata",
+                    resultMessage,
+                    failures > 0 ? "Pulizia TEMP parziale" : "Pulizia TEMP completata",
                     MessageBoxButtons.OK,
-                    MessageBoxIcon.Information
+                    failures > 0 ? MessageBoxIcon.Warning : MessageBoxIcon.Information
                 );
             }
-            catch (Exception ex)
+            catch (OperationCanceledException) when (_monitoringCancellation.IsCancellationRequested)
             {
-                MessageBox.Show(
-                    "Errore durante la pulizia della cartella TEMP:\n" + ex.Message,
-                    "Errore",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error
-                );
+                return;
+            }
+            catch (Exception ex) when (IsExpectedMonitoringFailure(ex))
+            {
+                ShowErrorMessage($"Errore durante la pulizia della cartella TEMP:\n{ex.Message}");
+            }
+            finally
+            {
+                if (!IsDisposed)
+                {
+                    btnSvuotaTemp.Enabled = true;
+                }
             }
         }
 
-
-        private void domainUpDown1_SelectedItemChanged(object sender, EventArgs e)
+        private static (int DeletedFiles, int DeletedFolders, int Failures) CleanTempDirectory(CancellationToken cancellationToken)
         {
-            SaveMonitoraggioSettings();
+            int deletedFiles = 0;
+            int deletedFolders = 0;
+            int failures = 0;
+            string tempPath = Path.GetTempPath();
+
+            foreach (string filePath in Directory.EnumerateFiles(tempPath, "*", SearchOption.TopDirectoryOnly))
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+
+                try
+                {
+                    File.Delete(filePath);
+                    deletedFiles++;
+                }
+                catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+                {
+                    failures++;
+                    Debug.WriteLine($"File TEMP non eliminato: {ex.Message}");
+                }
+            }
+
+            foreach (string directoryPath in Directory.EnumerateDirectories(tempPath, "*", SearchOption.TopDirectoryOnly))
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+
+                try
+                {
+                    if ((File.GetAttributes(directoryPath) & FileAttributes.ReparsePoint) != 0)
+                    {
+                        failures++;
+                        Debug.WriteLine($"Cartella TEMP di tipo reparse point lasciata intatta: {directoryPath}");
+                        continue;
+                    }
+
+                    Directory.Delete(directoryPath, recursive: true);
+                    deletedFolders++;
+                }
+                catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+                {
+                    failures++;
+                    Debug.WriteLine($"Cartella TEMP non eliminata: {ex.Message}");
+                }
+            }
+
+            return (deletedFiles, deletedFolders, failures);
         }
-        private void SaveMonitoraggioSettings()
+
+
+        private async void domainUpDown1_SelectedItemChanged(object sender, EventArgs e)
+        {
+            await SaveMonitoraggioSettingsAsync();
+        }
+        private async Task SaveMonitoraggioSettingsAsync()
         {
             int gb = GetSelectedGB();
 
@@ -945,7 +1179,48 @@ namespace WinHubX.Forms.Base
                 WriteIndented = true
             });
 
-            File.WriteAllText(monitoraggioPath, json);
+            string directory = Path.GetDirectoryName(monitoraggioPath)
+                ?? throw new InvalidOperationException("Percorso monitoraggio non valido.");
+            string temporaryPath = $"{monitoraggioPath}.{Guid.NewGuid():N}.tmp";
+
+            bool lockAcquired = false;
+            try
+            {
+                await _monitorSettingsWriteLock.WaitAsync(_monitoringToken);
+                lockAcquired = true;
+                Directory.CreateDirectory(directory);
+                await File.WriteAllTextAsync(temporaryPath, json, _monitoringToken);
+                File.Move(temporaryPath, monitoraggioPath, overwrite: true);
+            }
+            catch (OperationCanceledException) when (_monitoringToken.IsCancellationRequested)
+            {
+                Debug.WriteLine("Salvataggio impostazioni monitoraggio annullato durante la chiusura.");
+            }
+            catch (Exception ex) when (IsExpectedMonitoringFailure(ex))
+            {
+                Debug.WriteLine($"Salvataggio impostazioni monitoraggio non riuscito: {ex}");
+            }
+            finally
+            {
+                try
+                {
+                    if (File.Exists(temporaryPath))
+                    {
+                        File.Delete(temporaryPath);
+                    }
+                }
+                catch (IOException ex)
+                {
+                    Debug.WriteLine($"Rimozione file temporaneo impostazioni non riuscita: {ex.Message}");
+                }
+                finally
+                {
+                    if (lockAcquired)
+                    {
+                        _monitorSettingsWriteLock.Release();
+                    }
+                }
+            }
         }
 
         private void FormMonitoraggio_Load(object sender, EventArgs e)
@@ -963,17 +1238,17 @@ namespace WinHubX.Forms.Base
             domainUpDown1.ReadOnly = true;
         }
 
-        private void cuiSwitch_gradicpu_CheckedChanged(object sender, EventArgs e)
+        private async void cuiSwitch_gradicpu_CheckedChanged(object sender, EventArgs e)
         {
             MonitorSettings.ShowFahrenheitcpu = cuiSwitch_gradicpu.Checked;
-            SaveMonitoraggioSettings();
+            await SaveMonitoraggioSettingsAsync();
             UpdateTemperatureDisplays();
         }
 
-        private void cuiSwitch2_CheckedChanged(object sender, EventArgs e)
+        private async void cuiSwitch2_CheckedChanged(object sender, EventArgs e)
         {
             MonitorSettings.ShowFahrenheitgpu = cuiSwitch_gputemperatura.Checked;
-            SaveMonitoraggioSettings();
+            await SaveMonitoraggioSettingsAsync();
             UpdateTemperatureDisplays();
         }
 

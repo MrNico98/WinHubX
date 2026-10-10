@@ -1,19 +1,30 @@
 ﻿using Microsoft.Win32;
 using System.Globalization;
+using System.Diagnostics;
 using WinHubX.Impostazioni;
 
 namespace WinHubX
 {
     static class Program
     {
-        private static ThemeConfig Config;
+        private static ThemeConfig? _config;
+        private static ThemeConfig Config => _config ??= ThemeConfig.Load();
 
         [STAThread]
         static void Main(string[] args)
         {
-            // Carica configurazione
-            Config = ThemeConfig.Load();
+            if (args.Length == 3 && args[0] == "--elevated-process-broker")
+            {
+                Environment.ExitCode = ElevatedProcessBrokerClient.RunHostAsync(args[1], args[2]).GetAwaiter().GetResult();
+                return;
+            }
 
+            _ = Config;
+            // Configurazione WinForms moderna: DPI, stili visuali e rendering
+            // vengono applicati prima di creare qualsiasi controllo.
+            ApplicationConfiguration.Initialize();
+
+            // Carica configurazione
             // Imposta lingua in base a Windows se non impostata manualmente
             if (!Config.LanguageManuallySet)
             {
@@ -68,9 +79,6 @@ namespace WinHubX
             };
 
             // Avvia app
-            Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
             LanguageManager.SetLanguage(Config.Language);
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(Config.Language);
             Thread.CurrentThread.CurrentCulture = new CultureInfo(Config.Language);
@@ -84,12 +92,17 @@ namespace WinHubX
                 using (var key = Registry.CurrentUser.OpenSubKey(
                     @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize"))
                 {
-                    object value = key?.GetValue("AppsUseLightTheme");
+                    object? value = key?.GetValue("AppsUseLightTheme");
                     if (value is int v)
                         return v == 0; // 0 = dark, 1 = light
                 }
             }
-            catch { }
+            catch (Exception ex) when (ex is IOException
+                or UnauthorizedAccessException
+                or System.Security.SecurityException)
+            {
+                Debug.WriteLine($"Lettura del tema Windows non riuscita; verrà usato il tema predefinito: {ex}");
+            }
             return false;
         }
     }

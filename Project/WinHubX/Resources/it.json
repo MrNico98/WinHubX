@@ -64,7 +64,9 @@
     "restorepoint_title": "Punto di Ripristino",
     "restorepoint_message": "Vuoi creare un punto di ripristino prima di accedere alle impostazioni?",
     "aggiornamento_disponibile_msg": "È disponibile un aggiornamento!\nVai in Impostazioni per aggiornare",
-    "aggiornamento_disponibile_title": "WinHubX"
+    "aggiornamento_disponibile_title": "WinHubX",
+    "update_available_button": "Aggiornamento disponibile",
+    "update_available_description": "Apri le impostazioni per visualizzare e installare l'aggiornamento"
   },
   "FormMonitoraggio": {
     "monitoron": "Monitoraggio Attivo",
@@ -115,6 +117,18 @@
     "configurazione_non_trovata": "Configurazione non trovata",
     "url_non_trovato": "URL non trovato per la combinazione selezionata",
     "errore": "Errore:",
+    "errore_generico": "Si è verificato un errore:",
+    "errore_generico_scrubber": "Errore durante l'esecuzione di Office Scrubber:",
+    "url_non_trovato_github": "URL principale non trovato nel file GitHub.",
+    "url_non_trovato_fallback": "URL principale non trovato nel file di fallback.",
+    "url_non_trovato_github_scrubber": "URL di Office Scrubber non trovato nel file GitHub.",
+    "url_non_trovato_fallback_scrubber": "URL di Office Scrubber non trovato nel file di fallback.",
+    "file_non_trovato_scrubber": "File OfficeScrubber.cmd non trovato dopo l'estrazione.",
+    "seleziona_versione_tipo_installazione": "Seleziona una versione di Office e un tipo di installazione.",
+    "versione_non_trovata": "Versione di Office non trovata.",
+    "lingua_non_trovata": "Lingua non disponibile per questa versione.",
+    "link_non_trovato": "Nessun link di download disponibile per questa selezione.",
+    "scegli_percorso_salvataggio": "Scegli dove salvare il file di installazione.",
     "lingua": "Lingua",
     "aggiungirimuoviapp": "Aggiungi\\Rimuovi app Office",
     "no_office_detected_msg": "Nessun prodotto Office rilevato, questa sezione non verrà caricata.",
@@ -122,7 +136,9 @@
   },
   "FormCreaISO": {
     "selezione_obbligatoria_msg": "Devi selezionare almeno una voce per ciascun gruppo di opzioni prima di continuare.",
-    "selezione_obbligatoria_title": "Attenzione"
+    "selezione_obbligatoria_title": "Attenzione",
+    "domanda": "Al termine del debloat finale, due file .exe portabili verranno posizionati sul desktop:\n\n- AIMODS-Store.exe\n- WinHubX.exe\n\nQuesti file non richiedono installazione e possono essere eliminati in qualsiasi momento.",
+    "creazioneiso": "Creazione ISO personalizzata"
   },
   "FormExplorer": {
     "settings_loaded": "Impostazioni di Esplora risorse caricate correttamente.",
@@ -249,10 +265,10 @@
     "ripristinoFileSistema": "Ripristino dei file di sistema...",
     "esecuzioneSfc": "Esecuzione SFC...",
     "puliziaWinSxS": "Pulizia della cartella WinSxS...",
-    "pianificazioneChkdsk": "Pianificazione controllo del file system...",
+    "pianificazioneChkdsk": "Scansione online del file system...",
     "registrazioneDll": "Registrazione DLL di sistema...",
-    "ripristinoCompletato": "Ripristino completato! Riavvia il PC.",
-    "msgRipristinoCompletato": "Ripristino completato! Riavvia il PC per applicare le modifiche.",
+    "ripristinoCompletato": "Ripristino completato.",
+    "msgRipristinoCompletato": "Ripristino completato. Riavvia Windows solo se richiesto dal sistema.",
     "logBackupRegistro": "Backup del registro salvato in: {0}",
     "logDllRegistrata": "Registrata DLL: {0}",
     "scansioneInCorsoConTempo": "Scansione in corso... ({0} min)",
@@ -318,13 +334,17 @@
     "tooltipAbil_18": "Migliora l'uso dell'SSD, ottimizzando il sistema per lavorare in modo più efficiente con unità a stato solido, migliorando la velocità complessiva.",
     "tooltipAbil_default": "Nessuna descrizione disponibile."
   },
-  "FormCreaISO": {
-    "domanda": "Al termine del debloat finale, due file .exe portabili verranno posizionati sul desktop:\n\n- AIMODS-Store.exe\n- WinHubX.exe\n\nQuesti file sono portabili, non richiedono installazione forzata e possono essere facilmente eliminati in qualsiasi momento.",
-    "creazioneiso": "Creazione ISO personalizzata"
-  },
   "FormDebloat": {
     "confermaEsecuzione": "Sei sicuro di voler eseguire questa operazione?",
     "titoloConferma": "Conferma"
+  },
+  "FormServizi": {
+    "confirmTitle": "Conferma modifica servizi",
+    "confirmMessage": "Stai per interrompere e modificare l'avvio di {0} servizi Windows con privilegi amministrativi. Potresti interrompere funzioni di Windows o applicazioni. Continuare?",
+    "serviceSuccess": "Servizio \"{0}\": modificato correttamente",
+    "serviceFailure": "Servizio \"{0}\": {1}",
+    "serviceSummaryFailure": "Alcune modifiche non sono riuscite (codice {0}).",
+    "uacCancelled": "Operazione annullata nella richiesta UAC."
   },
   "FormTools": {
     "paneltitle": "WinHubXliteOS",
@@ -380,8 +400,21 @@
     "errorecreazioneiso": "ERRORE durante la creazione dell'ISO",
     "operazioneannullatatoken": "Operazione annullata.",
     "estrazioneisook": "Estrazione ISO completata",
+    "erroreisonontrovata": "Errore: file ISO non trovato:",
+    "operazioneannullata": "Operazione annullata dall'utente.",
+    "nessunfile": "Nessun file trovato all'interno dell'immagine ISO.",
+    "rimozionepacchetto": "Rimozione pacchetto",
+    "rimozionesuccesso": "rimosso correttamente.",
+    "nessunpacchetto": "⚠ Nessun pacchetto rimosso.",
+    "creazionefileedge": "Creazione del file per la rimozione di Edge...",
+    "creazionefilebypass": "Creazione del file per il bypass dell'installazione...",
+    "creazionefiledebloat": "Creazione del file per la rimozione delle app preinstallate...",
+    "creazionefileottimizzazione": "Creazione del file di ottimizzazione...",
+    "creazionefiledefender": "Creazione del file per la disattivazione di Windows Defender...",
+    "inizioCreazioneISO": "Creazione dell'immagine ISO...",
+    "erroresorgenteisomancante": "Errore: cartella sorgente ISO non trovata.",
     "successo1": "ISO PERSONALIZZATA CREATA CORRETTAMENTE",
-    "successo2": "Troverai la tua ISO personalizzata in C: rinominata come 'WindowsISO_edited.iso'",
+    "successo2": "Troverai la tua ISO personalizzata in '{0}'",
     "iniziocopianeccessari": "Inizio copia file necessari...",
     "importazionesettaggiabilitata": "Importazione settaggi WinHubX abilitata.",
     "fileconfigcopiato": "File config.dat esportato e spostato correttamente.",

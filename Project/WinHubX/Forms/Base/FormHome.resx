@@ -139,7 +139,7 @@
     <value>cuiProgressTrackerHorizontal1</value>
   </data>
   <data name="&gt;&gt;cuiProgressTrackerHorizontal1.Type" xml:space="preserve">
-    <value>CuoreUI.Controls.cuiProgressTrackerHorizontal, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+    <value>HartUI.Controls.cuiProgressTrackerHorizontal, HartUI, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;cuiProgressTrackerHorizontal1.Parent" xml:space="preserve">
     <value>$this</value>
@@ -166,7 +166,7 @@
     <value>cuiSpinner1</value>
   </data>
   <data name="&gt;&gt;cuiSpinner1.Type" xml:space="preserve">
-    <value>CuoreUI.Controls.cuiSpinner, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+    <value>HartUI.Controls.cuiSpinner, HartUI, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;cuiSpinner1.Parent" xml:space="preserve">
     <value>$this</value>
@@ -194,7 +194,7 @@
     <value>cuiSeparator1</value>
   </data>
   <data name="&gt;&gt;cuiSeparator1.Type" xml:space="preserve">
-    <value>CuoreUI.Controls.cuiSeparator, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+    <value>HartUI.Controls.cuiSeparator, HartUI, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;cuiSeparator1.Parent" xml:space="preserve">
     <value>$this</value>
@@ -779,7 +779,7 @@
     <value>btnVerificaVerdi</value>
   </data>
   <data name="&gt;&gt;btnVerificaVerdi.Type" xml:space="preserve">
-    <value>CuoreUI.Controls.cuiButton, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+    <value>HartUI.Controls.cuiButton, HartUI, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;btnVerificaVerdi.Parent" xml:space="preserve">
     <value>$this</value>

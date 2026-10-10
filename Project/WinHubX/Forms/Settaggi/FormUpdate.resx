@@ -322,7 +322,7 @@
     <value>btnSuggeritiVerdi</value>
   </data>
   <data name="&gt;&gt;btnSuggeritiVerdi.Type" xml:space="preserve">
-    <value>CuoreUI.Controls.cuiButton, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+    <value>HartUI.Controls.cuiButton, HartUI, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;btnSuggeritiVerdi.Parent" xml:space="preserve">
     <value>cuiPanel2</value>
@@ -418,7 +418,7 @@
     <value>cuiPanel2</value>
   </data>
   <data name="&gt;&gt;cuiPanel2.Type" xml:space="preserve">
-    <value>CuoreUI.Controls.cuiPanel, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+    <value>HartUI.Controls.cuiPanel, HartUI, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;cuiPanel2.Parent" xml:space="preserve">
     <value>$this</value>
@@ -445,7 +445,7 @@
     <value>btnRipristinaWinUpdateVerdi</value>
   </data>
   <data name="&gt;&gt;btnRipristinaWinUpdateVerdi.Type" xml:space="preserve">
-    <value>CuoreUI.Controls.cuiButton, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+    <value>HartUI.Controls.cuiButton, HartUI, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;btnRipristinaWinUpdateVerdi.Parent" xml:space="preserve">
     <value>$this</value>
@@ -472,7 +472,7 @@
     <value>btnUpdateEssenzialeVerdi</value>
   </data>
   <data name="&gt;&gt;btnUpdateEssenzialeVerdi.Type" xml:space="preserve">
-    <value>CuoreUI.Controls.cuiButton, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+    <value>HartUI.Controls.cuiButton, HartUI, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;btnUpdateEssenzialeVerdi.Parent" xml:space="preserve">
     <value>$this</value>
@@ -499,7 +499,7 @@
     <value>btnAvviaSelezionatiVerdi</value>
   </data>
   <data name="&gt;&gt;btnAvviaSelezionatiVerdi.Type" xml:space="preserve">
-    <value>CuoreUI.Controls.cuiButton, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+    <value>HartUI.Controls.cuiButton, HartUI, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;btnAvviaSelezionatiVerdi.Parent" xml:space="preserve">
     <value>$this</value>
@@ -523,7 +523,7 @@
     <value>progressBar2</value>
   </data>
   <data name="&gt;&gt;progressBar2.Type" xml:space="preserve">
-    <value>CuoreUI.Controls.cuiProgressBarHorizontal, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+    <value>HartUI.Controls.cuiProgressBarHorizontal, HartUI, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;progressBar2.Parent" xml:space="preserve">
     <value>$this</value>
@@ -550,7 +550,7 @@
     <value>btnResetVerdi</value>
   </data>
   <data name="&gt;&gt;btnResetVerdi.Type" xml:space="preserve">
-    <value>CuoreUI.Controls.cuiButton, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+    <value>HartUI.Controls.cuiButton, HartUI, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;btnResetVerdi.Parent" xml:space="preserve">
     <value>$this</value>

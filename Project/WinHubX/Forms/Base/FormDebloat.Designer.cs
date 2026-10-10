@@ -1,25 +1,7 @@
-﻿namespace WinHubX.Forms.Base
+namespace WinHubX.Forms.Base
 {
     partial class FormDebloat
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
-
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -32,18 +14,18 @@
             flowLayoutPanel1 = new FlowLayoutPanel();
             textBox1 = new TextBox();
             backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            progressBar1 = new CuoreUI.Controls.cuiProgressBarHorizontal();
-            btnAvviaSelezionatiVerdi = new CuoreUI.Controls.cuiButton();
-            btnModificaServiziDisattivo = new CuoreUI.Controls.cuiButton();
-            cuiPanel2 = new CuoreUI.Controls.cuiPanel();
+            progressBar1 = new HartUI.Controls.cuiProgressBarHorizontal();
+            btnAvviaSelezionatiVerdi = new HartUI.Controls.cuiButton();
+            btnModificaServiziDisattivo = new HartUI.Controls.cuiButton();
+            cuiPanel2 = new HartUI.Controls.cuiPanel();
             pictureBoxPowerPoint = new PictureBox();
-            btnDebloatAutomaticoVerdi = new CuoreUI.Controls.cuiButton();
+            btnDebloatAutomaticoVerdi = new HartUI.Controls.cuiButton();
             label3 = new Label();
             label5 = new Label();
-            cuiPanel1 = new CuoreUI.Controls.cuiPanel();
+            cuiPanel1 = new HartUI.Controls.cuiPanel();
             label1 = new Label();
-            cuiSwitch1 = new CuoreUI.Controls.cuiSwitch();
-            btnInstallaComponentiVerdi = new CuoreUI.Controls.cuiButton();
+            cuiSwitch1 = new HartUI.Controls.cuiSwitch();
+            btnInstallaComponentiVerdi = new HartUI.Controls.cuiButton();
             cuiPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxPowerPoint).BeginInit();
             cuiPanel1.SuspendLayout();
@@ -99,9 +81,7 @@
             btnAvviaSelezionatiVerdi.HoverImageTint = Color.White;
             btnAvviaSelezionatiVerdi.HoverOutline = Color.FromArgb(46, 125, 50);
             btnAvviaSelezionatiVerdi.Image = Properties.Resources.pngCheckCreaISO;
-            btnAvviaSelezionatiVerdi.ImageAutoCenter = true;
             btnAvviaSelezionatiVerdi.ImageExpand = new Point(0, 0);
-            btnAvviaSelezionatiVerdi.ImageOffset = new Point(0, 0);
             btnAvviaSelezionatiVerdi.Name = "btnAvviaSelezionatiVerdi";
             btnAvviaSelezionatiVerdi.NormalBackground = Color.FromArgb(37, 38, 39);
             btnAvviaSelezionatiVerdi.NormalForeColor = Color.White;
@@ -114,7 +94,6 @@
             btnAvviaSelezionatiVerdi.PressedOutline = Color.FromArgb(46, 125, 50);
             btnAvviaSelezionatiVerdi.Rounding = new Padding(8);
             btnAvviaSelezionatiVerdi.TextAlignment = StringAlignment.Center;
-            btnAvviaSelezionatiVerdi.TextOffset = new Point(0, 0);
             btnAvviaSelezionatiVerdi.Click += btnAvviaSelezionatiDebloat_Click;
             // 
             // btnModificaServiziDisattivo
@@ -134,9 +113,7 @@
             btnModificaServiziDisattivo.HoverImageTint = Color.White;
             btnModificaServiziDisattivo.HoverOutline = Color.FromArgb(192, 0, 0);
             btnModificaServiziDisattivo.Image = Properties.Resources.pngModificaServiziDebloat;
-            btnModificaServiziDisattivo.ImageAutoCenter = true;
             btnModificaServiziDisattivo.ImageExpand = new Point(0, 0);
-            btnModificaServiziDisattivo.ImageOffset = new Point(0, 0);
             btnModificaServiziDisattivo.Name = "btnModificaServiziDisattivo";
             btnModificaServiziDisattivo.NormalBackground = Color.FromArgb(37, 38, 39);
             btnModificaServiziDisattivo.NormalForeColor = Color.Gray;
@@ -149,7 +126,6 @@
             btnModificaServiziDisattivo.PressedOutline = Color.FromArgb(0, 126, 249);
             btnModificaServiziDisattivo.Rounding = new Padding(8);
             btnModificaServiziDisattivo.TextAlignment = StringAlignment.Center;
-            btnModificaServiziDisattivo.TextOffset = new Point(0, 0);
             btnModificaServiziDisattivo.Click += btnServizi_Click;
             // 
             // cuiPanel2
@@ -190,9 +166,7 @@
             btnDebloatAutomaticoVerdi.HoverImageTint = Color.White;
             btnDebloatAutomaticoVerdi.HoverOutline = Color.FromArgb(46, 125, 50);
             btnDebloatAutomaticoVerdi.Image = Properties.Resources.pngCheckCreaISO;
-            btnDebloatAutomaticoVerdi.ImageAutoCenter = true;
             btnDebloatAutomaticoVerdi.ImageExpand = new Point(0, 0);
-            btnDebloatAutomaticoVerdi.ImageOffset = new Point(0, 0);
             btnDebloatAutomaticoVerdi.Name = "btnDebloatAutomaticoVerdi";
             btnDebloatAutomaticoVerdi.NormalBackground = Color.FromArgb(37, 38, 39);
             btnDebloatAutomaticoVerdi.NormalForeColor = Color.White;
@@ -205,7 +179,6 @@
             btnDebloatAutomaticoVerdi.PressedOutline = Color.FromArgb(46, 125, 50);
             btnDebloatAutomaticoVerdi.Rounding = new Padding(8);
             btnDebloatAutomaticoVerdi.TextAlignment = StringAlignment.Center;
-            btnDebloatAutomaticoVerdi.TextOffset = new Point(0, 0);
             btnDebloatAutomaticoVerdi.Click += btnDebloatAuto_Click;
             // 
             // label3
@@ -245,15 +218,12 @@
             cuiSwitch1.CheckedBackground = Color.FromArgb(0, 126, 249);
             cuiSwitch1.CheckedForeground = Color.White;
             cuiSwitch1.CheckedOutlineColor = Color.Empty;
-            cuiSwitch1.CheckedSymbolColor = Color.FromArgb(0, 126, 249);
             cuiSwitch1.Name = "cuiSwitch1";
             cuiSwitch1.OutlineThickness = 1F;
-            cuiSwitch1.ShowSymbols = false;
             cuiSwitch1.ThumbSizeModifier = new Size(0, 0);
             cuiSwitch1.UncheckedBackground = Color.FromArgb(64, 128, 128, 128);
             cuiSwitch1.UncheckedForeground = Color.White;
             cuiSwitch1.UncheckedOutlineColor = Color.Empty;
-            cuiSwitch1.UncheckedSymbolColor = Color.Gray;
             cuiSwitch1.CheckedChanged += cuiSwitch1_CheckedChanged;
             // 
             // btnInstallaComponentiVerdi
@@ -273,9 +243,7 @@
             btnInstallaComponentiVerdi.HoverImageTint = Color.White;
             btnInstallaComponentiVerdi.HoverOutline = Color.FromArgb(46, 125, 50);
             btnInstallaComponentiVerdi.Image = Properties.Resources.pngInstallaAppDebloat;
-            btnInstallaComponentiVerdi.ImageAutoCenter = true;
             btnInstallaComponentiVerdi.ImageExpand = new Point(0, 0);
-            btnInstallaComponentiVerdi.ImageOffset = new Point(0, 0);
             btnInstallaComponentiVerdi.Name = "btnInstallaComponentiVerdi";
             btnInstallaComponentiVerdi.NormalBackground = Color.FromArgb(37, 38, 39);
             btnInstallaComponentiVerdi.NormalForeColor = Color.White;
@@ -288,7 +256,6 @@
             btnInstallaComponentiVerdi.PressedOutline = Color.FromArgb(46, 125, 50);
             btnInstallaComponentiVerdi.Rounding = new Padding(8);
             btnInstallaComponentiVerdi.TextAlignment = StringAlignment.Center;
-            btnInstallaComponentiVerdi.TextOffset = new Point(0, 0);
             btnInstallaComponentiVerdi.Click += btnInstallaComponentiVerdi_Click;
             // 
             // FormDebloat
@@ -316,24 +283,20 @@
         }
 
         #endregion
-        private Button btnDebloatAuto;
-        private Label lblInfoWin12;
         private FlowLayoutPanel flowLayoutPanel1;
         private TextBox textBox1;
-        private CuoreUI.Controls.cuiButton btnModificaServiziDisattivo;
+        private HartUI.Controls.cuiButton btnModificaServiziDisattivo;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private CuoreUI.Controls.cuiProgressBarHorizontal progressBar1;
-        private CuoreUI.Controls.cuiButton btnAvviaSelezionatiVerdi;
-        private CuoreUI.Controls.cuiButton btnRiprisitinoDefenderVerdi;
-        private CuoreUI.Controls.cuiButton btnProtezioneMinimaVerdi;
-        private CuoreUI.Controls.cuiPanel cuiPanel2;
+        private HartUI.Controls.cuiProgressBarHorizontal progressBar1;
+        private HartUI.Controls.cuiButton btnAvviaSelezionatiVerdi;
+        private HartUI.Controls.cuiPanel cuiPanel2;
         private PictureBox pictureBoxPowerPoint;
-        private CuoreUI.Controls.cuiButton btnDebloatAutomaticoVerdi;
+        private HartUI.Controls.cuiButton btnDebloatAutomaticoVerdi;
         private Label label3;
         private Label label5;
-        private CuoreUI.Controls.cuiPanel cuiPanel1;
+        private HartUI.Controls.cuiPanel cuiPanel1;
         private Label label1;
-        private CuoreUI.Controls.cuiSwitch cuiSwitch1;
-        private CuoreUI.Controls.cuiButton btnInstallaComponentiVerdi;
+        private HartUI.Controls.cuiSwitch cuiSwitch1;
+        private HartUI.Controls.cuiButton btnInstallaComponentiVerdi;
     }
 }

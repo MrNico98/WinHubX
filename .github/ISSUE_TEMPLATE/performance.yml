@@ -1,0 +1,32 @@
+name: Problema prestazioni
+description: Segnala un rallentamento o consumo anomalo di CPU, memoria o I/O.
+title: "[Performance]: "
+labels: [performance]
+body:
+  - type: input
+    id: section
+    attributes:
+      label: Sezione o operazione interessata
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Scenario riproducibile
+      description: Specifica durata, frequenza e condizioni osservate.
+    validations:
+      required: true
+  - type: textarea
+    id: measurements
+    attributes:
+      label: Misure osservate
+      description: Inserisci CPU, working set, durata o allocazioni, indicando strumento e metodo.
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Ambiente
+      placeholder: Versione Windows, CPU/RAM essenziali, versione o commit app
+    validations:
+      required: true

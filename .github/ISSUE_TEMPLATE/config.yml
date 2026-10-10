@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Segnalazione privata di vulnerabilità
+    url: https://github.com/LightYagami28/WinHubX/security/advisories/new
+    about: Non pubblicare dettagli di vulnerabilità in una issue pubblica.
+  - name: Politica di sicurezza
+    url: https://github.com/LightYagami28/WinHubX/blob/main/SECURITY.md
+    about: Leggi le istruzioni per la divulgazione responsabile.

@@ -1,4 +1,4 @@
-﻿namespace WinHubX.Forms.Base
+namespace WinHubX.Forms.Base
 {
     partial class FormCreaISO
     {
@@ -61,33 +61,33 @@
             IsoLavorWork = new RadioButton();
             IsoLite = new RadioButton();
             toolTip1 = new ToolTip(components);
-            cuiPanel1 = new CuoreUI.Controls.cuiPanel();
+            cuiPanel1 = new HartUI.Controls.cuiPanel();
             pictureBox2 = new PictureBox();
             label4 = new Label();
-            cuiPanel2 = new CuoreUI.Controls.cuiPanel();
+            cuiPanel2 = new HartUI.Controls.cuiPanel();
             pictureBox12 = new PictureBox();
             label3 = new Label();
-            cuiPanel3 = new CuoreUI.Controls.cuiPanel();
+            cuiPanel3 = new HartUI.Controls.cuiPanel();
             pictureBox13 = new PictureBox();
             label5 = new Label();
-            cuiPanel4 = new CuoreUI.Controls.cuiPanel();
+            cuiPanel4 = new HartUI.Controls.cuiPanel();
             pictureBox14 = new PictureBox();
             label6 = new Label();
-            cuiPanel6 = new CuoreUI.Controls.cuiPanel();
+            cuiPanel6 = new HartUI.Controls.cuiPanel();
             pictureBox15 = new PictureBox();
             label8 = new Label();
-            groupBox6 = new CuoreUI.Controls.cuiPanel();
+            groupBox6 = new HartUI.Controls.cuiPanel();
             pictureBox17 = new PictureBox();
             label10 = new Label();
-            btn_browserBianco = new CuoreUI.Controls.cuiButton();
-            cuiPanel5 = new CuoreUI.Controls.cuiPanel();
+            btn_browserBianco = new HartUI.Controls.cuiButton();
+            cuiPanel5 = new HartUI.Controls.cuiPanel();
             pictureBox11 = new PictureBox();
             label7 = new Label();
-            groupBox7 = new CuoreUI.Controls.cuiPanel();
+            groupBox7 = new HartUI.Controls.cuiPanel();
             pictureBox16 = new PictureBox();
             label9 = new Label();
-            btn_CreaISOVerdi = new CuoreUI.Controls.cuiButton();
-            btn_cambiaBianco = new CuoreUI.Controls.cuiButton();
+            btn_CreaISOVerdi = new HartUI.Controls.cuiButton();
+            btn_cambiaBianco = new HartUI.Controls.cuiButton();
             label11 = new Label();
             labelpercorso = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -579,9 +579,7 @@
             btn_browserBianco.HoverImageTint = Color.Black;
             btn_browserBianco.HoverOutline = Color.White;
             btn_browserBianco.Image = Properties.Resources.pngUploadCreaISO;
-            btn_browserBianco.ImageAutoCenter = true;
             btn_browserBianco.ImageExpand = new Point(0, 0);
-            btn_browserBianco.ImageOffset = new Point(0, 0);
             btn_browserBianco.Name = "btn_browserBianco";
             btn_browserBianco.NormalBackground = Color.FromArgb(37, 38, 39);
             btn_browserBianco.NormalForeColor = Color.White;
@@ -594,7 +592,6 @@
             btn_browserBianco.PressedOutline = Color.White;
             btn_browserBianco.Rounding = new Padding(8);
             btn_browserBianco.TextAlignment = StringAlignment.Center;
-            btn_browserBianco.TextOffset = new Point(0, 0);
             toolTip1.SetToolTip(btn_browserBianco, resources.GetString("btn_browserBianco.ToolTip"));
             btn_browserBianco.Click += btn_browser_Click;
             // 
@@ -678,9 +675,7 @@
             btn_CreaISOVerdi.HoverImageTint = Color.White;
             btn_CreaISOVerdi.HoverOutline = Color.FromArgb(46, 125, 50);
             btn_CreaISOVerdi.Image = Properties.Resources.pngCheckCreaISO;
-            btn_CreaISOVerdi.ImageAutoCenter = true;
             btn_CreaISOVerdi.ImageExpand = new Point(0, 0);
-            btn_CreaISOVerdi.ImageOffset = new Point(0, 0);
             btn_CreaISOVerdi.Name = "btn_CreaISOVerdi";
             btn_CreaISOVerdi.NormalBackground = Color.FromArgb(37, 38, 39);
             btn_CreaISOVerdi.NormalForeColor = Color.White;
@@ -693,7 +688,6 @@
             btn_CreaISOVerdi.PressedOutline = Color.FromArgb(46, 125, 50);
             btn_CreaISOVerdi.Rounding = new Padding(8);
             btn_CreaISOVerdi.TextAlignment = StringAlignment.Center;
-            btn_CreaISOVerdi.TextOffset = new Point(0, 0);
             toolTip1.SetToolTip(btn_CreaISOVerdi, resources.GetString("btn_CreaISOVerdi.ToolTip"));
             btn_CreaISOVerdi.Click += btn_CreaISO_Click;
             // 
@@ -714,9 +708,7 @@
             btn_cambiaBianco.HoverImageTint = Color.White;
             btn_cambiaBianco.HoverOutline = Color.White;
             btn_cambiaBianco.Image = null;
-            btn_cambiaBianco.ImageAutoCenter = true;
             btn_cambiaBianco.ImageExpand = new Point(0, 0);
-            btn_cambiaBianco.ImageOffset = new Point(0, 0);
             btn_cambiaBianco.Name = "btn_cambiaBianco";
             btn_cambiaBianco.NormalBackground = Color.FromArgb(37, 38, 39);
             btn_cambiaBianco.NormalForeColor = Color.White;
@@ -729,7 +721,6 @@
             btn_cambiaBianco.PressedOutline = Color.White;
             btn_cambiaBianco.Rounding = new Padding(8);
             btn_cambiaBianco.TextAlignment = StringAlignment.Center;
-            btn_cambiaBianco.TextOffset = new Point(0, 0);
             toolTip1.SetToolTip(btn_cambiaBianco, resources.GetString("btn_cambiaBianco.ToolTip"));
             btn_cambiaBianco.Click += btn_cambia_Click;
             // 
@@ -843,33 +834,33 @@
         private RadioButton IsoLite;
         private RadioButton IsoGaming;
         private ToolTip toolTip1;
-        private CuoreUI.Controls.cuiPanel cuiPanel1;
+        private HartUI.Controls.cuiPanel cuiPanel1;
         private Label label4;
         private PictureBox pictureBox2;
-        private CuoreUI.Controls.cuiButton btn_browserBianco;
-        private CuoreUI.Controls.cuiPanel cuiPanel2;
+        private HartUI.Controls.cuiButton btn_browserBianco;
+        private HartUI.Controls.cuiPanel cuiPanel2;
         private PictureBox pictureBox12;
         private Label label3;
-        private CuoreUI.Controls.cuiPanel cuiPanel3;
+        private HartUI.Controls.cuiPanel cuiPanel3;
         private PictureBox pictureBox13;
         private Label label5;
-        private CuoreUI.Controls.cuiPanel cuiPanel4;
+        private HartUI.Controls.cuiPanel cuiPanel4;
         private PictureBox pictureBox14;
         private Label label6;
-        private CuoreUI.Controls.cuiPanel cuiPanel5;
+        private HartUI.Controls.cuiPanel cuiPanel5;
         private PictureBox pictureBox11;
         private Label label7;
-        private CuoreUI.Controls.cuiPanel cuiPanel6;
+        private HartUI.Controls.cuiPanel cuiPanel6;
         private PictureBox pictureBox15;
         private Label label8;
-        private CuoreUI.Controls.cuiPanel groupBox7;
+        private HartUI.Controls.cuiPanel groupBox7;
         private PictureBox pictureBox16;
         private Label label9;
-        private CuoreUI.Controls.cuiPanel groupBox6;
+        private HartUI.Controls.cuiPanel groupBox6;
         private PictureBox pictureBox17;
         private Label label10;
-        private CuoreUI.Controls.cuiButton btn_CreaISOVerdi;
-        private CuoreUI.Controls.cuiButton btn_cambiaBianco;
+        private HartUI.Controls.cuiButton btn_CreaISOVerdi;
+        private HartUI.Controls.cuiButton btn_cambiaBianco;
         private Label label11;
         public Label labelpercorso;
     }

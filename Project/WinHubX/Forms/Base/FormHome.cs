@@ -9,7 +9,21 @@ namespace WinHubX
 {
     public partial class FormHome : Form
     {
+        private static bool IsExpectedSystemInformationFailure(Exception exception) =>
+            exception is IOException
+                or UnauthorizedAccessException
+                or System.Security.SecurityException
+                or System.ComponentModel.Win32Exception
+                or System.Runtime.InteropServices.COMException
+                or System.Management.ManagementException
+                or InvalidOperationException
+                or NotSupportedException
+                or TimeoutException
+                or ArgumentException;
+
+        private static readonly TimeSpan HardwareSnapshotLifetime = TimeSpan.FromHours(1);
         private readonly string jsonPath;
+        private bool verificationStarted;
 
         public FormHome()
         {
@@ -47,13 +61,44 @@ namespace WinHubX
 
             ApplicaTraduzioniUI();
 
-            if (File.Exists(jsonPath))
+            Shown += FormHome_Shown;
+        }
+
+        private async void FormHome_Shown(object? sender, EventArgs e)
+        {
+            if (verificationStarted)
+                return;
+
+            verificationStarted = true;
+            if (IsSnapshotFresh())
             {
                 ShowResultsUI();
                 AggiornaRiassunto();
             }
             else
-                _ = VerificaSistemaAsync();
+            {
+                try
+                {
+                    await VerificaSistemaAsync();
+                }
+                catch (Exception ex) when (IsExpectedSystemInformationFailure(ex))
+                {
+                    Debug.WriteLine($"Verifica hardware non riuscita: {ex}");
+                }
+            }
+        }
+
+        private bool IsSnapshotFresh()
+        {
+            try
+            {
+                return File.Exists(jsonPath)
+                    && DateTime.UtcNow - File.GetLastWriteTimeUtc(jsonPath) < HardwareSnapshotLifetime;
+            }
+            catch (IOException)
+            {
+                return false;
+            }
         }
         private void ApplicaTraduzioniUI()
         {
@@ -68,14 +113,14 @@ namespace WinHubX
         }
         private string PrepareJsonPath()
         {
-            string folderPath = Path.Combine(
+            string folderPath = Path.Join(
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                 "WinHubX",
                 "Computer"
             );
 
             Directory.CreateDirectory(folderPath);
-            return Path.Combine(folderPath, "osehardware.json");
+            return Path.Join(folderPath, "osehardware.json");
         }
         private void InitializeProgressTracker()
         {
@@ -125,17 +170,17 @@ namespace WinHubX
         {
             try
             {
-                var systemData = await RecuperaInformazioniSistemaAsync();
+                var progress = new Progress<int>(step => cuiProgressTrackerHorizontal1.TasksProgress = step);
+                var systemData = await RecuperaInformazioniSistemaAsync(progress);
 
                 await SalvaDatiSistemaAsync(systemData);
 
                 cuiProgressTrackerHorizontal1.TasksProgress = 5;
-                await Task.Delay(1500);
 
                 ShowResultsUI();
                 AggiornaRiassunto();
             }
-            catch (Exception ex)
+            catch (Exception ex) when (IsExpectedSystemInformationFailure(ex))
             {
                 MessageBox.Show($"Errore durante la verifica: {ex.Message}",
                     "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -163,37 +208,19 @@ namespace WinHubX
                 JsonElement activation = root.GetProperty("Activation");
                 string windows = activation.GetProperty("Windows").GetString() ?? nd;
                 string office = activation.GetProperty("Office").GetString() ?? nd;
-                labelcpu.Text = "      " + string.Format(
-                    LanguageManager.GetTranslation("FormHome", "cpu"),
-                    cpu
-                );
+                labelcpu.Text = "      " + LanguageManager.FormatTranslation("FormHome", "cpu", cpu);
 
-                labelram.Text = "      " + string.Format(
-                    LanguageManager.GetTranslation("FormHome", "ram"),
-                    ram
-                );
+                labelram.Text = "      " + LanguageManager.FormatTranslation("FormHome", "ram", ram);
 
-                labeldisco.Text = "      " + string.Format(
-                    LanguageManager.GetTranslation("FormHome", "disco"),
-                    disco
-                );
+                labeldisco.Text = "      " + LanguageManager.FormatTranslation("FormHome", "disco", disco);
 
-                labelos.Text = "      " + string.Format(
-                    LanguageManager.GetTranslation("FormHome", "os"),
-                    os
-                );
+                labelos.Text = "      " + LanguageManager.FormatTranslation("FormHome", "os", os);
 
-                labelwindows.Text = "      " + string.Format(
-                    LanguageManager.GetTranslation("FormHome", "windows"),
-                    windows
-                );
+                labelwindows.Text = "      " + LanguageManager.FormatTranslation("FormHome", "windows", windows);
 
-                labeloffice.Text = "      " + string.Format(
-                    LanguageManager.GetTranslation("FormHome", "office"),
-                    office
-                );
+                labeloffice.Text = "      " + LanguageManager.FormatTranslation("FormHome", "office", office);
             }
-            catch (Exception ex)
+            catch (Exception ex) when (IsExpectedSystemInformationFailure(ex))
             {
                 string errore = $"{LanguageManager.GetTranslation("FormHome", "ErroreCaricamento")}:\n{ex.Message}";
                 labelcpu.Text = errore;
@@ -205,62 +232,54 @@ namespace WinHubX
             }
         }
 
-        private async Task<object> RecuperaInformazioniSistemaAsync()
+        private async Task<object> RecuperaInformazioniSistemaAsync(IProgress<int> progress)
         {
-
-            await Task.Delay(3000);
-            string osInfo = GetOSInfo();
-            string architettura = Environment.Is64BitOperatingSystem ? "64" : "32";
-            cuiProgressTrackerHorizontal1.TasksProgress = 1;
-
-
-            await Task.Delay(3000);
-            string cpuName = GetCPUName();
-            string ramInfo = GetRAMInfo();
-            string diskInfo = GetSystemDiskType();
-            cuiProgressTrackerHorizontal1.TasksProgress = 2;
-
-
-            await Task.Delay(2000);
-            string windowsActivation = GetWindowsActivationStatus();
-            cuiProgressTrackerHorizontal1.TasksProgress = 3;
-
- 
-            await Task.Delay(2000);
-            string officeActivation;
-
-            if (!IsOfficeInstalled())
+            return await Task.Run<object>(() =>
             {
-                officeActivation = "Non installato";
-            }
-            else
-            {
-                bool officeActivated = IsOfficeActivated();
-                officeActivation = officeActivated ? "Attivato" : "Da attivare";
-            }
+                string osInfo = GetOSInfo();
+                string architettura = Environment.Is64BitOperatingSystem ? "64" : "32";
+                progress.Report(1);
 
-            cuiProgressTrackerHorizontal1.TasksProgress = 4;
-            await Task.Delay(2000);
-            cuiProgressTrackerHorizontal1.TasksProgress = 6;
-            await Task.Delay(2000);
+                string cpuName = GetCPUName();
+                string ramInfo = GetRAMInfo();
+                string diskInfo = GetSystemDiskType();
+                progress.Report(2);
 
-            return new
-            {
-                Timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
-                OperatingSystem = osInfo,
-                Architettura = architettura,
-                Hardware = new
+                string windowsActivation = GetWindowsActivationStatus();
+                progress.Report(3);
+
+                string officeActivation;
+                if (!IsOfficeInstalled())
                 {
-                    CPU = cpuName,
-                    RAM = ramInfo,
-                    Disk = diskInfo
-                },
-                Activation = new
-                {
-                    Windows = windowsActivation,
-                    Office = officeActivation
+                    officeActivation = "Non installato";
                 }
-            };
+                else
+                {
+                    bool officeActivated = IsOfficeActivated();
+                    officeActivation = officeActivated ? "Attivato" : "Da attivare";
+                }
+
+                progress.Report(4);
+                progress.Report(5);
+
+                return new
+                {
+                    Timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+                    OperatingSystem = osInfo,
+                    Architettura = architettura,
+                    Hardware = new
+                    {
+                        CPU = cpuName,
+                        RAM = ramInfo,
+                        Disk = diskInfo
+                    },
+                    Activation = new
+                    {
+                        Windows = windowsActivation,
+                        Office = officeActivation
+                    }
+                };
+            });
         }
 
 
@@ -273,7 +292,6 @@ namespace WinHubX
             });
 
             await File.WriteAllTextAsync(jsonPath, json);
-            await Task.Delay(4000); 
         }
 
 
@@ -292,7 +310,10 @@ namespace WinHubX
                     return $"{caption} (Versione {version}, Build {build}, {arch})";
                 }
             }
-            catch { }
+            catch (Exception ex) when (IsExpectedSystemInformationFailure(ex))
+            {
+                Debug.WriteLine($"Lettura informazioni OS tramite WMI non riuscita: {ex}");
+            }
             return "Informazioni OS non disponibili";
         }
 
@@ -300,11 +321,26 @@ namespace WinHubX
         {
             try
             {
-                using var searcher = new ManagementObjectSearcher("SELECT Name FROM Win32_Processor");
-                foreach (var item in searcher.Get())
-                    return item["Name"]?.ToString() ?? "Sconosciuto";
+                using var searcher = new ManagementObjectSearcher(
+                    "SELECT Name, NumberOfLogicalProcessors FROM Win32_Processor");
+                using ManagementObjectCollection processors = searcher.Get();
+                var processorInfo = new List<CpuProcessorInfo>();
+                foreach (ManagementObject processor in processors)
+                {
+                    using (processor)
+                    {
+                        string name = processor["Name"]?.ToString()?.Trim() ?? string.Empty;
+                        int.TryParse(processor["NumberOfLogicalProcessors"]?.ToString(), out int logicalProcessorCount);
+                        processorInfo.Add(new CpuProcessorInfo(name, logicalProcessorCount));
+                    }
+                }
+
+                return CpuInfoFormatter.Format(processorInfo);
             }
-            catch { }
+            catch (Exception ex) when (IsExpectedSystemInformationFailure(ex))
+            {
+                Debug.WriteLine($"Lettura nome CPU tramite WMI non riuscita: {ex}");
+            }
             return "Sconosciuto";
         }
 
@@ -320,12 +356,12 @@ namespace WinHubX
                 if (obj == null) return "Sconosciuta";
 
                 long totalBytes = Convert.ToInt64(obj["TotalPhysicalMemory"]);
-                int totalGB = (int)Math.Round(totalBytes / (1024.0 * 1024 * 1024));
-
-                return $"{totalGB} GB";
+                double totalGiB = totalBytes / (1024d * 1024 * 1024);
+                return $"{totalGiB:0.0} GB";
             }
-            catch
+            catch (Exception ex) when (IsExpectedSystemInformationFailure(ex))
             {
+                Debug.WriteLine($"Lettura memoria RAM tramite WMI non riuscita: {ex}");
                 return "Sconosciuta";
             }
         }
@@ -337,7 +373,7 @@ namespace WinHubX
             try
             {
 
-                string systemDrive = Path.GetPathRoot(Environment.SystemDirectory)?.TrimEnd('\\');
+                string? systemDrive = Path.GetPathRoot(Environment.SystemDirectory)?.TrimEnd('\\');
                 if (string.IsNullOrEmpty(systemDrive))
                     return "Sconosciuto";
 
@@ -366,15 +402,20 @@ namespace WinHubX
 
                         if (mediaType.Contains("HDD", StringComparison.OrdinalIgnoreCase) ||
                             mediaType.Contains("Fixed", StringComparison.OrdinalIgnoreCase) ||
-                            interfaceType.Equals("IDE", StringComparison.OrdinalIgnoreCase) ||
-                            interfaceType.Equals("SATA", StringComparison.OrdinalIgnoreCase))
+                            interfaceType.Equals("IDE", StringComparison.OrdinalIgnoreCase))
                             return $"HDD ({model})";
+
+                        if (interfaceType.Equals("SATA", StringComparison.OrdinalIgnoreCase))
+                            return $"Unità SATA ({model})";
 
                         return $"Sconosciuto ({model})";
                     }
                 }
             }
-            catch { }
+            catch (Exception ex) when (IsExpectedSystemInformationFailure(ex))
+            {
+                Debug.WriteLine($"Lettura tipo disco tramite WMI non riuscita: {ex}");
+            }
 
             return "Sconosciuto";
         }
@@ -385,17 +426,27 @@ namespace WinHubX
             {
                 var psi = new ProcessStartInfo
                 {
-                    FileName = "cscript.exe",
-                    Arguments = @"//nologo %windir%\system32\slmgr.vbs /xpr",
+                    FileName = Path.Join(Environment.SystemDirectory, "cscript.exe"),
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
                     UseShellExecute = false,
                     CreateNoWindow = true
                 };
+                psi.ArgumentList.Add("//nologo");
+                psi.ArgumentList.Add(Path.Join(Environment.GetFolderPath(Environment.SpecialFolder.Windows), "System32", "slmgr.vbs"));
+                psi.ArgumentList.Add("/xpr");
 
-                using var process = Process.Start(psi);
-                string output = process.StandardOutput.ReadToEnd().ToLowerInvariant();
+                using var process = Process.Start(psi)
+                    ?? throw new InvalidOperationException("Impossibile avviare cscript.");
+                Task<string> outputTask = process.StandardOutput.ReadToEndAsync();
+                Task<string> errorTask = process.StandardError.ReadToEndAsync();
                 process.WaitForExit();
+                string output = outputTask.GetAwaiter().GetResult().ToLowerInvariant();
+                string error = errorTask.GetAwaiter().GetResult();
+                if (process.ExitCode != 0)
+                {
+                    throw new InvalidOperationException($"Verifica licenza terminata con codice {process.ExitCode}: {error}");
+                }
 
                 if (output.Contains("permanently activated") ||
                     output.Contains("attivato definitivamente") ||
@@ -411,7 +462,10 @@ namespace WinHubX
                 if (output.Contains("not activated") || output.Contains("non attivato"))
                     return "Non attivato";
             }
-            catch { }
+            catch (Exception ex) when (IsExpectedSystemInformationFailure(ex))
+            {
+                Debug.WriteLine($"Verifica licenza Windows con cscript non riuscita; provo WMI: {ex}");
+            }
 
             try
             {
@@ -432,7 +486,7 @@ namespace WinHubX
                     };
                 }
             }
-            catch (Exception ex)
+            catch (Exception ex) when (IsExpectedSystemInformationFailure(ex))
             {
                 return $"Errore durante la verifica: {ex.Message}";
             }
@@ -462,12 +516,10 @@ namespace WinHubX
                 }
 
 
-                if (CheckOhookInstalled())
-                    return true;
             }
-            catch
+            catch (Exception ex) when (IsExpectedSystemInformationFailure(ex))
             {
-
+                Debug.WriteLine($"Verifica attivazione Office tramite WMI non riuscita: {ex}");
             }
 
             return false;
@@ -529,65 +581,10 @@ namespace WinHubX
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex) when (IsExpectedSystemInformationFailure(ex))
             {
+                Debug.WriteLine($"Ricerca installazione Office nel registro non riuscita: {ex}");
             }
-            return false;
-        }
-
-        private bool CheckOhookInstalled()
-        {
-            try
-            {
-                string[] programPaths =
-                {
-            Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles),
-            Environment.GetEnvironmentVariable("ProgramW6432"),
-            Environment.GetEnvironmentVariable("ProgramFiles(x86)")
-        };
-
-
-                programPaths = programPaths.Where(p => !string.IsNullOrWhiteSpace(p))
-                                           .Distinct()
-                                           .ToArray();
-
-
-                int[] officeVersions = { 15, 16 };
-                string[] systemFolders = { "System", "SystemX86" };
-                string[] officeRoots = { "Office 15", "Office" };
-
-
-                foreach (var path in programPaths)
-                {
-                    foreach (var version in officeVersions)
-                    {
-                        string searchPath = Path.Combine(path, $"Microsoft Office\\Office{version}");
-                        if (Directory.Exists(searchPath))
-                        {
-                            if (Directory.EnumerateFiles(searchPath, "sppc*dll", SearchOption.AllDirectories).Any())
-                                return true;
-                        }
-                    }
-
-                    foreach (var sys in systemFolders)
-                    {
-                        foreach (var root in officeRoots)
-                        {
-                            string searchPath = Path.Combine(path, $"Microsoft {root}\\root\\vfs\\{sys}");
-                            if (Directory.Exists(searchPath))
-                            {
-                                if (Directory.EnumerateFiles(searchPath, "sppc*dll", SearchOption.AllDirectories).Any())
-                                    return true;
-                            }
-                        }
-                    }
-                }
-            }
-            catch
-            {
-
-            }
-
             return false;
         }
 
@@ -602,7 +599,7 @@ namespace WinHubX
                     UseShellExecute = true
                 });
             }
-            catch (Exception ex)
+            catch (Exception ex) when (IsExpectedSystemInformationFailure(ex))
             {
                 MessageBox.Show($"Error: {ex.Message}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -619,7 +616,7 @@ namespace WinHubX
                     UseShellExecute = true
                 });
             }
-            catch (Exception ex)
+            catch (Exception ex) when (IsExpectedSystemInformationFailure(ex))
             {
                 MessageBox.Show($"Error: {ex.Message}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -639,8 +636,7 @@ namespace WinHubX
             labelwindows.Visible = false;
             labeloffice.Visible = false;
             label7.Visible = false;
-            await Task.Delay(2000);
-            VerificaSistemaAsync();
+            await VerificaSistemaAsync();
         }
     }
 }

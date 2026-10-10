@@ -1,0 +1,53 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <IsTestProject>true</IsTestProject>
+    <UseMicrosoftTestingPlatformRunner>true</UseMicrosoftTestingPlatformRunner>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="xunit.v3.mtp-v2" />
+    <PackageReference Include="Microsoft.Testing.Extensions.TrxReport.Abstractions" />
+    <PackageReference Include="Microsoft.Testing.Platform" />
+    <PackageReference Include="Microsoft.Testing.Platform.MSBuild" />
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
+    <PackageReference Include="Newtonsoft.Json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="..\WinHubX\Resources\it.json">
+      <LogicalName>WinHubX.Resources.it.json</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\WinHubX\Resources\en.json">
+      <LogicalName>WinHubX.Resources.en.json</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\WinHubX\Impostazioni\RegistryPresetFileValidator.cs" Link="Impostazioni\RegistryPresetFileValidator.cs" />
+    <Compile Include="..\WinHubX\Impostazioni\ElevatedRegistryMutationBatch.cs" Link="Impostazioni\ElevatedRegistryMutationBatch.cs" />
+    <Compile Include="..\WinHubX\Impostazioni\ElevatedProcessBroker.cs" Link="Impostazioni\ElevatedProcessBroker.cs" />
+    <Compile Include="..\WinHubX\Impostazioni\ElevatedRegistryAclMutationBatch.cs" Link="Impostazioni\ElevatedRegistryAclMutationBatch.cs" />
+    <Compile Include="..\WinHubX\Impostazioni\PrivacyServiceScriptBuilder.cs" Link="Impostazioni\PrivacyServiceScriptBuilder.cs" />
+    <Compile Include="..\WinHubX\Impostazioni\PrivacyScheduledTaskScriptBuilder.cs" Link="Impostazioni\PrivacyScheduledTaskScriptBuilder.cs" />
+    <Compile Include="..\WinHubX\Impostazioni\ServiceConfigurationValidator.cs" Link="Impostazioni\ServiceConfigurationValidator.cs" />
+    <Compile Include="..\WinHubX\Impostazioni\ServiceConfigurationScriptBuilder.cs" Link="Impostazioni\ServiceConfigurationScriptBuilder.cs" />
+    <Compile Include="..\WinHubX\Impostazioni\UpdateManifestValidator.cs" Link="Impostazioni\UpdateManifestValidator.cs" />
+    <Compile Include="..\WinHubX\Impostazioni\UpdateInstaller.cs" Link="Impostazioni\UpdateInstaller.cs" />
+    <Compile Include="..\WinHubX\Impostazioni\TrustedHttpsClient.cs" Link="Impostazioni\TrustedHttpsClient.cs" />
+    <Compile Include="..\WinHubX\Impostazioni\BitsTransferDownloader.cs" Link="Impostazioni\BitsTransferDownloader.cs" />
+    <Compile Include="..\WinHubX\Impostazioni\SafeZipExtractor.cs" Link="Impostazioni\SafeZipExtractor.cs" />
+    <Compile Include="..\WinHubX\Impostazioni\SafePathResolver.cs" Link="Impostazioni\SafePathResolver.cs" />
+    <Compile Include="..\WinHubX\Impostazioni\PrivateUserWorkspace.cs" Link="Impostazioni\PrivateUserWorkspace.cs" />
+    <Compile Include="..\WinHubX\Impostazioni\HardwareSensorReading.cs" Link="Impostazioni\HardwareSensorReading.cs" />
+    <Compile Include="..\WinHubX\Impostazioni\CpuInfoFormatter.cs" Link="Impostazioni\CpuInfoFormatter.cs" />
+    <Compile Include="..\WinHubX\Impostazioni\BackgroundWorkerCompletionMessageFactory.cs" Link="Impostazioni\BackgroundWorkerCompletionMessageFactory.cs" />
+    <Compile Include="..\WinHubX\Impostazioni\NetworkUsageCalculator.cs" Link="Impostazioni\NetworkUsageCalculator.cs" />
+    <Compile Include="..\WinHubX\Impostazioni\NetworkInterfaceRefreshPolicy.cs" Link="Impostazioni\NetworkInterfaceRefreshPolicy.cs" />
+    <Compile Include="..\WinHubX\Impostazioni\TempDirectorySizeCalculator.cs" Link="Impostazioni\TempDirectorySizeCalculator.cs" />
+    <Compile Include="..\WinHubX\Impostazioni\ThemeConfig.cs" Link="Impostazioni\ThemeConfig.cs" />
+    <Compile Include="..\WinHubX\Impostazioni\LanguageManager.cs" Link="Impostazioni\LanguageManager.cs" />
+  </ItemGroup>
+</Project>

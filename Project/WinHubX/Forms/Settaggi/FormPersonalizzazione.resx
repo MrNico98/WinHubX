@@ -1030,7 +1030,7 @@
     <value>btnSettaggiExplorerVerdi</value>
   </data>
   <data name="&gt;&gt;btnSettaggiExplorerVerdi.Type" xml:space="preserve">
-    <value>CuoreUI.Controls.cuiButton, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+    <value>HartUI.Controls.cuiButton, HartUI, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;btnSettaggiExplorerVerdi.Parent" xml:space="preserve">
     <value>panello</value>
@@ -1057,7 +1057,7 @@
     <value>btnResetVerdi</value>
   </data>
   <data name="&gt;&gt;btnResetVerdi.Type" xml:space="preserve">
-    <value>CuoreUI.Controls.cuiButton, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+    <value>HartUI.Controls.cuiButton, HartUI, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;btnResetVerdi.Parent" xml:space="preserve">
     <value>panello</value>
@@ -1084,7 +1084,7 @@
     <value>cuiButton1Verdi</value>
   </data>
   <data name="&gt;&gt;cuiButton1Verdi.Type" xml:space="preserve">
-    <value>CuoreUI.Controls.cuiButton, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+    <value>HartUI.Controls.cuiButton, HartUI, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;cuiButton1Verdi.Parent" xml:space="preserve">
     <value>panello</value>
@@ -1108,7 +1108,7 @@
     <value>progressBar1</value>
   </data>
   <data name="&gt;&gt;progressBar1.Type" xml:space="preserve">
-    <value>CuoreUI.Controls.cuiProgressBarHorizontal, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+    <value>HartUI.Controls.cuiProgressBarHorizontal, HartUI, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;progressBar1.Parent" xml:space="preserve">
     <value>panello</value>

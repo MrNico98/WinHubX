@@ -1,0 +1,61 @@
+# Roadmap di modernizzazione WinHubX
+
+Roadmap tecnica verificabile per portare WinHubX a uno standard moderno Windows/.NET. Ogni task va chiuso con build `-warnaserror`, test pertinenti, audit dipendenze e commit GPG.
+
+## Criteri finiti di completamento
+
+Lo scope WinHubX è tracciato nei 30 task numerati qui sotto: al checkpoint 2026-10-08 ne risultano chiusi 14 e restano 16. Non si aggiungono refactoring cosmetici fuori da bug riproducibili, rischio di sicurezza, regressioni o requisiti espliciti. Dopo WinHubX, i repository pubblici di MrNico98 richiesti dall'utente avranno una roadmap e una verifica distinte.
+
+Il lavoro si considera consegnabile quando ogni task è verificato con evidenze oppure ha un'eccezione motivata e un'alternativa sicura; `main` compila su .NET 10 stabile e il branch separato compila sul target .NET 11 disponibile, con tutti i warning trattati senza soppressioni; test, CI, CodeQL e audit dipendenze sono verdi; avvio e flussi UI pertinenti sono verificati su Windows; ogni dipendenza diretta è alla più recente versione stabile e le transitive sono aggiornate al massimo compatibile, con major incompatibili migrate insieme o sostituite. Restano esplicitamente fuori una certificazione legale NIS2 e la firma Authenticode finché non è disponibile un certificato. Raggiunti questi criteri, si ferma la modernizzazione e si consegna lo stato, non si riapre il ciclo per perfezionismi.
+
+## Fondamenta e toolchain
+
+- [x] 1. Consolidare `.editorconfig`, analizzatori .NET e regole di formattazione (policy comuni in `Directory.Build.props`, warning-as-error e code-style enforcement).
+- [x] 2. Mantenere branch separati .NET 10 stabile e .NET 11 preview.
+- [x] 3. Centralizzare versioni NuGet e verificare ogni aggiornamento dal registro (`Directory.Packages.props`; audit NuGet 2026-10-09: zero aggiornamenti stabili per dipendenze dirette app/test e nessuna vulnerabilità note. Il branch .NET 11 usa Newtonsoft.Json 14 beta e pin delle dipendenze .NET 11 RC, soggetti a verifica prima del rilascio. Considerando anche prerelease, restano due update transitivi: Mono.Posix.NETStandard 5.20.1-preview (non adottato: solo preview, compatibilità non verificata) e ApplicationInsights 3.1.2 (richiede migrazione coordinata del provider MTP; resta 2.23.0).
+- [x] 4. Configurare CI per restore, build, audit vulnerabilità e `git diff --check`.
+- [x] 5. Aggiungere test di smoke dell’avvio e dei servizi condivisi (CI Windows avvia il publish, verifica la finestra principale e termina il processo senza applicare tweak).
+- [x] 6. Aggiungere test di regressione per configurazione, lingua e tema (round-trip impostazioni tema/lingua, parità chiavi/cataloghi IT-EN, proprietà JSON duplicate e placeholder).
+- [x] 7. Documentare SDK, runtime, RID e processo di rilascio riproducibile in [`RELEASE.md`](RELEASE.md).
+- [x] 8. Verificare trimming, single-file e self-contained con report in [`RELEASE.md`](RELEASE.md): framework-dependent single-file e self-contained `win-x64` passano su .NET 11 RC con 0 warning; trimming viene correttamente rifiutato dall'SDK (`NETSDK1175`) per WinForms e resta disabilitato, senza soppressioni.
+
+## Architettura e performance
+
+- [ ] 9. Separare servizi, stato applicativo e presentazione WinForms.
+- [ ] 10. Introdurre lifecycle e cancellazione coerenti per tutte le operazioni async. Migliorata la chiusura di `FormMonitoraggio` (I/O preferenze, avvio e pulizie in coda con token), `FormOffice` (catalogo/dati scrubber cancellabili, token lifetime smaltito dopo le operazioni attive, processi già avviati attesi prima del cleanup), `PersonalizzazioneOffice` (sessione isolata, annullamento pre-avvio e chiusura differita finché setup e cleanup sono terminati; CTS ora dichiarata `using`), `FormCreazioneISO` (annullamento attesa iniziale, metodo `Task` e token smaltito dopo il cleanup), `FormCreaISO` (download config/BITS annullabile alla chiusura, doppio avvio impedito, sessione ISO pulita se non trasferita), icone Debloat (`PictureBox.LoadAsync` HTTPS, cancellato al dispose), output BITS e stdout/stderr di `FormRipristinoSO` (letture cancellabili; dopo l'uccisione del processo si osservano le letture annullate e si mantiene la propagazione della cancellazione). Restano le altre schermate e una verifica UI interattiva.
+- [ ] 11. Eliminare scansioni ricorsive e I/O sincrono dal thread UI. Nel Monitoraggio, lettura preferenze asincrona e scritture serializzate con sostituzione atomica; il calcolo TEMP usa un'unica enumerazione `FileSystemInfo`, salta reparse point, mantiene cancellazione/gestione accessi negati e si aggiorna ogni minuto. La topologia rete viene enumerata su worker cancellabile, aggiornata su eventi `NetworkChange` e ogni minuto come fallback, non più a ogni campione di throughput. In `FormAggiungiRimuoviAppOffice`, la ricerca degli eseguibili annidati ora enumera una sola volta (lazy), ignora directory non accessibili e reparse point; rimossa una doppia costruzione della stessa UI. Test di regressione aggiunti per Monitoraggio; restano da auditare le altre schermate e scansioni e a spostare sul worker il rilevamento Office.
+- [ ] 12. Rendere cache e snapshot hardware con scadenza e invalidazione esplicite.
+- [ ] 13. Completare la riscrittura del Monitoraggio con un modello di snapshot unico.
+- [ ] 14. Profilare startup, CPU, allocazioni e heap su .NET 10 e .NET 11. Oltre alla precedente traccia startup .NET 11 RC (15 s, ~4,2 MB), Sky è operativo: smoke UI di Monitoraggio e letture live verificati su .NET 10 e .NET 11. Trace `dotnet-sampled-thread-time` da 10 s prima/dopo: enumerazione TEMP ~4.336→163 ms e `GetAllNetworkInterfaces` ~336→9 ms; resta `HartUI.RoundedForm.DrawForm` ~161 ms/10 s. Il riepilogo CPU ora aggrega nome e thread logici per tutte le istanze `Win32_Processor` invece di restituire il primo socket; 5 test puri coprono sistemi single/multi-socket e dati incompleti. I numeri sono campioni del workload locale, non benchmark universali. Allocazioni, heap, avvio comparativo e tempi/working set per sezione restano da misurare.
+- [ ] 15. Ridurre creazione ripetuta di form, immagini e handler.
+- [ ] 16. Misurare working set e tempi di apertura per ogni sezione.
+- [ ] 17. Applicare double buffering, DPI PerMonitorV2 e layout responsive ai Designer.
+- [ ] 18. Verificare accessibilità, contrasto, tastiera e scaling dal 100% al 200%.
+
+## Sicurezza e aggiornamenti
+
+- [x] 19. Download e risorse HTTP passano da `TrustedHttpsClient`: allowlist host, solo HTTPS/porta 443, redirect manuali verificati, timeout finiti e cancellazione sui flussi di file; copertura di URL/redirect e timeout nei test.
+- [x] 20. Rendere obbligatori hash SHA-256 per i nuovi artefatti pubblicati dalla CI: `New-ArtifactSha256Manifest.ps1` calcola SHA-256 e dimensione per ogni file, incluso l'eseguibile; il manifest generato è verificato localmente e allegato all'artefatto.
+- [x] 21. Verificare Authenticode per i binari pubblicati: ogni firma deve risultare valida; i file non firmati sono esplicitamente indicati come `NotSigned` nel manifest, senza bloccare lo stato attuale privo di certificato.
+- [x] 22. Updater con sostituzione atomica staged, backup, verifica SHA-256, attesa finestra avviata e rollback se startup fallisce; coperto da test di regressione.
+- [x] 23. Eliminare quoting fragile nei processi PowerShell/CMD (`ProcessStartInfo.Arguments` sostituito con `ArgumentList` per Office e `taskkill`; scansione C# senza assegnazioni fragili residue).
+- [ ] 24. Verificare privilegi minimi e isolare ogni azione che richiede UAC (manifest `asInvoker`; `FormUtility`, `FormUpdate`, `FormDefender`, le modifiche Copilot di `FormPersonalizzazione` e le scritture HKLM/HKU di `FormPrivacy` delegano al processo elevato i privilegi necessari. `FormPrivacy` è stato verificato per i percorsi registro machine, task pianificati e storage riservato; test sintassi PowerShell e batch `REG_BINARY`. In `FormUpdate` corretto il ripristino dei valori e accorpata la modifica startup dei servizi. `FormCreazioneISO` delega DISM e reg.exe a un broker UAC con allowlist, pipe con ACL, workspace casuale con ACL dedicata sul disco fisso con più spazio, cleanup confinato alla sessione e test del validatore; anche inventario/rimozione pacchetti offline passa dal broker, senza PowerShell intermedio. `FormRipristinoSO` usa lo stesso broker per DISM, SFC, CHKDSK, export HKLM e regsvr32; il controllo disco è online e non marca il volume dirty. Corretto anche il caso nullo su output processo e snapshot WMI vuoto, senza loop che uscivano alla prima iterazione. Restano il collaudo interattivo UAC su ambiente di prova e l'audit finale di tutte le forme prima di chiudere il task.)
+- [ ] 25. Audit completo di script, URL, file binari e risorse esterne. Corrette estrazione ZIP ISO (traversal, link/reparse point, limiti e staging; test di regressione), pipeline dei download file verso BITS con redirect HTTPS rivalidati, redirect successivi bloccati, CRL e file temporaneo atomico, e workspace risorse ISO spostato da `%TEMP%` pubblica a sessioni LocalAppData con ACL ristrette e cleanup confinato. Il client HTTPS ha un limite esplicito nel ciclo redirect e test sul superamento. La action release è pinnata a SHA completo; i test dei rifiuti HTTP generano URI non sicuri senza esporre endpoint HTTP letterali. Le icone Debloat ora accettano solo URL HTTPS e vengono scaricate in background con cancellazione e logging degli errori. Restano da verificare provenienza e integrità degli altri asset. Verifica HTTP del 2026-10-09: gli URL configurati in `Dipendenze.json` rispondono; gli asset DefendNot puntano alla release upstream `MrNico98/WinHubX-Resource`, mentre il fork `LightYagami28/WinHubX-Resource` non pubblica release proprie. Il digest x64 nel codice resta malformato: DefendNot può disattivare Defender e questo audit non ne corregge hash o affidabilità di download/avvio né lo esegue. Restano test end-to-end ISO. SonarCloud su `main` (`235caa0`) è ancora `ERROR`: reliability C, security B, duplicazione 5,8%; API issue-search mostra 172 issue aperte nel leak period, incluse 5 bug e 1 vulnerability. Build, CodeQL e Socket sono verdi su .NET 10; build e CodeQL verdi su .NET 11. Il gate Sonar e i sei issue bug/security restano da risolvere con fix verificabili.
+
+  Follow-up Sonar 2026-10-09: l'analisi sul commit `6f2936b` conferma S4036 chiuso e gate di reliability/security superati. `FormWin` avvia `explorer.exe` da percorso assoluto e passa la URI con `ArgumentList`. Il Quality Gate complessivo resta `ERROR` solo per duplicazione del nuovo codice al 5,8% (soglia ≤3%); va ridotta senza estrazioni cosmetiche o soppressioni.
+
+  Follow-up duplicazione 2026-10-09: i gestori di completamento identici di `FormPrivacy` e `FormDefender` ora delegano a `BackgroundWorkerCompletionMessageFactory`, che uniforma errore, annullamento, fallimenti parziali deduplicati e successo. Cinque test coprono questi casi. Il flusso BITS resta attivo per gli altri download ZIP; DefendNot è escluso perché il suo hash x64 configurato è malformato e il loader può disattivare Defender. Non si sostituisce il digest senza una fonte indipendente né si esegue il payload.
+- [x] 26. Configurare Dependabot per NuGet e GitHub Actions.
+
+La valutazione tecnica del rischio ispirata a NIS2 e le evidenze richieste sono descritte in [`SECURITY-ENGINEERING.md`](SECURITY-ENGINEERING.md); è una metodologia ingegneristica, non una valutazione legale o attestazione di conformità.
+
+## UX, distribuzione e documentazione
+
+- [ ] 27. Completare la palette futuristica centralizzata per tutte le form.
+- [ ] 28. Riscrivere Designer e risorse legacy mantenendo localizzazione IT/EN.
+- [ ] 29. Preparare pacchetto release, manifest winget e recipe Chocolatey con hash reali.
+- [ ] 30. Pubblicare wiki tecnica, guida utenti, troubleshooting e changelog verificabili.
+
+## Repository correlati MrNico98
+
+Inventario pubblico rilevato il 2026-10-08: `PhoenixPlay`, `WinHubX`, `ISODownloader`, `PhoenixPlay-Resources`, `WIMToolkit`, `WinCustomizer`, `MiniCleanerTool`, `WinHubX-Resource`, `Assistente-Aggiornamento`, `ImageDebloat`, `pacman`, oltre a fork di terzi. Verranno importati solo i repository pertinenti, con licenza e dipendenze verificate; i fork di terzi non verranno copiati automaticamente.

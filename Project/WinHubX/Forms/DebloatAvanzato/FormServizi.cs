@@ -1,149 +1,249 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
+using System.ComponentModel;
 using System.Diagnostics;
-using System.Globalization;
+using System.Text.Json;
 using WinHubX.Impostazioni;
 
-namespace WinHubX.Forms.DebloatAvanzato
+namespace WinHubX.Forms.DebloatAvanzato;
+
+public partial class FormServizi : Form
 {
-    public partial class FormServizi : Form
+    private static bool IsExpectedServiceOperationFailure(Exception exception) =>
+        exception is IOException
+            or UnauthorizedAccessException
+            or System.Security.SecurityException
+            or System.ComponentModel.Win32Exception
+            or System.Runtime.InteropServices.COMException
+            or HttpRequestException
+            or System.Text.Json.JsonException
+            or Newtonsoft.Json.JsonException
+            or InvalidOperationException
+            or OperationCanceledException
+            or TimeoutException
+            or ArgumentException;
+
+    private static readonly HttpClient HttpClient = CreateHttpClient();
+    private const string ServicesUrl =
+        "https://raw.githubusercontent.com/LightYagami28/WinHubX-Resource/refs/heads/main/servizi.json";
+
+    private ServiziRoot? _serviceCatalog;
+
+    public FormServizi()
     {
-        public FormServizi()
-        {
-            LanguageManager.LoadTranslations();
-            InitializeComponent();
-            ThemeManager.ApplyThemeToControl(this, ThemeManager.IsDarkTheme);
-        }
+        LanguageManager.LoadTranslations();
+        InitializeComponent();
+        ThemeManager.ApplyThemeToControl(this, ThemeManager.IsDarkTheme);
+    }
 
-        private async void FormServizi_Load(object sender, EventArgs e)
+    private static HttpClient CreateHttpClient()
+    {
+        var handler = new SocketsHttpHandler
         {
-            string url = "https://raw.githubusercontent.com/AMStore-na/WinHubX-Resource/refs/heads/main/Servizi.json";
+            AllowAutoRedirect = false,
+            PooledConnectionLifetime = TimeSpan.FromMinutes(5),
+            AutomaticDecompression = System.Net.DecompressionMethods.All
+        };
 
+        return new HttpClient(handler) { Timeout = TimeSpan.FromSeconds(30) };
+    }
+
+    private async void FormServizi_Load(object? sender, EventArgs e)
+    {
+        try
+        {
+            string json = await TrustedHttpsClient.GetStringAsync(HttpClient, ServicesUrl);
+            ServiziRoot catalog = JsonConvert.DeserializeObject<ServiziRoot>(json)
+                ?? throw new InvalidDataException("Configurazione servizi non valida.");
+            ServiceConfigurationValidator.ValidateCatalog(catalog);
+
+            DisabilitaServizi.BeginUpdate();
             try
             {
-                using (HttpClient client = new HttpClient())
-                {
-                    string json = await client.GetStringAsync(url);
-                    ServiziRoot serviziRoot = JsonConvert.DeserializeObject<ServiziRoot>(json);
-
-                    for (int i = 0; i < serviziRoot.service.Count; i++)
-                    {
-                        var servizio = serviziRoot.service[i];
-                        _ = DisabilitaServizi.Items.Add(servizio.Name);
-                        DisabilitaServizi.SetItemChecked(i, true);
-                    }
-                }
+                int firstAddedIndex = DisabilitaServizi.Items.Count;
+                DisabilitaServizi.Items.AddRange(catalog.service
+                    .Select(static service => (object)service.Name)
+                    .ToArray());
+                for (int index = firstAddedIndex; index < DisabilitaServizi.Items.Count; index++)
+                    DisabilitaServizi.SetItemChecked(index, true);
             }
-            catch (Exception ex)
+            finally
             {
-                _ = MessageBox.Show($"Error: {ex.Message}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                DisabilitaServizi.EndUpdate();
             }
+
+            _serviceCatalog = catalog;
+        }
+        catch (Exception ex) when (IsExpectedServiceOperationFailure(ex))
+        {
+            _ = MessageBox.Show(
+                this,
+                ex.GetBaseException().Message,
+                "WinHubX — servizi",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+    }
+
+    private async void ModificaServiziButton_Click(object? sender, EventArgs e)
+    {
+        if (!button1.Enabled || _serviceCatalog is null)
+        {
+            return;
         }
 
-
-        private async void ModificaServiziButton_Click(object sender, EventArgs e)
+        string[] selectedNames = DisabilitaServizi.CheckedItems.Cast<string>().ToArray();
+        if (selectedNames.Length == 0)
         {
-            int totalSteps = DisabilitaServizi.CheckedItems.Count;
-            if (totalSteps == 0) totalSteps = 1;
+            return;
+        }
 
-            progressBar1.Maximum = totalSteps;
+        string confirmation = Translate(
+            "confirmMessage",
+            "Stai per interrompere e modificare l'avvio di {0} servizi Windows con privilegi amministrativi. Potresti interrompere funzioni di Windows o applicazioni. Continuare?",
+            "You are about to stop and change the startup configuration of {0} Windows services with administrator privileges. This may interrupt Windows or application features. Continue?");
+        if (MessageBox.Show(
+                this,
+                LanguageManager.Format(confirmation, selectedNames.Length),
+                Translate("confirmTitle", "Conferma modifica servizi", "Confirm service changes"),
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning,
+                MessageBoxDefaultButton.Button2) != DialogResult.Yes)
+        {
+            return;
+        }
+
+        HashSet<string> selectedNameSet = new(selectedNames, StringComparer.OrdinalIgnoreCase);
+        List<Servizio> selectedChanges = _serviceCatalog.service
+            .Where(service => selectedNameSet.Contains(service.Name))
+            .ToList();
+        if (selectedChanges.Count != selectedNames.Length)
+        {
+            _ = MessageBox.Show(
+                this,
+                "La selezione non corrisponde al catalogo validato. Ricarica la finestra e riprova.",
+                "WinHubX — servizi",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+            return;
+        }
+
+        progressBar1.Maximum = selectedChanges.Count;
+        progressBar1.Value = 0;
+        progressBar1.Style = ProgressBarStyle.Marquee;
+        progressBar1.MarqueeAnimationSpeed = 25;
+        richTextBox1.Clear();
+        button1.Enabled = false;
+        DisabilitaServizi.Enabled = false;
+
+        try
+        {
+            await ApplyServiceChangesAsync(selectedChanges);
+        }
+        finally
+        {
+            progressBar1.MarqueeAnimationSpeed = 0;
+            progressBar1.Style = ProgressBarStyle.Blocks;
             progressBar1.Value = 0;
-            richTextBox1.Clear();
-
-            await EseguiModificaServiziAsync();
+            button1.Enabled = true;
+            DisabilitaServizi.Enabled = true;
         }
+    }
 
-        private async Task EseguiModificaServiziAsync()
+    private async Task ApplyServiceChangesAsync(IReadOnlyCollection<Servizio> changes)
+    {
+        string reportPath = Path.Join(Path.GetTempPath(), $"WinHubX-ServiceChanges-{Guid.NewGuid():N}.json");
+
+        try
         {
-            string url = "https://raw.githubusercontent.com/AMStore-na/WinHubX-Resource/refs/heads/main/Servizi.json";
+            using (new FileStream(reportPath, FileMode.CreateNew, FileAccess.Write, FileShare.None))
+            {
+            }
 
+            string encodedCommand = ServiceConfigurationScriptBuilder.BuildEncodedCommand(changes, reportPath);
+            var startInfo = new ProcessStartInfo
+            {
+                FileName = Path.Join(Environment.SystemDirectory, "WindowsPowerShell", "v1.0", "powershell.exe"),
+                Verb = "runas",
+                UseShellExecute = true,
+                WindowStyle = ProcessWindowStyle.Hidden
+            };
+            startInfo.ArgumentList.Add("-NoLogo");
+            startInfo.ArgumentList.Add("-NoProfile");
+            startInfo.ArgumentList.Add("-NonInteractive");
+            startInfo.ArgumentList.Add("-EncodedCommand");
+            startInfo.ArgumentList.Add(encodedCommand);
+
+            using Process process = Process.Start(startInfo)
+                ?? throw new InvalidOperationException("Impossibile avviare PowerShell con privilegi amministrativi.");
+            await process.WaitForExitAsync();
+            progressBar1.Style = ProgressBarStyle.Blocks;
+
+            string reportJson = await File.ReadAllTextAsync(reportPath);
+            List<ServiceConfigurationResult> results = System.Text.Json.JsonSerializer.Deserialize<List<ServiceConfigurationResult>>(
+                reportJson,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true })
+                ?? throw new InvalidDataException("Il report delle modifiche ai servizi non è valido.");
+
+            if (results.Count != changes.Count)
+            {
+                throw new InvalidDataException("Il report non contiene l'esito di tutti i servizi selezionati.");
+            }
+
+            foreach (string line in results.Select(result => result.Success
+                ? LanguageManager.Format(
+                    Translate("serviceSuccess", "Servizio \"{0}\": modificato correttamente", "Service \"{0}\": changed successfully"),
+                    result.ServiceName)
+                : LanguageManager.Format(
+                    Translate("serviceFailure", "Servizio \"{0}\": {1}", "Service \"{0}\": {1}"),
+                    result.ServiceName,
+                    result.Error ?? "Errore non specificato.")))
+            {
+                richTextBox1.AppendText(line + Environment.NewLine);
+                progressBar1.Value = Math.Min(progressBar1.Value + 1, progressBar1.Maximum);
+            }
+
+            if (process.ExitCode != 0)
+            {
+                richTextBox1.AppendText(LanguageManager.Format(
+                    Translate("serviceSummaryFailure", "Alcune modifiche non sono riuscite (codice {0}).", "Some changes failed (exit code {0})."),
+                    process.ExitCode) + Environment.NewLine);
+            }
+        }
+        catch (Win32Exception ex) when (ex.NativeErrorCode == 1223)
+        {
+            richTextBox1.AppendText(Translate(
+                "uacCancelled",
+                "Operazione annullata nella richiesta UAC.",
+                "Operation cancelled at the UAC prompt.") + Environment.NewLine);
+        }
+        catch (Exception ex) when (IsExpectedServiceOperationFailure(ex))
+        {
+            Debug.WriteLine(ex);
+            richTextBox1.AppendText($"❌ {ex.GetBaseException().Message}{Environment.NewLine}");
+        }
+        finally
+        {
             try
             {
-                using (HttpClient client = new HttpClient())
-                {
-                    string json = await client.GetStringAsync(url);
-                    ServiziRoot serviziRoot = JsonConvert.DeserializeObject<ServiziRoot>(json);
-
-                    int currentStep = 0;
-
-                    foreach (var checkedItem in DisabilitaServizi.CheckedItems)
-                    {
-                        string serviceName = checkedItem.ToString();
-                        var servizio = serviziRoot.service.FirstOrDefault(s => s.Name == serviceName);
-
-                        if (servizio != null)
-                        {
-                            string stopComando = $"Get-Service -Name \"{servizio.Name}\" -ErrorAction Stop | Stop-Service";
-
-                            string comando = $"Set-Service -Name \"{servizio.Name}\" -StartupType {servizio.StartupType}";
-
-                            string stato = await Task.Run(() =>
-                            {
-                                try
-                                {
-                                    ProcessStartInfo psi = new ProcessStartInfo
-                                    {
-                                        FileName = "powershell.exe",
-                                        Arguments = $"-Command \"{stopComando}; {comando}\"",
-                                        Verb = "runas",
-                                        UseShellExecute = false,
-                                        CreateNoWindow = true,
-                                        RedirectStandardOutput = true,
-                                        RedirectStandardError = true
-                                    };
-
-                                    using (var proc = Process.Start(psi))
-                                    {
-                                        string output = proc.StandardOutput.ReadToEnd();
-                                        string error = proc.StandardError.ReadToEnd();
-                                        proc.WaitForExit();
-
-                                        if (proc.ExitCode == 0)
-                                        {
-                                            return $"Servizio \"{servizio.Name}\" → ✅ Modificato con successo";
-                                        }
-                                        else
-                                        {
-                                            string errorMessage = error.Split(new[] { "\r\n" }, StringSplitOptions.None).FirstOrDefault() ?? error;
-                                            return $"❌ Error: {errorMessage}";
-                                        }
-                                    }
-                                }
-                                catch (Exception ex)
-                                {
-                                    return $"❌ Error: {ex.Message}";
-                                }
-                            });
-
-                            _ = richTextBox1.Invoke((MethodInvoker)(() =>
-                            {
-                                richTextBox1.AppendText($"{stato}\n");
-                                richTextBox1.ScrollToCaret();
-                                progressBar1.Value = Math.Min(++currentStep, progressBar1.Maximum);
-                            }));
-                        }
-                    }
-                }
+                File.Delete(reportPath);
             }
-            catch (Exception)
+            catch (Exception ex) when (IsExpectedServiceOperationFailure(ex))
             {
-                _ = richTextBox1.Invoke((MethodInvoker)(() =>
-                {
-                    richTextBox1.AppendText($"❌ Error");
-                }));
+                Debug.WriteLine($"Impossibile eliminare il report temporaneo dei servizi: {ex}");
             }
         }
-
     }
 
-    public class Servizio
+    private static string Translate(string key, string italianFallback, string englishFallback)
     {
-        public required string Name { get; set; }
-        public required string StartupType { get; set; }
-        public required string OriginalType { get; set; }
-    }
+        string translation = LanguageManager.GetTranslation("FormServizi", key);
+        if (!string.Equals(translation, key, StringComparison.Ordinal))
+        {
+            return translation;
+        }
 
-    public class ServiziRoot
-    {
-        public required List<Servizio> service { get; set; }
+        return LanguageManager.CurrentLanguage.StartsWith("it", StringComparison.OrdinalIgnoreCase)
+            ? italianFallback
+            : englishFallback;
     }
 }

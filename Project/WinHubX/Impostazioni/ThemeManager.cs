@@ -1,4 +1,4 @@
-﻿using CuoreUI.Controls;
+using HartUI.Controls;
 namespace WinHubX.Impostazioni
 {
     public static class ThemeManager
@@ -57,23 +57,23 @@ namespace WinHubX.Impostazioni
                 return;
             if (control is Form formMain && formMain.Name == "Form1")
             {
-                formMain.BackColor = darkTheme ? Color.FromArgb(64, 60, 59) : Color.FromArgb(245, 245, 245);
+                formMain.BackColor = darkTheme ? UiPalette.DarkWindow : UiPalette.LightWindow;
                 foreach (Control child in formMain.Controls)
                     ApplyThemeToControl(child, darkTheme);
 
                 return; 
             }
-            Color backColor = darkTheme ? Color.FromArgb(37, 38, 39) : Color.White;
-            Color foreColor = darkTheme ? Color.White : Color.Black;
+            Color backColor = darkTheme ? UiPalette.DarkSurface : UiPalette.LightSurface;
+            Color foreColor = darkTheme ? UiPalette.DarkText : UiPalette.LightText;
 
             string parentPanelName = GetSpecialParentPanelName(control);
             if (parentPanelName == "panel1" || parentPanelName == "panel2" || parentPanelName == "panel3" || parentPanelName == "tableLayoutPanel1")
             {
-                backColor = darkTheme ? Color.FromArgb(64, 60, 59) : Color.FromArgb(245, 245, 245);
+                backColor = darkTheme ? UiPalette.DarkWindow : UiPalette.LightWindow;
             }
             else if (parentPanelName == "PnlFormLoader")
             {
-                backColor = darkTheme ? Color.FromArgb(37, 38, 39) : Color.White;
+                backColor = darkTheme ? UiPalette.DarkSurface : UiPalette.LightSurface;
             }
 
             Color arancione = Color.Coral;
@@ -92,53 +92,25 @@ namespace WinHubX.Impostazioni
 
             if (control is Form form && form.Name != "Form1")
             {
-                if (IsSpecialColor(form.BackColor))
-                {
-                    form.BackColor = form.BackColor;
-                }
-                else
-                {
-                    form.BackColor = darkTheme ? Color.FromArgb(37, 38, 39) : Color.White;
-                }
+                if (!IsSpecialColor(form.BackColor))
+                    form.BackColor = darkTheme ? UiPalette.DarkSurface : UiPalette.LightSurface;
 
-                if (IsSpecialColor(form.ForeColor))
-                {
-                    form.ForeColor = form.ForeColor;
-                }
-                else
-                {
+                if (!IsSpecialColor(form.ForeColor))
                     form.ForeColor = foreColor;
-                }
             }
             else
             {
-                if (IsSpecialColor(control.BackColor))
-                {
-                    // mantiene il colore originale
-                    control.BackColor = control.BackColor;
-                }
-                else
-                {
+                if (!IsSpecialColor(control.BackColor))
                     control.BackColor = backColor;
-                }
 
-                if (!(control is PictureBox))
-                {
-                    if (IsSpecialColor(control.ForeColor))
-                    {
-                        control.ForeColor = control.ForeColor;
-                    }
-                    else
-                    {
-                        control.ForeColor = foreColor;
-                    }
-                }
+                if (control is not PictureBox && !IsSpecialColor(control.ForeColor))
+                    control.ForeColor = foreColor;
                 if (control is cuiButton cuoreBtn)
                 {
                     bool isVerdi = cuoreBtn.Name.Contains("Verdi");
                     bool isBianco = cuoreBtn.Name.Contains("Bianco");
-                    Color themeBack = darkTheme ? Color.FromArgb(37, 38, 39) : Color.White;
-                    Color themeFore = darkTheme ? Color.White : Color.Black;
+                    Color themeBack = darkTheme ? UiPalette.DarkSurface : UiPalette.LightSurface;
+                    Color themeFore = darkTheme ? UiPalette.DarkText : UiPalette.LightText;
 
                     // BackColor e NormalBackground seguono sempre il tema
                     cuoreBtn.BackColor = themeBack;
@@ -170,25 +142,25 @@ namespace WinHubX.Impostazioni
                         // Regole speciali per bottoni "Bianco"
                         if (darkTheme)
                         {
-                            cuoreBtn.NormalBackground = Color.FromArgb(37, 38, 39);
-                            cuoreBtn.NormalForeColor = Color.White;
-                            cuoreBtn.NormalImageTint = Color.White;
-                            cuoreBtn.NormalOutline = Color.White;
+                            cuoreBtn.NormalBackground = UiPalette.DarkSurface;
+                            cuoreBtn.NormalForeColor = UiPalette.DarkText;
+                            cuoreBtn.NormalImageTint = UiPalette.DarkText;
+                            cuoreBtn.NormalOutline = UiPalette.DarkBorder;
 
                             cuoreBtn.HoverBackground = Color.White;
                             cuoreBtn.HoverForeColor = Color.Black;
                             cuoreBtn.HoverImageTint = Color.Black;
                             cuoreBtn.HoverOutline = Color.White;
 
-                            cuoreBtn.PressedBackground = Color.FromArgb(37, 38, 39);
-                            cuoreBtn.PressedForeColor = Color.White;
-                            cuoreBtn.PressedImageTint = Color.White;
-                            cuoreBtn.PressedOutline = Color.White;
+                            cuoreBtn.PressedBackground = UiPalette.DarkSurface;
+                            cuoreBtn.PressedForeColor = UiPalette.DarkText;
+                            cuoreBtn.PressedImageTint = UiPalette.DarkText;
+                            cuoreBtn.PressedOutline = UiPalette.DarkBorder;
 
-                            cuoreBtn.CheckedBackground = Color.FromArgb(37, 38, 39);
-                            cuoreBtn.CheckedForeColor = Color.White;
-                            cuoreBtn.CheckedImageTint = Color.White;
-                            cuoreBtn.CheckedOutline = Color.White;
+                            cuoreBtn.CheckedBackground = UiPalette.DarkSurface;
+                            cuoreBtn.CheckedForeColor = UiPalette.DarkText;
+                            cuoreBtn.CheckedImageTint = UiPalette.DarkText;
+                            cuoreBtn.CheckedOutline = UiPalette.DarkBorder;
                         }
                         else
                         {
@@ -238,7 +210,7 @@ namespace WinHubX.Impostazioni
                     }
                     if (cuoreBtn.Name.EndsWith("Disattivo", StringComparison.OrdinalIgnoreCase))
                     {
-                        Color grigio = Color.Gray;
+                        Color grigio = darkTheme ? UiPalette.DarkMutedText : UiPalette.LightMutedText;
 
                         cuoreBtn.ForeColor = grigio;
                         cuoreBtn.NormalForeColor = grigio;
@@ -265,9 +237,9 @@ namespace WinHubX.Impostazioni
 
                 if (control is cuiPanel panel)
                 {
-                    panel.PanelColor = darkTheme ? Color.FromArgb(37, 38, 39) : Color.White;
-                    panel.BackColor = darkTheme ? Color.FromArgb(37, 38, 39) : Color.White;
-                    panel.PanelOutlineColor = darkTheme ? Color.WhiteSmoke : Color.DarkGray;
+                    panel.PanelColor = darkTheme ? UiPalette.DarkSurface : UiPalette.LightSurface;
+                    panel.BackColor = darkTheme ? UiPalette.DarkSurface : UiPalette.LightSurface;
+                    panel.PanelOutlineColor = darkTheme ? UiPalette.DarkBorder : UiPalette.LightBorder;
                 }
                 if (control is cuiPictureBox pic)
                 {
@@ -299,7 +271,7 @@ namespace WinHubX.Impostazioni
 
         private static string GetSpecialParentPanelName(Control control)
         {
-            Control current = control;
+            Control? current = control;
             while (current != null)
             {
                 if (current.Name == "panel1" || current.Name == "panel2" || current.Name == "panel3" || current.Name == "PnlFormLoader" || current.Name == "tableLayoutPanel1")
@@ -318,12 +290,12 @@ namespace WinHubX.Impostazioni
 
         public static Color GetBackColor(bool darkTheme)
         {
-            return darkTheme ? Color.FromArgb(37, 38, 39) : Color.White;
+            return darkTheme ? UiPalette.DarkSurface : UiPalette.LightSurface;
         }
 
         public static Color GetForeColor(bool darkTheme)
         {
-            return darkTheme ? Color.White : Color.Black;
+            return darkTheme ? UiPalette.DarkText : UiPalette.LightText;
         }
     }
 }

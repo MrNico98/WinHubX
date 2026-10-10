@@ -1,75 +1,61 @@
-# WinHubX - The Ultimate Windows Optimization Toolbox 🚀  
+# WinHubX
 
-<div align="center">
-  <img src="./Immagini/image.png" width="500">
-  <h1>WinHubX</h1>
-  <p><strong>Your all-in-one solution for Windows optimization, customization, and management</strong></p>
-  
-  <p>
-    <img src="https://img.shields.io/github/stars/MrNico98/WinHubX?style=for-the-badge&logo=github" alt="GitHub Stars">
-    <img src="https://img.shields.io/github/license/MrNico98/WinHubX?style=for-the-badge" alt="License">
-    <img src="https://img.shields.io/github/last-commit/MrNico98/WinHubX?style=for-the-badge" alt="Last Commit">
-  </p>
-</div>
+WinHubX è una toolbox open source per Windows 10/11, progettata per manutenzione, diagnostica, personalizzazione e gestione di immagini ufficiali Microsoft.
 
-## 🌍 Multi-Language Support
-- 🇬🇧 **English**
-- 🇮🇹 **Italiano**
+[![Build](https://github.com/LightYagami28/WinHubX/actions/workflows/dotnet.yml/badge.svg)](https://github.com/LightYagami28/WinHubX/actions/workflows/dotnet.yml)
+[![License](https://img.shields.io/github/license/LightYagami28/WinHubX)](LICENSE)
+[![Latest release](https://img.shields.io/github/v/release/LightYagami28/WinHubX)](https://github.com/LightYagami28/WinHubX/releases/latest)
 
----
+> Stato: sviluppo attivo. Provare ogni modifica in una macchina virtuale o con un backup verificato.
 
-## ✨ Key Features
-✔ **Windows & Office ISO Downloader** - Get official Microsoft ISOs directly  
-✔ **System Optimizer** - Boost performance with one click  
-✔ **Privacy Manager** - Take control of your data  
-✔ **Customization Toolkit** - Personalize your Windows experience  
-✔ **Maintenance Center** - Keep your system running smoothly  
-✔ **Network Utilities** - Advanced networking tools  
-✔ **Security Tweaks** - Harden your system against threats  
+## Funzionalità
 
----
+- diagnostica hardware e monitoraggio delle risorse;
+- strumenti per privacy, manutenzione e personalizzazione di Windows;
+- download da fonti ufficiali HTTPS e verifica dell'integrità quando disponibile;
+- strumenti per immagini ISO, driver e componenti Microsoft;
+- interfaccia WinForms moderna, localizzata in italiano e inglese.
 
-## 📊 Technical Overview
-| Linguaggio   | Percentuale |
-|--------------|-------------|
-| PowerShell   | 0.3%        |
-| C#           | 42.4%       |
-| Batchfile    | 57.3%       |
+WinHubX non automatizza attivazioni non autorizzate e non distribuisce certificati, chiavi o credenziali.
 
----
+## Requisiti
 
-## 📜 License
-WinHubX is proudly open-source under the GNU GPL v3.0 License - free to use, modify, and share!
+- Windows 10 1809 o successivo, preferibilmente Windows 11;
+- architettura x64;
+- .NET 10 Desktop Runtime per la release stabile;
+- privilegi amministrativi solo per le operazioni di sistema che li richiedono.
 
----
+## Installazione e compilazione
 
-## 🔒 Security Verified
-[![VirusTotal Scan](https://img.shields.io/badge/VirusTotal-Clean-green?style=flat&logo=virustotal)](https://www.virustotal.com/)
+Scarica il pacchetto dalla [release più recente](https://github.com/LightYagami28/WinHubX/releases/latest), estrailo e avvia `WinHubX.exe`.
 
----
+```powershell
+dotnet restore Project/WinHubX.sln
+dotnet build Project/WinHubX.sln --configuration Release --warnaserror
+dotnet run --project Project/WinHubX.Tests/WinHubX.Tests.csproj --configuration Release
+```
 
-## 📰 Featured In
-Publication	Link
-YourLifeUpdate	Read Article
-UIBlog	Read Article
-GuruHitech	Read Article
+La suite include test di sicurezza per la validazione dei preset `.reg` importati.
 
----
+Il branch `main` segue .NET 10. `experiment/net11-modernization` è sperimentale e richiede l'SDK .NET 11 preview compatibile.
 
-## 🚀 Getting Started
-👉 [Download the latest release](https://github.com/MrNico98/WinHubX/releases/latest)
+## Sicurezza
 
----
+Usa esclusivamente sorgenti ufficiali e controlla gli hash pubblicati con la release. Segnala vulnerabilità responsabilmente senza allegare token, password, certificati o dati personali.
 
-## 💡 Why Choose WinHubX?
+WinHubX non include una firma Authenticode: le release possono essere firmate dal manutentore prima della pubblicazione.
 
-- 🎁 **Completely Free** — No ads, no paywalls  
-- 🔄 **Regular Updates** — Continuously improved by the community  
-- 🧰 **Comprehensive Toolkit** — Everything you need in one place  
-- 🖥️ **User-Friendly** — Intuitive interface for all skill levels  
+## Documentazione
 
----
+- [FAQ](Faq.md)
+- [Contribuire](CONTRIBUTING.md)
+- [Build e pubblicazione](docs/RELEASE.md)
+- [Roadmap di modernizzazione](docs/ROADMAP-MODERNIZZAZIONE.md)
 
-<div align="center"> <h3>Join our growing community of Windows enthusiasts!</h3> <img src="https://img.shields.io/github/forks/MrNico98/WinHubX?style=social" alt="Forks"> <img src="https://img.shields.io/github/watchers/MrNico98/WinHubX?style=social" alt="Watchers"> </div>
-Created with ❤️ by MrNico98 and contributors
-The original Windows optimization wizard
+## Licenza
+
+Distribuito secondo la [GNU GPL v3.0](LICENSE).
+
+## Crediti
+
+Progetto originario di MrNico98, mantenuto e modernizzato dalla community e dai contributori.

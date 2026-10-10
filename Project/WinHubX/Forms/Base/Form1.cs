@@ -1,30 +1,21 @@
-﻿using Microsoft.Win32;
+using Microsoft.Win32;
 using System.Diagnostics;
 using System.Diagnostics.Tracing;
-using System.Runtime.InteropServices;
 using System.Security.Policy;
 using System.Windows.Forms;
 using WinHubX.Forms.Base;
 using WinHubX.Forms.CreaISO;
 using WinHubX.Forms.ImpostazioniApp;
 using WinHubX.Impostazioni;
-using static System.Net.WebRequestMethods;
 
 namespace WinHubX
 {
     public partial class Form1 : Form
     {
-        [DllImport("user32.dll")]
-        private static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
-        private const int WM_NCLBUTTONDOWN = 0xA1;
-        private const int HT_CAPTION = 0x2;
-        [DllImport("user32.dll")]
-        private static extern bool ReleaseCapture();
-
-        private NotifyIcon notifyIcon;
-        private ContextMenuStrip trayIconContextMenu;
-        private static readonly HttpClient client = new HttpClient();
         private readonly List<Button> bottoni = new();
+        private bool _isDraggingWindow;
+        private Point _dragCursorOrigin;
+        private Point _dragWindowOrigin;
 
         private const int HTLEFT = 10;
         private const int HTRIGHT = 11;
@@ -35,7 +26,9 @@ namespace WinHubX
         private const int HTBOTTOMLEFT = 16;
         private const int HTBOTTOMRIGHT = 17;
         private const int WM_NCHITTEST = 0x84;
-        private Form previousForm = null;
+        private Form? previousForm;
+        private Form? activeForm;
+        private Button? updateAvailableButton;
 
         protected override void WndProc(ref Message m)
         {
@@ -136,18 +129,34 @@ namespace WinHubX
                 control is CheckBox ||
                 control is ComboBox ||
                 control is ListBox ||
-                control is CuoreUI.Controls.cuiSwitch ||
-                control is CuoreUI.Controls.cuiFileDropper ||
-                control is CuoreUI.Controls.cuiPictureBox ||
+                control is HartUI.Controls.cuiSwitch ||
+                control is HartUI.Controls.cuiFileDropper ||
+                control is HartUI.Controls.cuiPictureBox ||
                 control is RadioButton)
                 return;
             control.MouseDown += (s, e) =>
             {
                 if (e.Button == MouseButtons.Left)
                 {
-                    _ = ReleaseCapture();
-                    _ = SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+                    _isDraggingWindow = true;
+                    _dragCursorOrigin = Cursor.Position;
+                    _dragWindowOrigin = Location;
                 }
+            };
+            control.MouseMove += (s, e) =>
+            {
+                if (_isDraggingWindow && e.Button.HasFlag(MouseButtons.Left))
+                {
+                    Point cursorPosition = Cursor.Position;
+                    Location = new Point(
+                        _dragWindowOrigin.X + cursorPosition.X - _dragCursorOrigin.X,
+                        _dragWindowOrigin.Y + cursorPosition.Y - _dragCursorOrigin.Y);
+                }
+            };
+            control.MouseUp += (s, e) =>
+            {
+                if (e.Button == MouseButtons.Left)
+                    _isDraggingWindow = false;
             };
             foreach (Control child in control.Controls.Cast<Control>().ToList())
             {
@@ -158,7 +167,6 @@ namespace WinHubX
         private void swap_pnlNav(Button activeButton, bool darkTheme)
         {
             Color baseColor = darkTheme ? Color.FromArgb(64, 60, 59) : Color.FromArgb(245, 245, 245);
-            Color activeColor = darkTheme ? Color.FromArgb(80, 80, 80) : Color.FromArgb(220, 220, 220);
 
             foreach (var button in bottoni)
             {
@@ -176,30 +184,32 @@ namespace WinHubX
             lblPanelTitle.Text = title;
             pictureBox3.Visible = showBackArrow;
             pictureBoxlblalto.Image = button?.Image;
-            if (showBackArrow && PnlFormLoader.Controls.Count > 0)
-            {
-                previousForm = PnlFormLoader.Controls[0] as Form;
-            }
-            else
-            {
-                previousForm = null;
-            }
-            LoadFormIntoPanel(form);
+            previousForm = showBackArrow && PnlFormLoader.Controls.Count > 0
+                ? PnlFormLoader.Controls[0] as Form
+                : null;
+            LoadFormIntoPanel(form, showBackArrow ? previousForm : null);
             EnableDragging(this);
             ThemeManager.ApplyThemeToControl(form, dark);
         }
 
 
-        private void LoadFormIntoPanel(Form form)
+        private void LoadFormIntoPanel(Form form, Form? preservedForm = null)
         {
+            if (activeForm is not null && activeForm != preservedForm && !activeForm.IsDisposed)
+            {
+                PnlFormLoader.Controls.Remove(activeForm);
+                activeForm.Close();
+                activeForm.Dispose();
+            }
+
             PnlFormLoader.Controls.Clear();
 
             form.Dock = DockStyle.Fill;
             form.TopLevel = false;
-            form.TopMost = true;
             form.FormBorderStyle = FormBorderStyle.None;
 
             PnlFormLoader.Controls.Add(form);
+            activeForm = form;
             form.Show();
         }
 
@@ -219,63 +229,8 @@ namespace WinHubX
         private void btnmonitoraggio_Click(object sender, EventArgs e) =>
             LoadForm(new FormMonitoraggio(this), btnmonitoraggio, LanguageManager.GetTranslation("FormMain", "Monitoraggio"));
 
-        private void btnSettaggi_Click(object sender, EventArgs e)
-        {
-            using (RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\WinHubX"))
-            {
-                if (key != null)
-                {
-                    object value = key.GetValue("SettaggiRiavviati");
-                    if (value != null && value.ToString() == "1")
-                    {
-                        puntodiripristino();
-                        return;
-                    }
-                }
-            }
-            string titolo = LanguageManager.GetTranslation("Form1", "reboot_title");
-            string messaggio = LanguageManager.GetTranslation("Form1", "reboot_message");
-
-            var result = MessageBox.Show(
-                messaggio,
-                titolo,
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question
-            );
-
-            if (result == DialogResult.Yes)
-            {
-                _ = System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
-                {
-                    FileName = "cmd.exe",
-                    Arguments = "/c \"sc config UCPD start= disabled && schtasks /change /Enable /TN \"\\Microsoft\\Windows\\AppxDeploymentClient\\UCPD velocity\" && shutdown /r /t 0\"",
-                    CreateNoWindow = true,
-                    UseShellExecute = false,
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true
-                });
-
-                using (RegistryKey regKey = Registry.CurrentUser.CreateSubKey("Software\\WinHubX"))
-                {
-                    regKey.SetValue("SettaggiRiavviati", 1);
-                }
-                Application.Exit();
-            }
-            else
-            {
-                using (RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\WinHubX"))
-                {
-                    if (key != null)
-                    {
-                        object value = key.GetValue("SettaggiRiavviati");
-                        if (value != null && value.ToString() == "0")
-                        {
-                            _ = MessageBox.Show("I need registry access to access this menu");
-                        }
-                    }
-                }
-            }
-        }
+        private void btnSettaggi_Click(object sender, EventArgs e) =>
+            LoadForm(new FormSettaggi(this), btnSettaggi, LanguageManager.GetTranslation("FormMain", "Tweaks"));
 
         private void puntodiripristino()
         {
@@ -294,10 +249,13 @@ namespace WinHubX
                 try
                 {
                     string script = @"
+$ErrorActionPreference = 'Stop'
+
 try {
     Enable-ComputerRestore -Drive ""$env:SystemDrive""
 } catch {
-    Write-Host ""Errore nell'abilitazione del Ripristino configurazione di sistema: $_""
+    Write-Error ""Errore nell'abilitazione del Ripristino configurazione di sistema: $_""
+    exit 1
 }
 
 $exists = Get-ItemProperty -path ""HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SystemRestore"" -Name ""SystemRestorePointCreationFrequency"" -ErrorAction SilentlyContinue
@@ -308,45 +266,77 @@ if($null -eq $exists) {
 try {
     Import-Module Microsoft.PowerShell.Management -ErrorAction Stop
 } catch {
-    return
+    Write-Error ""Errore nel caricamento del modulo di ripristino: $_""
+    exit 1
 }
 
 try {
     $existingRestorePoints = Get-ComputerRestorePoint | Where-Object { $_.CreationTime.Date -eq (Get-Date).Date }
 } catch {
-    return
+    Write-Error ""Errore nella verifica dei punti di ripristino: $_""
+    exit 1
 }
 if ($existingRestorePoints.Count -eq 0) {
     Checkpoint-Computer -Description ""Punto di ripristino creato da WinHubX"" -RestorePointType MODIFY_SETTINGS
 }
 ";
 
-                    string tempScriptPath = Path.Combine(Path.GetTempPath(), "CreateRestorePoint.ps1");
-                    System.IO.File.WriteAllText(tempScriptPath, script);
-
-                    ProcessStartInfo psi = new ProcessStartInfo()
+                    string tempScriptPath = Path.Join(Path.GetTempPath(), $"WinHubX-RestorePoint-{Guid.NewGuid():N}.ps1");
+                    try
                     {
-                        FileName = "powershell.exe",
-                        Arguments = $"-ExecutionPolicy Bypass -NoProfile -File \"{tempScriptPath}\"",
-                        UseShellExecute = false,
-                        Verb = "runas"
-                    };
+                        System.IO.File.WriteAllText(tempScriptPath, script);
 
-                    Process.Start(psi)?.WaitForExit();
+                        ProcessStartInfo psi = new ProcessStartInfo
+                        {
+                            FileName = Path.Join(Environment.SystemDirectory, "WindowsPowerShell", "v1.0", "powershell.exe"),
+                            UseShellExecute = true,
+                            Verb = "runas",
+                            WindowStyle = ProcessWindowStyle.Hidden
+                        };
+                        psi.ArgumentList.Add("-NoProfile");
+                        psi.ArgumentList.Add("-NoLogo");
+                        psi.ArgumentList.Add("-NonInteractive");
+                        psi.ArgumentList.Add("-File");
+                        psi.ArgumentList.Add(tempScriptPath);
+
+                        using Process restorePointProcess = Process.Start(psi)
+                            ?? throw new InvalidOperationException("Impossibile avviare la creazione del punto di ripristino.");
+                        restorePointProcess.WaitForExit();
+                        if (restorePointProcess.ExitCode != 0)
+                            throw new InvalidOperationException($"Creazione punto di ripristino terminata con codice {restorePointProcess.ExitCode}.");
+                    }
+                    finally
+                    {
+                        try { File.Delete(tempScriptPath); }
+                        catch (IOException ex) { Debug.WriteLine($"Impossibile eliminare lo script temporaneo del ripristino: {ex}"); }
+                        catch (UnauthorizedAccessException ex) { Debug.WriteLine($"Accesso negato durante la rimozione dello script temporaneo: {ex}"); }
+                    }
                     string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                    string regBackupPath = Path.Combine(desktopPath, $"BackupRegistroWinHubX_{DateTime.Now:yyyyMMdd_HHmmss}.reg");
+                    string regBackupPath = Path.Join(desktopPath, $"BackupRegistroWinHubX_{DateTime.Now:yyyyMMdd_HHmmss}.reg");
 
                     ProcessStartInfo regExport = new ProcessStartInfo()
                     {
-                        FileName = "reg.exe",
-                        Arguments = $"export HKLM \"{regBackupPath}\" /y",
+                        FileName = Path.Join(Environment.SystemDirectory, "reg.exe"),
                         UseShellExecute = true,
                         Verb = "runas"
                     };
+                    regExport.ArgumentList.Add("export");
+                    regExport.ArgumentList.Add("HKLM");
+                    regExport.ArgumentList.Add(regBackupPath);
+                    regExport.ArgumentList.Add("/y");
 
-                    Process.Start(regExport)?.WaitForExit();
+                    using Process exportProcess = Process.Start(regExport)
+                        ?? throw new InvalidOperationException("Impossibile avviare l'esportazione del registro.");
+                    exportProcess.WaitForExit();
+                    if (exportProcess.ExitCode != 0)
+                        throw new InvalidOperationException($"Esportazione del registro terminata con codice {exportProcess.ExitCode}.");
                 }
-                catch (Exception ex)
+                catch (Exception ex) when (ex is IOException
+                    or UnauthorizedAccessException
+                    or System.Security.SecurityException
+                    or System.ComponentModel.Win32Exception
+                    or InvalidOperationException
+                    or OperationCanceledException)
                 {
                     _ = MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -380,9 +370,13 @@ if ($existingRestorePoints.Count -eq 0) {
             {
                 try
                 {
-                    formMonitoraggio.CleanupResources();
+                    await formMonitoraggio.CleanupResourcesAsync();
                 }
-                catch (Exception ex)
+                catch (Exception ex) when (ex is IOException
+                    or UnauthorizedAccessException
+                    or System.Security.SecurityException
+                    or InvalidOperationException
+                    or OperationCanceledException)
                 {
                     MessageBox.Show($"Errore nella pulizia di FormMonitoraggio: {ex.Message}");
                 }
@@ -393,12 +387,18 @@ if ($existingRestorePoints.Count -eq 0) {
             {
                 try
                 {
-                    await RunPowerShellAsync($"Dismount-DiskImage -ImagePath '{AppState.IsoPath}'");
+                    await RunPowerShellAsync(
+                        $"Dismount-DiskImage -ImagePath '{EscapePowerShellLiteral(AppState.IsoPath)}'");
                     AppState.IsoMontata = false;
                     AppState.IsoDriveLetter = null;
                     AppState.IsoPath = null;
                 }
-                catch (Exception ex)
+                catch (Exception ex) when (ex is IOException
+                    or UnauthorizedAccessException
+                    or System.Security.SecurityException
+                    or System.ComponentModel.Win32Exception
+                    or InvalidOperationException
+                    or OperationCanceledException)
                 {
                     MessageBox.Show($"Errore nello smontare ISO: {ex.Message}");
                 }
@@ -415,18 +415,23 @@ if ($existingRestorePoints.Count -eq 0) {
             {
                 StartInfo = new ProcessStartInfo
                 {
-                    FileName = "powershell.exe",
-                    Arguments = $"-Command \"{command}\"",
+                    FileName = Path.Join(Environment.SystemDirectory, "WindowsPowerShell", "v1.0", "powershell.exe"),
                     UseShellExecute = false,
                     CreateNoWindow = true,
                     RedirectStandardOutput = true,
                     RedirectStandardError = true
                 }
             };
+            process.StartInfo.ArgumentList.Add("-NoProfile");
+            process.StartInfo.ArgumentList.Add("-NonInteractive");
+            process.StartInfo.ArgumentList.Add("-Command");
+            process.StartInfo.ArgumentList.Add(command);
             process.Start();
             await process.WaitForExitAsync();
             return process.ExitCode;
         }
+
+        private static string EscapePowerShellLiteral(string value) => value.Replace("'", "''");
         private void btnMnmz_Click(object sender, EventArgs e)
         {
             WindowState = FormWindowState.Minimized;
@@ -443,8 +448,8 @@ if ($existingRestorePoints.Count -eq 0) {
 
             if (AppConfig.CheckUpdatesOnStartup)
             {
-                var impostazioni = new FormImpostazioniApp();
-                bool updateAvailable = await impostazioni.VerificaAggiornamentiAutomaticiAsync();
+                using var impostazioni = new FormImpostazioniApp();
+                await impostazioni.VerificaAggiornamentiAutomaticiAsync();
                 if (impostazioni.UpdateDetectedAtStartup)
                 {
                     MostraNotificaAggiornamento();
@@ -503,19 +508,42 @@ if ($existingRestorePoints.Count -eq 0) {
 
         private void cuiPictureBox1_Click(object sender, EventArgs e)
         {
-            FormImpostazioniApp formImpostazioniApp = new FormImpostazioniApp();
-            formImpostazioniApp.Show();
+            ShowSettingsWindow();
+        }
+
+        private void ShowSettingsWindow()
+        {
+            var settings = new FormImpostazioniApp();
+            settings.FormClosed += (_, _) => settings.Dispose();
+            settings.Show(this);
         }
 
 
         private void MostraNotificaAggiornamento()
         {
-            MessageBox.Show(
-                LanguageManager.GetTranslation("Form1", "aggiornamento_disponibile_msg"),
-                LanguageManager.GetTranslation("Form1", "aggiornamento_disponibile_title"),
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information
-            );
+            if (updateAvailableButton is not null || panel3.IsDisposed)
+                return;
+
+            updateAvailableButton = new Button
+            {
+                Name = "updateAvailableButton",
+                Text = LanguageManager.GetTranslation("Form1", "update_available_button"),
+                AccessibleName = LanguageManager.GetTranslation("Form1", "update_available_button"),
+                AccessibleDescription = LanguageManager.GetTranslation("Form1", "update_available_description"),
+                AutoSize = false,
+                Size = new Size(184, 32),
+                Location = new Point(Math.Max(8, picMinimizzaApp.Left - 196), Math.Max(4, (panel3.ClientSize.Height - 32) / 2)),
+                Anchor = AnchorStyles.Top | AnchorStyles.Right,
+                BackColor = Color.FromArgb(255, 190, 70),
+                ForeColor = Color.FromArgb(35, 35, 35),
+                FlatStyle = FlatStyle.Flat,
+                Cursor = Cursors.Hand,
+                UseVisualStyleBackColor = false
+            };
+            updateAvailableButton.FlatAppearance.BorderSize = 0;
+            updateAvailableButton.Click += (_, _) => ShowSettingsWindow();
+            panel3.Controls.Add(updateAvailableButton);
+            updateAvailableButton.BringToFront();
         }
     }
 }

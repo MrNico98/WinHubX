@@ -1,1 +1,17 @@
 
+
+# IDE e output di compilazione
+.vs/
+**/bin/
+**/obj/
+publish/
+artifacts/
+# Local Visual Studio temporary signing certificate (never commit private keys)
+Project/WinHubX/WinHubX_TemporaryKey.pfx
+*.log
+*.diagsession
+*.nettrace
+*.gcdump
+*.etlx
+*.speedscope.json
+*-counters.csv

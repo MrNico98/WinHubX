@@ -1,0 +1,51 @@
+name: Segnalazione bug
+description: Segnala un malfunzionamento riproducibile di WinHubX.
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Prima cerca issue simili. Non inserire password, token, chiavi, percorsi personali o dati identificativi.
+  - type: textarea
+    id: steps
+    attributes:
+      label: Passaggi per riprodurre
+      description: Elenca passaggi brevi e ripetibili.
+      placeholder: |
+        1. Apri...
+        2. Seleziona...
+        3. Osserva...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Risultato atteso
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Risultato effettivo ed eventuale errore
+      description: Rimuovi dati personali e segreti da log o screenshot.
+    validations:
+      required: true
+  - type: dropdown
+    id: windows
+    attributes:
+      label: Versione Windows
+      options:
+        - Windows 11
+        - Windows 10
+        - Windows Server
+        - Altro / non so
+    validations:
+      required: true
+  - type: input
+    id: app-version
+    attributes:
+      label: Versione o commit WinHubX
+      placeholder: Release, versione o hash commit
+    validations:
+      required: true

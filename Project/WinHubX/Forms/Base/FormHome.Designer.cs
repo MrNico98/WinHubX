@@ -1,25 +1,7 @@
-﻿namespace WinHubX
+namespace WinHubX
 {
     partial class FormHome
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
-
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -29,9 +11,9 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormHome));
-            cuiProgressTrackerHorizontal1 = new CuoreUI.Controls.cuiProgressTrackerHorizontal();
-            cuiSpinner1 = new CuoreUI.Controls.cuiSpinner();
-            cuiSeparator1 = new CuoreUI.Controls.cuiSeparator();
+            cuiProgressTrackerHorizontal1 = new HartUI.Controls.cuiProgressTrackerHorizontal();
+            cuiSpinner1 = new HartUI.Controls.cuiSpinner();
+            cuiSeparator1 = new HartUI.Controls.cuiSeparator();
             labelverifica = new Label();
             label1 = new Label();
             labelcpu = new Label();
@@ -45,7 +27,7 @@
             labelwindows = new Label();
             labeloffice = new Label();
             label7 = new Label();
-            btnVerificaVerdi = new CuoreUI.Controls.cuiButton();
+            btnVerificaVerdi = new HartUI.Controls.cuiButton();
             label5 = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
@@ -60,7 +42,6 @@
             cuiProgressTrackerHorizontal1.LineThickness = 13;
             cuiProgressTrackerHorizontal1.Name = "cuiProgressTrackerHorizontal1";
             cuiProgressTrackerHorizontal1.Rounding = 10;
-            cuiProgressTrackerHorizontal1.ShowSymbols = true;
             cuiProgressTrackerHorizontal1.TaskForeColor = Color.FromArgb(128, 128, 128);
             cuiProgressTrackerHorizontal1.Tasks = new string[]
     {
@@ -196,9 +177,7 @@
             btnVerificaVerdi.HoverImageTint = Color.White;
             btnVerificaVerdi.HoverOutline = Color.FromArgb(46, 125, 50);
             btnVerificaVerdi.Image = Properties.Resources.pngclick;
-            btnVerificaVerdi.ImageAutoCenter = true;
             btnVerificaVerdi.ImageExpand = new Point(0, 0);
-            btnVerificaVerdi.ImageOffset = new Point(0, 0);
             btnVerificaVerdi.Name = "btnVerificaVerdi";
             btnVerificaVerdi.NormalBackground = Color.FromArgb(37, 38, 39);
             btnVerificaVerdi.NormalForeColor = Color.White;
@@ -211,7 +190,6 @@
             btnVerificaVerdi.PressedOutline = Color.FromArgb(46, 125, 50);
             btnVerificaVerdi.Rounding = new Padding(8);
             btnVerificaVerdi.TextAlignment = StringAlignment.Center;
-            btnVerificaVerdi.TextOffset = new Point(0, 0);
             btnVerificaVerdi.Click += btnVerifica_Click;
             // 
             // label5
@@ -251,11 +229,10 @@
         }
 
         #endregion
-        private CuoreUI.Controls.cuiProgressTrackerHorizontal cuiProgressTrackerHorizontal1;
-        private CuoreUI.Controls.cuiSpinner cuiSpinner1;
-        private CuoreUI.Controls.cuiSeparator cuiSeparator1;
+        private HartUI.Controls.cuiProgressTrackerHorizontal cuiProgressTrackerHorizontal1;
+        private HartUI.Controls.cuiSpinner cuiSpinner1;
+        private HartUI.Controls.cuiSeparator cuiSeparator1;
         private Label labelverifica;
-        private Button button1;
         private Label label1;
         private Label labelcpu;
         private PictureBox pictureBox1;
@@ -268,7 +245,7 @@
         private Label labelwindows;
         private Label labeloffice;
         private Label label7;
-        private CuoreUI.Controls.cuiButton btnVerificaVerdi;
+        private HartUI.Controls.cuiButton btnVerificaVerdi;
         private Label label5;
     }
 }

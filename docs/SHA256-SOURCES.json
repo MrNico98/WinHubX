@@ -1,0 +1,663 @@
+{
+  "algorithm": "SHA-256",
+  "commit": "4f845e72d8d8bd2083a1530268e15d964a50b1f9",
+  "generatedAtUtc": "2026-10-08T00:36:18.7253134Z",
+  "files": [
+    {
+      "path": ".github/dependabot.yml",
+      "sha256": "001befc00558e6e61983b1401674774d6f08a40cf56f574d2a1f708d21121e75"
+    },
+    {
+      "path": ".github/workflows/dotnet.yml",
+      "sha256": "374b83df707740dec9d31ce26c8ed19629270cfda203e90e5367eae5fa4edc67"
+    },
+    {
+      "path": ".github/workflows/release.yml",
+      "sha256": "73ddf939e343a497f986af9d4a27933fa13cc268dd2054bdc8e0082844dc9f36"
+    },
+    {
+      "path": "Project/WinHubX/App.config",
+      "sha256": "232db5d00ba83c0227a81f5918b09a5c417d511d0ad2d6397c53fbadcaaf2a0c"
+    },
+    {
+      "path": "Project/WinHubX/DialogBlock/Form_DialogBlock.Designer.cs",
+      "sha256": "d3387a35757bbb6e83a9fcfa9ade74e2c7df31b8cc88fd3899cb9787fc495f9c"
+    },
+    {
+      "path": "Project/WinHubX/DialogBlock/Form_DialogBlock.cs",
+      "sha256": "917876ab17b2355dac9c66c95676cb90d633620d56f72dda202053edc7bbe635"
+    },
+    {
+      "path": "Project/WinHubX/DialogBlock/Form_DialogBlock.en.resx",
+      "sha256": "4bacb92838cc2dcad63154689f064b65229a7c9f86287957af3e5a43655c3397"
+    },
+    {
+      "path": "Project/WinHubX/DialogBlock/Form_DialogBlock.resx",
+      "sha256": "4fcd4908ddb7f34aa1f436730ab3513a278aad33b9e651182ddccd62c709f260"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Base/Form1.Designer.cs",
+      "sha256": "2e05983285d5dfcc656ec77f5b37e50e2eb2d70896fda3b4256fca16dae48f3b"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Base/Form1.cs",
+      "sha256": "ae6b44e85d246217b164874f95c086c4c5cb60db7d807f27769d389b076c72dc"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Base/Form1.en.resx",
+      "sha256": "d1061e2755e4cfefd8df4fbe03e0bdd0a699befe5d0e485a29a98d89e4df2bfc"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Base/Form1.resx",
+      "sha256": "1bf38a7c3899fd06168082119aed73d726f86a63737ae2e10dcb9f980ccbc37f"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Base/FormDebloat.Designer.cs",
+      "sha256": "99be96c442bcd426411fb5eaa58dd002b7f1698d6ef156ddfbe302ffd249633c"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Base/FormDebloat.cs",
+      "sha256": "1b4587675b5c1838dcb86a96fad237ff6bc3255cb0145b69e8145d8a43e656a0"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Base/FormDebloat.en.resx",
+      "sha256": "27e3b818f7a714693da4b362ac67d43b135a753fffcf5d25fe4d24b67b17e3f1"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Base/FormDebloat.resx",
+      "sha256": "46d05532b3b297b3ed474da9ec6c26465013aba6dedcdc7c9f274a5851153ba1"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Base/FormHome.Designer.cs",
+      "sha256": "a5eb240dae4c15157a8438b439ec174b56df4ea381ed925eee5b08e3164717e8"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Base/FormHome.cs",
+      "sha256": "74c4c2b4b85afaaff3e323fadf7304582d8d0641fb7b922973139064f332420b"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Base/FormHome.en.resx",
+      "sha256": "ccbd209cb2f9e30e937a05ed41bead621752ab7471b027cfa651fcf312eae658"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Base/FormHome.resx",
+      "sha256": "5bcca9cc8ac64d5ea4d2938e575544818dfa80287d92061a29a293861b1631fb"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Base/FormMonitoraggio.Designer.cs",
+      "sha256": "e701c7f97356515b3c14cf4835378c41ddaded95d3cf63569c9fa057a6fa2e2f"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Base/FormMonitoraggio.cs",
+      "sha256": "5ffc014d5349ad08703c5ba8f7fb2009392785438cc60b98c80df471cf2c4a0e"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Base/FormMonitoraggio.en.resx",
+      "sha256": "48b1147bc3d7b678b5403a6c5a286a05c574c4196f05fa75e3dc33b4599824d9"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Base/FormMonitoraggio.resx",
+      "sha256": "ef308bc99a3f078f1330e1417bce0977438365fdaa9b52a6fab72b439fe1a172"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Base/FormOffice.Designer.cs",
+      "sha256": "6971091a7ece4717636f7d4961bca51925693f08b100ccded7e79ad0c4327171"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Base/FormOffice.cs",
+      "sha256": "c402c73ee903a1c6df30472688bf83d4a00d476aab245e2f2c6f7b54b9867626"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Base/FormOffice.en.resx",
+      "sha256": "8ef575071361699bf3c2eb438f2e013ca206e592373ce899e59a9698a3754cbe"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Base/FormOffice.resx",
+      "sha256": "7cd171d30346877b480c1b80d75eff33c8a5da3247aecedf45bce9eacc390b97"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Base/FormSettaggi.Designer.cs",
+      "sha256": "3aafd50bb977484618c328e035050239de73d2741f5f242316ea3271d68fc315"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Base/FormSettaggi.cs",
+      "sha256": "11ada2abcbdad13763ba46a871b4eae5c4d02acd05bc19ba9fcdef6c95186427"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Base/FormSettaggi.en.resx",
+      "sha256": "657b3a078ae55cf1a7c884feb7d6ae1f5005dc5d5a9faa5e90cbcfbc6419468b"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Base/FormSettaggi.resx",
+      "sha256": "35b89df1377b9efee338cd94fed500ed123994a4769eb8e4076702f70fd61053"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Base/FormWin.Designer.cs",
+      "sha256": "4484e6358e37d93e2bf32ed605f33766c03adfece67108946e4b264fd4fe18f1"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Base/FormWin.cs",
+      "sha256": "f75b4085fcabde2587df381d77ad626951932f89feedc374f0ae08c9abdb0e00"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Base/FormWin.en.resx",
+      "sha256": "74e776d5df8014b4f6b498759efd31c4203e8e766cda11f33e985a57e286a3c0"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Base/FormWin.resx",
+      "sha256": "2b00389e6972d13eff4176c920fb1019c4e5968a36e334721141ca97125f7864"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Base/ProgressBar.Designer.cs",
+      "sha256": "70bd980d0bc4ea73bcc05ecf987522b5c4c88b49e9e39651784558da8e607990"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Base/ProgressBar.cs",
+      "sha256": "afd747010ffbae9646d4b22dbdeaa76fef4d084a9fe9944fb0c876c23f1f9eb5"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Base/ProgressBar.en.resx",
+      "sha256": "4363cd7d5b8671c72442ce1a1bfc10d64ebd24b2d718b54bd4fcd025e4967298"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Base/ProgressBar.resx",
+      "sha256": "e8c63ff0545240c05096eaa4056018c3d3ac7292aae761704f5a02b379ce7635"
+    },
+    {
+      "path": "Project/WinHubX/Forms/CreaISO/AppState.cs",
+      "sha256": "bec365b8a6ba076ed76c056a81b7ffe52dd6d912276f8e0c3bd4b032e5b63be4"
+    },
+    {
+      "path": "Project/WinHubX/Forms/CreaISO/FormCreaISO.Designer.cs",
+      "sha256": "90064553f9bf38f026f4e61daa55713857fe6bcf03db392eaff57022c05bcfe8"
+    },
+    {
+      "path": "Project/WinHubX/Forms/CreaISO/FormCreaISO.cs",
+      "sha256": "dbb12600d2ca7e5143365213794c44fce1a7b31102454ac6bb46ee8c9f24b846"
+    },
+    {
+      "path": "Project/WinHubX/Forms/CreaISO/FormCreaISO.en.resx",
+      "sha256": "cd7ec76ec7a9b92eb3aba9997ca88ebb07b436b21f62130d3345b1f002b95016"
+    },
+    {
+      "path": "Project/WinHubX/Forms/CreaISO/FormCreaISO.resx",
+      "sha256": "f31116d74886da0cdc8edd1424861c59036aba6e3b281a43fdbbddbec0e6b5ad"
+    },
+    {
+      "path": "Project/WinHubX/Forms/CreaISO/FormCreazioneISO.Designer.cs",
+      "sha256": "de1f94271a37a2389cf00426c006058d5322c35ae4df69c5dba93b2d2d9e16ab"
+    },
+    {
+      "path": "Project/WinHubX/Forms/CreaISO/FormCreazioneISO.cs",
+      "sha256": "bad2c7dcadcfdb939ad092e01101094a6f52b79ec8cf12086faf8351b4a8dec8"
+    },
+    {
+      "path": "Project/WinHubX/Forms/CreaISO/FormCreazioneISO.en.resx",
+      "sha256": "c650c3e1ad555ac4b7e79726de9388c48822f028df7df345a3ab21b17fad827e"
+    },
+    {
+      "path": "Project/WinHubX/Forms/CreaISO/FormCreazioneISO.resx",
+      "sha256": "efc8c44ba9b1218f0fd9bbc370128bed1472a904491d7f65e04996e9249a484a"
+    },
+    {
+      "path": "Project/WinHubX/Forms/DebloatAvanzato/AppItemControl.Designer.cs",
+      "sha256": "21eab9819d9169822c315749a076b6a9e9548d08c9a96a5530cf48dfc9b5250d"
+    },
+    {
+      "path": "Project/WinHubX/Forms/DebloatAvanzato/AppItemControl.cs",
+      "sha256": "86854c707e9e3f5ee1cd9a777fbf636e2867e4687b5bd24b6061f55c1e067447"
+    },
+    {
+      "path": "Project/WinHubX/Forms/DebloatAvanzato/AppItemControl.resx",
+      "sha256": "a122f3e718c7a26b3b21f292ae61305dc66838bb76b93ed6a7669b2ab4ca3432"
+    },
+    {
+      "path": "Project/WinHubX/Forms/DebloatAvanzato/FormServizi.Designer.cs",
+      "sha256": "2e908708a583f57f154f611d5a777fb3205b306e1e8a5f83ac80f5d3d9261aa0"
+    },
+    {
+      "path": "Project/WinHubX/Forms/DebloatAvanzato/FormServizi.cs",
+      "sha256": "b85de37ffb0f4066c00d319f19cff15843f42497bfeb35ee48a4722de7ec61ed"
+    },
+    {
+      "path": "Project/WinHubX/Forms/DebloatAvanzato/FormServizi.en.resx",
+      "sha256": "7f6c6e9e39bab1af708c7f6801827d3e0396c3860495778565b8b03a9712e1d2"
+    },
+    {
+      "path": "Project/WinHubX/Forms/DebloatAvanzato/FormServizi.resx",
+      "sha256": "6e77d32eca90681b7f1c3cfb8fa7a624c61478308bd2b74e5c99e50d3b1a75e8"
+    },
+    {
+      "path": "Project/WinHubX/Forms/DriverRST/FormDriverRST.Designer.cs",
+      "sha256": "97fb721e80711173d2e256de0acb7926ffb350846366f5f71f19c6469d7d3ab1"
+    },
+    {
+      "path": "Project/WinHubX/Forms/DriverRST/FormDriverRST.cs",
+      "sha256": "c1fa6f5857ab63ecdd50c9f5f4308326cad0277c324e9250425ec1fbe9ade8be"
+    },
+    {
+      "path": "Project/WinHubX/Forms/DriverRST/FormDriverRST.en.resx",
+      "sha256": "31d8fa94f56db2807b3ce356d41f8041c903102e3e6419d559891ada37e35028"
+    },
+    {
+      "path": "Project/WinHubX/Forms/DriverRST/FormDriverRST.resx",
+      "sha256": "b69c7d94fa34aca3b0a57550a04c6b9701253fdfab2c09d284ca321c60fd66c9"
+    },
+    {
+      "path": "Project/WinHubX/Forms/ImpostazioniApp/FormImpostazioniApp.Designer.cs",
+      "sha256": "f4f0065a287e4ec9922cc9c500b80bb7ac87cd334ba656e7bfac0dd124045b18"
+    },
+    {
+      "path": "Project/WinHubX/Forms/ImpostazioniApp/FormImpostazioniApp.cs",
+      "sha256": "ee4551eec84146a81fd4eed8553ea0b0addf3693a98dca44e9e0a0212f8d8cd2"
+    },
+    {
+      "path": "Project/WinHubX/Forms/ImpostazioniApp/FormImpostazioniApp.en.resx",
+      "sha256": "c0cac630c005717c65bd6988b1a6d5816b82d04c28cd763c8e63e8f60c55c0fe"
+    },
+    {
+      "path": "Project/WinHubX/Forms/ImpostazioniApp/FormImpostazioniApp.resx",
+      "sha256": "73a76bd2b3d717fb1a972a6b2ae2d2e4cb994e869b6c97cf159fb7791dfdea30"
+    },
+    {
+      "path": "Project/WinHubX/Forms/InstallaComponenti/FormInstallaComponenti.Designer.cs",
+      "sha256": "53d5ab9548bce2dd967a70bec633ac7f188bfe5129a9befdd06b726766819b7d"
+    },
+    {
+      "path": "Project/WinHubX/Forms/InstallaComponenti/FormInstallaComponenti.cs",
+      "sha256": "8f515f6e6d6481e5ab2d5ba1b10fef129ae8099ef87b3743bb883869a85a5fb5"
+    },
+    {
+      "path": "Project/WinHubX/Forms/InstallaComponenti/FormInstallaComponenti.en.resx",
+      "sha256": "6824fb48bfe916372f46c40b0bcc78a16d2598032009bf7a537dff44c5dda786"
+    },
+    {
+      "path": "Project/WinHubX/Forms/InstallaComponenti/FormInstallaComponenti.resx",
+      "sha256": "4c2b964db3e8e2dba4b28b29f2a6d291de5ed542a7ba9960e0fb8ddedcc4621f"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Personalizzazione office/AppItem.Designer.cs",
+      "sha256": "65da69b6d205b769bdbc54f4c47484ec3ea577bd91ba3054f314b4c2afa32846"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Personalizzazione office/AppItem.cs",
+      "sha256": "eea8307855114a47ad3bb1ddaad80b236d398f0c9044e22d930604dba04e0da8"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Personalizzazione office/AppItem.resx",
+      "sha256": "a122f3e718c7a26b3b21f292ae61305dc66838bb76b93ed6a7669b2ab4ca3432"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Personalizzazione office/FormAggiungiRimuoviAppOffice.Designer.cs",
+      "sha256": "5b1dba9b1aafd62f7e3f826ba25c7058355e726bb85683e241fd2dafc7f0c4e1"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Personalizzazione office/FormAggiungiRimuoviAppOffice.cs",
+      "sha256": "cefde26b3354b4a8455f5f3350ad1717b7a1c351e884dd604b05f7cbbb3e5b58"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Personalizzazione office/FormAggiungiRimuoviAppOffice.en.resx",
+      "sha256": "1c3e0f69053ec379873054f0fd7fc4cb42368b92c392cb3b33ac608db2b5f133"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Personalizzazione office/FormAggiungiRimuoviAppOffice.resx",
+      "sha256": "bc403cfef4db7afe506024bc5e80756a13ee5756482265213e32931181783f39"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Personalizzazione office/PersonalizzazioneOffice.Designer.cs",
+      "sha256": "f476c1b9fddc09c2856e9b8104926c2cea160c6e250b89a87395bbafcc5bc75e"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Personalizzazione office/PersonalizzazioneOffice.cs",
+      "sha256": "688ed88a76b41bd4e5900b3136396d11782269faf94546e8cc567237ca734dbb"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Personalizzazione office/PersonalizzazioneOffice.en.resx",
+      "sha256": "4acb622fd0884045f771f92b30a17849ca5cc4cee54df6b24f57741709704c79"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Personalizzazione office/PersonalizzazioneOffice.resx",
+      "sha256": "50c336802e0f27a9453b80f62a279347e7d26f2ba8799b1b5d177e7907e9eb71"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Settaggi/FormDefender.Designer.cs",
+      "sha256": "3607776eb21c4053f26e5b5bbcdeb04559ba1621a4ee0ceb93df05a8b8f3a761"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Settaggi/FormDefender.cs",
+      "sha256": "f9000f2bb56421d03873e1eb6f66df271d5b0c270044e95f8821f9f2d25152d3"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Settaggi/FormDefender.en.resx",
+      "sha256": "a490e4cd953df3f668a4f6d9d55c9a7de084a94b99ac13c00eb7187f833d5ca9"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Settaggi/FormDefender.resx",
+      "sha256": "bf48d1cec89b2b45b23735cc7503b3e4f4d417303f916e2731a341b075b48b2a"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Settaggi/FormExplorer.Designer.cs",
+      "sha256": "cc7f19bd55a61f829df6310181de2e298a172c829ca34a8ff225b44860179c96"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Settaggi/FormExplorer.cs",
+      "sha256": "f2368e9e3fda9b051bfc6c1d4cde7bb92652aee3e57cc48e32d4b509f3323d22"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Settaggi/FormExplorer.en.resx",
+      "sha256": "a6f0f2206cb96ea4892141c73930953287b9ece6521a8dd7e57b402cdcd534b9"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Settaggi/FormExplorer.resx",
+      "sha256": "ef10212bf433b64f0e3e81e7bce49bb52eff6d89b26f8b47f0e0fa3a38855ddf"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Settaggi/FormPersonalizzazione.Designer.cs",
+      "sha256": "e972ad426ce4e6bcada6e9296abb3c01f73514fd9cbc29bde3cc926adb9498d2"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Settaggi/FormPersonalizzazione.cs",
+      "sha256": "d95f736dfc0b753b8f6f2d93837d8b15bb1db9c6d68e705ad8143ce7a99ff2ae"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Settaggi/FormPersonalizzazione.en.resx",
+      "sha256": "4eae88dc84313a5e266e041e7400c56af61449e448372d08379f30401aa2a077"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Settaggi/FormPersonalizzazione.resx",
+      "sha256": "051c06d9feed08638e04bb86763eb3e3de38f118c3bc2f9fd1aaf2ce9b3bd382"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Settaggi/FormPrivacy.Designer.cs",
+      "sha256": "37b95f5bcc33a96cef2a6b1c89876164364b4838814e6cd5e4f37ae0feb43778"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Settaggi/FormPrivacy.cs",
+      "sha256": "b7c9a8d17dd8ea33067331a1752f27501aa8cf10ed41762f49c4d74ecd152c2f"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Settaggi/FormPrivacy.en.resx",
+      "sha256": "85d5f079adc214c42d5983a047b2c3398cce018228a92e37351d9d66f303c27b"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Settaggi/FormPrivacy.resx",
+      "sha256": "70a29dc1c3cf360e59b05c9c947b6cb85c8ba8a9e900ddf77629244665102bf2"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Settaggi/FormRipristinoSO.Designer.cs",
+      "sha256": "cb78ce9f65660e5746cc74053545e1d1046277747843ca76b701eaa96a38889b"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Settaggi/FormRipristinoSO.cs",
+      "sha256": "c34bca3f5e751479a09b0f896fb6052858022339cc21dafce9762629ad7962dc"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Settaggi/FormRipristinoSO.en.resx",
+      "sha256": "e8fc6b492c85ebadb12984a9b813cc59e987894af195dbd910d6c4e59d9ff929"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Settaggi/FormRipristinoSO.resx",
+      "sha256": "1ee4816601016c998e439a90d698695260769a2e5166d508ac519d112b6e7dd3"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Settaggi/FormUpdate.Designer.cs",
+      "sha256": "d22c70a8605cb8eed1ccc867d9c1303719b3bafb23c44456630f14cc40ec78dd"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Settaggi/FormUpdate.cs",
+      "sha256": "2d389ed678a9fd7ab9f24738c873979736fdf477d874d3a528503a9d05562b7b"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Settaggi/FormUpdate.en.resx",
+      "sha256": "b5fac64b6db4653f35bb8d1b3cfb031eb2b40eb9e9d5307026bc5538460eef25"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Settaggi/FormUpdate.resx",
+      "sha256": "bb0c39355fcb3480ef03f088887bd4684e7e6f2272f5bc2488c873606572c673"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Settaggi/FormUtility.Designer.cs",
+      "sha256": "6d4630e44956e37e37eeb94f6be475e0dc693c17cf2f1c8666ca0199d0e8eb3d"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Settaggi/FormUtility.cs",
+      "sha256": "2e701e672b9eacd3ea056e34975c9f824bb36b5d1c7c69e98d6ca8a1e68125c2"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Settaggi/FormUtility.en.resx",
+      "sha256": "283970ef8ddffe5751debef6a0dd208a0891bd371aeafc4551267d518b495607"
+    },
+    {
+      "path": "Project/WinHubX/Forms/Settaggi/FormUtility.resx",
+      "sha256": "c591a01bb6402dc233677113f605799ae04a74bd92f8d5e45968aa89d6e99632"
+    },
+    {
+      "path": "Project/WinHubX/Impostazioni/Dipendenze.cs",
+      "sha256": "cf868eb007a7bfe993c839a202f20beccb6eb4dc257c92526c83feb909031c25"
+    },
+    {
+      "path": "Project/WinHubX/Impostazioni/DownloadManager.cs",
+      "sha256": "ff144e64e5b9d50efcfd89f227705787c430e2b85cb448e1207970a7ec3670ba"
+    },
+    {
+      "path": "Project/WinHubX/Impostazioni/LanguageManager.cs",
+      "sha256": "21587d77b7d217586db39a71145b0dae28db0d8d597404de3b06b16a6cf5224d"
+    },
+    {
+      "path": "Project/WinHubX/Impostazioni/MonitorSettings.cs",
+      "sha256": "49267b378081de515607ec4385fca5e72688eb7bc53219f51f4f3cd9df97c663"
+    },
+    {
+      "path": "Project/WinHubX/Impostazioni/ThemeConfig.cs",
+      "sha256": "1f9c955ac83075ada3aa0bf6d1ba6b87cc3f7191f8982e965762543d850f3a5f"
+    },
+    {
+      "path": "Project/WinHubX/Impostazioni/ThemeManager.cs",
+      "sha256": "bad9ed1c39457729c91fb000548e1c07889b73d2bc92a7bc1a0d076e31e0aab3"
+    },
+    {
+      "path": "Project/WinHubX/Impostazioni/UiPalette.cs",
+      "sha256": "dfa52ea640f0a3efd465e12532b0edc2b3e0949941447d55f3abd5441b116b7e"
+    },
+    {
+      "path": "Project/WinHubX/Program.cs",
+      "sha256": "431edca6b48c8b6b76d4991c5efca672f3e89bdc8b128a9876f5b6c3f439fc30"
+    },
+    {
+      "path": "Project/WinHubX/Properties/Resources.Designer.cs",
+      "sha256": "fa6332fe23ba5df8aa6bddb78a4378b783e65c1e969d437107c6a8c8c8a9a117"
+    },
+    {
+      "path": "Project/WinHubX/Properties/Resources.resx",
+      "sha256": "c540d559f74e4a0bf0a37793199ab0b29315436708b14c8eb121d287050236ba"
+    },
+    {
+      "path": "Project/WinHubX/Resources/KMS38_Activation.cmd",
+      "sha256": "22ccdd5acd5324715cba8e219d2de0a73d9e73f78674ec443148ffb8f11b64fa"
+    },
+    {
+      "path": "Project/WinHubX/Resources/Ohook_Activation_AIO.cmd",
+      "sha256": "609aa604cb3ebbcc8c7d4902876096f8634bf1d87829f610919e9b173181aa29"
+    },
+    {
+      "path": "Project/WinHubX/Resources/TSforge_Activation.cmd",
+      "sha256": "ed39d5ade26f255392a05e90c9f204426028d53832cfecc89eb0bf2d946b6bf0"
+    },
+    {
+      "path": "Project/WinHubX/Resources/TSforge_Activation_Office.cmd",
+      "sha256": "48abecf8dfda7537f06828aff9c2a7119bbc532bbda6165c3420c4e7b10bc6f3"
+    },
+    {
+      "path": "Project/WinHubX/Resources/WinHubXStatoAttivazione.cmd",
+      "sha256": "0c593b8cc48a249f584097c104f6562f3415d15580655058e9bd7ba4dc52e266"
+    },
+    {
+      "path": "Project/WinHubX/Resources/WinHubXWSL.ps1",
+      "sha256": "94922f3230fc2c1f4163a39d9e93ec8abcf73a203557291e8e1609ba66eafd1e"
+    },
+    {
+      "path": "Project/WinHubX/Resources/en.json",
+      "sha256": "d8c326638e93d04b45d6df26179a84de19b3b992f0c55c8c491c368dd08456fb"
+    },
+    {
+      "path": "Project/WinHubX/Resources/it.json",
+      "sha256": "1ec2dcf1b95c95613225fccd6b7f6c6a4401393090ea39f58b52ee1dfd6c5adb"
+    },
+    {
+      "path": "Project/WinHubX/WinHubX.csproj",
+      "sha256": "9193a45883504562b3f749a49b767c28a11d080bf83289199b43259cc04eb3cd"
+    },
+    {
+      "path": "Project/WinHubX/app.manifest",
+      "sha256": "8e713b0b5df5327e4afca000fd8e5b2ef58f3e8f1a8761704a8f4160b5c0e3e9"
+    },
+    {
+      "path": "Project/WinHubX/obj/Debug/net8.0-windows/.NETCoreApp,Version=v8.0.AssemblyAttributes.cs",
+      "sha256": "f7a5d9789c863625e139ff99e1113a503830f6b85a88f6129916df83ac76b49e"
+    },
+    {
+      "path": "Project/WinHubX/obj/Debug/net8.0-windows/WinHubX.AssemblyInfo.cs",
+      "sha256": "6ecc61231588c14c35b08a6510e6957719997813bc8e9272200aa44314a124dc"
+    },
+    {
+      "path": "Project/WinHubX/obj/Debug/net8.0-windows/WinHubX.GlobalUsings.g.cs",
+      "sha256": "c95ea51a9e8c77e5367f652ede0c8871e7d6413090add59e1b8dd6805ac37e70"
+    },
+    {
+      "path": "Project/WinHubX/obj/Debug/net8.0-windows/WinHubX.designer.deps.json",
+      "sha256": "6988b9ffbde07fb7119f7f21252342e8ec37b32bed9eda94bc4587eb6fb20a7b"
+    },
+    {
+      "path": "Project/WinHubX/obj/Debug/net8.0-windows/WinHubX.designer.runtimeconfig.json",
+      "sha256": "15713fa0d989d823cfd0c1872c0a80d9feccbc8ff783159a29e3e3f62d653b5b"
+    },
+    {
+      "path": "Project/WinHubX/obj/Release/net8.0-windows/.NETCoreApp,Version=v8.0.AssemblyAttributes.cs",
+      "sha256": "f7a5d9789c863625e139ff99e1113a503830f6b85a88f6129916df83ac76b49e"
+    },
+    {
+      "path": "Project/WinHubX/obj/Release/net8.0-windows/WinHubX.AssemblyInfo.cs",
+      "sha256": "70c6a1c61c923fedf1737f0777e46926747ad97b8c228333d1f244b17ed85729"
+    },
+    {
+      "path": "Project/WinHubX/obj/Release/net8.0-windows/WinHubX.GlobalUsings.g.cs",
+      "sha256": "c95ea51a9e8c77e5367f652ede0c8871e7d6413090add59e1b8dd6805ac37e70"
+    },
+    {
+      "path": "Project/WinHubX/obj/Release/net8.0-windows/WinHubX.designer.deps.json",
+      "sha256": "6988b9ffbde07fb7119f7f21252342e8ec37b32bed9eda94bc4587eb6fb20a7b"
+    },
+    {
+      "path": "Project/WinHubX/obj/Release/net8.0-windows/WinHubX.designer.runtimeconfig.json",
+      "sha256": "ab67bf0a72f90cded8dbe1cedd3d78e95acdaac91a5b0d5041e856a70d8e3302"
+    },
+    {
+      "path": "Project/WinHubX/obj/Release/net8.0-windows/win-x64/.NETCoreApp,Version=v8.0.AssemblyAttributes.cs",
+      "sha256": "f7a5d9789c863625e139ff99e1113a503830f6b85a88f6129916df83ac76b49e"
+    },
+    {
+      "path": "Project/WinHubX/obj/Release/net8.0-windows/win-x64/WinHubX.AssemblyInfo.cs",
+      "sha256": "667104495645ff9235f32d89344ecb01ec546f5d4e7b4ae7d40fcba0ce6a2701"
+    },
+    {
+      "path": "Project/WinHubX/obj/Release/net8.0-windows/win-x64/WinHubX.GlobalUsings.g.cs",
+      "sha256": "427d9a42fa44fd3d6c018a63a0d55b7c737dfdf7fc82cf33c069304bea4c74be"
+    },
+    {
+      "path": "Project/WinHubX/obj/Release/net8.0-windows/win-x64/WinHubX.deps.json",
+      "sha256": "fd4f5749cc1e4962ae822f30ea97ea7167f60662b9593052b5b3e2729412e2b9"
+    },
+    {
+      "path": "Project/WinHubX/obj/Release/net8.0-windows/win-x64/en/WinHubX.resources.cs",
+      "sha256": "f20dc63eba704e828cbf6313278c68e0c82b84563956299a6ae3091b033a9091"
+    },
+    {
+      "path": "Project/WinHubX/obj/Release/net8.0-windows/win-x86/.NETCoreApp,Version=v8.0.AssemblyAttributes.cs",
+      "sha256": "f7a5d9789c863625e139ff99e1113a503830f6b85a88f6129916df83ac76b49e"
+    },
+    {
+      "path": "Project/WinHubX/obj/Release/net8.0-windows/win-x86/WinHubX.AssemblyInfo.cs",
+      "sha256": "70c6a1c61c923fedf1737f0777e46926747ad97b8c228333d1f244b17ed85729"
+    },
+    {
+      "path": "Project/WinHubX/obj/Release/net8.0-windows/win-x86/WinHubX.GlobalUsings.g.cs",
+      "sha256": "c95ea51a9e8c77e5367f652ede0c8871e7d6413090add59e1b8dd6805ac37e70"
+    },
+    {
+      "path": "Project/WinHubX/obj/Release/net8.0-windows/win-x86/WinHubX.deps.json",
+      "sha256": "56365dff21a5fb7906be8c92af865ee816553771b5bd32e1245684e3e49d82f0"
+    },
+    {
+      "path": "Project/WinHubX/obj/WinHubX.csproj.nuget.dgspec.json",
+      "sha256": "bd61c01e3f902a53abad7a61d419f056c3ab02cd8ac9a5b38627ea92a1f510a4"
+    },
+    {
+      "path": "Project/WinHubX/obj/project.assets.json",
+      "sha256": "ddbf1cba6741f36deb25782d3a16ac4897489ae6170a2162f1e44e9d57f9fbbd"
+    },
+    {
+      "path": "Project/WinHubX/obj/publish/win-x64/WinHubX.csproj.nuget.dgspec.json",
+      "sha256": "bf7777a3a358e47852f8d6ddb66ac8ff44344821d4ce9e3d23991753cf8f62c9"
+    },
+    {
+      "path": "Project/WinHubX/obj/publish/win-x64/project.assets.json",
+      "sha256": "6425ae30b4a270df02e1aa81d3e17ab89ad7a92e15b7b51c4a60f7458c119361"
+    },
+    {
+      "path": "Project/WinHubX/obj/publish/win-x86/WinHubX.csproj.nuget.dgspec.json",
+      "sha256": "743fb6edf1c2d939c002aeef3f705c425040f0547292f9c4ec4913e4743da517"
+    },
+    {
+      "path": "Project/WinHubX/obj/publish/win-x86/project.assets.json",
+      "sha256": "ca3b0f838a0b33e3829b69bf035b718fde85f680d963f5788c1733ea3877abe4"
+    },
+    {
+      "path": "Project/WinHubX/obj/x64/Release/net8.0-windows/.NETCoreApp,Version=v8.0.AssemblyAttributes.cs",
+      "sha256": "f7a5d9789c863625e139ff99e1113a503830f6b85a88f6129916df83ac76b49e"
+    },
+    {
+      "path": "Project/WinHubX/obj/x64/Release/net8.0-windows/WinHubX.AssemblyInfo.cs",
+      "sha256": "667104495645ff9235f32d89344ecb01ec546f5d4e7b4ae7d40fcba0ce6a2701"
+    },
+    {
+      "path": "Project/WinHubX/obj/x64/Release/net8.0-windows/WinHubX.GlobalUsings.g.cs",
+      "sha256": "427d9a42fa44fd3d6c018a63a0d55b7c737dfdf7fc82cf33c069304bea4c74be"
+    },
+    {
+      "path": "Project/WinHubX/obj/x64/Release/net8.0-windows/WinHubX.designer.deps.json",
+      "sha256": "bf427fa9b6bf9e2792f640aa63cedeeee0dfdcff2f70871ab603e589b332188b"
+    },
+    {
+      "path": "Project/WinHubX/obj/x64/Release/net8.0-windows/WinHubX.designer.runtimeconfig.json",
+      "sha256": "f81400059192a1deb90a5b509b119575257e757322ece83dd5c557e50d53a2c2"
+    },
+    {
+      "path": "Project/WinHubX/obj/x64/Release/net8.0-windows/win-x64/.NETCoreApp,Version=v8.0.AssemblyAttributes.cs",
+      "sha256": "f7a5d9789c863625e139ff99e1113a503830f6b85a88f6129916df83ac76b49e"
+    },
+    {
+      "path": "Project/WinHubX/obj/x64/Release/net8.0-windows/win-x64/WinHubX.AssemblyInfo.cs",
+      "sha256": "667104495645ff9235f32d89344ecb01ec546f5d4e7b4ae7d40fcba0ce6a2701"
+    },
+    {
+      "path": "Project/WinHubX/obj/x64/Release/net8.0-windows/win-x64/WinHubX.GlobalUsings.g.cs",
+      "sha256": "427d9a42fa44fd3d6c018a63a0d55b7c737dfdf7fc82cf33c069304bea4c74be"
+    },
+    {
+      "path": "Project/WinHubX/obj/x64/Release/net8.0-windows/win-x64/WinHubX.deps.json",
+      "sha256": "fd4f5749cc1e4962ae822f30ea97ea7167f60662b9593052b5b3e2729412e2b9"
+    },
+    {
+      "path": "tools/Migrate-CuoreUI-2026.ps1",
+      "sha256": "09f160d7868fd5bf6878242705848d48749dd9162354f2aa46285b73c558a344"
+    },
+    {
+      "path": "tools/Normalize-Resx.ps1",
+      "sha256": "61095461588c5cdeaf458621cf423298f887a3aeba54444590f950f4bc9101e0"
+    },
+    {
+      "path": "update.json",
+      "sha256": "7362cc7bc5a34b240975b3ddd36155d545d9ca882f0172ef3bf750943a252509"
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-﻿namespace WinHubX.Forms.Settaggi
+namespace WinHubX.Forms.Settaggi
 {
     partial class FormPersonalizzazione
     {
@@ -60,10 +60,10 @@
             radio_orologiomostradatasecondi = new CheckBox();
             radio_orologiostandard = new CheckBox();
             radio_orologiomostrasecondi = new CheckBox();
-            btnSettaggiExplorerVerdi = new CuoreUI.Controls.cuiButton();
-            btnResetVerdi = new CuoreUI.Controls.cuiButton();
-            cuiButton1Verdi = new CuoreUI.Controls.cuiButton();
-            progressBar1 = new CuoreUI.Controls.cuiProgressBarHorizontal();
+            btnSettaggiExplorerVerdi = new HartUI.Controls.cuiButton();
+            btnResetVerdi = new HartUI.Controls.cuiButton();
+            cuiButton1Verdi = new HartUI.Controls.cuiButton();
+            progressBar1 = new HartUI.Controls.cuiProgressBarHorizontal();
             label1 = new Label();
             label4 = new Label();
             label3 = new Label();
@@ -346,9 +346,7 @@
             btnSettaggiExplorerVerdi.HoverImageTint = Color.White;
             btnSettaggiExplorerVerdi.HoverOutline = Color.White;
             btnSettaggiExplorerVerdi.Image = Properties.Resources.pngExplorerPersonalizzazioneTweaks;
-            btnSettaggiExplorerVerdi.ImageAutoCenter = true;
             btnSettaggiExplorerVerdi.ImageExpand = new Point(0, 0);
-            btnSettaggiExplorerVerdi.ImageOffset = new Point(0, 0);
             btnSettaggiExplorerVerdi.Name = "btnSettaggiExplorerVerdi";
             btnSettaggiExplorerVerdi.NormalBackground = Color.FromArgb(37, 38, 39);
             btnSettaggiExplorerVerdi.NormalForeColor = Color.White;
@@ -361,7 +359,6 @@
             btnSettaggiExplorerVerdi.PressedOutline = Color.White;
             btnSettaggiExplorerVerdi.Rounding = new Padding(8);
             btnSettaggiExplorerVerdi.TextAlignment = StringAlignment.Center;
-            btnSettaggiExplorerVerdi.TextOffset = new Point(0, 0);
             btnSettaggiExplorerVerdi.Click += btnSettaggiExplorer_Click;
             // 
             // btnResetVerdi
@@ -381,9 +378,7 @@
             btnResetVerdi.HoverImageTint = Color.White;
             btnResetVerdi.HoverOutline = Color.FromArgb(0, 126, 249);
             btnResetVerdi.Image = Properties.Resources.pngRipristinaDefenderTweaks;
-            btnResetVerdi.ImageAutoCenter = true;
             btnResetVerdi.ImageExpand = new Point(0, 0);
-            btnResetVerdi.ImageOffset = new Point(0, 0);
             btnResetVerdi.Name = "btnResetVerdi";
             btnResetVerdi.NormalBackground = Color.FromArgb(37, 38, 39);
             btnResetVerdi.NormalForeColor = Color.White;
@@ -396,7 +391,6 @@
             btnResetVerdi.PressedOutline = Color.FromArgb(0, 126, 249);
             btnResetVerdi.Rounding = new Padding(8);
             btnResetVerdi.TextAlignment = StringAlignment.Center;
-            btnResetVerdi.TextOffset = new Point(0, 0);
             btnResetVerdi.Click += btn_resetselezione_Click;
             // 
             // cuiButton1Verdi
@@ -416,9 +410,7 @@
             cuiButton1Verdi.HoverImageTint = Color.White;
             cuiButton1Verdi.HoverOutline = Color.FromArgb(46, 125, 50);
             cuiButton1Verdi.Image = Properties.Resources.pngCheckCreaISO;
-            cuiButton1Verdi.ImageAutoCenter = true;
             cuiButton1Verdi.ImageExpand = new Point(0, 0);
-            cuiButton1Verdi.ImageOffset = new Point(0, 0);
             cuiButton1Verdi.Name = "cuiButton1Verdi";
             cuiButton1Verdi.NormalBackground = Color.FromArgb(37, 38, 39);
             cuiButton1Verdi.NormalForeColor = Color.White;
@@ -431,7 +423,6 @@
             cuiButton1Verdi.PressedOutline = Color.FromArgb(46, 125, 50);
             cuiButton1Verdi.Rounding = new Padding(8);
             cuiButton1Verdi.TextAlignment = StringAlignment.Center;
-            cuiButton1Verdi.TextOffset = new Point(0, 0);
             cuiButton1Verdi.Click += btnAvviaSelezionati_Click;
             // 
             // progressBar1
@@ -492,17 +483,13 @@
         }
 
         #endregion
-        private Panel panel32;
-        private Panel panel4;
-        private Panel panel7;
-        private Label label2;
         private ToolTip toolTip1;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private Panel panello;
-        private CuoreUI.Controls.cuiButton btnSettaggiExplorerVerdi;
-        private CuoreUI.Controls.cuiButton btnResetVerdi;
-        private CuoreUI.Controls.cuiButton cuiButton1Verdi;
-        private CuoreUI.Controls.cuiProgressBarHorizontal progressBar1;
+        private HartUI.Controls.cuiButton btnSettaggiExplorerVerdi;
+        private HartUI.Controls.cuiButton btnResetVerdi;
+        private HartUI.Controls.cuiButton cuiButton1Verdi;
+        private HartUI.Controls.cuiProgressBarHorizontal progressBar1;
         private Label label1;
         private Label label4;
         private Label label3;

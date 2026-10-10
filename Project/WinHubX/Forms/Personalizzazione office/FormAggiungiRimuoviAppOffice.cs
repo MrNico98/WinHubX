@@ -1,7 +1,6 @@
 ﻿using Microsoft.Win32;
 using System.Diagnostics;
 using System.Globalization;
-using System.Runtime.InteropServices;
 using System.Text;
 using WinHubX.Impostazioni;
 
@@ -9,26 +8,49 @@ namespace WinHubX.Forms.Personalizzazione_office
 {
     public partial class FormAggiungiRimuoviAppOffice : Form
     {
-        public string officeVersion;
-        public string platform;
-        public string product;
-        public string culture;
-        [DllImport("advapi32.dll", CharSet = CharSet.Auto)]
-        public static extern int RegOpenKeyEx(
-    IntPtr hKey,
-    string subKey,
-    int ulOptions,
-    int samDesired,
-    out IntPtr phkResult);
+        private static bool IsExpectedOfficeDiscoveryFailure(Exception exception) =>
+            exception is IOException
+                or UnauthorizedAccessException
+                or System.Security.SecurityException
+                or System.ComponentModel.Win32Exception
+                or System.Runtime.InteropServices.COMException
+                or System.Management.ManagementException
+                or InvalidOperationException
+                or NotSupportedException
+                or ArgumentException;
 
-        [DllImport("advapi32.dll", SetLastError = true)]
-        public static extern int RegCloseKey(IntPtr hKey);
+        private static readonly Dictionary<string, string> FriendlyApplicationNames = new(StringComparer.OrdinalIgnoreCase)
+        {
+            ["WINWORD"] = "Word",
+            ["EXCEL"] = "Excel",
+            ["POWERPNT"] = "PowerPoint",
+            ["MSACCESS"] = "Access",
+            ["OUTLOOK"] = "Outlook",
+            ["MSPUB"] = "Publisher",
+            ["ONENOTE"] = "OneNote",
+            ["VISIO"] = "Visio",
+            ["WINPROJ"] = "Project",
+            ["ONEDRIVE"] = "OneDrive"
+        };
+        private static readonly Dictionary<string, string> ExecutableNames = new(StringComparer.OrdinalIgnoreCase)
+        {
+            ["WINWORD"] = "WINWORD.EXE",
+            ["EXCEL"] = "EXCEL.EXE",
+            ["POWERPNT"] = "POWERPNT.EXE",
+            ["MSACCESS"] = "MSACCESS.EXE",
+            ["OUTLOOK"] = "OUTLOOK.EXE",
+            ["MSPUB"] = "MSPUB.EXE",
+            ["ONENOTE"] = "ONENOTE.EXE",
+            ["VISIO"] = "VISIO.EXE",
+            ["WINPROJ"] = "WINPROJ.EXE",
+            ["ONEDRIVE"] = "ONEDRIVE.EXE"
+        };
 
-        private const int KEY_WOW64_64KEY = 0x0100;
-        private const int KEY_QUERY_VALUE = 0x0001;
-        private static readonly IntPtr HKEY_LOCAL_MACHINE = new IntPtr(unchecked((int)0x80000002));
-
-        private Dictionary<string, string> officeApps = new Dictionary<string, string>()
+        public string officeVersion = string.Empty;
+        public string platform = string.Empty;
+        public string product = string.Empty;
+        public string culture = string.Empty;
+        private readonly Dictionary<string, string> officeApps = new Dictionary<string, string>()
         {
             {"word", "Word"},
             {"excel", "Excel"},
@@ -41,8 +63,8 @@ namespace WinHubX.Forms.Personalizzazione_office
             {"onedrive", "OneDrive"},
             {"teams", "M.Teams"}
         };
-        private Form1 form1;
-        private FormOffice formoffice;
+        private readonly Form1 form1;
+        private readonly FormOffice formoffice;
         public FormAggiungiRimuoviAppOffice(Form1 form1, FormOffice formoffice)
         {
             InitializeComponent();
@@ -77,20 +99,17 @@ namespace WinHubX.Forms.Personalizzazione_office
         {
             officeVersion = GetRegistryValue(
                 @"SOFTWARE\Microsoft\Office\ClickToRun\Configuration",
-                "VersionToReport");
+                "VersionToReport") ?? string.Empty;
 
             if (string.IsNullOrEmpty(officeVersion))
             {
                 officeVersion = GetRegistryValue(
                     @"SOFTWARE\Microsoft\Office\16.0\Common\InstallRoot",
-                    "Version");
+                    "Version") ?? string.Empty;
             }
 
-            if (!string.IsNullOrEmpty(officeVersion) && officeVersion.StartsWith("16.") && IsOfficeWithPublisher())
-            {
-                if (!officeApps.ContainsKey("publisher"))
-                    officeApps.Add("publisher", "Publisher");
-            }
+            if (!string.IsNullOrEmpty(officeVersion) && officeVersion.StartsWith("16.", StringComparison.Ordinal) && IsOfficeWithPublisher())
+                officeApps.TryAdd("publisher", "Publisher");
         }
         private Dictionary<string, string> DetectInstalledOfficeApps()
         {
@@ -124,7 +143,7 @@ namespace WinHubX.Forms.Personalizzazione_office
                             {
                                 if (appKeyPath != null)
                                 {
-                                    string exePath = appKeyPath.GetValue("")?.ToString();
+                                    string? exePath = appKeyPath.GetValue("")?.ToString();
                                     if (!string.IsNullOrEmpty(exePath) && File.Exists(exePath))
                                     {
                                         string appName = GetFriendlyAppName(app);
@@ -149,11 +168,12 @@ namespace WinHubX.Forms.Personalizzazione_office
 
                             if (!string.IsNullOrEmpty(basePath))
                             {
+                                HashSet<string>? nestedExecutableNames = null;
                                 foreach (var app in possibleApps)
                                 {
                                     string appName = GetFriendlyAppName(app);
                                     string exeName = GetExeName(app);
-                                    string exePath = Path.Combine(basePath, exeName);
+                                    string exePath = Path.Join(basePath, exeName);
 
                                     if (File.Exists(exePath))
                                     {
@@ -161,8 +181,8 @@ namespace WinHubX.Forms.Personalizzazione_office
                                     }
                                     else
                                     {
-                                        string foundPath = SearchFileInDirectory(basePath, exeName);
-                                        if (!string.IsNullOrEmpty(foundPath))
+                                        nestedExecutableNames ??= FindOfficeExecutableNames(basePath);
+                                        if (nestedExecutableNames.Contains(exeName))
                                         {
                                             apps[appName.ToLower()] = appName;
                                         }
@@ -183,14 +203,14 @@ namespace WinHubX.Forms.Personalizzazione_office
                             {
                                 using (var subKey = key.OpenSubKey($@"{version}\Word\InstallRoot"))
                                 {
-                                    string path = subKey?.GetValue("Path")?.ToString();
+                                    string? path = subKey?.GetValue("Path")?.ToString();
                                     if (!string.IsNullOrEmpty(path) && Directory.Exists(path))
                                     {
                                         foreach (var app in possibleApps)
                                         {
                                             string appName = GetFriendlyAppName(app);
                                             string exeName = GetExeName(app);
-                                            string exePath = Path.Combine(path, exeName);
+                                            string exePath = Path.Join(path, exeName);
 
                                             if (File.Exists(exePath))
                                             {
@@ -217,7 +237,7 @@ namespace WinHubX.Forms.Personalizzazione_office
                                 {
                                     if (appKeyPath != null)
                                     {
-                                        string exePath = appKeyPath.GetValue("")?.ToString();
+                                            string? exePath = appKeyPath.GetValue("")?.ToString();
                                         if (!string.IsNullOrEmpty(exePath) && File.Exists(exePath))
                                         {
                                             string appName = GetFriendlyAppName(app);
@@ -234,7 +254,7 @@ namespace WinHubX.Forms.Personalizzazione_office
                     apps = FallbackOfficeDetection();
                 }
             }
-            catch (Exception ex)
+            catch (Exception ex) when (IsExpectedOfficeDiscoveryFailure(ex))
             {
                 MessageBox.Show($"Errore durante il rilevamento delle app Office: {ex.Message}", "DEBUG", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 apps = FallbackOfficeDetection();
@@ -261,14 +281,11 @@ namespace WinHubX.Forms.Personalizzazione_office
         @"C:\Program Files (x86)\Microsoft Office\Office15"
     };
 
-            foreach (var path in possiblePaths)
+            foreach (string path in possiblePaths.Where(Directory.Exists))
             {
-                if (!Directory.Exists(path))
-                    continue;
-
                 foreach (var exe in exeNames)
                 {
-                    string exePath = Path.Combine(path, exe);
+                    string exePath = Path.Join(path, exe);
                     if (File.Exists(exePath))
                     {
                         string appName = exe switch
@@ -298,53 +315,40 @@ namespace WinHubX.Forms.Personalizzazione_office
 
         private string GetFriendlyAppName(string appCode)
         {
-            var nameMap = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
-    {
-        {"WINWORD", "Word"},
-        {"EXCEL", "Excel"},
-        {"POWERPNT", "PowerPoint"},
-        {"MSACCESS", "Access"},
-        {"OUTLOOK", "Outlook"},
-        {"MSPUB", "Publisher"},
-        {"ONENOTE", "OneNote"},
-        {"VISIO", "Visio"},
-        {"WINPROJ", "Project"},
-        {"ONEDRIVE", "OneDrive"}
-    };
-
-            return nameMap.ContainsKey(appCode) ? nameMap[appCode] : appCode;
+            return FriendlyApplicationNames.TryGetValue(appCode, out string? friendlyName)
+                ? friendlyName
+                : appCode;
         }
 
         private string GetExeName(string appCode)
         {
-            var exeMap = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
-    {
-        {"WINWORD", "WINWORD.EXE"},
-        {"EXCEL", "EXCEL.EXE"},
-        {"POWERPNT", "POWERPNT.EXE"},
-        {"MSACCESS", "MSACCESS.EXE"},
-        {"OUTLOOK", "OUTLOOK.EXE"},
-        {"MSPUB", "MSPUB.EXE"},
-        {"ONENOTE", "ONENOTE.EXE"},
-        {"VISIO", "VISIO.EXE"},
-        {"WINPROJ", "WINPROJ.EXE"},
-        {"ONEDRIVE", "ONEDRIVE.EXE"}
-    };
-
-            return exeMap.ContainsKey(appCode) ? exeMap[appCode] : $"{appCode}.EXE";
+            return ExecutableNames.TryGetValue(appCode, out string? executableName)
+                ? executableName
+                : $"{appCode}.EXE";
         }
 
-        private string SearchFileInDirectory(string directory, string fileName)
+        private static HashSet<string> FindOfficeExecutableNames(string directory)
         {
+            var executableNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             try
             {
-                var files = Directory.GetFiles(directory, fileName, SearchOption.AllDirectories);
-                return files.Length > 0 ? files[0] : null;
+                var options = new EnumerationOptions
+                {
+                    RecurseSubdirectories = true,
+                    IgnoreInaccessible = true,
+                    AttributesToSkip = FileAttributes.ReparsePoint,
+                    ReturnSpecialDirectories = false
+                };
+
+                foreach (string path in Directory.EnumerateFiles(directory, "*.exe", options))
+                    executableNames.Add(Path.GetFileName(path));
             }
-            catch
+            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or ArgumentException or NotSupportedException)
             {
-                return null;
+                Debug.WriteLine($"Scansione eseguibili Office in '{directory}' incompleta: {ex}");
             }
+
+            return executableNames;
         }
 
         private bool IsOfficeWithPublisher()
@@ -362,16 +366,17 @@ namespace WinHubX.Forms.Personalizzazione_office
                            release.Contains("2019");
                 }
             }
-            catch
+            catch (Exception ex) when (IsExpectedOfficeDiscoveryFailure(ex))
             {
+                Debug.WriteLine($"Rilevamento versione Office non riuscito: {ex}");
                 return false;
             }
         }
 
-        private List<string> selectedAppsInstall = new List<string>();
-        private List<string> selectedAppsRemove = new List<string>();  
+        private readonly List<string> selectedAppsInstall = new List<string>();
+        private readonly List<string> selectedAppsRemove = new List<string>();
 
-        private void DisplayInstalledOfficeApps(string product)
+        private void DisplayInstalledOfficeApps(string productCode)
         {
             var installedApps = DetectInstalledOfficeApps(); 
 
@@ -379,9 +384,9 @@ namespace WinHubX.Forms.Personalizzazione_office
             flowPanelAppsInstall.Controls.Clear();
             flowPanelAppsRimuovi.Controls.Clear();
 
-            Image GetImage(string name)
+            Image? GetImage(string name)
             {
-                bool is365 = product.Contains("365");
+                bool is365 = productCode.Contains("365", StringComparison.OrdinalIgnoreCase);
                 return is365 ? name switch
                 {
                     "word" => Properties.Resources.Microsoft_Office_Word_2025present,
@@ -484,36 +489,24 @@ namespace WinHubX.Forms.Personalizzazione_office
 
         public static string? GetRegistryValue(string subKey, string valueName)
         {
-            IntPtr hKey = IntPtr.Zero;
             try
             {
-                int result = RegOpenKeyEx(
-                    HKEY_LOCAL_MACHINE,
-                    subKey,
-                    0,
-                    KEY_QUERY_VALUE | KEY_WOW64_64KEY,
-                    out hKey);
-
-                if (result == 0 && hKey != IntPtr.Zero)
-                {
-                    using (RegistryKey key = RegistryKey.FromHandle(new Microsoft.Win32.SafeHandles.SafeRegistryHandle(hKey, true)))
-                    {
-                        return key.GetValue(valueName)?.ToString();
-                    }
-                }
+                using RegistryKey baseKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64);
+                using RegistryKey? key = baseKey.OpenSubKey(subKey, writable: false);
+                return key?.GetValue(valueName)?.ToString();
             }
-            catch (Exception ex)
+            catch (Exception ex) when (ex is ArgumentException
+                or IOException
+                or UnauthorizedAccessException
+                or System.Security.SecurityException)
             {
-                _ = MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Debug.WriteLine($"Lettura del valore Registro HKLM\\{subKey}\\{valueName} non riuscita: {ex}");
+                _ = MessageBox.Show($"Lettura del Registro non riuscita: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
             }
-            finally
-            {
-
-            }
-            return null;
         }
 
-        private async void BtnInstall_Click(object sender, EventArgs e)
+        private async void BtnInstall_Click(object? sender, EventArgs e)
         {
             string c2rExe = @"C:\Program Files\Common Files\Microsoft Shared\ClickToRun\OfficeClickToRun.exe";
             string arch = Environment.Is64BitOperatingSystem ? "x64" : "x32";
@@ -537,13 +530,14 @@ namespace WinHubX.Forms.Personalizzazione_office
                     }
                 }
             }
-            catch
+            catch (Exception ex) when (IsExpectedOfficeDiscoveryFailure(ex))
             {
+                Debug.WriteLine($"Lettura configurazione Office non riuscita: {ex}");
                 MessageBox.Show("Impossibile leggere le impostazioni di Office.", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             string lang = NormalizeLanguageCode(culture);
-            string updch = GetUpdateChannel(targetEdition);
+            string updch = GetUpdateChannel(targetEdition) ?? string.Empty;
             string allLangs = GetInstalledOfficeLangs(lang);
             var installedApps = DetectInstalledOfficeApps().Keys.ToList();
             var keepOrInstall = new HashSet<string>(
@@ -552,46 +546,46 @@ namespace WinHubX.Forms.Personalizzazione_office
             foreach (var app in selectedAppsRemove)
                 keepOrInstall.Remove(app);
             var excludeList = new StringBuilder();
-            foreach (var app in officeApps.Keys)
+            foreach (var app in officeApps.Keys.Where(app => !keepOrInstall.Contains(app)))
             {
-                if (!keepOrInstall.Contains(app))
-                    excludeList.Append($",{app}");
+                excludeList.Append($",{app}");
             }
-            string c2rCommand = $"\"{c2rExe}\" " +
-                                $"platform={arch} culture={lang} " +
-                                $"productstoadd={targetEdition}.16_{allLangs} " +
-                                $"cdnbaseurl.16=http://officecdn.microsoft.com/pr/{updch} " +
-                                $"baseurl.16=http://officecdn.microsoft.com/pr/{updch} " +
-                                $"version.16={version} mediatype.16=CDN sourcetype.16=CDN " +
-                                $"deliverymechanism={updch} " +
-                                $"{targetEdition}.excludedapps.16=groove{excludeList} " +
-                                "flt.useteamsaddon=disabled flt.usebingaddononinstall=disabled flt.usebingaddononupdate=disabled";
-
             try
             {
                 ProcessStartInfo psi = new ProcessStartInfo
                 {
                     FileName = c2rExe,
-                    Arguments = c2rCommand.Substring(c2rCommand.IndexOf("platform=")),
-                    UseShellExecute = false,
+                    UseShellExecute = true,
                     Verb = "runas",
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true,
-                    CreateNoWindow = true
+                    WindowStyle = ProcessWindowStyle.Hidden
                 };
+                psi.ArgumentList.Add($"platform={arch}");
+                psi.ArgumentList.Add($"culture={lang}");
+                psi.ArgumentList.Add($"productstoadd={targetEdition}.16_{allLangs}");
+                psi.ArgumentList.Add($"cdnbaseurl.16=https://officecdn.microsoft.com/pr/{updch}");
+                psi.ArgumentList.Add($"baseurl.16=https://officecdn.microsoft.com/pr/{updch}");
+                psi.ArgumentList.Add($"version.16={version}");
+                psi.ArgumentList.Add("mediatype.16=CDN");
+                psi.ArgumentList.Add("sourcetype.16=CDN");
+                psi.ArgumentList.Add($"deliverymechanism={updch}");
+                psi.ArgumentList.Add($"{targetEdition}.excludedapps.16=groove{excludeList}");
+                psi.ArgumentList.Add("flt.useteamsaddon=disabled");
+                psi.ArgumentList.Add("flt.usebingaddononinstall=disabled");
+                psi.ArgumentList.Add("flt.usebingaddononupdate=disabled");
                 progressBar1.Visible = true;
                 progressBar1.Value = 0;
                 progressBar1.Value = 35;
 
-                using (var process = Process.Start(psi))
+                using (var process = Process.Start(psi)
+                    ?? throw new InvalidOperationException("Impossibile avviare l'installer Office."))
                 {
-                    await Task.Run(() => process.WaitForExit());
+                    await process.WaitForExitAsync();
                 }
                 progressBar1.Value = 100;
                 MessageBox.Show("Operazione completata.\nLe app di Office sono state aggiornate con successo.",
                     "Office Installer", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch (Exception ex)
+            catch (Exception ex) when (IsExpectedOfficeDiscoveryFailure(ex))
             {
                 progressBar1.Value = 0;
 
@@ -622,7 +616,7 @@ namespace WinHubX.Forms.Personalizzazione_office
             };
         }
 
-        private string GetUpdateChannel(string edition)
+        private string? GetUpdateChannel(string edition)
         {
             string? audienceId = null;
             try
@@ -633,7 +627,10 @@ namespace WinHubX.Forms.Personalizzazione_office
                     audienceId = key?.GetValue("AudienceId")?.ToString();
                 }
             }
-            catch { }
+            catch (Exception ex) when (IsExpectedOfficeDiscoveryFailure(ex))
+            {
+                Debug.WriteLine($"Lettura AudienceId Office in vista registro a 32 bit non riuscita: {ex}");
+            }
             if (string.IsNullOrWhiteSpace(audienceId))
             {
                 try
@@ -644,7 +641,10 @@ namespace WinHubX.Forms.Personalizzazione_office
                         audienceId = key?.GetValue("AudienceId")?.ToString();
                     }
                 }
-                catch { }
+                catch (Exception ex) when (IsExpectedOfficeDiscoveryFailure(ex))
+                {
+                    Debug.WriteLine($"Lettura AudienceId Office in vista registro a 64 bit non riuscita: {ex}");
+                }
             }
 
             return audienceId;
@@ -660,17 +660,17 @@ namespace WinHubX.Forms.Personalizzazione_office
 
             using (RegistryKey baseKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64))
             {
-                using (RegistryKey configKey = baseKey.OpenSubKey(officeRegBase))
+                using (RegistryKey? configKey = baseKey.OpenSubKey(officeRegBase))
                 {
                     if (configKey != null)
                     {
-                        using (RegistryKey productKey = baseKey.OpenSubKey(productReleasePath))
+                        using (RegistryKey? productKey = baseKey.OpenSubKey(productReleasePath))
                         {
                             if (productKey != null)
                             {
                                 foreach (string subKeyName in productKey.GetSubKeyNames())
                                 {
-                                    using (RegistryKey subKey = productKey.OpenSubKey(subKeyName))
+                                    using (RegistryKey? subKey = productKey.OpenSubKey(subKeyName))
                                     {
                                         if (subKey != null)
                                         {
@@ -698,7 +698,7 @@ namespace WinHubX.Forms.Personalizzazione_office
         private void DisplayInstallationInfo()
         {
             Version requiredVersion = new Version("16.0.9029.2167");
-            Version installedVersion;
+            Version? installedVersion;
 
             try
             {
@@ -707,13 +707,13 @@ namespace WinHubX.Forms.Personalizzazione_office
                 {
                     if (key != null)
                     {
-                        culture = key.GetValue("ClientCulture")?.ToString().ToLower() ?? "it-it";
+                        culture = key.GetValue("ClientCulture")?.ToString()?.ToLowerInvariant() ?? "it-it";
                         var productValue = key.GetValue("ProductReleaseIds");
                         if (productValue != null)
                         {
                             if (productValue is string)
                             {
-                                product = productValue.ToString();
+                                product = productValue as string ?? string.Empty;
                             }
                             else if (productValue is Array)
                             {
@@ -726,28 +726,24 @@ namespace WinHubX.Forms.Personalizzazione_office
                     }
                 }
             }
-            catch
+            catch (Exception ex) when (IsExpectedOfficeDiscoveryFailure(ex))
             {
+                Debug.WriteLine($"Lettura configurazione Click-to-Run non riuscita: {ex}");
             }
 
             string versionText = LanguageManager.GetTranslation("FormOfficeAggiungiRimuovi", "office_non_trovato");
 
             if (!string.IsNullOrEmpty(officeVersion) && Version.TryParse(officeVersion, out installedVersion))
             {
-                if (installedVersion >= requiredVersion)
-                {
-                    versionText =
-                        string.Format(LanguageManager.GetTranslation("FormOfficeAggiungiRimuovi", "versione_office"), officeVersion) + "\n" +
-                        string.Format(LanguageManager.GetTranslation("FormOfficeAggiungiRimuovi", "piattaforma"), platform) + "\n" +
-                        string.Format(LanguageManager.GetTranslation("FormOfficeAggiungiRimuovi", "prodotto"), product) + "\n" +
-                        string.Format(LanguageManager.GetTranslation("FormOfficeAggiungiRimuovi", "lingua"), culture);
-                }
-                else
-                {
-                    versionText =
-                        string.Format(LanguageManager.GetTranslation("FormOfficeAggiungiRimuovi", "versione_non_compatibile"), officeVersion) + "\n" +
-                        string.Format(LanguageManager.GetTranslation("FormOfficeAggiungiRimuovi", "versione_richiesta"), requiredVersion.ToString());
-                }
+                versionText = installedVersion >= requiredVersion
+                    ?
+                        LanguageManager.FormatTranslation("FormOfficeAggiungiRimuovi", "versione_office", officeVersion) + "\n" +
+                        LanguageManager.FormatTranslation("FormOfficeAggiungiRimuovi", "piattaforma", platform) + "\n" +
+                        LanguageManager.FormatTranslation("FormOfficeAggiungiRimuovi", "prodotto", product) + "\n" +
+                        LanguageManager.FormatTranslation("FormOfficeAggiungiRimuovi", "lingua", culture)
+                    :
+                        LanguageManager.FormatTranslation("FormOfficeAggiungiRimuovi", "versione_non_compatibile", officeVersion) + "\n" +
+                        LanguageManager.FormatTranslation("FormOfficeAggiungiRimuovi", "versione_richiesta", requiredVersion);
             }
 
             lblversioneoffice.Text = versionText;
@@ -764,10 +760,6 @@ namespace WinHubX.Forms.Personalizzazione_office
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning
                 );
-            }
-            if (!string.IsNullOrEmpty(product))
-            {
-                DisplayInstalledOfficeApps(product);
             }
         }
     }

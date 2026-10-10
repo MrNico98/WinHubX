@@ -1,4 +1,4 @@
-﻿using CuoreUI.Controls;
+using HartUI.Controls;
 
 namespace WinHubX
 {
@@ -106,9 +106,7 @@ namespace WinHubX
             btnPersonalizzaOfficePrinci.HoverImageTint = Color.White;
             btnPersonalizzaOfficePrinci.HoverOutline = Color.White;
             btnPersonalizzaOfficePrinci.Image = Properties.Resources.pngPersonalizzaOffice;
-            btnPersonalizzaOfficePrinci.ImageAutoCenter = true;
             btnPersonalizzaOfficePrinci.ImageExpand = new Point(0, 0);
-            btnPersonalizzaOfficePrinci.ImageOffset = new Point(0, 0);
             btnPersonalizzaOfficePrinci.Name = "btnPersonalizzaOfficePrinci";
             btnPersonalizzaOfficePrinci.NormalBackground = Color.FromArgb(37, 38, 39);
             btnPersonalizzaOfficePrinci.NormalForeColor = Color.White;
@@ -121,7 +119,6 @@ namespace WinHubX
             btnPersonalizzaOfficePrinci.PressedOutline = Color.White;
             btnPersonalizzaOfficePrinci.Rounding = new Padding(8);
             btnPersonalizzaOfficePrinci.TextAlignment = StringAlignment.Center;
-            btnPersonalizzaOfficePrinci.TextOffset = new Point(0, 0);
             toolTip1.SetToolTip(btnPersonalizzaOfficePrinci, resources.GetString("btnPersonalizzaOfficePrinci.ToolTip"));
             btnPersonalizzaOfficePrinci.Click += btnPersonalizzaOffice_Click;
             // 
@@ -142,9 +139,7 @@ namespace WinHubX
             btnAggRimAppOfficePrinci.HoverImageTint = Color.White;
             btnAggRimAppOfficePrinci.HoverOutline = Color.White;
             btnAggRimAppOfficePrinci.Image = Properties.Resources.pngAggiungiRimuoviOffice;
-            btnAggRimAppOfficePrinci.ImageAutoCenter = true;
             btnAggRimAppOfficePrinci.ImageExpand = new Point(0, 0);
-            btnAggRimAppOfficePrinci.ImageOffset = new Point(0, 0);
             btnAggRimAppOfficePrinci.Name = "btnAggRimAppOfficePrinci";
             btnAggRimAppOfficePrinci.NormalBackground = Color.FromArgb(37, 38, 39);
             btnAggRimAppOfficePrinci.NormalForeColor = Color.White;
@@ -157,7 +152,6 @@ namespace WinHubX
             btnAggRimAppOfficePrinci.PressedOutline = Color.White;
             btnAggRimAppOfficePrinci.Rounding = new Padding(8);
             btnAggRimAppOfficePrinci.TextAlignment = StringAlignment.Center;
-            btnAggRimAppOfficePrinci.TextOffset = new Point(0, 0);
             toolTip1.SetToolTip(btnAggRimAppOfficePrinci, resources.GetString("btnAggRimAppOfficePrinci.ToolTip"));
             btnAggRimAppOfficePrinci.Click += btnAggRimAppOffice_Click;
             // 
@@ -178,9 +172,7 @@ namespace WinHubX
             btnAttivaOfficePrinci.HoverImageTint = Color.White;
             btnAttivaOfficePrinci.HoverOutline = Color.White;
             btnAttivaOfficePrinci.Image = Properties.Resources.pngAttivaWindows;
-            btnAttivaOfficePrinci.ImageAutoCenter = true;
             btnAttivaOfficePrinci.ImageExpand = new Point(0, 0);
-            btnAttivaOfficePrinci.ImageOffset = new Point(0, 0);
             btnAttivaOfficePrinci.Name = "btnAttivaOfficePrinci";
             btnAttivaOfficePrinci.NormalBackground = Color.FromArgb(37, 38, 39);
             btnAttivaOfficePrinci.NormalForeColor = Color.White;
@@ -193,7 +185,6 @@ namespace WinHubX
             btnAttivaOfficePrinci.PressedOutline = Color.White;
             btnAttivaOfficePrinci.Rounding = new Padding(8);
             btnAttivaOfficePrinci.TextAlignment = StringAlignment.Center;
-            btnAttivaOfficePrinci.TextOffset = new Point(0, 0);
             toolTip1.SetToolTip(btnAttivaOfficePrinci, resources.GetString("btnAttivaOfficePrinci.ToolTip"));
             btnAttivaOfficePrinci.Click += btnAttivaOffice_Click;
             // 
@@ -214,9 +205,7 @@ namespace WinHubX
             btnScrubberPrinci.HoverImageTint = Color.White;
             btnScrubberPrinci.HoverOutline = Color.White;
             btnScrubberPrinci.Image = Properties.Resources.pngDisinstallaOffice;
-            btnScrubberPrinci.ImageAutoCenter = true;
             btnScrubberPrinci.ImageExpand = new Point(0, 0);
-            btnScrubberPrinci.ImageOffset = new Point(0, 0);
             btnScrubberPrinci.Name = "btnScrubberPrinci";
             btnScrubberPrinci.NormalBackground = Color.FromArgb(37, 38, 39);
             btnScrubberPrinci.NormalForeColor = Color.White;
@@ -229,7 +218,6 @@ namespace WinHubX
             btnScrubberPrinci.PressedOutline = Color.White;
             btnScrubberPrinci.Rounding = new Padding(8);
             btnScrubberPrinci.TextAlignment = StringAlignment.Center;
-            btnScrubberPrinci.TextOffset = new Point(0, 0);
             toolTip1.SetToolTip(btnScrubberPrinci, resources.GetString("btnScrubberPrinci.ToolTip"));
             btnScrubberPrinci.Click += btnScrubber_Click;
             // 
@@ -298,9 +286,7 @@ namespace WinHubX
             btn_cambiaBianco.HoverImageTint = Color.Black;
             btn_cambiaBianco.HoverOutline = Color.White;
             btn_cambiaBianco.Image = null;
-            btn_cambiaBianco.ImageAutoCenter = true;
             btn_cambiaBianco.ImageExpand = new Point(0, 0);
-            btn_cambiaBianco.ImageOffset = new Point(0, 0);
             btn_cambiaBianco.Name = "btn_cambiaBianco";
             btn_cambiaBianco.NormalBackground = Color.FromArgb(37, 38, 39);
             btn_cambiaBianco.NormalForeColor = Color.White;
@@ -313,7 +299,6 @@ namespace WinHubX
             btn_cambiaBianco.PressedOutline = Color.White;
             btn_cambiaBianco.Rounding = new Padding(8);
             btn_cambiaBianco.TextAlignment = StringAlignment.Center;
-            btn_cambiaBianco.TextOffset = new Point(0, 0);
             toolTip1.SetToolTip(btn_cambiaBianco, resources.GetString("btn_cambiaBianco.ToolTip"));
             btn_cambiaBianco.Click += btn_cambia_Click;
             // 
@@ -422,9 +407,7 @@ namespace WinHubX
             btnDownloadVerdi.HoverImageTint = Color.White;
             btnDownloadVerdi.HoverOutline = Color.FromArgb(46, 125, 50);
             btnDownloadVerdi.Image = Properties.Resources.pngScaricaOffice;
-            btnDownloadVerdi.ImageAutoCenter = true;
             btnDownloadVerdi.ImageExpand = new Point(0, 0);
-            btnDownloadVerdi.ImageOffset = new Point(0, 0);
             btnDownloadVerdi.Name = "btnDownloadVerdi";
             btnDownloadVerdi.NormalBackground = Color.FromArgb(37, 38, 39);
             btnDownloadVerdi.NormalForeColor = Color.White;
@@ -437,7 +420,6 @@ namespace WinHubX
             btnDownloadVerdi.PressedOutline = Color.FromArgb(46, 125, 50);
             btnDownloadVerdi.Rounding = new Padding(8);
             btnDownloadVerdi.TextAlignment = StringAlignment.Center;
-            btnDownloadVerdi.TextOffset = new Point(0, 0);
             toolTip1.SetToolTip(btnDownloadVerdi, resources.GetString("btnDownloadVerdi.ToolTip"));
             btnDownloadVerdi.Click += btnDownload_Click;
             // 
@@ -461,7 +443,6 @@ namespace WinHubX
         }
 
         #endregion
-        private RichTextBox richTextBoxInfo;
         private Panel panel50;
         private TableLayoutPanel tableLayoutPanel50;
         private Panel panel70;

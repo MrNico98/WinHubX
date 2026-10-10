@@ -2,24 +2,42 @@
 using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 using System.IO.Compression;
+using System.Net;
 using WinHubX.Forms.Base;
 using WinHubX.Impostazioni;
 
 
 namespace WinHubX.Forms.Settaggi
 {
-    public partial class FormPersonalizzazione : Form
+    public partial class FormPersonalizzazione : Form, IImportedSettingsForm
     {
-        private Form1 form1;
+        private readonly Form1 form1;
         private FormSettaggi formSettaggi;
-        private string tempFolder = Path.Combine(Path.GetTempPath(), "WinHubX");
+        private readonly string tempFolder = Path.Join(Path.GetTempPath(), "WinHubX");
+        private static readonly HttpClient ResourceClient = CreateResourceClient();
         private int totalSteps = 0;
-        private bool isSSD;
+
+        private static HttpClient CreateResourceClient()
+        {
+            var handler = new SocketsHttpHandler
+            {
+                AllowAutoRedirect = false,
+                MaxConnectionsPerServer = 4,
+                AutomaticDecompression = DecompressionMethods.None,
+                PooledConnectionLifetime = TimeSpan.FromMinutes(5)
+            };
+            return new HttpClient(handler) { Timeout = TimeSpan.FromMinutes(2) };
+        }
+
+        private static Uri RequireTrustedHttpsUri(string value)
+        {
+            return TrustedHttpsClient.ValidateUri(value, "personalizzazione");
+        }
         public FormPersonalizzazione(FormSettaggi formSettaggi, Form1 form1)
         {
             InitializeComponent();
-            form1 = form1;
-            formSettaggi = formSettaggi;
+            this.form1 = form1;
+            this.formSettaggi = formSettaggi;
             ThemeManager.ApplyThemeToControl(this, ThemeManager.IsDarkTheme);
             cuiButton1Verdi.Content = LanguageManager.CurrentLanguage switch
             {
@@ -37,23 +55,41 @@ namespace WinHubX.Forms.Settaggi
 
         private void btnAvviaSelezionati_Click(object sender, EventArgs e)
         {
-            totalSteps = 0;
-            foreach (Control control in panello.Controls)
-            {
-                if (control is CheckBox checkBox && checkBox.Checked)
-                {
-                    totalSteps++;
-                }
-            }
+            string[] selectedOptions = EnumerateControls(panello)
+                .OfType<CheckBox>()
+                .Where(checkBox => checkBox.Checked)
+                .Select(checkBox => checkBox.Name)
+                .ToArray();
+
+            totalSteps = selectedOptions.Length;
             if (totalSteps == 0)
             {
-                totalSteps = 1;
+                return;
             }
+
             progressBar1.MaxValue = totalSteps;
             progressBar1.Value = 0;
             if (!backgroundWorker1.IsBusy)
             {
-                backgroundWorker1.RunWorkerAsync();
+                cuiButton1Verdi.Enabled = false;
+                backgroundWorker1.RunWorkerAsync(selectedOptions);
+            }
+        }
+
+        Task IImportedSettingsForm.ApplyImportedSettingsAsync() =>
+            ImportedSettingsWorker.RunAsync(
+                backgroundWorker1,
+                () => btnAvviaSelezionati_Click(cuiButton1Verdi, EventArgs.Empty));
+
+        private static IEnumerable<Control> EnumerateControls(Control parent)
+        {
+            foreach (Control child in parent.Controls)
+            {
+                yield return child;
+                foreach (Control descendant in EnumerateControls(child))
+                {
+                    yield return descendant;
+                }
             }
         }
 
@@ -63,7 +99,7 @@ namespace WinHubX.Forms.Settaggi
             {
                 using (RegistryKey currentUserKey = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32))
                 {
-                    using (RegistryKey taskbarSettings = currentUserKey.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\TaskbarDeveloperSettings"))
+                    using (RegistryKey? taskbarSettings = currentUserKey.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\TaskbarDeveloperSettings"))
                     {
                         taskbarSettings?.SetValue("TaskbarEndTask", 0, RegistryValueKind.DWord);
                     }
@@ -71,7 +107,8 @@ namespace WinHubX.Forms.Settaggi
             }
             catch (Exception ex)
             {
-                _ = MessageBox.Show($"Error: {ex.Message}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Debug.WriteLine($"Impostazione End Task non applicata: {ex}");
+                throw;
             }
         }
 
@@ -82,7 +119,7 @@ namespace WinHubX.Forms.Settaggi
             {
                 using (RegistryKey currentUserKey = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32))
                 {
-                    using (RegistryKey taskbarSettings = currentUserKey.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\TaskbarDeveloperSettings"))
+                    using (RegistryKey? taskbarSettings = currentUserKey.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\TaskbarDeveloperSettings"))
                     {
                         taskbarSettings?.SetValue("TaskbarEndTask", 1, RegistryValueKind.DWord);
                     }
@@ -90,7 +127,8 @@ namespace WinHubX.Forms.Settaggi
             }
             catch (Exception ex)
             {
-                _ = MessageBox.Show("Error:" + ex.Message, "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Debug.WriteLine($"Impostazione End Task non ripristinata: {ex}");
+                throw;
             }
         }
 
@@ -98,11 +136,7 @@ namespace WinHubX.Forms.Settaggi
         {
             try
             {
-                using (RegistryKey localMachineKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32))
-                using (RegistryKey windowsCopilotLM = localMachineKey.CreateSubKey(@"SOFTWARE\Policies\Microsoft\Windows\WindowsCopilot"))
-                {
-                    windowsCopilotLM?.SetValue("TurnOffWindowsCopilot", 1, RegistryValueKind.DWord);
-                }
+                UpdateCopilotMachinePolicyAndPackage(disableCopilot: true);
 
                 using (RegistryKey currentUserKey = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32))
                 {
@@ -116,21 +150,11 @@ namespace WinHubX.Forms.Settaggi
                         explorerAdvanced?.SetValue("ShowCopilotButton", 0, RegistryValueKind.DWord);
                     }
                 }
-                ProcessStartInfo processInfo = new ProcessStartInfo
-                {
-                    FileName = "cmd.exe",
-                    Arguments = "/c dism /online /remove-package /package-name:Microsoft.Windows.Copilot",
-                    Verb = "runas",
-                    UseShellExecute = true,
-                    CreateNoWindow = false,
-                    WindowStyle = ProcessWindowStyle.Normal
-                };
-
-                _ = Process.Start(processInfo);
             }
             catch (Exception ex)
             {
-                _ = MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Debug.WriteLine($"Rimozione Copilot non riuscita: {ex}");
+                throw;
             }
         }
 
@@ -138,11 +162,7 @@ namespace WinHubX.Forms.Settaggi
         {
             try
             {
-                using (RegistryKey localMachineKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32))
-                using (RegistryKey windowsCopilotLM = localMachineKey.CreateSubKey(@"SOFTWARE\Policies\Microsoft\Windows\WindowsCopilot"))
-                {
-                    windowsCopilotLM?.SetValue("TurnOffWindowsCopilot", 0, RegistryValueKind.DWord);
-                }
+                UpdateCopilotMachinePolicyAndPackage(disableCopilot: false);
                 using (RegistryKey currentUserKey = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32))
                 {
                     using (RegistryKey windowsCopilotCU = currentUserKey.CreateSubKey(@"Software\Policies\Microsoft\Windows\WindowsCopilot"))
@@ -155,21 +175,11 @@ namespace WinHubX.Forms.Settaggi
                         explorerAdvanced?.SetValue("ShowCopilotButton", 1, RegistryValueKind.DWord);
                     }
                 }
-                ProcessStartInfo processInfo = new ProcessStartInfo
-                {
-                    FileName = "cmd.exe",
-                    Arguments = "/c dism /online /add-package /package-name:Microsoft.Windows.Copilot",
-                    Verb = "runas",
-                    UseShellExecute = true,
-                    CreateNoWindow = false,
-                    WindowStyle = ProcessWindowStyle.Normal
-                };
-
-                _ = Process.Start(processInfo);
             }
             catch (Exception ex)
             {
-                _ = MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Debug.WriteLine($"Ripristino Copilot non riuscito: {ex}");
+                throw;
             }
         }
 
@@ -177,20 +187,12 @@ namespace WinHubX.Forms.Settaggi
         {
             try
             {
-                ProcessStartInfo processInfo = new ProcessStartInfo
-                {
-                    FileName = "cmd.exe",
-                    Arguments = "/c dism /online /enable-feature /featurename:Recall",
-                    Verb = "runas",
-                    UseShellExecute = true,
-                    CreateNoWindow = false,
-                    WindowStyle = ProcessWindowStyle.Normal
-                };
-                _ = Process.Start(processInfo);
+                StartElevatedDism("/online", "/enable-feature", "/featurename:Recall");
             }
             catch (Exception ex)
             {
-                _ = MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Debug.WriteLine($"Attivazione Recall non riuscita: {ex}");
+                throw;
             }
         }
 
@@ -198,21 +200,70 @@ namespace WinHubX.Forms.Settaggi
         {
             try
             {
-                ProcessStartInfo processInfo = new ProcessStartInfo
-                {
-                    FileName = "cmd.exe",
-                    Arguments = "/c dism /online /disable-feature /featurename:Recall",
-                    Verb = "runas",
-                    UseShellExecute = true,
-                    CreateNoWindow = false,
-                    WindowStyle = ProcessWindowStyle.Normal
-                };
-                _ = Process.Start(processInfo);
+                StartElevatedDism("/online", "/disable-feature", "/featurename:Recall");
             }
             catch (Exception ex)
             {
-                _ = MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Debug.WriteLine($"Disattivazione Recall non riuscita: {ex}");
+                throw;
             }
+        }
+
+        private static void StartElevatedDism(params string[] arguments)
+        {
+            var processInfo = new ProcessStartInfo
+            {
+                FileName = Path.Join(Environment.SystemDirectory, "dism.exe"),
+                Verb = "runas",
+                UseShellExecute = true,
+                WindowStyle = ProcessWindowStyle.Normal
+            };
+            foreach (string argument in arguments)
+                processInfo.ArgumentList.Add(argument);
+
+            using Process process = Process.Start(processInfo)
+                ?? throw new InvalidOperationException("Impossibile avviare DISM con privilegi elevati.");
+            process.WaitForExit();
+            if (process.ExitCode != 0)
+                throw new InvalidOperationException($"DISM è terminato con codice {process.ExitCode}.");
+        }
+
+        private static void UpdateCopilotMachinePolicyAndPackage(bool disableCopilot)
+        {
+            var mutations = new ElevatedRegistryMutationBatch();
+            mutations.SetValue(
+                RegistryHive.LocalMachine,
+                @"SOFTWARE\Policies\Microsoft\Windows\WindowsCopilot",
+                "TurnOffWindowsCopilot",
+                disableCopilot ? 1 : 0,
+                RegistryValueKind.DWord,
+                RegistryView.Registry32);
+
+            string packageCommand = disableCopilot
+                ? "& $dism /online /remove-package /package-name:Microsoft.Windows.Copilot"
+                : "& $dism /online /add-package /package-name:Microsoft.Windows.Copilot";
+            string script = string.Join(Environment.NewLine,
+                mutations.BuildCommand(),
+                "$dism = Join-Path $env:SystemRoot 'System32\\dism.exe'",
+                packageCommand,
+                "exit $LASTEXITCODE");
+            var processInfo = new ProcessStartInfo
+            {
+                FileName = Path.Join(Environment.SystemDirectory, "WindowsPowerShell", "v1.0", "powershell.exe"),
+                UseShellExecute = true,
+                Verb = "runas",
+                WindowStyle = ProcessWindowStyle.Normal
+            };
+            processInfo.ArgumentList.Add("-NoProfile");
+            processInfo.ArgumentList.Add("-NonInteractive");
+            processInfo.ArgumentList.Add("-EncodedCommand");
+            processInfo.ArgumentList.Add(Convert.ToBase64String(System.Text.Encoding.Unicode.GetBytes(script)));
+
+            using Process process = Process.Start(processInfo)
+                ?? throw new InvalidOperationException("Impossibile avviare la modifica Copilot con privilegi elevati.");
+            process.WaitForExit();
+            if (process.ExitCode != 0)
+                throw new InvalidOperationException($"La modifica del pacchetto Copilot è terminata con codice {process.ExitCode}.");
         }
 
         private void AvviaProcessoOttimizzaRicerca()
@@ -224,7 +275,8 @@ namespace WinHubX.Forms.Settaggi
             }
             catch (Exception ex)
             {
-                _ = MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Debug.WriteLine($"Ottimizzazione ricerca Explorer non riuscita: {ex}");
+                throw;
             }
         }
         private void AvviaProcessoDisabilitaOttimizzaRicerca()
@@ -237,7 +289,8 @@ namespace WinHubX.Forms.Settaggi
             }
             catch (Exception ex)
             {
-                _ = MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Debug.WriteLine($"Ripristino ottimizzazione ricerca Explorer non riuscito: {ex}");
+                throw;
             }
         }
         private void AvviaProcessoDisabilitaSuggeriti()
@@ -251,7 +304,8 @@ namespace WinHubX.Forms.Settaggi
             }
             catch (Exception ex)
             {
-                _ = MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Debug.WriteLine($"Disattivazione suggerimenti ricerca non riuscita: {ex}");
+                throw;
             }
         }
 
@@ -267,7 +321,8 @@ namespace WinHubX.Forms.Settaggi
             }
             catch (Exception ex)
             {
-                _ = MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Debug.WriteLine($"Attivazione suggerimenti ricerca non riuscita: {ex}");
+                throw;
             }
         }
         private void AvviaProcessoDisabilitaRicercaInternet()
@@ -287,7 +342,8 @@ namespace WinHubX.Forms.Settaggi
             }
             catch (Exception ex)
             {
-                _ = MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Debug.WriteLine($"Disattivazione ricerca Internet non riuscita: {ex}");
+                throw;
             }
         }
         private void AvviaProcessoAbilitaRicercaInternet()
@@ -302,88 +358,55 @@ namespace WinHubX.Forms.Settaggi
             }
             catch (Exception ex)
             {
-                _ = MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Debug.WriteLine($"Attivazione ricerca Internet non riuscita: {ex}");
+                throw;
             }
         }
 
         private async Task AvviaProcessoConRegFile(string regFileName)
         {
-            string zipFileUrl = await OttieniUrlRegFile(Dipendenze.GitHubConfigUrl);
-
-            if (!string.IsNullOrEmpty(zipFileUrl))
+            try
             {
-                string zipFilePath = Path.Combine(tempFolder, "resources.zip");
-
+                string zipFileUrl = await OttieniUrlRegFile(Dipendenze.GitHubConfigUrl);
+                string zipFilePath = Path.Join(tempFolder, "resources.zip");
                 await ScaricaFile(zipFileUrl, zipFilePath);
-                await Task.Delay(1000);
-
-                string regFilePath = EstraiFileReg(zipFilePath, regFileName);
-
-                if (regFilePath != null)
-                {
-                    EseguiFileReg(regFilePath);
-                    await Task.Delay(3000);
-                }
-                else
-                {
+                string? regFilePath = EstraiFileReg(zipFilePath, regFileName);
+                if (regFilePath is null)
                     throw new FileNotFoundException($"File .reg '{regFileName}' non trovato nel file ZIP.");
-                }
-
-                if (File.Exists(zipFilePath))
-                {
-                    File.Delete(zipFilePath);
-                    await Task.Delay(3000);
-                }
-
-                if (Directory.Exists(tempFolder))
-                {
-                    try
-                    {
-                        Directory.Delete(tempFolder, true);
-                        await Task.Delay(3000);
-                    }
-                    catch (IOException)
-                    {
-                        throw new IOException("Errore nell'eliminazione della cartella temporanea.");
-                    }
-                }
+                EseguiFileReg(regFilePath);
             }
-            else
+            finally
             {
-                throw new Exception("URL del file ZIP non trovato.");
+                if (Directory.Exists(tempFolder))
+                    Directory.Delete(tempFolder, recursive: true);
             }
         }
 
 
         private async Task<string> OttieniUrlRegFile(string jsonUrl)
         {
-            using (HttpClient client = new HttpClient())
-            {
-                var response = await client.GetStringAsync(jsonUrl);
-                var json = JObject.Parse(response);
-                return json["PersonaTastoDestro"]["PersoTastoDestro"].ToString();
-            }
+            Uri configUri = RequireTrustedHttpsUri(jsonUrl);
+            var response = await TrustedHttpsClient.GetStringAsync(ResourceClient, configUri.AbsoluteUri);
+            var json = JObject.Parse(response);
+            string? resourceUrl = json["PersonaTastoDestro"]?["PersoTastoDestro"]?.Value<string>();
+            return RequireTrustedHttpsUri(resourceUrl
+                ?? throw new InvalidOperationException("URL risorsa non presente nella configurazione.")).ToString();
         }
 
         private async Task ScaricaFile(string url, string filePath)
         {
-            using (HttpClient client = new HttpClient())
-            {
-                _ = Directory.CreateDirectory(tempFolder);
-                using (var response = await client.GetAsync(url))
-                {
-                    _ = response.EnsureSuccessStatusCode();
-                    using (var fs = new FileStream(filePath, FileMode.CreateNew))
-                    {
-                        await response.Content.CopyToAsync(fs);
-                    }
-                }
-            }
+            Uri resourceUri = RequireTrustedHttpsUri(url);
+            _ = Directory.CreateDirectory(tempFolder);
+            await DownloadManager.DownloadFileAsync(resourceUri.ToString(), filePath,
+                CancellationToken.None, autoParallel: false);
         }
 
         private string? EstraiFileReg(string zipFilePath, string regFileName)
         {
-            string extractedRegFilePath = Path.Combine(tempFolder, regFileName);
+            string extractionRoot = Path.GetFullPath(tempFolder) + Path.DirectorySeparatorChar;
+            string extractedRegFilePath = Path.GetFullPath(Path.Join(tempFolder, regFileName));
+            if (!extractedRegFilePath.StartsWith(extractionRoot, StringComparison.OrdinalIgnoreCase))
+                throw new InvalidOperationException("Percorso di estrazione non valido.");
             using (ZipArchive archive = ZipFile.OpenRead(zipFilePath))
             {
                 foreach (ZipArchiveEntry entry in archive.Entries)
@@ -401,130 +424,79 @@ namespace WinHubX.Forms.Settaggi
 
         private void EseguiFileReg(string filePath)
         {
-            string regedit64Path = @"C:\Windows\System32\regedit.exe";
-            string regedit32Path = @"C:\Windows\SysWOW64\regedit.exe";
+            string systemRegeditPath = Path.Join(Environment.SystemDirectory, "regedit.exe");
+            ImportRegistryFile(systemRegeditPath, filePath);
 
-            try
+            if (Environment.Is64BitOperatingSystem)
             {
-                _ = System.Diagnostics.Process.Start(regedit64Path, $"/s \"{filePath}\"");
+                string? windowsDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Windows);
+                if (!string.IsNullOrWhiteSpace(windowsDirectory))
+                {
+                    string regedit32Path = Path.Join(windowsDirectory, "SysWOW64", "regedit.exe");
+                    if (File.Exists(regedit32Path))
+                    {
+                        ImportRegistryFile(regedit32Path, filePath);
+                    }
+                }
             }
-            catch (Exception)
-            {
+        }
 
-            }
-
-            try
+        private static void ImportRegistryFile(string regeditPath, string filePath)
+        {
+            using var process = new Process
             {
-                _ = System.Diagnostics.Process.Start(regedit32Path, $"/s \"{filePath}\"");
-            }
-            catch (Exception)
-            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = regeditPath,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                }
+            };
+            process.StartInfo.ArgumentList.Add("/s");
+            process.StartInfo.ArgumentList.Add(filePath);
 
-            }
+            if (!process.Start())
+                throw new InvalidOperationException($"Impossibile avviare l'importazione del file registro: {regeditPath}");
+
+            process.WaitForExit();
+            if (process.ExitCode != 0)
+                throw new InvalidOperationException($"regedit è terminato con codice {process.ExitCode}.");
         }
 
 
         private void AvviaProcessoDestroDefault()
         {
             string registryPath = @"SOFTWARE\CLASSES\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}";
-            try
-            {
-                using (RegistryKey key32 = Registry.CurrentUser.OpenSubKey(registryPath, true))
-                {
-                    if (key32 != null)
-                    {
-                        Registry.CurrentUser.DeleteSubKeyTree(registryPath, false);
-                    }
-                    else
-                    {
-
-                    }
-                }
-            }
-            catch (UnauthorizedAccessException)
-            {
-
-            }
-            catch (Exception)
-            {
-
-            }
-            try
-            {
-                using (RegistryKey key64 = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64))
-                {
-                    using (RegistryKey subKey64 = key64.OpenSubKey(registryPath, true))
-                    {
-                        if (subKey64 != null)
-                        {
-                            key64.DeleteSubKeyTree(registryPath, false);
-
-                        }
-                        else
-                        {
-
-                        }
-                    }
-                }
-            }
-            catch (UnauthorizedAccessException)
-            {
-
-            }
-            catch (Exception)
-            {
-
-            }
+            DeleteCurrentUserSubKeyIfPresent(registryPath, RegistryView.Registry32);
+            DeleteCurrentUserSubKeyIfPresent(registryPath, RegistryView.Registry64);
         }
 
         private void AvviaProcessoDestroLegacy()
         {
             string registryPath = @"SOFTWARE\CLASSES\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32";
-            try
+            SetCurrentUserDefaultString(registryPath, RegistryView.Registry32);
+            SetCurrentUserDefaultString(registryPath, RegistryView.Registry64);
+        }
+
+        private static void DeleteCurrentUserSubKeyIfPresent(string subKeyPath, RegistryView registryView)
+        {
+            using RegistryKey baseKey = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, registryView);
+            bool exists;
+            using (RegistryKey? existingKey = baseKey.OpenSubKey(subKeyPath, writable: true))
             {
-                using (RegistryKey key32 = Registry.CurrentUser.CreateSubKey(registryPath))
-                {
-                    if (key32 != null)
-                    {
-                        key32.SetValue("", "", RegistryValueKind.String);
-
-                    }
-                    else
-                    {
-
-                    }
-                }
+                exists = existingKey is not null;
             }
-            catch (UnauthorizedAccessException)
-            {
 
-            }
-            catch (Exception)
-            {
+            if (exists)
+                baseKey.DeleteSubKeyTree(subKeyPath, throwOnMissingSubKey: false);
+        }
 
-            }
-            try
-            {
-                using (RegistryKey key64 = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64).CreateSubKey(registryPath))
-                {
-                    if (key64 != null)
-                    {
-                        key64.SetValue("", "", RegistryValueKind.String);
-                    }
-                    else
-                    {
-
-                    }
-                }
-            }
-            catch (UnauthorizedAccessException)
-            {
-
-            }
-            catch (Exception)
-            {
-
-            }
+        private static void SetCurrentUserDefaultString(string subKeyPath, RegistryView registryView)
+        {
+            using RegistryKey baseKey = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, registryView);
+            using RegistryKey key = baseKey.CreateSubKey(subKeyPath)
+                ?? throw new UnauthorizedAccessException($"Impossibile creare HKCU\\{subKeyPath} nella vista {registryView}.");
+            key.SetValue(string.Empty, string.Empty, RegistryValueKind.String);
         }
 
         private void AvviaProcessoMostraSecondi()
@@ -593,33 +565,25 @@ namespace WinHubX.Forms.Settaggi
 
         private static void UpdateRegistryValue(string registryPath, string valueName, object newValue, RegistryValueKind valueKind)
         {
-            try
-            {
-                using (RegistryKey key = Registry.CurrentUser.OpenSubKey(registryPath, writable: true))
-                {
-                    if (key != null)
-                    {
-                        key.SetValue(valueName, newValue, valueKind);
-                    }
-                    else
-                    {
-
-                    }
-                }
-            }
-            catch (Exception)
-            {
-
-            }
+            using RegistryKey key = Registry.CurrentUser.CreateSubKey(registryPath, writable: true)
+                ?? throw new InvalidOperationException($"Impossibile aprire o creare HKCU\\{registryPath}.");
+            key.SetValue(valueName, newValue, valueKind);
         }
 
         private static void RestartExplorer()
         {
-            foreach (var process in Process.GetProcessesByName("explorer"))
+            int currentSessionId = Process.GetCurrentProcess().SessionId;
+            foreach (Process process in Process.GetProcessesByName("explorer"))
             {
-                process.Kill();
+                using (process)
+                {
+                    if (process.SessionId == currentSessionId)
+                        process.Kill();
+                }
             }
-            _ = System.Diagnostics.Process.Start("explorer.exe");
+            string explorerPath = Path.Join(Environment.GetFolderPath(Environment.SpecialFolder.Windows), "explorer.exe");
+            _ = Process.Start(new ProcessStartInfo(explorerPath) { UseShellExecute = true })
+                ?? throw new InvalidOperationException("Impossibile riavviare Esplora file.");
         }
 
         private void btnBack_Click(object sender, EventArgs e)
@@ -664,23 +628,15 @@ namespace WinHubX.Forms.Settaggi
             radio_abilicopilot.Checked = false;
             radio_abilitaendtask.Checked = false;
             radio_disabilitaendtask.Checked = false;
-            try
-            {
-                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\WinHubX\Personalizzazione", true);
-            }
-            catch (Exception)
-            {
-
-            }
         }
 
         private bool GetCheckboxState(string itemName)
         {
-            using (RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\WinHubX\\Personalizzazione"))
+            using (RegistryKey? key = Registry.CurrentUser.OpenSubKey("Software\\WinHubX\\Personalizzazione"))
             {
                 if (key != null)
                 {
-                    object value = key.GetValue(itemName);
+                    object? value = key.GetValue(itemName);
                     if (value != null)
                     {
                         return (int)value == 1;
@@ -723,220 +679,204 @@ namespace WinHubX.Forms.Settaggi
         {
             using (RegistryKey baseKey = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, view))
             {
-                using (RegistryKey key = baseKey.OpenSubKey(path, writable: true))
-                {
-                    if (key != null)
-                    {
-                        key.SetValue(valueName, value, RegistryValueKind.String);
-                    }
-                    else
-                    {
-
-                    }
-                }
+                using RegistryKey key = baseKey.CreateSubKey(path, writable: true)
+                    ?? throw new InvalidOperationException($"Impossibile aprire o creare HKCU\\{path}.");
+                key.SetValue(valueName, value, RegistryValueKind.String);
             }
         }
 
         public void DeleteRegistryValue(string path, string valueName, RegistryView view)
         {
-            using (RegistryKey baseKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, view))
+            using (RegistryKey baseKey = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, view))
             {
-                using (RegistryKey key = baseKey.OpenSubKey(path, writable: true))
+                using (RegistryKey? key = baseKey.OpenSubKey(path, writable: true))
                 {
-                    if (key != null)
-                    {
-                        try
-                        {
-                            key.DeleteValue(valueName, throwOnMissingValue: false);
-                        }
-                        catch (ArgumentException)
-                        {
-
-                        }
-                    }
-                    else
-                    {
-
-                    }
+                    key?.DeleteValue(valueName, throwOnMissingValue: false);
                 }
             }
         }
 
         private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
+            if (e.Argument is not string[] selectedOptionNames)
+            {
+                throw new InvalidOperationException("Selezione delle personalizzazioni non valida.");
+            }
+
+            var selectedOptions = selectedOptionNames.ToHashSet(StringComparer.Ordinal);
             int currentStep = 0;
-            if (radio_orologiomostrasecondi.Checked)
+            if (selectedOptions.Contains(nameof(radio_orologiomostrasecondi)))
             {
                 AvviaProcessoMostraSecondi();
-                SetCheckboxState("MostraSecondi", radio_orologiomostrasecondi.Checked);
+                SetCheckboxState("MostraSecondi", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
             }
-            if (radio_orologiomostradatasecondi.Checked)
+            if (selectedOptions.Contains(nameof(radio_orologiomostradatasecondi)))
             {
                 AvviaProcessoMostraDataSecondi();
-                SetCheckboxState("MostraDataSecondi", radio_orologiomostradatasecondi.Checked);
+                SetCheckboxState("MostraDataSecondi", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
             }
-            if (radio_orologiostandard.Checked)
+            if (selectedOptions.Contains(nameof(radio_orologiostandard)))
             {
                 AvviaProcessoOrologioStandard();
-                SetCheckboxState("OrologioStandard", radio_orologiostandard.Checked);
+                SetCheckboxState("OrologioStandard", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
             }
-            if (radio_orologionascondioradata.Checked)
+            if (selectedOptions.Contains(nameof(radio_orologionascondioradata)))
             {
                 AvviaProcessoNascondiOraData();
-                SetCheckboxState("NascondiOraData", radio_orologionascondioradata.Checked);
+                SetCheckboxState("NascondiOraData", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
             }
-            if (radio_orologiomostraoradata.Checked)
+            if (selectedOptions.Contains(nameof(radio_orologiomostraoradata)))
             {
                 AvviaProcessoMostraOraData();
-                SetCheckboxState("MostraOraData", radio_orologiomostraoradata.Checked);
+                SetCheckboxState("MostraOraData", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
             }
-            if (radio_destrolegacy.Checked)
+            if (selectedOptions.Contains(nameof(radio_destrolegacy)))
             {
                 AvviaProcessoDestroLegacy();
-                SetCheckboxState("DestroLegacy", radio_destrolegacy.Checked);
+                SetCheckboxState("DestroLegacy", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
             }
-            if (radio_destrodefault.Checked)
+            if (selectedOptions.Contains(nameof(radio_destrodefault)))
             {
                 AvviaProcessoDestroDefault();
-                SetCheckboxState("DestroDefault", radio_destrodefault.Checked);
+                SetCheckboxState("DestroDefault", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
             }
-            if (radio_apricmd.Checked)
+            if (selectedOptions.Contains(nameof(radio_apricmd)))
             {
-                _ = AvviaProcessoConRegFile("cmdsi.reg");
-                SetCheckboxState("ApriCMD", radio_apricmd.Checked);
+                AvviaProcessoConRegFile("cmdsi.reg").GetAwaiter().GetResult();
+                SetCheckboxState("ApriCMD", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
             }
-            if (radio_eliminaapricmd.Checked)
+            if (selectedOptions.Contains(nameof(radio_eliminaapricmd)))
             {
-                _ = AvviaProcessoConRegFile("cmdno.reg");
-                SetCheckboxState("EliminaApriCMD", radio_eliminaapricmd.Checked);
+                AvviaProcessoConRegFile("cmdno.reg").GetAwaiter().GetResult();
+                SetCheckboxState("EliminaApriCMD", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
             }
-            if (radio_apripowershell.Checked)
+            if (selectedOptions.Contains(nameof(radio_apripowershell)))
             {
-                _ = AvviaProcessoConRegFile("powershellsi.reg");
-                SetCheckboxState("ApriPowershell", radio_apripowershell.Checked);
+                AvviaProcessoConRegFile("powershellsi.reg").GetAwaiter().GetResult();
+                SetCheckboxState("ApriPowershell", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
             }
-            if (radio_eliminapowershell.Checked)
+            if (selectedOptions.Contains(nameof(radio_eliminapowershell)))
             {
-                _ = AvviaProcessoConRegFile("powershellno.reg");
-                SetCheckboxState("EliminaPowershell", radio_eliminapowershell.Checked);
+                AvviaProcessoConRegFile("powershellno.reg").GetAwaiter().GetResult();
+                SetCheckboxState("EliminaPowershell", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
             }
-            if (radio_disattivafx.Checked)
+            if (selectedOptions.Contains(nameof(radio_disattivafx)))
             {
-                _ = AvviaProcessoConRegFile("disabilita_tutti_visual_fx.reg");
-                SetCheckboxState("DisattivaFx", radio_disattivafx.Checked);
+                AvviaProcessoConRegFile("disabilita_tutti_visual_fx.reg").GetAwaiter().GetResult();
+                SetCheckboxState("DisattivaFx", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
             }
-            if (radio_attivafx.Checked)
+            if (selectedOptions.Contains(nameof(radio_attivafx)))
             {
-                _ = AvviaProcessoConRegFile("abilita_visual_fx.reg");
-                SetCheckboxState("AttivaFx", radio_attivafx.Checked);
+                AvviaProcessoConRegFile("abilita_visual_fx.reg").GetAwaiter().GetResult();
+                SetCheckboxState("AttivaFx", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
             }
-            if (radio_disabilitaricercainternet.Checked)
+            if (selectedOptions.Contains(nameof(radio_disabilitaricercainternet)))
             {
                 AvviaProcessoDisabilitaRicercaInternet();
-                SetCheckboxState("DisabilitaRicercaInternet", radio_disabilitaricercainternet.Checked);
+                SetCheckboxState("DisabilitaRicercaInternet", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
             }
-            if (radio_abilitaRicercainternet.Checked)
+            if (selectedOptions.Contains(nameof(radio_abilitaRicercainternet)))
             {
                 AvviaProcessoAbilitaRicercaInternet();
-                SetCheckboxState("AbilitaRicercaInternet", radio_disabilitaricercainternet.Checked);
+                SetCheckboxState("AbilitaRicercaInternet", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
             }
-            if (radio_abilitasuggeriti.Checked)
+            if (selectedOptions.Contains(nameof(radio_abilitasuggeriti)))
             {
                 AvviaProcessoAbilitaSuggeriti();
-                SetCheckboxState("AbilitaSuggeriti", radio_abilitasuggeriti.Checked);
+                SetCheckboxState("AbilitaSuggeriti", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
             }
-            if (radio_disabilitasuggeriti.Checked)
+            if (selectedOptions.Contains(nameof(radio_disabilitasuggeriti)))
             {
                 AvviaProcessoDisabilitaSuggeriti();
-                SetCheckboxState("DisabilitaSuggeriti", radio_disabilitasuggeriti.Checked);
+                SetCheckboxState("DisabilitaSuggeriti", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
             }
-            if (radio_ottimizzaricerca.Checked)
+            if (selectedOptions.Contains(nameof(radio_ottimizzaricerca)))
             {
                 AvviaProcessoOttimizzaRicerca();
-                SetCheckboxState("OttimizzaRicerca", radio_ottimizzaricerca.Checked);
+                SetCheckboxState("OttimizzaRicerca", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
             }
-            if (radio_disabilitaottimizzaricerca.Checked)
+            if (selectedOptions.Contains(nameof(radio_disabilitaottimizzaricerca)))
             {
                 AvviaProcessoDisabilitaOttimizzaRicerca();
-                SetCheckboxState("DisabilitaOttimizzaRicerca", radio_ottimizzaricerca.Checked);
+                SetCheckboxState("DisabilitaOttimizzaRicerca", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
             }
-            if (radio_abilitarecall.Checked)
+            if (selectedOptions.Contains(nameof(radio_abilitarecall)))
             {
                 AvviaProcessoAbilitaecall();
-                SetCheckboxState("AbilitaRecall", radio_abilitarecall.Checked);
+                SetCheckboxState("AbilitaRecall", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
             }
-            if (radio_disabilitarecall.Checked)
+            if (selectedOptions.Contains(nameof(radio_disabilitarecall)))
             {
                 AvviaProcessoRimuovirecall();
-                SetCheckboxState("DisabilitaRecall", radio_disabilitarecall.Checked);
+                SetCheckboxState("DisabilitaRecall", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
             }
-            if (radio_abilicopilot.Checked)
+            if (selectedOptions.Contains(nameof(radio_abilicopilot)))
             {
                 AvviaProcessoAggiungiCopilot();
-                SetCheckboxState("AbilitaCopilot", radio_abilicopilot.Checked);
+                SetCheckboxState("AbilitaCopilot", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
             }
-            if (radio_disacopilot.Checked)
+            if (selectedOptions.Contains(nameof(radio_disacopilot)))
             {
                 AvviaProcessoRimuoviCopilot();
-                SetCheckboxState("DisablitaCopilot", radio_disacopilot.Checked);
+                SetCheckboxState("DisablitaCopilot", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
             }
-            if (radio_abilitaendtask.Checked)
+            if (selectedOptions.Contains(nameof(radio_abilitaendtask)))
             {
                 AbiliaEndTask();
-                SetCheckboxState("AbiliEndTask", radio_disacopilot.Checked);
+                SetCheckboxState("AbiliEndTask", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
             }
-            if (radio_disabilitaendtask.Checked)
+            if (selectedOptions.Contains(nameof(radio_disabilitaendtask)))
             {
                 DisabilitaEndTask();
-                SetCheckboxState("DisabilEndTask", radio_disacopilot.Checked);
+                SetCheckboxState("DisabilEndTask", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
             }
@@ -949,23 +889,47 @@ namespace WinHubX.Forms.Settaggi
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
-            RestartExplorer();
-            string messaggio = LanguageManager.GetTranslation("Global", "modifichesuccesso");
+            cuiButton1Verdi.Enabled = true;
+            if (e.Error is not null)
+            {
+                Debug.WriteLine($"Applicazione delle personalizzazioni non riuscita: {e.Error}");
+                MessageBox.Show(
+                    $"Applicazione interrotta; alcune modifiche precedenti potrebbero essere già state applicate.\n{e.Error.Message}",
+                    "WinHubX",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                return;
+            }
 
-            _ = MessageBox.Show(
-                messaggio,
-                "WinHubX",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information
-            );
+            try
+            {
+                RestartExplorer();
+                MessageBox.Show(
+                    LanguageManager.GetTranslation("Global", "modifichesuccesso"),
+                    "WinHubX",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+            }
+            catch (Exception ex) when (ex is System.ComponentModel.Win32Exception
+                or IOException
+                or UnauthorizedAccessException
+                or System.Security.SecurityException
+                or InvalidOperationException)
+            {
+                Debug.WriteLine($"Riavvio Esplora file dopo personalizzazione non riuscito: {ex}");
+                MessageBox.Show(
+                    $"Le impostazioni sono state applicate, ma Esplora file non è stato riavviato automaticamente.\n{ex.Message}",
+                    "WinHubX",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+            }
         }
 
         private void SetCheckboxState(string itemName, bool isChecked)
         {
-            using (RegistryKey key = Registry.CurrentUser.CreateSubKey("Software\\WinHubX\\Personalizzazione"))
-            {
-                key.SetValue(itemName, isChecked ? 1 : 0, RegistryValueKind.DWord);
-            }
+            using RegistryKey key = Registry.CurrentUser.CreateSubKey("Software\\WinHubX\\Personalizzazione")
+                ?? throw new InvalidOperationException("Impossibile salvare lo stato delle personalizzazioni.");
+            key.SetValue(itemName, isChecked ? 1 : 0, RegistryValueKind.DWord);
         }
 
         private void btnSettaggiExplorer_Click(object sender, EventArgs e)
@@ -979,12 +943,10 @@ namespace WinHubX.Forms.Settaggi
         {
             if (sender is CheckBox current && current.Checked)
             {
-                foreach (var chk in panel78.Controls.OfType<CheckBox>())
+                foreach (CheckBox chk in panel78.Controls.OfType<CheckBox>()
+                    .Where(chk => chk.Name.StartsWith("radio_orologio", StringComparison.Ordinal) && chk != current))
                 {
-                    if (chk.Name.StartsWith("radio_orologio") && chk != current)
-                    {
-                        chk.Checked = false;
-                    }
+                    chk.Checked = false;
                 }
             }
         }
@@ -1003,16 +965,10 @@ namespace WinHubX.Forms.Settaggi
                     ? text.Substring("Abilita ".Length)
                     : text.Substring("Disabilita ".Length);
 
-                foreach (var chk in panel77.Controls.OfType<CheckBox>())
+                foreach (CheckBox chk in panel77.Controls.OfType<CheckBox>().Where(chk =>
+                    chk != current && IsOppositeSetting(chk.Text, isAbilita, baseText, "Abilita ", "Disabilita ")))
                 {
-                    if (chk == current) continue;
-
-                    string chkText = chk.Text;
-                    if ((isAbilita && chkText.StartsWith("Disabilita ") && chkText.Substring("Disabilita ".Length) == baseText) ||
-                        (isDisabilita && chkText.StartsWith("Abilita ") && chkText.Substring("Abilita ".Length) == baseText))
-                    {
-                        chk.Checked = false;
-                    }
+                    chk.Checked = false;
                 }
             }
         }
@@ -1034,20 +990,20 @@ namespace WinHubX.Forms.Settaggi
                     ? text.Substring("Aggiungi ".Length)
                     : text.Substring("Rimuovi ".Length);
 
-                foreach (var chk in panel76.Controls.OfType<CheckBox>())
+                foreach (CheckBox chk in panel76.Controls.OfType<CheckBox>().Where(chk =>
+                    chk != current && IsOppositeSetting(chk.Text, isAggiungi, baseText, "Aggiungi ", "Rimuovi ")))
                 {
-                    if (chk == current) continue;
-
-                    string chkText = chk.Text;
-                    if ((isAggiungi && chkText.StartsWith("Rimuovi ") && chkText.Substring("Rimuovi ".Length) == baseText) ||
-                        (isRimuovi && chkText.StartsWith("Aggiungi ") && chkText.Substring("Aggiungi ".Length) == baseText))
-                    {
-                        chk.Checked = false;
-                    }
+                    chk.Checked = false;
                 }
             }
         }
 
+        private static bool IsOppositeSetting(string candidateText, bool enabling, string baseText, string enablePrefix, string disablePrefix)
+        {
+            string expectedPrefix = enabling ? disablePrefix : enablePrefix;
+            return candidateText.StartsWith(expectedPrefix, StringComparison.Ordinal)
+                && string.Equals(candidateText[expectedPrefix.Length..], baseText, StringComparison.Ordinal);
+        }
 
     }
 }

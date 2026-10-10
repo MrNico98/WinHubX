@@ -81,16 +81,6 @@ namespace WinHubX.Properties {
         }
         
         /// <summary>
-        ///   Cerca una risorsa localizzata di tipo System.Byte[].
-        /// </summary>
-        internal static byte[] KMS38_Activation {
-            get {
-                object obj = ResourceManager.GetObject("KMS38_Activation", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Microsoft_Office_Access_20192025 {
@@ -277,16 +267,6 @@ namespace WinHubX.Properties {
             get {
                 object obj = ResourceManager.GetObject("Microsoft_Store_logo_dark.svg", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Cerca una risorsa localizzata di tipo System.Byte[].
-        /// </summary>
-        internal static byte[] Ohook_Activation_AIO {
-            get {
-                object obj = ResourceManager.GetObject("Ohook_Activation_AIO", resourceCulture);
-                return ((byte[])(obj));
             }
         }
         
@@ -1277,16 +1257,6 @@ namespace WinHubX.Properties {
             get {
                 object obj = ResourceManager.GetObject("term_verde", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Cerca una risorsa localizzata di tipo System.Byte[].
-        /// </summary>
-        internal static byte[] TSforge_Activation {
-            get {
-                object obj = ResourceManager.GetObject("TSforge_Activation", resourceCulture);
-                return ((byte[])(obj));
             }
         }
         

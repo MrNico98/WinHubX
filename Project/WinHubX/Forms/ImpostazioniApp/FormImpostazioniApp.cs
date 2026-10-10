@@ -7,6 +7,8 @@ using System.IO.Compression;
 using System.Management;
 using System.Security.Policy;
 using System.Text;
+using System.Net;
+using System.Security.Cryptography;
 using WinHubX.Forms.Base;
 using WinHubX.Impostazioni;
 
@@ -14,13 +16,44 @@ namespace WinHubX.Forms.ImpostazioniApp
 {
     public partial class FormImpostazioniApp : Form
     {
+        private static bool IsExpectedApplicationUpdateFailure(Exception exception) =>
+            exception is IOException
+                or UnauthorizedAccessException
+                or System.Security.SecurityException
+                or System.ComponentModel.Win32Exception
+                or HttpRequestException
+                or System.Text.Json.JsonException
+                or System.Security.Cryptography.CryptographicException
+                or InvalidOperationException
+                or OperationCanceledException
+                or TimeoutException
+                or ArgumentException;
+
         private string selectedTheme = "";
         private string lingua = "";
-        private static readonly HttpClient client = new HttpClient();
-        private string latestVersion = null;
-        private string latestUpdateUrl = null;
-        private string latestReleaseNotes = null;
+        private static readonly HttpClient client = CreateHttpClient();
+        private string? latestVersion;
+        private string? latestUpdateUrl;
+        private string? latestReleaseNotes;
+        private string? latestUpdateSha256;
         public bool UpdateDetectedAtStartup { get; private set; } = false;
+
+        private static HttpClient CreateHttpClient()
+        {
+            var handler = new SocketsHttpHandler
+            {
+                AllowAutoRedirect = false,
+                MaxConnectionsPerServer = 4,
+                PooledConnectionLifetime = TimeSpan.FromMinutes(5),
+                AutomaticDecompression = System.Net.DecompressionMethods.None
+            };
+
+            return new HttpClient(handler)
+            {
+                Timeout = TimeSpan.FromSeconds(30)
+            };
+        }
+
         public FormImpostazioniApp()
         {
             InitializeComponent();
@@ -168,9 +201,6 @@ namespace WinHubX.Forms.ImpostazioniApp
         {
             var config = ThemeConfig.Load();
 
-            string jsonPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                "WinHubX", "Impostazioni", "Tema.json");
-
             if (!config.ThemeManuallySet)
             {
                 radioButton_temadisistema.Checked = true;
@@ -191,9 +221,6 @@ namespace WinHubX.Forms.ImpostazioniApp
         private void LoadCurrentLingua()
         {
             var config = ThemeConfig.Load();
-
-            string jsonPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                "WinHubX", "Impostazioni", "Tema.json");
 
             if (!config.LanguageManuallySet)
             {
@@ -239,7 +266,7 @@ namespace WinHubX.Forms.ImpostazioniApp
         private async void btnAggiornamento_Click(object sender, EventArgs e)
         {
 
-            if (btnAggiornamento.Content == "  Aggiorna" && latestUpdateUrl != null)
+            if (btnAggiornamento.Content == "  Aggiorna" && latestUpdateUrl != null && latestVersion != null)
             {
                 btnAggiornamento.Content = LanguageManager.CurrentLanguage switch
                 {
@@ -247,7 +274,7 @@ namespace WinHubX.Forms.ImpostazioniApp
                     "en" => "  Update",
                     _ => btnAggiornamento.Content
                 };
-                await DownloadAndUpdate(latestUpdateUrl, latestVersion);
+                await DownloadAndUpdate(latestUpdateUrl, latestVersion, latestUpdateSha256);
                 return;
             }
             var result = await CheckForUpdatesAsync();
@@ -257,6 +284,7 @@ namespace WinHubX.Forms.ImpostazioniApp
                 latestVersion = result.LatestVersion;
                 latestUpdateUrl = result.UpdateUrl;
                 latestReleaseNotes = result.ReleaseNotes;
+                latestUpdateSha256 = result.Sha256;
                 btnAggiornamento.Content = LanguageManager.CurrentLanguage switch
                 {
                     "it" => "  Aggiorna",
@@ -332,13 +360,14 @@ namespace WinHubX.Forms.ImpostazioniApp
                 return false;
             }
 
-            var result = await CheckForUpdatesAsync();
+            var result = await CheckForUpdatesAsync(reportErrors: false);
 
             if (result.UpdateAvailable)
             {
                 latestVersion = result.LatestVersion;
                 latestUpdateUrl = result.UpdateUrl;
                 latestReleaseNotes = result.ReleaseNotes;
+                latestUpdateSha256 = result.Sha256;
 
                 UpdateDetectedAtStartup = true;
             }
@@ -352,129 +381,211 @@ namespace WinHubX.Forms.ImpostazioniApp
         }
 
 
-        private async Task<UpdateInfoResult> CheckForUpdatesAsync()
+        private async Task<UpdateInfoResult> CheckForUpdatesAsync(bool reportErrors = true)
         {
-            string configUrl = "https://raw.githubusercontent.com/MrNico98/WinHubX-Resource/refs/heads/main/Dipendenze.json";
+            const string updateManifestUrl = "https://raw.githubusercontent.com/LightYagami28/WinHubX/refs/heads/main/update.json";
             string currentVersion = AppConfig.CurrentVersion;
 
             try
             {
-                var configResponse = await client.GetStringAsync(configUrl);
-                dynamic configData = JsonConvert.DeserializeObject(configResponse);
-                string updateInfoUrl = configData.Form1.updateInfoUrl;
+                string response = await GetTrustedResponseStringAsync(updateManifestUrl, "manifest aggiornamenti");
+                JObject updateInfo = JObject.Parse(response);
 
-                var response = await client.GetStringAsync(updateInfoUrl);
-                dynamic updateInfo = JsonConvert.DeserializeObject(response);
-
-                string latestVersion = (string)updateInfo.version;
-                string updateUrl = (string)updateInfo.updateUrl;
+                ValidatedUpdateManifest manifest = UpdateManifestValidator.Validate(
+                    updateInfo["version"]?.Value<string>(),
+                    updateInfo["updateUrl"]?.Value<string>(),
+                    updateInfo["sha256"]?.Value<string>());
 
                 string userLang = Thread.CurrentThread.CurrentUICulture
                     .TwoLetterISOLanguageName.ToUpper();
 
-                string releaseNotes = GetReleaseNotesByLanguage(updateInfo.releaseNotes, userLang);
+                string releaseNotes = GetReleaseNotesByLanguage(updateInfo["releaseNotes"], userLang);
 
                 return new UpdateInfoResult
                 {
-                    UpdateAvailable = latestVersion != currentVersion,
-                    LatestVersion = latestVersion,
-                    UpdateUrl = updateUrl,
-                    ReleaseNotes = releaseNotes
+                    UpdateAvailable = IsNewerVersion(manifest.Version, currentVersion),
+                    LatestVersion = manifest.Version,
+                    UpdateUrl = manifest.UpdateUrl,
+                    ReleaseNotes = releaseNotes,
+                    Sha256 = manifest.Sha256
                 };
             }
-            catch (Exception ex)
+            catch (Exception ex) when (IsExpectedApplicationUpdateFailure(ex))
             {
-                MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Diagnostics.Debug.WriteLine($"Controllo aggiornamenti non riuscito: {ex}");
+                if (reportErrors && !IsDisposed)
+                    MessageBox.Show($"Impossibile controllare gli aggiornamenti: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return new UpdateInfoResult { UpdateAvailable = false };
             }
         }
 
-        private string GetReleaseNotesByLanguage(dynamic releaseNotesObject, string language)
+        private async Task<string> GetTrustedResponseStringAsync(string url, string description)
+        {
+            UpdateManifestValidator.EnsureTrustedHttpsUrl(url, description);
+            return await TrustedHttpsClient.GetStringAsync(client, url);
+        }
+
+        private static bool IsNewerVersion(string candidate, string current)
+        {
+            return Version.TryParse(candidate, out Version? candidateVersion)
+                && Version.TryParse(current, out Version? currentVersion)
+                && candidateVersion > currentVersion;
+        }
+
+        private string GetReleaseNotesByLanguage(JToken? releaseNotesObject, string language)
         {
             try
             {
-                var notes = releaseNotesObject[language];
+                var notes = releaseNotesObject?[language];
                 if (notes == null)
                     return "Nessuna nota disponibile.";
 
                 StringBuilder sb = new StringBuilder();
                 foreach (var note in notes)
                 {
-                    sb.AppendLine("• " + note.ToString());
+                    sb.AppendLine("• " + note);
                 }
 
                 return sb.ToString().Trim();
             }
-            catch
+            catch (Exception ex) when (ex is ArgumentException or InvalidOperationException or Newtonsoft.Json.JsonException)
             {
+                Debug.WriteLine($"Lettura note di rilascio non riuscita: {ex}");
                 return "Note di rilascio non disponibili per la lingua selezionata.";
             }
         }
 
-        private async Task DownloadAndUpdate(string updateUrl, string version)
+        private async Task DownloadAndUpdate(string updateUrl, string version, string? expectedSha256)
         {
-            string updateFilePath = Path.Combine(Path.GetTempPath(), $"WinHubX{version}.exe");
+            string updateFilePath = Path.Join(Path.GetTempPath(), $"WinHubX-{version}-{Guid.NewGuid():N}.exe");
             using (var progressForm = new ProgressForm())
             {
                 progressForm.Show();
                 progressForm.SetMarquee();
                 try
                 {
+                    if (!UpdateManifestValidator.IsValidSha256(expectedSha256))
+                        throw new InvalidOperationException("Aggiornamento interrotto: SHA-256 assente o non valido.");
+
                     await DownloadFileWithProgress(updateUrl, updateFilePath, progressForm);
-                    string currentExecutablePath = Application.ExecutablePath;
-                    File.Move(currentExecutablePath, Path.ChangeExtension(currentExecutablePath, ".old"), true);
-                    File.Move(updateFilePath, currentExecutablePath);
-                    _ = Process.Start(currentExecutablePath);
+                    await using FileStream downloadedFile = File.OpenRead(updateFilePath);
+                    byte[] actualHash = await SHA256.HashDataAsync(downloadedFile);
+                    string actualSha256 = Convert.ToHexString(actualHash);
+                    if (!actualSha256.Equals(expectedSha256, StringComparison.OrdinalIgnoreCase))
+                        throw new InvalidOperationException("Il controllo SHA-256 del pacchetto aggiornamento non è riuscito.");
+                    await UpdateInstaller.InstallAndStartAsync(
+                        updateFilePath,
+                        Application.ExecutablePath,
+                        expectedSha256,
+                        StartUpdatedProcessAndWaitForWindowAsync);
                     Application.Exit();
                 }
-                catch (Exception ex)
+                catch (Exception ex) when (IsExpectedApplicationUpdateFailure(ex))
                 {
                     _ = MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 finally
                 {
                     progressForm.CompleteOperation();
+                    try
+                    {
+                        if (File.Exists(updateFilePath))
+                            File.Delete(updateFilePath);
+                    }
+                    catch (IOException cleanupException)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"File temporaneo aggiornamento non rimosso: {cleanupException.Message}");
+                    }
                 }
+            }
+        }
+
+        private static async Task<bool> StartUpdatedProcessAndWaitForWindowAsync(string executablePath, CancellationToken cancellationToken)
+        {
+            using Process process = Process.Start(new ProcessStartInfo(executablePath) { UseShellExecute = false })
+                ?? throw new InvalidOperationException("Windows non ha avviato il processo aggiornato.");
+            using var timeout = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            timeout.CancelAfter(TimeSpan.FromSeconds(20));
+
+            try
+            {
+                while (!timeout.IsCancellationRequested)
+                {
+                    if (process.HasExited)
+                    {
+                        return false;
+                    }
+
+                    process.Refresh();
+                    if (process.MainWindowHandle != IntPtr.Zero)
+                    {
+                        return true;
+                    }
+
+                    await Task.Delay(TimeSpan.FromMilliseconds(200), timeout.Token);
+                }
+            }
+            catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
+            {
+                // La nuova versione non ha mostrato la finestra entro il timeout: arrestarla prima del rollback.
+            }
+            catch
+            {
+                StopFailedUpdateProcess(process);
+                throw;
+            }
+
+            StopFailedUpdateProcess(process);
+            return false;
+        }
+
+        private static void StopFailedUpdateProcess(Process process)
+        {
+            try
+            {
+                if (!process.HasExited)
+                {
+                    process.Kill(entireProcessTree: true);
+                    process.WaitForExit();
+                }
+            }
+            catch (Exception exception) when (exception is InvalidOperationException or System.ComponentModel.Win32Exception)
+            {
+                System.Diagnostics.Debug.WriteLine($"Arresto processo aggiornato non riuscito: {exception}");
             }
         }
 
         private async Task DownloadFileWithProgress(string url, string filePath, ProgressForm progressForm)
         {
-            string localPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "WinHubX");
-            if (File.Exists(localPath))
-            {
-                try
-                {
-                    File.Delete(localPath);
-                }
-                catch (Exception ex)
-                {
-                    _ = MessageBox.Show($"Error:\n{ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-
-            using var response = await client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead);
+            UpdateManifestValidator.EnsureTrustedHttpsUrl(url, "pacchetto aggiornamento");
+            using var timeout = new CancellationTokenSource(TimeSpan.FromMinutes(10));
+            using var response = await TrustedHttpsClient.GetAsync(client, url, timeout.Token);
+            UpdateManifestValidator.EnsureTrustedHttpsUrl(response.RequestMessage?.RequestUri?.ToString(), "reindirizzamento pacchetto aggiornamento");
             _ = response.EnsureSuccessStatusCode();
             var totalBytes = response.Content.Headers.ContentLength.GetValueOrDefault();
-            using var contentStream = await response.Content.ReadAsStreamAsync();
+            if (totalBytes <= 0)
+                throw new InvalidOperationException("Il pacchetto aggiornamento non espone una dimensione valida.");
+            using var contentStream = await response.Content.ReadAsStreamAsync(timeout.Token);
             using var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None, 8192, true);
             var buffer = new byte[8192];
             long bytesRead = 0;
             int read;
-            while ((read = await contentStream.ReadAsync(buffer, 0, buffer.Length)) > 0)
+            while ((read = await contentStream.ReadAsync(buffer, timeout.Token)) > 0)
             {
-                await fileStream.WriteAsync(buffer, 0, read);
+                await fileStream.WriteAsync(buffer.AsMemory(0, read), timeout.Token);
+                bytesRead += read;
                 progressForm.Invoke(new Action(() =>
-                progressForm.SetStatus("Download...", (int)((bytesRead * 100) / totalBytes))));
+                    progressForm.SetStatus("Download...", (int)Math.Clamp((bytesRead * 100) / totalBytes, 0, 100))));
             }
         }
 
         private class UpdateInfoResult
         {
             public bool UpdateAvailable { get; set; }
-            public string LatestVersion { get; set; }
-            public string UpdateUrl { get; set; }
-            public string ReleaseNotes { get; set; }
+            public string LatestVersion { get; set; } = string.Empty;
+            public string UpdateUrl { get; set; } = string.Empty;
+            public string ReleaseNotes { get; set; } = string.Empty;
+            public string? Sha256 { get; set; }
         }
 
         private async void FormImpostazioniApp_Load(object sender, EventArgs e)
@@ -493,11 +604,8 @@ namespace WinHubX.Forms.ImpostazioniApp
                     btnAggiornamento.Content = "  " + LanguageManager.GetTranslation("FormImpostazioni", "aggiornamento_disponibile");
                     btnAggiornamento.Image = Properties.Resources.pngScaricaOffice;
                     MessageBox.Show(
-                        string.Format(
-                            LanguageManager.GetTranslation("FormImpostazioni", "aggiornamento_disponibile_msg"),
-                            latestVersion,
-                            latestReleaseNotes
-                        ),
+                        LanguageManager.FormatTranslation(
+                            "FormImpostazioni", "aggiornamento_disponibile_msg", latestVersion, latestReleaseNotes),
                         LanguageManager.GetTranslation("FormImpostazioni", "aggiornamento_disponibile"),
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Information
@@ -512,10 +620,7 @@ namespace WinHubX.Forms.ImpostazioniApp
             {
                 versioneTesto += " - " + LanguageManager.GetTranslation("FormImpostazioni", "nessun_aggiornamento");
             }
-            labelversione.Text = string.Format(
-                LanguageManager.GetTranslation("FormImpostazioni", "labelversione"),
-                versioneTesto
-            );
+            labelversione.Text = LanguageManager.FormatTranslation("FormImpostazioni", "labelversione", versioneTesto);
         }
     }
 }

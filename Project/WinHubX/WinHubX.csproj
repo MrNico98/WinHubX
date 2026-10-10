@@ -2,12 +2,9 @@
 
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
-		<TargetFramework>net8.0-windows</TargetFramework>
-		<Nullable>enable</Nullable>
+		<TargetFramework>net10.0-windows</TargetFramework>
 		<UseWindowsForms>true</UseWindowsForms>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<ApplicationHighDpiMode>SystemAware</ApplicationHighDpiMode>
-		<ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
+		<ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
 		<AssemblyVersion>2.5.0.0</AssemblyVersion>
 		<FileVersion>2.5.0.0</FileVersion>
 		<ApplicationManifest>app.manifest</ApplicationManifest>
@@ -18,13 +15,12 @@
 		<DebugType>none</DebugType>
 		<DebugSymbols>false</DebugSymbols>
 		<Optimize>true</Optimize>
+		<TieredCompilation>true</TieredCompilation>
+		<TieredPGO>true</TieredPGO>
 		<Deterministic>true</Deterministic>
-		<IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
-		<SuppressTrimAnalysisWarnings>true</SuppressTrimAnalysisWarnings>
 		<SatelliteResourceLanguages>it;en</SatelliteResourceLanguages>
 		<PublishSingleFile>true</PublishSingleFile>
-		<TrimMode>partial</TrimMode>
-		<EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+		<EnableCompressionInSingleFile Condition="'$(SelfContained)' == 'true'">true</EnableCompressionInSingleFile>
 		<IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
 		<EnableUnsafeBinaryFormatterSerialization>false</EnableUnsafeBinaryFormatterSerialization>
 		<EventSourceSupport>false</EventSourceSupport>
@@ -71,11 +67,8 @@
     <None Remove="Resources\Immagini\FormTools\pngWinHubXLiteOS.png" />
     <None Remove="Resources\Immagini\pngXtndLogo_WinHubX.png" />
     <None Remove="Resources\it.json" />
-    <None Remove="Resources\TSforge_Activation.cmd" />
-    <None Remove="Resources\TSforge_Activation_Office.cmd" />
     <None Remove="Resources\WinCustomizer.ps1" />
     <None Remove="Resources\WinHubXScrubber.cmd" />
-    <None Remove="Resources\WinHubXStatoAttivazione.cmd" />
     <None Remove="Resources\WinHubXWSL.ps1" />
   </ItemGroup>
 
@@ -228,22 +221,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Resources\WinHubXStatoAttivazione.cmd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
     <EmbeddedResource Include="Resources\WinHubXWSL.ps1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CuoreUI.Winforms" Version="2025.10.18.1" />
-    <PackageReference Include="DiscUtils.Udf" Version="0.16.13" />
-    <PackageReference Include="LibreHardwareMonitorLib" Version="0.9.4" />
-    <PackageReference Include="Microsoft.PowerShell.Native" Version="7.4.0" />
-    <PackageReference Include="System.Management.Automation" Version="7.4.13" />
-    <PackageReference Include="System.ServiceProcess.ServiceController" Version="10.0.0" />
-    <PackageReference Include="TaskScheduler" Version="2.12.2" />
+    <PackageReference Include="DiscUtils.Udf" />
+    <PackageReference Include="HartUI.Winforms" />
+    <PackageReference Include="LibreHardwareMonitorLib" />
+    <PackageReference Include="BlackSharp.Core" />
+    <PackageReference Include="Newtonsoft.Json" />
+    <PackageReference Include="System.ServiceProcess.ServiceController" />
+    <PackageReference Include="TaskScheduler" />
   </ItemGroup>
 
   <ItemGroup>

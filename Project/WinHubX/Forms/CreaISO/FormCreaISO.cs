@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 using System.IO.Compression;
-using System.Text.Json;
 using System.Text.RegularExpressions;
 using WinHubX.Forms.CreaISO;
 using WinHubX.Impostazioni;
@@ -10,20 +9,48 @@ namespace WinHubX.Forms.Base
 {
     public partial class FormCreaISO : Form
     {
-        private Form1 form1;
+        private static bool IsExpectedIsoResourceFailure(Exception exception) =>
+            exception is IOException
+                or UnauthorizedAccessException
+                or System.Security.SecurityException
+                or System.ComponentModel.Win32Exception
+                or HttpRequestException
+                or System.Text.Json.JsonException
+                or InvalidDataException
+                or InvalidOperationException
+                or NotSupportedException
+                or OperationCanceledException
+                or TimeoutException
+                or ArgumentException;
+
+        private static readonly HttpClient ResourceClient = new(new SocketsHttpHandler
+        {
+            AllowAutoRedirect = false,
+            PooledConnectionLifetime = TimeSpan.FromMinutes(5),
+            AutomaticDecompression = System.Net.DecompressionMethods.All
+        })
+        {
+            Timeout = TimeSpan.FromMinutes(2)
+        };
+
+        private readonly Form1 form1;
         private string selectedFile = string.Empty;
-        private string percorsoCompletoISO;
+        private string percorsoCompletoISO = string.Empty;
+        private string? _pendingResourceSessionPath;
+        private bool _resourceSessionTransferred;
+        private CancellationTokenSource? _resourcePreparationCancellation;
         public FormCreaISO(Form1 form1)
         {
             InitializeComponent();
-            form1 = form1;
+            this.form1 = form1;
             groupBox7.Hide();
             groupBox6.Hide();
             pictureBox7.Hide();
             pictureBox4.Hide();
             ActiveControl = btn_browserBianco;
             ThemeManager.ApplyThemeToControl(this, ThemeManager.IsDarkTheme);
-            string downloadPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
+            FormClosed += OnFormClosedCleanupResourceSession;
+            string downloadPath = Path.Join(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
             labelpercorso.Text = $"{downloadPath}";
             percorsoCompletoISO = downloadPath;
             btn_CreaISOVerdi.Content = LanguageManager.CurrentLanguage switch
@@ -47,102 +74,90 @@ namespace WinHubX.Forms.Base
         }
 
         string IsoMountLetter = string.Empty;
-        string installwimpath = string.Empty;
+        string? installwimpath;
 
-        public void ExecuteCommand(string command, bool ShowMessage)
+        private async Task ScaricaFileAsync(string url, string destinazione, CancellationToken cancellationToken)
         {
-            if (!ShowMessage)
-            {
-                var startInfo = new ProcessStartInfo()
-                {
-                    FileName = "powershell.exe",
-                    Arguments = command,
-                    UseShellExecute = false,
-                    CreateNoWindow = true,
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true
-                };
-
-                using (var process = Process.Start(startInfo))
-                {
-                    process.WaitForExit();
-
-                    var output = process.StandardOutput.ReadToEnd();
-                    var error = process.StandardError.ReadToEnd();
-                }
-            }
-            else if (ShowMessage)
-            {
-            }
-        }
-        private async Task ScaricaFileAsync(string url, string destinazione)
-        {
-            using (HttpClient client = new HttpClient())
-            {
-                using (HttpResponseMessage response = await client.GetAsync(url))
-                {
-                    _ = response.EnsureSuccessStatusCode();
-                    using (FileStream fs = new FileStream(destinazione, FileMode.Create, FileAccess.Write, FileShare.None))
-                    {
-                        await response.Content.CopyToAsync(fs);
-                    }
-                }
-            }
+            await BitsTransferDownloader.DownloadFileAsync(url, destinazione, null, cancellationToken);
         }
 
-        private async Task<string> GetZipUrlFromJsonAsync(string jsonUrl)
-        {
-            using (HttpClient client = new HttpClient())
-            {
-                try
-                {
-                    string jsonResponse = await client.GetStringAsync(jsonUrl);
-                    using (JsonDocument doc = JsonDocument.Parse(jsonResponse))
-                    {
-                        JsonElement root = doc.RootElement;
-                        string? zipUrl = root.GetProperty("CreaISOWIN").GetProperty("creaiso").GetString();
-                        return zipUrl ?? string.Empty;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    _ = MessageBox.Show($"Error: {ex.Message}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return string.Empty;
-                }
-            }
-        }
-        private async Task<string> GetZipUrlFromGitHubConfigAsync()
+        private async Task<string> GetZipUrlFromGitHubConfigAsync(CancellationToken cancellationToken)
         {
             try
             {
-                using (HttpClient client = new HttpClient())
-                {
-                    var json = await client.GetStringAsync(Dipendenze.GitHubConfigUrl);
-                    var obj = JObject.Parse(json);
-                    string? url = obj["FormWin"]?["creaISOzip"]?.ToString();
+                string json = await TrustedHttpsClient.GetStringAsync(
+                    ResourceClient,
+                    Dipendenze.GitHubConfigUrl,
+                    cancellationToken);
+                JObject obj = JObject.Parse(json);
+                string? url = obj["FormWin"]?["creaISOzip"]?.ToString();
 
-                    if (string.IsNullOrWhiteSpace(url))
-                        throw new Exception("URL ZIP non trovato in Dipendenze.json");
+                if (string.IsNullOrWhiteSpace(url))
+                    throw new InvalidDataException("URL ZIP non trovato in Dipendenze.json");
 
-                    return url;
-                }
+                return url;
             }
-            catch (Exception ex)
+            catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
             {
-                throw new Exception("Impossibile ottenere zipUrl: " + ex.Message);
+                throw;
+            }
+            catch (Exception ex) when (IsExpectedIsoResourceFailure(ex))
+            {
+                throw new InvalidDataException("Impossibile ottenere zipUrl.", ex);
             }
         }
 
-        private async void btn_CreaISO_Click(object sender, EventArgs e)
+        private async void btn_CreaISO_Click(object? sender, EventArgs e)
+        {
+            if (_resourcePreparationCancellation is not null)
+                return;
+
+            using var cancellation = new CancellationTokenSource();
+            _resourcePreparationCancellation = cancellation;
+            btn_CreaISOVerdi.Enabled = false;
+            try
+            {
+                await CreateIsoAsync(cancellation.Token);
+            }
+            catch (OperationCanceledException) when (cancellation.IsCancellationRequested)
+            {
+                // Closing the form cancels resource acquisition without showing a spurious error.
+            }
+            finally
+            {
+                if (ReferenceEquals(_resourcePreparationCancellation, cancellation))
+                    _resourcePreparationCancellation = null;
+
+                if (!_resourceSessionTransferred && _pendingResourceSessionPath is { } sessionPath)
+                {
+                    try
+                    {
+                        PrivateUserWorkspace.DeleteSession(sessionPath);
+                        _pendingResourceSessionPath = null;
+                    }
+                    catch (Exception cleanupException) when (cleanupException is IOException or UnauthorizedAccessException or InvalidDataException)
+                    {
+                        Debug.WriteLine($"Pulizia workspace risorse ISO non riuscita: {cleanupException}");
+                    }
+                }
+
+                if (!IsDisposed)
+                    btn_CreaISOVerdi.Enabled = true;
+            }
+        }
+
+        private async Task CreateIsoAsync(CancellationToken cancellationToken)
         {
             string comboxstr = comboBox1.Text.Trim();
-            bool selezioniValide =
-                (RemProcRad.Checked || NotRemProcRad.Checked) &&
-                (DebAppRad.Checked || StockAppRad.Checked) &&
-                (NotDisWinDefRad.Checked || DisWindDefRad.Checked) &&
-                (NotRemEdgeRad.Checked || RemEdgeRad.Checked) &&
-                (IsoLite.Checked || IsoLavorWork.Checked || IsoGaming.Checked) && 
-                (DriverCartella.Checked || DriverQuestoPC.Checked || NoDriver.Checked);
+            bool selezioniSistemaValide =
+                IsAnySelected(RemProcRad, NotRemProcRad) &&
+                IsAnySelected(DebAppRad, StockAppRad) &&
+                IsAnySelected(NotDisWinDefRad, DisWindDefRad);
+            bool selezioniImmagineValide =
+                IsAnySelected(NotRemEdgeRad, RemEdgeRad) &&
+                IsAnySelected(IsoLite, IsoLavorWork, IsoGaming) &&
+                IsAnySelected(DriverCartella, DriverQuestoPC, NoDriver);
+            bool selezioniValide = selezioniSistemaValide && selezioniImmagineValide;
             if (comboxstr.Contains("10"))
             {
                 selezioniValide &= (SixforArchRad.Checked || ThirTwoRad.Checked);
@@ -163,48 +178,63 @@ namespace WinHubX.Forms.Base
                 return;
             }
 
-            string zipUrl = await GetZipUrlFromGitHubConfigAsync();
-            string zipFilePath = Path.Combine(Path.GetTempPath(), "RisorseCreaISO.zip");
-
+            string resourceSessionPath;
             try
             {
-                if (!File.Exists(zipFilePath))
-                {
-                    await ScaricaFileAsync(zipUrl, zipFilePath);
-                }
-
-                string tempPath = Path.Combine(Path.GetTempPath(), "RisorseCreaISO");
-                if (!Directory.Exists(tempPath))
-                {
-                    _ = Directory.CreateDirectory(tempPath);
-                }
-
-                using (ZipArchive archive = ZipFile.OpenRead(zipFilePath))
-                {
-                    foreach (ZipArchiveEntry entry in archive.Entries)
-                    {
-                        string destinazioneFile = Path.Combine(tempPath, entry.FullName);
-                        if (string.IsNullOrEmpty(entry.Name))
-                        {
-                            continue;
-                        }
-                        string directoryPath = Path.GetDirectoryName(destinazioneFile);
-                        if (!string.IsNullOrEmpty(directoryPath) && !Directory.Exists(directoryPath))
-                        {
-                            _ = Directory.CreateDirectory(directoryPath);
-                        }
-
-                        entry.ExtractToFile(destinazioneFile, overwrite: true);
-                    }
-                }
+                resourceSessionPath = PrivateUserWorkspace.CreateSession();
             }
-            catch (Exception)
+            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or System.Security.SecurityException)
             {
-
+                _ = MessageBox.Show(this, $"Impossibile creare il workspace privato per le risorse ISO: {ex.Message}",
+                    "WinHubX — risorse ISO", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            ExecuteCommand("Dismount-DiskImage -ImagePath \"" + selectedFile + "\"", false);
+            string zipFilePath = Path.Join(resourceSessionPath, "RisorseCreaISO.zip");
+            string stagingPath = Path.Join(resourceSessionPath, "staging");
+            string resourcePath = Path.Join(resourceSessionPath, "RisorseCreaISO");
+            bool resourcePrepared = false;
+            try
+            {
+                string zipUrl = await GetZipUrlFromGitHubConfigAsync(cancellationToken);
+                await ScaricaFileAsync(zipUrl, zipFilePath, cancellationToken);
+                cancellationToken.ThrowIfCancellationRequested();
+                SafeZipExtractor.ExtractToFreshDirectory(zipFilePath, stagingPath);
+                Directory.Move(stagingPath, resourcePath);
+                cancellationToken.ThrowIfCancellationRequested();
+                resourcePrepared = true;
+                _pendingResourceSessionPath = resourceSessionPath;
+            }
+            catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
+            catch (Exception ex) when (IsExpectedIsoResourceFailure(ex))
+            {
+                _ = MessageBox.Show(this, $"Impossibile verificare o estrarre le risorse ISO: {ex.Message}",
+                    "WinHubX — risorse ISO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            finally
+            {
+                try
+                {
+                    if (File.Exists(zipFilePath))
+                        File.Delete(zipFilePath);
+                    if (Directory.Exists(stagingPath))
+                        Directory.Delete(stagingPath, recursive: true);
+                    if (!resourcePrepared)
+                        PrivateUserWorkspace.DeleteSession(resourceSessionPath);
+                }
+                catch (Exception cleanupException) when (IsExpectedIsoResourceFailure(cleanupException))
+                {
+                    Debug.WriteLine($"Pulizia risorse ISO temporanee non completata: {cleanupException}");
+                }
+            }
+
+            _ = await RunPowerShellAsync(
+                $"$ErrorActionPreference = 'Stop'; Dismount-DiskImage -ImagePath '{EscapePowerShellLiteral(selectedFile)}'");
+            cancellationToken.ThrowIfCancellationRequested();
             AppState.IsoMontata = false;
             AppState.IsoPath = null;
 
@@ -252,7 +282,7 @@ namespace WinHubX.Forms.Base
         { "TipoOttimizzazione", TipoOttimizzazione },
     };
 
-            FormCreazioneISO nuovaForm = new FormCreazioneISO(form1, this)
+            FormCreazioneISO nuovaForm = new FormCreazioneISO(form1, this, resourceSessionPath)
             {
                 ParametriISO = parametri
             };
@@ -265,10 +295,35 @@ namespace WinHubX.Forms.Base
             nuovaForm.FormBorderStyle = FormBorderStyle.None;
             form1.PnlFormLoader.Controls.Add(nuovaForm);
             nuovaForm.Show();
+            _resourceSessionTransferred = true;
             Close();
         }
 
-        private async void btn_browser_Click(object sender, EventArgs e)
+        private static bool IsAnySelected(params RadioButton[] options)
+        {
+            return options.Any(static option => option.Checked);
+        }
+
+        private void OnFormClosedCleanupResourceSession(object? sender, FormClosedEventArgs e)
+        {
+            _resourcePreparationCancellation?.Cancel();
+            if (_resourcePreparationCancellation is not null)
+                return;
+
+            if (_resourceSessionTransferred || _pendingResourceSessionPath is not { } sessionPath)
+                return;
+
+            try
+            {
+                PrivateUserWorkspace.DeleteSession(sessionPath);
+            }
+            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or InvalidDataException)
+            {
+                Debug.WriteLine($"Pulizia workspace risorse ISO non riuscita: {ex.Message}");
+            }
+        }
+
+        private async void btn_browser_Click(object? sender, EventArgs e)
         {
             using var openFileDialog = new OpenFileDialog
             {
@@ -314,7 +369,7 @@ namespace WinHubX.Forms.Base
 
                 await LoadWimInfoAsync(installwimpath);
             }
-            catch (Exception ex)
+            catch (Exception ex) when (IsExpectedIsoResourceFailure(ex))
             {
                 MessageBox.Show($"Errore: {ex.Message}");
             }
@@ -338,11 +393,11 @@ namespace WinHubX.Forms.Base
             return result.Trim();
         }
 
-        private static string GetInstallImagePath(string driveLetter)
+        private static string? GetInstallImagePath(string driveLetter)
         {
             string basePath = $"{driveLetter}:\\sources";
-            string wimPath = Path.Combine(basePath, "install.wim");
-            string esdPath = Path.Combine(basePath, "install.esd");
+            string wimPath = Path.Join(basePath, "install.wim");
+            string esdPath = Path.Join(basePath, "install.esd");
 
             if (File.Exists(wimPath)) return wimPath;
             if (File.Exists(esdPath)) return esdPath;
@@ -352,7 +407,7 @@ namespace WinHubX.Forms.Base
         private async Task LoadWimInfoAsync(string wimPath)
         {
             string output = await RunPowerShellOutputAsync(
-                $"dism /english /Get-WimInfo /WimFile:'{wimPath}'"
+                $"dism /english /Get-WimInfo /WimFile:'{EscapePowerShellLiteral(wimPath)}'"
             );
 
             var matches = Regex.Matches(output, @"Name\s*:\s*(.+)");
@@ -373,18 +428,16 @@ namespace WinHubX.Forms.Base
         {
             using var process = new Process
             {
-                StartInfo = new ProcessStartInfo
-                {
-                    FileName = "powershell.exe",
-                    Arguments = $"-Command \"{command}\"",
-                    UseShellExecute = false,
-                    CreateNoWindow = true,
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true
-                }
+                StartInfo = CreatePowerShellStartInfo(command)
             };
             process.Start();
+            Task<string> outputTask = process.StandardOutput.ReadToEndAsync();
+            Task<string> errorTask = process.StandardError.ReadToEndAsync();
             await process.WaitForExitAsync();
+            await Task.WhenAll(outputTask, errorTask);
+            string standardError = await errorTask;
+            if (!string.IsNullOrWhiteSpace(standardError))
+                Debug.WriteLine($"PowerShell error: {standardError.Trim()}");
             return process.ExitCode;
         }
 
@@ -392,21 +445,38 @@ namespace WinHubX.Forms.Base
         {
             using var process = new Process
             {
-                StartInfo = new ProcessStartInfo
-                {
-                    FileName = "powershell.exe",
-                    Arguments = $"-Command \"{command}\"",
-                    UseShellExecute = false,
-                    CreateNoWindow = true,
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true
-                }
+                StartInfo = CreatePowerShellStartInfo(command)
             };
             process.Start();
-            string output = await process.StandardOutput.ReadToEndAsync();
+            Task<string> outputTask = process.StandardOutput.ReadToEndAsync();
+            Task<string> errorTask = process.StandardError.ReadToEndAsync();
             await process.WaitForExitAsync();
-            return output;
+            await Task.WhenAll(outputTask, errorTask);
+            string standardOutput = await outputTask;
+            string standardError = await errorTask;
+            if (!string.IsNullOrWhiteSpace(standardError))
+                Debug.WriteLine($"PowerShell error: {standardError.Trim()}");
+            return standardOutput;
         }
+
+        private static ProcessStartInfo CreatePowerShellStartInfo(string command)
+        {
+            var startInfo = new ProcessStartInfo
+            {
+                FileName = Path.Join(Environment.SystemDirectory, "WindowsPowerShell", "v1.0", "powershell.exe"),
+                UseShellExecute = false,
+                CreateNoWindow = true,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true
+            };
+            startInfo.ArgumentList.Add("-NoProfile");
+            startInfo.ArgumentList.Add("-NonInteractive");
+            startInfo.ArgumentList.Add("-Command");
+            startInfo.ArgumentList.Add(command);
+            return startInfo;
+        }
+
+        private static string EscapePowerShellLiteral(string value) => value.Replace("'", "''", StringComparison.Ordinal);
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -450,7 +520,7 @@ namespace WinHubX.Forms.Base
             labelpercorso.Text = path + "...";
         }
 
-        private void btn_cambia_Click(object sender, EventArgs e)
+        private void btn_cambia_Click(object? sender, EventArgs e)
         {
             using (var dialog = new FolderBrowserDialog())
             {

@@ -1,25 +1,7 @@
-﻿namespace WinHubX
+namespace WinHubX
 {
     partial class FormWin
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
-
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -30,11 +12,11 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormWin));
             panel50 = new Panel();
-            btnDriverRSTPrinci = new CuoreUI.Controls.cuiButton();
-            btnDownloadIsoPrinci = new CuoreUI.Controls.cuiButton();
-            btnAttivaWindowsPrinci = new CuoreUI.Controls.cuiButton();
-            btnCambiaEdizionePrinci = new CuoreUI.Controls.cuiButton();
-            btnCreaIsoPrinci = new CuoreUI.Controls.cuiButton();
+            btnDriverRSTPrinci = new HartUI.Controls.cuiButton();
+            btnDownloadIsoPrinci = new HartUI.Controls.cuiButton();
+            btnAttivaWindowsPrinci = new HartUI.Controls.cuiButton();
+            btnCambiaEdizionePrinci = new HartUI.Controls.cuiButton();
+            btnCreaIsoPrinci = new HartUI.Controls.cuiButton();
             panel50.SuspendLayout();
             SuspendLayout();
             // 
@@ -65,9 +47,7 @@
             btnDriverRSTPrinci.HoverImageTint = Color.White;
             btnDriverRSTPrinci.HoverOutline = Color.White;
             btnDriverRSTPrinci.Image = Properties.Resources.pngDriverRST1;
-            btnDriverRSTPrinci.ImageAutoCenter = true;
             btnDriverRSTPrinci.ImageExpand = new Point(0, 0);
-            btnDriverRSTPrinci.ImageOffset = new Point(0, 0);
             btnDriverRSTPrinci.Name = "btnDriverRSTPrinci";
             btnDriverRSTPrinci.NormalBackground = Color.FromArgb(37, 38, 39);
             btnDriverRSTPrinci.NormalForeColor = Color.White;
@@ -80,7 +60,6 @@
             btnDriverRSTPrinci.PressedOutline = Color.White;
             btnDriverRSTPrinci.Rounding = new Padding(8);
             btnDriverRSTPrinci.TextAlignment = StringAlignment.Center;
-            btnDriverRSTPrinci.TextOffset = new Point(0, 0);
             btnDriverRSTPrinci.Click += btnDriverRSTPrinci_Click;
             // 
             // btnDownloadIsoPrinci
@@ -100,9 +79,7 @@
             btnDownloadIsoPrinci.HoverImageTint = Color.White;
             btnDownloadIsoPrinci.HoverOutline = Color.White;
             btnDownloadIsoPrinci.Image = Properties.Resources.pngDownloadISO;
-            btnDownloadIsoPrinci.ImageAutoCenter = true;
             btnDownloadIsoPrinci.ImageExpand = new Point(0, 0);
-            btnDownloadIsoPrinci.ImageOffset = new Point(0, 0);
             btnDownloadIsoPrinci.Name = "btnDownloadIsoPrinci";
             btnDownloadIsoPrinci.NormalBackground = Color.FromArgb(37, 38, 39);
             btnDownloadIsoPrinci.NormalForeColor = Color.White;
@@ -115,7 +92,6 @@
             btnDownloadIsoPrinci.PressedOutline = Color.White;
             btnDownloadIsoPrinci.Rounding = new Padding(8);
             btnDownloadIsoPrinci.TextAlignment = StringAlignment.Center;
-            btnDownloadIsoPrinci.TextOffset = new Point(0, 0);
             btnDownloadIsoPrinci.Click += btnDownloadIsoPrinci_Click;
             // 
             // btnAttivaWindowsPrinci
@@ -135,9 +111,7 @@
             btnAttivaWindowsPrinci.HoverImageTint = Color.White;
             btnAttivaWindowsPrinci.HoverOutline = Color.White;
             btnAttivaWindowsPrinci.Image = Properties.Resources.pngAttivaWindows;
-            btnAttivaWindowsPrinci.ImageAutoCenter = true;
             btnAttivaWindowsPrinci.ImageExpand = new Point(0, 0);
-            btnAttivaWindowsPrinci.ImageOffset = new Point(0, 0);
             btnAttivaWindowsPrinci.Name = "btnAttivaWindowsPrinci";
             btnAttivaWindowsPrinci.NormalBackground = Color.FromArgb(37, 38, 39);
             btnAttivaWindowsPrinci.NormalForeColor = Color.White;
@@ -150,7 +124,6 @@
             btnAttivaWindowsPrinci.PressedOutline = Color.White;
             btnAttivaWindowsPrinci.Rounding = new Padding(8);
             btnAttivaWindowsPrinci.TextAlignment = StringAlignment.Center;
-            btnAttivaWindowsPrinci.TextOffset = new Point(0, 0);
             btnAttivaWindowsPrinci.Click += btnAttivaWin_Click;
             // 
             // btnCambiaEdizionePrinci
@@ -170,9 +143,7 @@
             btnCambiaEdizionePrinci.HoverImageTint = Color.White;
             btnCambiaEdizionePrinci.HoverOutline = Color.White;
             btnCambiaEdizionePrinci.Image = Properties.Resources.pngCambioEdizione;
-            btnCambiaEdizionePrinci.ImageAutoCenter = true;
             btnCambiaEdizionePrinci.ImageExpand = new Point(0, 0);
-            btnCambiaEdizionePrinci.ImageOffset = new Point(0, 0);
             btnCambiaEdizionePrinci.Name = "btnCambiaEdizionePrinci";
             btnCambiaEdizionePrinci.NormalBackground = Color.FromArgb(37, 38, 39);
             btnCambiaEdizionePrinci.NormalForeColor = Color.White;
@@ -185,7 +156,6 @@
             btnCambiaEdizionePrinci.PressedOutline = Color.White;
             btnCambiaEdizionePrinci.Rounding = new Padding(8);
             btnCambiaEdizionePrinci.TextAlignment = StringAlignment.Center;
-            btnCambiaEdizionePrinci.TextOffset = new Point(0, 0);
             btnCambiaEdizionePrinci.Click += btnCambioEdizione_Click;
             // 
             // btnCreaIsoPrinci
@@ -205,9 +175,7 @@
             btnCreaIsoPrinci.HoverImageTint = Color.White;
             btnCreaIsoPrinci.HoverOutline = Color.White;
             btnCreaIsoPrinci.Image = Properties.Resources.pngCreaISO;
-            btnCreaIsoPrinci.ImageAutoCenter = true;
             btnCreaIsoPrinci.ImageExpand = new Point(0, 0);
-            btnCreaIsoPrinci.ImageOffset = new Point(0, 0);
             btnCreaIsoPrinci.Name = "btnCreaIsoPrinci";
             btnCreaIsoPrinci.NormalBackground = Color.FromArgb(37, 38, 39);
             btnCreaIsoPrinci.NormalForeColor = Color.White;
@@ -220,7 +188,6 @@
             btnCreaIsoPrinci.PressedOutline = Color.White;
             btnCreaIsoPrinci.Rounding = new Padding(8);
             btnCreaIsoPrinci.TextAlignment = StringAlignment.Center;
-            btnCreaIsoPrinci.TextOffset = new Point(0, 0);
             btnCreaIsoPrinci.Click += btnCreaIso_Click;
             // 
             // FormWin
@@ -238,10 +205,10 @@
         #endregion
 
         private Panel panel50;
-        private CuoreUI.Controls.cuiButton btnDriverRSTPrinci;
-        private CuoreUI.Controls.cuiButton btnDownloadIsoPrinci;
-        private CuoreUI.Controls.cuiButton btnAttivaWindowsPrinci;
-        private CuoreUI.Controls.cuiButton btnCambiaEdizionePrinci;
-        private CuoreUI.Controls.cuiButton btnCreaIsoPrinci;
+        private HartUI.Controls.cuiButton btnDriverRSTPrinci;
+        private HartUI.Controls.cuiButton btnDownloadIsoPrinci;
+        private HartUI.Controls.cuiButton btnAttivaWindowsPrinci;
+        private HartUI.Controls.cuiButton btnCambiaEdizionePrinci;
+        private HartUI.Controls.cuiButton btnCreaIsoPrinci;
     }
 }

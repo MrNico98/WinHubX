@@ -1,25 +1,7 @@
-﻿namespace WinHubX.Forms.Personalizzazione_office
+namespace WinHubX.Forms.Personalizzazione_office
 {
     partial class PersonalizzazioneOffice
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
-
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -55,8 +37,8 @@
             comboBoxVerOffice = new ComboBox();
             labelversione = new Label();
             lblSelezionLingua = new Label();
-            progressBar_office = new CuoreUI.Controls.cuiProgressBarHorizontal();
-            btn_CreaISOVerdi = new CuoreUI.Controls.cuiButton();
+            progressBar_office = new HartUI.Controls.cuiProgressBarHorizontal();
+            btn_CreaISOVerdi = new HartUI.Controls.cuiButton();
             panel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxPublisher).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBoxProject).BeginInit();
@@ -312,9 +294,7 @@
             btn_CreaISOVerdi.HoverImageTint = Color.White;
             btn_CreaISOVerdi.HoverOutline = Color.FromArgb(46, 125, 50);
             btn_CreaISOVerdi.Image = Properties.Resources.pngCheckCreaISO;
-            btn_CreaISOVerdi.ImageAutoCenter = true;
             btn_CreaISOVerdi.ImageExpand = new Point(0, 0);
-            btn_CreaISOVerdi.ImageOffset = new Point(0, 0);
             btn_CreaISOVerdi.Name = "btn_CreaISOVerdi";
             btn_CreaISOVerdi.NormalBackground = Color.FromArgb(37, 38, 39);
             btn_CreaISOVerdi.NormalForeColor = Color.White;
@@ -327,7 +307,6 @@
             btn_CreaISOVerdi.PressedOutline = Color.FromArgb(46, 125, 50);
             btn_CreaISOVerdi.Rounding = new Padding(8);
             btn_CreaISOVerdi.TextAlignment = StringAlignment.Center;
-            btn_CreaISOVerdi.TextOffset = new Point(0, 0);
             btn_CreaISOVerdi.Click += btn_avviainstallazione_Click;
             // 
             // PersonalizzazioneOffice
@@ -379,7 +358,7 @@
         private ComboBox comboBoxVerOffice;
         private Label labelversione;
         private Label lblSelezionLingua;
-        private CuoreUI.Controls.cuiProgressBarHorizontal progressBar_office;
+        private HartUI.Controls.cuiProgressBarHorizontal progressBar_office;
         private PictureBox pictureBoxPublisher;
         private PictureBox pictureBoxProject;
         private PictureBox pictureBoxVisio;
@@ -390,6 +369,6 @@
         private PictureBox pictureBoxPowerPoint;
         private PictureBox pictureBoxExcel;
         private Label label1;
-        private CuoreUI.Controls.cuiButton btn_CreaISOVerdi;
+        private HartUI.Controls.cuiButton btn_CreaISOVerdi;
     }
 }

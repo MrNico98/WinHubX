@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 using System.Globalization;
-using System.Net;
 using WinHubX.Forms.Base;
 using WinHubX.Forms.DriverRST;
 using WinHubX.Forms.ImpostazioniApp;
@@ -11,11 +10,6 @@ namespace WinHubX
 {
     public partial class FormWin : Form
     {
-        private Form1 form1;
-        private string selectedOS;
-        private string? selectedArch;
-        private string selectedVersion;
-        private string selectedLanguage;
         public FormWin(Form1 form1)
         {
             LanguageManager.LoadLanguageFromSettings();
@@ -38,265 +32,60 @@ namespace WinHubX
                 "en" => "  Create ISO",
                 _ => btnCreaIsoPrinci.Content
             };
-            this.form1 = form1;
             ThemeManager.ApplyThemeToControl(this, ThemeManager.IsDarkTheme);
         }
 
-        private async void btnAttivaWin_Click(object sender, EventArgs e)
-        {
-            string primaryURL = string.Empty;
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-
-            try
-            {
-                OperatingSystem os = Environment.OSVersion;
-                string osName = GetWindowsVersionName(os);
-                if (IsWindowsServer())
-                {
-                    string serverScriptUrl = "https://github.com/MrNico98/WinHubX-Resource/releases/download/WinHubX-Risorse/TSforge_Activation.cmd";
-                    await ExecuteScriptFromUrl(serverScriptUrl);
-                    return;
-                }
-                if (osName == "Windows 7" || osName == "Windows 8" || osName == "Windows 8.1")
-                {
-                    ExtractAndExecuteLocalScript();
-                    return;
-                }
-
-                if (IsInternetAvailable())
-                {
-                    using (HttpClient client = new HttpClient())
-                    {
-                        var jsonResponse = await client.GetStringAsync(Dipendenze.GitHubConfigUrl);
-                        var jsonObject = JObject.Parse(jsonResponse);
-
-                        primaryURL = jsonObject["FormWin"]?["attivatorewin"]?.ToString() ?? string.Empty;
-                    }
-
-                    if (string.IsNullOrWhiteSpace(primaryURL))
-                    {
-                        MessageBox.Show("Impossibile trovare 'attivatorewin' in Dipendenze.json", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-
-                    await ExecuteScriptFromUrl(primaryURL);
-                }
-                else
-                {
-                    _ = MessageBox.Show(
-                        LanguageManager.GetTranslation("Global", "nointernet"),
-                        "WinHubX",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning
-                    );
-
-                    if (osName == "Windows 10")
-                        ExtractAndExecuteLocalScript();
-                    else
-                        ExtractAndExecuteLocalScriptKMS38();
-                }
-            }
-            catch (Exception ex)
-            {
-                _ = MessageBox.Show($"Error: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private bool IsWindowsServer()
+        private void btnAttivaWin_Click(object? sender, EventArgs e)
         {
             try
             {
-                string productName = string.Empty;
-                using (var baseKey64 = Microsoft.Win32.RegistryKey.OpenBaseKey(
-                    Microsoft.Win32.RegistryHive.LocalMachine,
-                    Microsoft.Win32.RegistryView.Registry64))
-                {
-                    using (var subKey = baseKey64.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion"))
-                    {
-                        productName = subKey?.GetValue("ProductName")?.ToString() ?? string.Empty;
-                    }
-                }
-                if (string.IsNullOrEmpty(productName))
-                {
-                    using (var baseKey32 = Microsoft.Win32.RegistryKey.OpenBaseKey(
-                        Microsoft.Win32.RegistryHive.LocalMachine,
-                        Microsoft.Win32.RegistryView.Registry32))
-                    {
-                        using (var subKey = baseKey32.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion"))
-                        {
-                            productName = subKey?.GetValue("ProductName")?.ToString() ?? string.Empty;
-                        }
-                    }
-                }
-                if (!string.IsNullOrEmpty(productName) &&
-                    productName.Contains("Server", StringComparison.OrdinalIgnoreCase))
-                {
-                    return true;
-                }
-                string osName = GetWindowsVersionName(Environment.OSVersion);
-                if (osName.Contains("Server", StringComparison.OrdinalIgnoreCase))
-                    return true;
-            }
-            catch
-            {
-
-            }
-
-            return false;
-        }
-
-        private string GetWindowsVersionName(OperatingSystem os)
-        {
-            Version v = os.Version;
-            switch (v.Major)
-            {
-                case 6:
-                    switch (v.Minor)
-                    {
-                        case 1: return "Windows 7";
-                        case 2: return "Windows 8";
-                        case 3: return "Windows 8.1";
-                    }
-                    break;
-                case 10:
-                    return "Windows 10";
-                case 11:
-                    return "Windows 11"; 
-            }
-            return "Unknown";
-        }
-
-        private bool IsInternetAvailable()
-        {
-            try
-            {
-                using (var client = new HttpClient())
-                {
-                    var result = client.GetAsync("https://www.google.com").Result;
-                    return result.IsSuccessStatusCode;
-                }
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        private void ExtractAndExecuteLocalScript()
-        {
-            try
-            {
-                string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                string scriptPath = Path.Combine(documentsPath, "TSforge_Activation.cmd");
-                byte[] scriptBytes = Properties.Resources.TSforge_Activation;
-                File.WriteAllBytes(scriptPath, scriptBytes);
-                _ = Process.Start(new ProcessStartInfo
-                {
-                    FileName = scriptPath,
-                    UseShellExecute = true,
-                    Verb = "runas"
-                });
-            }
-            catch (Exception ex)
-            {
-                _ = MessageBox.Show($"Error: {ex.Message}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-        private void ExtractAndExecuteLocalScriptKMS38()
-        {
-            try
-            {
-                string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                string scriptPath = Path.Combine(documentsPath, "TSforge_Activation.cmd");
-                byte[] scriptBytes = Properties.Resources.TSforge_Activation;
-                File.WriteAllBytes(scriptPath, scriptBytes);
-                _ = Process.Start(new ProcessStartInfo
-                {
-                    FileName = scriptPath,
-                    UseShellExecute = true,
-                    Verb = "runas"
-                });
-            }
-            catch (Exception ex)
-            {
-                _ = MessageBox.Show($"Error: {ex.Message}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-
-        public static async Task ExecuteScriptFromUrl(string url)
-        {
-            try
-            {
-                using (HttpClient client = new HttpClient())
-                {
-                    var scriptContent = await client.GetStringAsync(url);
-                    string tempFilePath = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "HWID_Activation.cmd");
-                    System.IO.File.WriteAllText(tempFilePath, scriptContent);
-                    _ = Process.Start(new ProcessStartInfo
-                    {
-                        FileName = tempFilePath,
-                        UseShellExecute = true,
-                        Verb = "runas"
-                    });
-                }
-            }
-            catch (Exception ex)
-            {
-                _ = MessageBox.Show($"Error: {ex.Message}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private async void btnCambioEdizione_Click(object sender, EventArgs e)
-        {
-            string tempScript = Path.Combine(Path.GetTempPath(), "tempScript.bat");
-            string logFile = Path.Combine(Path.GetTempPath(), "ScriptExecution.log");
-            string primaryURL = string.Empty;
-
-            if (File.Exists(tempScript))
-            {
-                File.Delete(tempScript);
-            }
-
-            try
-            {
-                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-                using (HttpClient client = new HttpClient())
-                {
-                    var jsonResponse = await client.GetStringAsync(Dipendenze.GitHubConfigUrl);
-                    var jsonObject = JObject.Parse(jsonResponse);
-                    primaryURL = jsonObject["FormWin"]?["cambiowin"]?.ToString() ?? string.Empty;
-                }
-                if (string.IsNullOrWhiteSpace(primaryURL))
-                {
-                    File.AppendAllText(logFile, "primaryURL non trovato nel JSON.");
-                    return;
-                }
-                using (HttpClient client = new HttpClient())
-                {
-                    byte[] fileBytes = await client.GetByteArrayAsync(primaryURL);
-                    await File.WriteAllBytesAsync(tempScript, fileBytes);
-                }
+                string windowsDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Windows);
                 var startInfo = new ProcessStartInfo
                 {
-                    FileName = "cmd.exe",
-                    Arguments = $"/c \"{tempScript}\"",
-                    UseShellExecute = true,
-                    CreateNoWindow = false
+                    FileName = Path.Join(windowsDirectory, "explorer.exe"),
+                    WorkingDirectory = windowsDirectory,
+                    UseShellExecute = false
                 };
-
-                Process.Start(startInfo);
+                startInfo.ArgumentList.Add("ms-settings:activation");
+                _ = Process.Start(startInfo)
+                    ?? throw new InvalidOperationException("Impossibile avviare Esplora file.");
             }
-            catch (Exception ex)
+            catch (Exception ex) when (ex is System.ComponentModel.Win32Exception
+                or InvalidOperationException
+                or System.Security.SecurityException
+                or ArgumentException)
             {
-                File.AppendAllText(logFile, ex.Message);
+                _ = MessageBox.Show($"Impossibile aprire le impostazioni di attivazione: {ex.Message}", "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnCambioEdizione_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show(
+                    "WinHubX aprirà il sito ufficiale massgrave.dev nel browser predefinito. L'app non scaricherà né eseguirà script di attivazione. Continuare?",
+                    "Apri Massgrave", MessageBoxButtons.YesNo, MessageBoxIcon.Information,
+                    MessageBoxDefaultButton.Button2) != DialogResult.Yes)
+                return;
+
+            try
+            {
+                _ = Process.Start(new ProcessStartInfo("https://massgrave.dev/") { UseShellExecute = true })
+                    ?? throw new InvalidOperationException("Il browser predefinito non è stato avviato.");
+            }
+            catch (Exception ex) when (ex is System.ComponentModel.Win32Exception
+                or InvalidOperationException
+                or System.Security.SecurityException
+                or ArgumentException)
+            {
+                _ = MessageBox.Show($"Impossibile aprire massgrave.dev: {ex.Message}",
+                    "WinHubX", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void btnCreaIso_Click(object sender, EventArgs e)
         {
             panel50.Controls.Clear();
-            Form1 mainForm = Application.OpenForms["Form1"] as Form1;
+            Form1? mainForm = Application.OpenForms["Form1"] as Form1;
             if (mainForm == null) return;
             mainForm.pictureBox3.Visible = true;
             mainForm.pictureBox3.Click += (s, ev) =>
@@ -327,7 +116,10 @@ namespace WinHubX
                 };
                 Process.Start(psi);
             }
-            catch (Exception ex)
+            catch (Exception ex) when (ex is System.ComponentModel.Win32Exception
+                or InvalidOperationException
+                or System.Security.SecurityException
+                or ArgumentException)
             {
                 MessageBox.Show($"Impossibile aprire il browser: {ex.Message}", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

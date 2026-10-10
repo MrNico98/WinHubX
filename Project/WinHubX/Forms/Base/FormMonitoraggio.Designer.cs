@@ -1,4 +1,4 @@
-﻿namespace WinHubX.Forms.Base
+namespace WinHubX.Forms.Base
 {
     partial class FormMonitoraggio
     {
@@ -30,61 +30,60 @@
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMonitoraggio));
-            tempMonitorTimer = new System.Windows.Forms.Timer(components);
             tableLayoutPanel17 = new TableLayoutPanel();
-            cuiPanel5 = new CuoreUI.Controls.cuiPanel();
+            cuiPanel5 = new HartUI.Controls.cuiPanel();
             domainUpDown1 = new DomainUpDown();
             BarTEMPtext = new Label();
-            BarTEMP = new CuoreUI.Controls.cuiCircleProgressBar();
+            BarTEMP = new HartUI.Controls.cuiCircleProgressBar();
             label21 = new Label();
             label3 = new Label();
             label11 = new Label();
             label12 = new Label();
-            btnSvuotaTemp = new CuoreUI.Controls.cuiButton();
+            btnSvuotaTemp = new HartUI.Controls.cuiButton();
             BarDISCOtext = new Label();
-            BarDISCO = new CuoreUI.Controls.cuiCircleProgressBar();
+            BarDISCO = new HartUI.Controls.cuiCircleProgressBar();
             label18 = new Label();
-            cuiPanel1 = new CuoreUI.Controls.cuiPanel();
+            cuiPanel1 = new HartUI.Controls.cuiPanel();
             label17 = new Label();
             label16 = new Label();
-            cuiSwitch_gradicpu = new CuoreUI.Controls.cuiSwitch();
+            cuiSwitch_gradicpu = new HartUI.Controls.cuiSwitch();
             limiteCPU = new NumericUpDown();
-            puliziaautomaticoCPU = new CuoreUI.Controls.cuiSwitch();
+            puliziaautomaticoCPU = new HartUI.Controls.cuiSwitch();
             label7 = new Label();
             label6 = new Label();
             label5 = new Label();
-            btnPulisciCPU = new CuoreUI.Controls.cuiButton();
+            btnPulisciCPU = new HartUI.Controls.cuiButton();
             labelCpuTemp = new Label();
             BarCPUtext = new Label();
             pic_termcpu = new PictureBox();
-            BarCPU = new CuoreUI.Controls.cuiCircleProgressBar();
+            BarCPU = new HartUI.Controls.cuiCircleProgressBar();
             label1 = new Label();
             label4 = new Label();
-            cuiPanel2 = new CuoreUI.Controls.cuiPanel();
+            cuiPanel2 = new HartUI.Controls.cuiPanel();
             limiteRAM = new NumericUpDown();
-            puliziaautomaticRAM = new CuoreUI.Controls.cuiSwitch();
+            puliziaautomaticRAM = new HartUI.Controls.cuiSwitch();
             label8 = new Label();
             label9 = new Label();
             label10 = new Label();
-            btnPulisciRam = new CuoreUI.Controls.cuiButton();
+            btnPulisciRam = new HartUI.Controls.cuiButton();
             BarRAMtext = new Label();
-            BarRAM = new CuoreUI.Controls.cuiCircleProgressBar();
+            BarRAM = new HartUI.Controls.cuiCircleProgressBar();
             label14 = new Label();
-            cuiPanel3 = new CuoreUI.Controls.cuiPanel();
+            cuiPanel3 = new HartUI.Controls.cuiPanel();
             label22 = new Label();
             label23 = new Label();
-            cuiSwitch_gputemperatura = new CuoreUI.Controls.cuiSwitch();
+            cuiSwitch_gputemperatura = new HartUI.Controls.cuiSwitch();
             label2 = new Label();
             BarGPUtext = new Label();
-            BarGPU = new CuoreUI.Controls.cuiCircleProgressBar();
+            BarGPU = new HartUI.Controls.cuiCircleProgressBar();
             labelGpuTemp = new Label();
             pic_termgpu = new PictureBox();
             label19 = new Label();
             label20 = new Label();
-            cuiPanel4 = new CuoreUI.Controls.cuiPanel();
+            cuiPanel4 = new HartUI.Controls.cuiPanel();
             label13 = new Label();
             labelReteUtilizzo = new Label();
-            progressbarRete = new CuoreUI.Controls.cuiCircleProgressBar();
+            progressbarRete = new HartUI.Controls.cuiCircleProgressBar();
             lblDonwload = new Label();
             lblUpload = new Label();
             labelVelocitaRete = new Label();
@@ -196,9 +195,7 @@
             btnSvuotaTemp.HoverImageTint = Color.White;
             btnSvuotaTemp.HoverOutline = Color.FromArgb(46, 125, 50);
             btnSvuotaTemp.Image = Properties.Resources.pngSvuotaMonitoraggio;
-            btnSvuotaTemp.ImageAutoCenter = true;
             btnSvuotaTemp.ImageExpand = new Point(0, 0);
-            btnSvuotaTemp.ImageOffset = new Point(0, 0);
             btnSvuotaTemp.Name = "btnSvuotaTemp";
             btnSvuotaTemp.NormalBackground = Color.FromArgb(37, 38, 39);
             btnSvuotaTemp.NormalForeColor = Color.White;
@@ -211,7 +208,6 @@
             btnSvuotaTemp.PressedOutline = Color.FromArgb(46, 125, 50);
             btnSvuotaTemp.Rounding = new Padding(8);
             btnSvuotaTemp.TextAlignment = StringAlignment.Center;
-            btnSvuotaTemp.TextOffset = new Point(0, 0);
             btnSvuotaTemp.Click += btnSvuotaTemp_Click;
             // 
             // BarDISCOtext
@@ -282,15 +278,12 @@
             cuiSwitch_gradicpu.CheckedBackground = Color.FromArgb(0, 126, 249);
             cuiSwitch_gradicpu.CheckedForeground = Color.White;
             cuiSwitch_gradicpu.CheckedOutlineColor = Color.Empty;
-            cuiSwitch_gradicpu.CheckedSymbolColor = Color.FromArgb(0, 126, 249);
             cuiSwitch_gradicpu.Name = "cuiSwitch_gradicpu";
             cuiSwitch_gradicpu.OutlineThickness = 1F;
-            cuiSwitch_gradicpu.ShowSymbols = false;
             cuiSwitch_gradicpu.ThumbSizeModifier = new Size(0, 0);
             cuiSwitch_gradicpu.UncheckedBackground = Color.FromArgb(64, 128, 128, 128);
             cuiSwitch_gradicpu.UncheckedForeground = Color.White;
             cuiSwitch_gradicpu.UncheckedOutlineColor = Color.Empty;
-            cuiSwitch_gradicpu.UncheckedSymbolColor = Color.Gray;
             cuiSwitch_gradicpu.CheckedChanged += cuiSwitch_gradicpu_CheckedChanged;
             // 
             // limiteCPU
@@ -306,15 +299,12 @@
             puliziaautomaticoCPU.CheckedBackground = Color.FromArgb(0, 126, 249);
             puliziaautomaticoCPU.CheckedForeground = Color.White;
             puliziaautomaticoCPU.CheckedOutlineColor = Color.Empty;
-            puliziaautomaticoCPU.CheckedSymbolColor = Color.FromArgb(0, 126, 249);
             puliziaautomaticoCPU.Name = "puliziaautomaticoCPU";
             puliziaautomaticoCPU.OutlineThickness = 1F;
-            puliziaautomaticoCPU.ShowSymbols = false;
             puliziaautomaticoCPU.ThumbSizeModifier = new Size(0, 0);
             puliziaautomaticoCPU.UncheckedBackground = Color.FromArgb(64, 128, 128, 128);
             puliziaautomaticoCPU.UncheckedForeground = Color.White;
             puliziaautomaticoCPU.UncheckedOutlineColor = Color.Empty;
-            puliziaautomaticoCPU.UncheckedSymbolColor = Color.Gray;
             // 
             // label7
             // 
@@ -351,9 +341,7 @@
             btnPulisciCPU.HoverImageTint = Color.White;
             btnPulisciCPU.HoverOutline = Color.FromArgb(46, 125, 50);
             btnPulisciCPU.Image = Properties.Resources.pngPulisciMonitoraggio;
-            btnPulisciCPU.ImageAutoCenter = true;
             btnPulisciCPU.ImageExpand = new Point(0, 0);
-            btnPulisciCPU.ImageOffset = new Point(0, 0);
             btnPulisciCPU.Name = "btnPulisciCPU";
             btnPulisciCPU.NormalBackground = Color.FromArgb(37, 38, 39);
             btnPulisciCPU.NormalForeColor = Color.White;
@@ -366,7 +354,6 @@
             btnPulisciCPU.PressedOutline = Color.FromArgb(46, 125, 50);
             btnPulisciCPU.Rounding = new Padding(8);
             btnPulisciCPU.TextAlignment = StringAlignment.Center;
-            btnPulisciCPU.TextOffset = new Point(0, 0);
             btnPulisciCPU.Click += btn_puliscicpu_Click;
             // 
             // labelCpuTemp
@@ -444,15 +431,12 @@
             puliziaautomaticRAM.CheckedBackground = Color.FromArgb(0, 126, 249);
             puliziaautomaticRAM.CheckedForeground = Color.White;
             puliziaautomaticRAM.CheckedOutlineColor = Color.Empty;
-            puliziaautomaticRAM.CheckedSymbolColor = Color.FromArgb(0, 126, 249);
             puliziaautomaticRAM.Name = "puliziaautomaticRAM";
             puliziaautomaticRAM.OutlineThickness = 1F;
-            puliziaautomaticRAM.ShowSymbols = false;
             puliziaautomaticRAM.ThumbSizeModifier = new Size(0, 0);
             puliziaautomaticRAM.UncheckedBackground = Color.FromArgb(64, 128, 128, 128);
             puliziaautomaticRAM.UncheckedForeground = Color.White;
             puliziaautomaticRAM.UncheckedOutlineColor = Color.Empty;
-            puliziaautomaticRAM.UncheckedSymbolColor = Color.Gray;
             // 
             // label8
             // 
@@ -489,9 +473,7 @@
             btnPulisciRam.HoverImageTint = Color.White;
             btnPulisciRam.HoverOutline = Color.FromArgb(46, 125, 50);
             btnPulisciRam.Image = Properties.Resources.pngPulisciMonitoraggio;
-            btnPulisciRam.ImageAutoCenter = true;
             btnPulisciRam.ImageExpand = new Point(0, 0);
-            btnPulisciRam.ImageOffset = new Point(0, 0);
             btnPulisciRam.Name = "btnPulisciRam";
             btnPulisciRam.NormalBackground = Color.FromArgb(37, 38, 39);
             btnPulisciRam.NormalForeColor = Color.White;
@@ -504,7 +486,6 @@
             btnPulisciRam.PressedOutline = Color.FromArgb(46, 125, 50);
             btnPulisciRam.Rounding = new Padding(8);
             btnPulisciRam.TextAlignment = StringAlignment.Center;
-            btnPulisciRam.TextOffset = new Point(0, 0);
             btnPulisciRam.Click += btn_pulisciram_Click;
             // 
             // BarRAMtext
@@ -570,15 +551,12 @@
             cuiSwitch_gputemperatura.CheckedBackground = Color.FromArgb(0, 126, 249);
             cuiSwitch_gputemperatura.CheckedForeground = Color.White;
             cuiSwitch_gputemperatura.CheckedOutlineColor = Color.Empty;
-            cuiSwitch_gputemperatura.CheckedSymbolColor = Color.FromArgb(0, 126, 249);
             cuiSwitch_gputemperatura.Name = "cuiSwitch_gputemperatura";
             cuiSwitch_gputemperatura.OutlineThickness = 1F;
-            cuiSwitch_gputemperatura.ShowSymbols = false;
             cuiSwitch_gputemperatura.ThumbSizeModifier = new Size(0, 0);
             cuiSwitch_gputemperatura.UncheckedBackground = Color.FromArgb(64, 128, 128, 128);
             cuiSwitch_gputemperatura.UncheckedForeground = Color.White;
             cuiSwitch_gputemperatura.UncheckedOutlineColor = Color.Empty;
-            cuiSwitch_gputemperatura.UncheckedSymbolColor = Color.Gray;
             cuiSwitch_gputemperatura.CheckedChanged += cuiSwitch2_CheckedChanged;
             // 
             // label2
@@ -729,62 +707,60 @@
 
         #endregion
 
-        private System.Windows.Forms.Timer tempMonitorTimer;
         private TableLayoutPanel tableLayoutPanel17;
-        private CuoreUI.Controls.cuiPanel cuiPanel3;
+        private HartUI.Controls.cuiPanel cuiPanel3;
         private Label label2;
         private Label BarGPUtext;
-        private CuoreUI.Controls.cuiCircleProgressBar BarGPU;
+        private HartUI.Controls.cuiCircleProgressBar BarGPU;
         private Label labelGpuTemp;
         private PictureBox pic_termgpu;
         private Label label19;
         private Label label20;
-        private CuoreUI.Controls.cuiPanel cuiPanel2;
+        private HartUI.Controls.cuiPanel cuiPanel2;
         private NumericUpDown limiteRAM;
-        private CuoreUI.Controls.cuiSwitch puliziaautomaticRAM;
+        private HartUI.Controls.cuiSwitch puliziaautomaticRAM;
         private Label label8;
         private Label label9;
         private Label label10;
-        private CuoreUI.Controls.cuiButton cuiButton1;
         private Label BarRAMtext;
-        private CuoreUI.Controls.cuiCircleProgressBar BarRAM;
+        private HartUI.Controls.cuiCircleProgressBar BarRAM;
         private Label label14;
-        private CuoreUI.Controls.cuiPanel cuiPanel1;
+        private HartUI.Controls.cuiPanel cuiPanel1;
         private NumericUpDown limiteCPU;
-        private CuoreUI.Controls.cuiSwitch puliziaautomaticoCPU;
+        private HartUI.Controls.cuiSwitch puliziaautomaticoCPU;
         private Label label7;
         private Label label6;
         private Label label5;
-        private CuoreUI.Controls.cuiButton btnPulisciCPU;
+        private HartUI.Controls.cuiButton btnPulisciCPU;
         private Label labelCpuTemp;
         private Label BarCPUtext;
         private PictureBox pic_termcpu;
-        private CuoreUI.Controls.cuiCircleProgressBar BarCPU;
+        private HartUI.Controls.cuiCircleProgressBar BarCPU;
         private Label label1;
         private Label label4;
-        private CuoreUI.Controls.cuiPanel cuiPanel5;
+        private HartUI.Controls.cuiPanel cuiPanel5;
         private Label label21;
         private Label label3;
         private Label label11;
         private Label label12;
         private Label BarDISCOtext;
-        private CuoreUI.Controls.cuiCircleProgressBar BarDISCO;
+        private HartUI.Controls.cuiCircleProgressBar BarDISCO;
         private Label label18;
-        private CuoreUI.Controls.cuiButton btnSvuotaTemp;
-        private CuoreUI.Controls.cuiButton btnPulisciRam;        
+        private HartUI.Controls.cuiButton btnSvuotaTemp;
+        private HartUI.Controls.cuiButton btnPulisciRam;
         private Label BarTEMPtext;
-        private CuoreUI.Controls.cuiCircleProgressBar BarTEMP;
+        private HartUI.Controls.cuiCircleProgressBar BarTEMP;
         private DomainUpDown domainUpDown1;
         private Label label17;
         private Label label16;
-        private CuoreUI.Controls.cuiSwitch cuiSwitch_gradicpu;
+        private HartUI.Controls.cuiSwitch cuiSwitch_gradicpu;
         private Label label22;
         private Label label23;
-        private CuoreUI.Controls.cuiSwitch cuiSwitch_gputemperatura;
-        private CuoreUI.Controls.cuiPanel cuiPanel4;
+        private HartUI.Controls.cuiSwitch cuiSwitch_gputemperatura;
+        private HartUI.Controls.cuiPanel cuiPanel4;
         private Label label13;
         private Label labelReteUtilizzo;
-        private CuoreUI.Controls.cuiCircleProgressBar progressbarRete;
+        private HartUI.Controls.cuiCircleProgressBar progressbarRete;
         private Label lblDonwload;
         private Label lblUpload;
         private Label labelVelocitaRete;

@@ -1,25 +1,7 @@
-﻿namespace WinHubX.Forms.InstallaComponenti
+namespace WinHubX.Forms.InstallaComponenti
 {
     partial class FormInstallaComponenti
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
-
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -30,7 +12,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormInstallaComponenti));
             label3 = new Label();
-            btnInstallaVerdi = new CuoreUI.Controls.cuiButton();
+            btnInstallaVerdi = new HartUI.Controls.cuiButton();
             pictureBoxPowerPoint = new PictureBox();
             pictureBoxExcel = new PictureBox();
             pictureBoxWord = new PictureBox();
@@ -67,9 +49,7 @@
             btnInstallaVerdi.HoverImageTint = Color.White;
             btnInstallaVerdi.HoverOutline = Color.FromArgb(46, 125, 50);
             btnInstallaVerdi.Image = Properties.Resources.pngCheckCreaISO;
-            btnInstallaVerdi.ImageAutoCenter = true;
             btnInstallaVerdi.ImageExpand = new Point(0, 0);
-            btnInstallaVerdi.ImageOffset = new Point(0, 0);
             btnInstallaVerdi.Name = "btnInstallaVerdi";
             btnInstallaVerdi.NormalBackground = Color.FromArgb(37, 38, 39);
             btnInstallaVerdi.NormalForeColor = Color.White;
@@ -82,7 +62,6 @@
             btnInstallaVerdi.PressedOutline = Color.FromArgb(46, 125, 50);
             btnInstallaVerdi.Rounding = new Padding(8);
             btnInstallaVerdi.TextAlignment = StringAlignment.Center;
-            btnInstallaVerdi.TextOffset = new Point(0, 0);
             btnInstallaVerdi.Click += btnInstalla_Click;
             // 
             // pictureBoxPowerPoint
@@ -167,11 +146,10 @@
         #endregion
 
         private Label label3;
-        private CuoreUI.Controls.cuiButton btnInstallaVerdi;
+        private HartUI.Controls.cuiButton btnInstallaVerdi;
         private PictureBox pictureBoxPowerPoint;
         private PictureBox pictureBoxExcel;
         private PictureBox pictureBoxWord;
-        private CheckBox checkBox_powerpoint;
         private CheckBox checkBox_winget;
         private CheckBox checkBox_microsoftdefender;
         private CheckBox checkBox_MicrosoftStore;

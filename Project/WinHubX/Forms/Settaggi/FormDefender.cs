@@ -1,4 +1,4 @@
-﻿using Microsoft.Win32;
+using Microsoft.Win32;
 using System.Security.AccessControl;
 using System.Security.Principal;
 using WinHubX.Forms.Base;
@@ -6,17 +6,33 @@ using WinHubX.Impostazioni;
 
 namespace WinHubX.Forms.Settaggi
 {
-    public partial class FormDefender : Form
+    public partial class FormDefender : Form, IImportedSettingsForm
     {
-        private Form1 form1;
-        private FormSettaggi formSettaggi;
+        private static bool IsExpectedDefenderOperationFailure(Exception exception) =>
+            exception is IOException
+                or UnauthorizedAccessException
+                or System.Security.SecurityException
+                or System.ComponentModel.Win32Exception
+                or System.Runtime.InteropServices.COMException
+                or System.Management.ManagementException
+                or InvalidOperationException
+                or OperationCanceledException
+                or TimeoutException
+                or ArgumentException;
+
+        private sealed record DefenderSelection(HashSet<string> Disable, HashSet<string> Enable);
+
+        private readonly Form1 form1;
+        private readonly FormSettaggi formSettaggi;
         private int totalSteps = 0;
         private int tIndex = -1;
+        private ElevatedRegistryMutationBatch? pendingRegistryMutations;
+        private ElevatedRegistryAclMutationBatch? pendingRegistryAclMutations;
         public FormDefender(FormSettaggi formSettaggi, Form1 form1)
         {
             InitializeComponent();
-            form1 = form1;
-            formSettaggi = formSettaggi;
+            this.form1 = form1;
+            this.formSettaggi = formSettaggi;
             LoadCheckboxStates();
             DisabilitaDefender.MouseMove += new MouseEventHandler(checkedListBox1_MouseMove);
             AbilitaDefender.MouseMove += new MouseEventHandler(checkedListBox2_MouseMove);
@@ -47,7 +63,7 @@ namespace WinHubX.Forms.Settaggi
             };
         }
 
-        private void checkedListBox1_MouseMove(object sender, MouseEventArgs e)
+        private void checkedListBox1_MouseMove(object? sender, MouseEventArgs e)
         {
             int index = DisabilitaDefender.IndexFromPoint(e.Location);
             if (tIndex != index)
@@ -61,7 +77,7 @@ namespace WinHubX.Forms.Settaggi
             }
         }
 
-        private void checkedListBox2_MouseMove(object sender, MouseEventArgs e)
+        private void checkedListBox2_MouseMove(object? sender, MouseEventArgs e)
         {
             int index = AbilitaDefender.IndexFromPoint(e.Location);
             if (tIndex != index)
@@ -92,19 +108,19 @@ namespace WinHubX.Forms.Settaggi
 
         private void SetCheckboxState(string itemName, bool isChecked)
         {
-            using (RegistryKey key = Registry.CurrentUser.CreateSubKey("Software\\WinHubX"))
+            using (RegistryKey? key = Registry.CurrentUser.CreateSubKey("Software\\WinHubX"))
             {
-                key.SetValue(itemName, isChecked ? 1 : 0, RegistryValueKind.DWord);
+                key?.SetValue(itemName, isChecked ? 1 : 0, RegistryValueKind.DWord);
             }
         }
 
         private bool GetCheckboxState(string itemName)
         {
-            using (RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\WinHubX"))
+            using (RegistryKey? key = Registry.CurrentUser.OpenSubKey("Software\\WinHubX"))
             {
                 if (key != null)
                 {
-                    object value = key.GetValue(itemName);
+                    object? value = key.GetValue(itemName);
                     if (value != null)
                     {
                         return (int)value == 1;
@@ -158,48 +174,55 @@ namespace WinHubX.Forms.Settaggi
         }
 
 
-        private void btnAvviaSelezionatiDef_Click(object sender, EventArgs e)
+        private void btnAvviaSelezionatiDef_Click(object? sender, EventArgs e)
         {
-            totalSteps = 0;
+            if (backgroundWorker1.IsBusy)
+            {
+                return;
+            }
 
-            totalSteps = DisabilitaDefender.CheckedItems.Count + AbilitaDefender.CheckedItems.Count;
-            if (totalSteps == 0) totalSteps = 1;
+            var selection = new DefenderSelection(
+                DisabilitaDefender.CheckedItems.Cast<string>().ToHashSet(StringComparer.Ordinal),
+                AbilitaDefender.CheckedItems.Cast<string>().ToHashSet(StringComparer.Ordinal));
+            totalSteps = selection.Disable.Count + selection.Enable.Count;
+            if (totalSteps == 0)
+            {
+                return;
+            }
+
             progressBar1.MaxValue = totalSteps;
             progressBar1.Value = 0;
-
-            if (!backgroundWorker1.IsBusy)
-            {
-                backgroundWorker1.RunWorkerAsync();
-            }
+            backgroundWorker1.RunWorkerAsync(selection);
         }
 
-        private void btnRipristinaDefender_Click(object sender, EventArgs e)
+        Task IImportedSettingsForm.ApplyImportedSettingsAsync() =>
+            ImportedSettingsWorker.RunAsync(
+                backgroundWorker1,
+                () => btnAvviaSelezionatiDef_Click(btnAvviaSelezionatiVerdi, EventArgs.Empty));
+
+        private void btnRipristinaDefender_Click(object? sender, EventArgs e)
         {
             try
             {
+                pendingRegistryMutations = new ElevatedRegistryMutationBatch();
+                pendingRegistryAclMutations = new ElevatedRegistryAclMutationBatch();
                 SetMpPreference("EnableControlledFolderAccess", true);
-                SetDwordRegistryValue(@"SOFTWARE\Microsoft\.NETFramework\v4.0.30319", "SchUseStrongCrypto", 1, RegistryView.Registry64);
-                SetDwordRegistryValue(@"SOFTWARE\Microsoft\.NETFramework\v4.0.30319", "SchUseStrongCrypto", 1, RegistryView.Registry32);
+                SetDwordRegistryValue(@"SOFTWARE\Microsoft\.NETFramework\v4.0.30319", "SchUseStrongCrypto", 1);
                 SetDwordRegistryValue(@"SOFTWARE\Wow6432Node\Microsoft\.NETFramework\v4.0.30319", "SchUseStrongCrypto", 1, RegistryView.Registry32);
                 SetDwordRegistryValue(@"SOFTWARE\Microsoft\Windows\CurrentVersion\QualityCompat", "cadca5fe-87d3-4b96-b7fb-a231484277cc", 0, RegistryView.Registry64);
                 SetDwordRegistryValue(@"Software\Microsoft\Windows Security Health\State", "AccountProtection_MicrosoftAccount_Disconnected", 0, RegistryView.Registry64);
-                SetDwordRegistryValue(@"Software\Microsoft\Windows\CurrentVersion\Policies\Attachments", "SaveZoneInformation", 1, RegistryView.Registry64);
-                SetDwordRegistryValue(@"Software\Microsoft\Windows\CurrentVersion\Policies\Attachments", "SaveZoneInformation", 1, RegistryView.Registry32);
-                SetDwordRegistryValue(@"SOFTWARE\Microsoft\Windows Script Host\Settings", "Enabled", 1, RegistryView.Registry64);
-                SetDwordRegistryValue(@"SOFTWARE\Microsoft\Windows Script Host\Settings", "Enabled", 1, RegistryView.Registry32);
-                SetDwordRegistryValue(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System", "ConsentPromptBehaviorAdmin", 5, RegistryView.Registry64);
-                SetDwordRegistryValue(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System", "ConsentPromptBehaviorAdmin", 5, RegistryView.Registry32);
-                SetDwordRegistryValue(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System", "PromptOnSecureDesktop", 1, RegistryView.Registry64);
-                SetDwordRegistryValue(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System", "PromptOnSecureDesktop", 1, RegistryView.Registry32);
-                SetDwordRegistryValue(@"SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters", "AutoShareWks", 1, RegistryView.Registry64);
-                SetDwordRegistryValue(@"SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters", "AutoShareWks", 1, RegistryView.Registry32);
-                SetDwordRegistryValue(@"SOFTWARE\Policies\Microsoft\Windows Defender\Spynet", "SpynetReporting", 0, RegistryView.Registry64);
-                SetDwordRegistryValue(@"SOFTWARE\Policies\Microsoft\Windows Defender\Spynet", "SpynetReporting", 0, RegistryView.Registry32);
-                SetDwordRegistryValue(@"SOFTWARE\Policies\Microsoft\Windows Defender\Spynet", "SubmitSamplesConsent", 2, RegistryView.Registry64);
-                SetDwordRegistryValue(@"SOFTWARE\Policies\Microsoft\Windows Defender\Spynet", "SubmitSamplesConsent", 2, RegistryView.Registry32);
+                SetDwordRegistryValue(@"Software\Microsoft\Windows\CurrentVersion\Policies\Attachments", "SaveZoneInformation", 1);
+                SetDwordRegistryValue(@"SOFTWARE\Microsoft\Windows Script Host\Settings", "Enabled", 1);
+                SetDwordRegistryValue(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System", "ConsentPromptBehaviorAdmin", 5);
+                SetDwordRegistryValue(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System", "PromptOnSecureDesktop", 1);
+                SetDwordRegistryValue(@"SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters", "AutoShareWks", 1);
+                SetDwordRegistryValue(@"SOFTWARE\Policies\Microsoft\Windows Defender\Spynet", "SpynetReporting", 0);
+                SetDwordRegistryValue(@"SOFTWARE\Policies\Microsoft\Windows Defender\Spynet", "SubmitSamplesConsent", 2);
+                ApplyPendingRegistryMutations();
             }
-            catch (Exception)
+            catch (Exception ex) when (IsExpectedDefenderOperationFailure(ex))
             {
+                pendingRegistryMutations = null;
                 MessageBox.Show("Si è verificato un errore durante il ripristino. Controlla i permessi o il registro eventi.",
                     "WinHubX - Errore", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -215,150 +238,113 @@ namespace WinHubX.Forms.Settaggi
         }
 
 
-        static void DeleteRegistryKey(string keyPath, RegistryView registryView)
+        private void DeleteRegistryValue(string keyPath, string valueName, RegistryView registryView)
         {
-            try
-            {
-                using (RegistryKey baseKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, registryView))
-                {
-                    baseKey.DeleteSubKeyTree(keyPath);
-
-                }
-            }
-            catch (Exception)
-            {
-
-            }
+            GetPendingRegistryMutations().DeleteValue(RegistryHive.LocalMachine, keyPath, valueName, registryView);
         }
 
-        static void DeleteRegistryKey3arg(string keyPath, string subKeyName, RegistryView registryView)
+        private void DeleteRegistryValue(string keyPath, string valueName)
         {
-            try
-            {
-                using (RegistryKey baseKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, registryView))
-                {
-                    baseKey.DeleteSubKey(Path.Combine(keyPath, subKeyName), throwOnMissingSubKey: false);
-                }
-            }
-            catch (Exception)
-            {
-
-            }
+            DeleteRegistryValue(keyPath, valueName, RegistryView.Registry64);
+            DeleteRegistryValue(keyPath, valueName, RegistryView.Registry32);
         }
 
-        static void SetDwordRegistryValue(string keyPath, string valueName, int value, RegistryView registryView)
+        private void SetDwordRegistryValue(string keyPath, string valueName, int value, RegistryView registryView)
         {
-            try
-            {
-                using (RegistryKey key = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, registryView).CreateSubKey(keyPath, writable: true))
-                {
-                    if (key != null)
-                    {
-                        key.SetValue(valueName, value, RegistryValueKind.DWord);
-
-                    }
-                    else
-                    {
-
-                    }
-                }
-            }
-            catch (Exception)
-            {
-
-            }
+            GetPendingRegistryMutations().SetValue(RegistryHive.LocalMachine, keyPath, valueName, value,
+                RegistryValueKind.DWord, registryView);
         }
 
-        static void RemoveRegistryValue(string keyPath, string valueName)
+        private void SetDwordRegistryValue(string keyPath, string valueName, int value)
         {
-            try
-            {
-                using (RegistryKey key64 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64).OpenSubKey(keyPath, writable: true))
-                {
-                    key64?.DeleteValue(valueName, throwOnMissingValue: false);
-                }
-                using (RegistryKey key32 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32).OpenSubKey(keyPath, writable: true))
-                {
-                    key32?.DeleteValue(valueName, throwOnMissingValue: false);
-                }
-            }
-            catch (Exception)
-            {
-
-            }
+            SetDwordRegistryValue(keyPath, valueName, value, RegistryView.Registry64);
+            SetDwordRegistryValue(keyPath, valueName, value, RegistryView.Registry32);
         }
 
-        void TakeOwnership(string keyPath, RegistryView registryView)
+        void GrantRegistryTakeOwnershipRight(string keyPath, RegistryView registryView)
         {
-            try
-            {
-                using (RegistryKey key = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, registryView).OpenSubKey(keyPath, writable: true))
-                {
-                    if (key != null)
-                    {
-                        RegistrySecurity security = key.GetAccessControl();
-                        WindowsIdentity identity = WindowsIdentity.GetCurrent();
-                        SecurityIdentifier sid = identity.User;
-                        security.AddAccessRule(new RegistryAccessRule(sid, RegistryRights.TakeOwnership, AccessControlType.Allow));
-                        key.SetAccessControl(security);
-                        key.SetAccessControl(new RegistrySecurity { });
-                        key.SetAccessControl(new RegistrySecurity());
-
-                    }
-                    else
-                    {
-
-                    }
-                }
-            }
-            catch (UnauthorizedAccessException)
-            {
-
-            }
-            catch (Exception)
-            {
-
-            }
+            using WindowsIdentity identity = WindowsIdentity.GetCurrent();
+            string userSid = identity.User?.Value
+                ?? throw new InvalidOperationException("Impossibile determinare l'identità Windows corrente.");
+            GetPendingRegistryAclMutations().AddLocalMachineTakeOwnership(keyPath, registryView, userSid);
         }
         private void SetStringRegistryValue(string keyPath, string name, string value, RegistryView view)
         {
-            using (var baseKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, view))
-            using (var key = baseKey.CreateSubKey(keyPath))
-            {
-                key.SetValue(name, value, RegistryValueKind.ExpandString);
-            }
+            GetPendingRegistryMutations().SetValue(RegistryHive.LocalMachine, keyPath, name, value,
+                RegistryValueKind.ExpandString, view);
         }
 
-        private void TakeOwnRegistry(string keyPath)
+        private ElevatedRegistryMutationBatch GetPendingRegistryMutations() =>
+            pendingRegistryMutations ??= new ElevatedRegistryMutationBatch();
+
+        private ElevatedRegistryAclMutationBatch GetPendingRegistryAclMutations() =>
+            pendingRegistryAclMutations ??= new ElevatedRegistryAclMutationBatch();
+
+        private void ApplyPendingRegistryMutations()
         {
-            var psi = new System.Diagnostics.ProcessStartInfo
+            if ((pendingRegistryMutations is null || pendingRegistryMutations.Count == 0)
+                && (pendingRegistryAclMutations is null || pendingRegistryAclMutations.Count == 0))
+                return;
+
+            string script = pendingRegistryMutations is { Count: > 0 }
+                ? pendingRegistryMutations.BuildCommand()
+                : "$ErrorActionPreference = 'Stop'";
+            if (pendingRegistryAclMutations is { Count: > 0 })
+                script += Environment.NewLine + pendingRegistryAclMutations.BuildCommand();
+
+            string encodedScript = Convert.ToBase64String(System.Text.Encoding.Unicode.GetBytes(script));
+            var startInfo = new System.Diagnostics.ProcessStartInfo
             {
-                FileName = "cmd.exe",
-                Arguments = $"/c takeown /f \"HKEY_LOCAL_MACHINE\\{keyPath}\" /a",
-                Verb = "runas",
-                UseShellExecute = true
+                FileName = Path.Join(Environment.SystemDirectory, "WindowsPowerShell", "v1.0", "powershell.exe"),
+                UseShellExecute = true,
+                WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden,
+                Verb = "runas"
             };
-            var process = System.Diagnostics.Process.Start(psi);
+            startInfo.ArgumentList.Add("-NoProfile");
+            startInfo.ArgumentList.Add("-NonInteractive");
+            startInfo.ArgumentList.Add("-EncodedCommand");
+            startInfo.ArgumentList.Add(encodedScript);
+            using System.Diagnostics.Process process = System.Diagnostics.Process.Start(startInfo)
+                ?? throw new InvalidOperationException("Impossibile avviare le modifiche Defender con privilegi elevati.");
             process.WaitForExit();
+            if (process.ExitCode != 0)
+                throw new InvalidOperationException($"Le modifiche del Registro Defender sono terminate con codice {process.ExitCode}.");
+            pendingRegistryMutations = null;
+            pendingRegistryAclMutations = null;
         }
 
         private void SetMpPreference(string preference, bool enabled)
         {
             var psi = new System.Diagnostics.ProcessStartInfo
             {
-                FileName = "powershell.exe",
-                Arguments = $"-Command Set-MpPreference -{preference} {(enabled ? "Enabled" : "Disabled")}",
+                FileName = Path.Join(Environment.SystemDirectory, "WindowsPowerShell", "v1.0", "powershell.exe"),
                 Verb = "runas",
-                UseShellExecute = true
+                UseShellExecute = true,
+                WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden
             };
-            var process = System.Diagnostics.Process.Start(psi);
+            psi.ArgumentList.Add("-NoProfile");
+            psi.ArgumentList.Add("-NonInteractive");
+            psi.ArgumentList.Add("-Command");
+            psi.ArgumentList.Add($"$ErrorActionPreference = 'Stop'; Set-MpPreference -{preference} {(enabled ? "Enabled" : "Disabled")}");
+            using var process = System.Diagnostics.Process.Start(psi)
+                ?? throw new InvalidOperationException("Impossibile avviare Set-MpPreference.");
             process.WaitForExit();
+            if (process.ExitCode != 0)
+                throw new InvalidOperationException($"Set-MpPreference -{preference} è terminato con codice {process.ExitCode}.");
         }
 
-        private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        private void backgroundWorker1_DoWork(object? sender, System.ComponentModel.DoWorkEventArgs e)
         {
+            if (e.Argument is not DefenderSelection selection)
+            {
+                throw new InvalidOperationException("Selezione delle impostazioni Defender non valida.");
+            }
+
             int currentStep = 0;
-            if (DisabilitaDefender.CheckedItems.Contains("Disabilita Controllo Accesso Cartella"))
+            var failures = new List<string>();
+            pendingRegistryMutations = new ElevatedRegistryMutationBatch();
+            pendingRegistryAclMutations = new ElevatedRegistryAclMutationBatch();
+            if (selection.Disable.Contains("Disabilita Controllo Accesso Cartella"))
             {
                 SetCheckboxState("DisabilitaControlloAccessoCartella", true);
                 currentStep++;
@@ -367,26 +353,25 @@ namespace WinHubX.Forms.Settaggi
                 {
                     SetMpPreference("EnableControlledFolderAccess", true);
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedDefenderOperationFailure(ex))
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
             }
             else
             {
                 SetCheckboxState("DisabilitaControlloAccessoCartella", false);
             }
-            if (DisabilitaDefender.CheckedItems.Contains("Disabilita Isolamento Core"))
+            if (selection.Disable.Contains("Disabilita Isolamento Core"))
             {
                 SetCheckboxState("DisabilitaIsolamentoCore", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 try
                 {
-                    DeleteRegistryKey(@"SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity", RegistryView.Registry64);
-                    DeleteRegistryKey(@"SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity", RegistryView.Registry32);
+                    DeleteRegistryValue(@"SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity", "Enabled");
                 }
-                catch (Exception ex)
+                catch (Exception ex) when (IsExpectedDefenderOperationFailure(ex))
                 {
                     _ = MessageBox.Show($"An error occurred: {ex.Message}");
                 }
@@ -395,7 +380,7 @@ namespace WinHubX.Forms.Settaggi
             {
                 SetCheckboxState("DisabilitaIsolamentoCore", false);
             }
-            if (DisabilitaDefender.CheckedItems.Contains("Disabilita Applicazione Defender Guard"))
+            if (selection.Disable.Contains("Disabilita Applicazione Defender Guard"))
             {
                 SetCheckboxState("DisabilitaApplicazioneDefernderGuard", true);
                 currentStep++;
@@ -404,187 +389,178 @@ namespace WinHubX.Forms.Settaggi
                 {
                     var startInfo = new System.Diagnostics.ProcessStartInfo()
                     {
-                        FileName = "powershell.exe",
-                        Arguments = "Disable-WindowsOptionalFeature -online -FeatureName \"Windows-Defender-ApplicationGuard\" -NoRestart -WarningAction SilentlyContinue",
-                        UseShellExecute = false,
-                        CreateNoWindow = true,
-                        RedirectStandardOutput = true,
-                        RedirectStandardError = true,
+                        FileName = Path.Join(Environment.SystemDirectory, "WindowsPowerShell", "v1.0", "powershell.exe"),
+                        UseShellExecute = true,
+                        WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden,
                         Verb = "runas"
                     };
+                    startInfo.ArgumentList.Add("-NoProfile");
+                    startInfo.ArgumentList.Add("-NonInteractive");
+                    startInfo.ArgumentList.Add("-Command");
+                    startInfo.ArgumentList.Add("Disable-WindowsOptionalFeature -Online -FeatureName 'Windows-Defender-ApplicationGuard' -NoRestart -WarningAction SilentlyContinue");
 
-                    using (var process = System.Diagnostics.Process.Start(startInfo))
+                    using (var process = System.Diagnostics.Process.Start(startInfo)
+                        ?? throw new InvalidOperationException("Impossibile avviare la modifica di Windows Defender."))
                     {
                         process.WaitForExit();
 
-                        var output = process.StandardOutput.ReadToEnd();
-                        var error = process.StandardError.ReadToEnd();
                     }
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedDefenderOperationFailure(ex))
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
             }
             else
             {
                 SetCheckboxState("DisabilitaApplicazioneDefernderGuard", false);
             }
-            if (DisabilitaDefender.CheckedItems.Contains("Disabilita Protezione Account Warning"))
+            if (selection.Disable.Contains("Disabilita Protezione Account Warning"))
             {
                 SetCheckboxState("DisabilitaProtezioneAccountWarning", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 try
                 {
-                    SetDwordRegistryValue(@"Software\Microsoft\Windows Security Health\State", "AccountProtection_MicrosoftAccount_Disconnected", 1, RegistryView.Registry64);
-                    SetDwordRegistryValue(@"Software\Microsoft\Windows Security Health\State", "AccountProtection_MicrosoftAccount_Disconnected", 1, RegistryView.Registry32);
+                    SetDwordRegistryValue(@"Software\Microsoft\Windows Security Health\State", "AccountProtection_MicrosoftAccount_Disconnected", 1);
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedDefenderOperationFailure(ex))
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
             }
             else
             {
                 SetCheckboxState("DisabilitaProtezioneAccountWarning", false);
             }
-            if (DisabilitaDefender.CheckedItems.Contains("Disabilita Blocco Download Files"))
+            if (selection.Disable.Contains("Disabilita Blocco Download Files"))
             {
                 SetCheckboxState("DisabilitaBloccoDownloadFiles", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 try
                 {
-                    SetDwordRegistryValue(@"Software\Microsoft\Windows\CurrentVersion\Policies\Attachments", "SaveZoneInformation", 1, RegistryView.Registry64);
-                    SetDwordRegistryValue(@"Software\Microsoft\Windows\CurrentVersion\Policies\Attachments", "SaveZoneInformation", 1, RegistryView.Registry32);
+                    SetDwordRegistryValue(@"Software\Microsoft\Windows\CurrentVersion\Policies\Attachments", "SaveZoneInformation", 1);
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedDefenderOperationFailure(ex))
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
             }
             else
             {
                 SetCheckboxState("DisabilitaBloccoDownloadFiles", false);
             }
-            if (DisabilitaDefender.CheckedItems.Contains("Disabilita Windows Script Host"))
+            if (selection.Disable.Contains("Disabilita Windows Script Host"))
             {
                 SetCheckboxState("DisabilitaWindowsScriptHost", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 try
                 {
-                    SetDwordRegistryValue(@"SOFTWARE\Microsoft\Windows Script Host\Settings", "Enabled", 0, RegistryView.Registry64);
-                    SetDwordRegistryValue(@"SOFTWARE\Microsoft\Windows Script Host\Settings", "Enabled", 0, RegistryView.Registry32);
+                    SetDwordRegistryValue(@"SOFTWARE\Microsoft\Windows Script Host\Settings", "Enabled", 0);
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedDefenderOperationFailure(ex))
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
             }
             else
             {
                 SetCheckboxState("DisabilitaWindowsScriptHost", false);
             }
-            if (DisabilitaDefender.CheckedItems.Contains("Disabilita .NET Strong Cryptography"))
+            if (selection.Disable.Contains("Disabilita .NET Strong Cryptography"))
             {
                 SetCheckboxState("DisabilitaNETStrongCryptography", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 try
                 {
-                    DeleteRegistryKey3arg(@"SOFTWARE\Microsoft\.NETFramework\v4.0.30319", "SchUseStrongCrypto", RegistryView.Registry64);
-                    DeleteRegistryKey3arg(@"SOFTWARE\Microsoft\.NETFramework\v4.0.30319", "SchUseStrongCrypto", RegistryView.Registry32);
+                    DeleteRegistryValue(@"SOFTWARE\Microsoft\.NETFramework\v4.0.30319", "SchUseStrongCrypto");
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedDefenderOperationFailure(ex))
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
             }
             else
             {
                 SetCheckboxState("DisabilitaNETStrongCryptography", false);
             }
-            if (DisabilitaDefender.CheckedItems.Contains("Livello Minimo UAC"))
+            if (selection.Disable.Contains("Livello Minimo UAC"))
             {
                 SetCheckboxState("LivelloMinimoUAC", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 try
                 {
-                    SetDwordRegistryValue(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System", "ConsentPromptBehaviorAdmin", 0, RegistryView.Registry64);
-                    SetDwordRegistryValue(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System", "ConsentPromptBehaviorAdmin", 0, RegistryView.Registry32);
+                    SetDwordRegistryValue(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System", "ConsentPromptBehaviorAdmin", 0);
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedDefenderOperationFailure(ex))
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
             }
             else
             {
                 SetCheckboxState("LivelloMinimoUAC", false);
             }
-            if (DisabilitaDefender.CheckedItems.Contains("Disabilita Implicit Administrative Sheres"))
+            if (selection.Disable.Contains("Disabilita Implicit Administrative Sheres"))
             {
                 SetCheckboxState("DisabilitaImplicitAdministrativeSheres", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 try
                 {
-                    SetDwordRegistryValue(@"SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters", "AutoShareWks", 0, RegistryView.Registry64);
-                    SetDwordRegistryValue(@"SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters", "AutoShareWks", 0, RegistryView.Registry32);
+                    SetDwordRegistryValue(@"SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters", "AutoShareWks", 0);
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedDefenderOperationFailure(ex))
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
             }
             else
             {
                 SetCheckboxState("DisabilitaImplicitAdministrativeSheres", false);
             }
-            if (DisabilitaDefender.CheckedItems.Contains("Disabilita Windows Firewall"))
+            if (selection.Disable.Contains("Disabilita Windows Firewall"))
             {
                 SetCheckboxState("DisabilitaWindowsFirewall", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 try
                 {
-                    SetDwordRegistryValue(@"SOFTWARE\Policies\Microsoft\WindowsFirewall\StandardProfile", "EnableFirewall", 0, RegistryView.Registry64);
-                    SetDwordRegistryValue(@"SOFTWARE\Policies\Microsoft\WindowsFirewall\StandardProfile", "EnableFirewall", 0, RegistryView.Registry32);
+                    SetDwordRegistryValue(@"SOFTWARE\Policies\Microsoft\WindowsFirewall\StandardProfile", "EnableFirewall", 0);
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedDefenderOperationFailure(ex))
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
             }
             else
             {
                 SetCheckboxState("DisabilitaWindowsFirewall", false);
             }
-            if (DisabilitaDefender.CheckedItems.Contains("Disabilita Windows Defender CLoud"))
+            if (selection.Disable.Contains("Disabilita Windows Defender CLoud"))
             {
                 SetCheckboxState("DisabilitaWindowsDefenderCLoud", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 try
                 {
-                    SetDwordRegistryValue(@"SOFTWARE\Policies\Microsoft\Windows Defender\Spynet", "SpynetReporting", 0, RegistryView.Registry64);
-                    SetDwordRegistryValue(@"SOFTWARE\Policies\Microsoft\Windows Defender\Spynet", "SpynetReporting", 0, RegistryView.Registry32);
-                    SetDwordRegistryValue(@"SOFTWARE\Policies\Microsoft\Windows Defender\Spynet", "SubmitSamplesConsent", 2, RegistryView.Registry64);
-                    SetDwordRegistryValue(@"SOFTWARE\Policies\Microsoft\Windows Defender\Spynet", "SubmitSamplesConsent", 2, RegistryView.Registry32);
+                    SetDwordRegistryValue(@"SOFTWARE\Policies\Microsoft\Windows Defender\Spynet", "SpynetReporting", 0);
+                    SetDwordRegistryValue(@"SOFTWARE\Policies\Microsoft\Windows Defender\Spynet", "SubmitSamplesConsent", 2);
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedDefenderOperationFailure(ex))
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
             }
             else
             {
                 SetCheckboxState("DisabilitaWindowsDefenderCLoud", false);
             }
-            if (DisabilitaDefender.CheckedItems.Contains("Disabilita Windows Defender SysTray"))
+            if (selection.Disable.Contains("Disabilita Windows Defender SysTray"))
             {
                 SetCheckboxState("DisabilitaWindowsDefenderSysTray", true);
                 currentStep++;
@@ -592,34 +568,27 @@ namespace WinHubX.Forms.Settaggi
                 try
                 {
                     string systrayKeyPath = @"SOFTWARE\Policies\Microsoft\Windows Defender Security Center\Systray";
-                    using (var key64 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64).CreateSubKey(systrayKeyPath, writable: true))
-                    {
-                        key64?.SetValue("HideSystray", 1, RegistryValueKind.DWord);
-                    }
-                    using (var key32 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32).CreateSubKey(systrayKeyPath, writable: true))
-                    {
-                        key32?.SetValue("HideSystray", 1, RegistryValueKind.DWord);
-                    }
+                    SetDwordRegistryValue(systrayKeyPath, "HideSystray", 1);
                     var osVersion = Environment.OSVersion.Version;
                     if (osVersion.Build == 14393)
                     {
-                        RemoveRegistryValue(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", "WindowsDefender");
+                        DeleteRegistryValue(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", "WindowsDefender");
                     }
                     else if (osVersion.Build >= 15063)
                     {
-                        RemoveRegistryValue(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", "SecurityHealth");
+                        DeleteRegistryValue(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", "SecurityHealth");
                     }
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedDefenderOperationFailure(ex))
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
             }
             else
             {
                 SetCheckboxState("DisabilitaWindowsDefenderSysTray", false);
             }
-            if (DisabilitaDefender.CheckedItems.Contains("Disabilita Windows Defender Services"))
+            if (selection.Disable.Contains("Disabilita Windows Defender Services"))
             {
                 SetCheckboxState("DisabilitaWindowsDefenderServices", true);
                 currentStep++;
@@ -635,54 +604,52 @@ namespace WinHubX.Forms.Settaggi
 
                     foreach (var path in registryPaths)
                     {
-                        TakeOwnership(path, RegistryView.Registry64);
-                        TakeOwnership(path, RegistryView.Registry32);
+                        GrantRegistryTakeOwnershipRight(path, RegistryView.Registry64);
+                        GrantRegistryTakeOwnershipRight(path, RegistryView.Registry32);
                     }
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedDefenderOperationFailure(ex))
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
             }
-            if (AbilitaDefender.CheckedItems.Contains("Abilita Controllo Accesso Cartella"))
+            if (selection.Enable.Contains("Abilita Controllo Accesso Cartella"))
             {
                 SetCheckboxState("AbilitaControlloAccessoCartella", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 try
                 {
-                    SetDwordRegistryValue(@"SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity", "Enabled", 1, RegistryView.Registry64);
-                    SetDwordRegistryValue(@"SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity", "Enabled", 1, RegistryView.Registry32);
+                    SetDwordRegistryValue(@"SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity", "Enabled", 1);
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedDefenderOperationFailure(ex))
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
             }
             else
             {
                 SetCheckboxState("AbilitaControlloAccessoCartella", false);
             }
-            if (AbilitaDefender.CheckedItems.Contains("Abilita Isolamento Core"))
+            if (selection.Enable.Contains("Abilita Isolamento Core"))
             {
                 SetCheckboxState("AbilitaIsolamentoCore", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 try
                 {
-                    SetDwordRegistryValue(@"SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity", "Enabled", 1, RegistryView.Registry64);
-                    SetDwordRegistryValue(@"SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity", "Enabled", 1, RegistryView.Registry32);
+                    SetDwordRegistryValue(@"SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity", "Enabled", 1);
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedDefenderOperationFailure(ex))
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
             }
             else
             {
                 SetCheckboxState("AbilitaIsolamentoCore", false);
             }
-            if (AbilitaDefender.CheckedItems.Contains("Abilita Applicazione Defender Guard"))
+            if (selection.Enable.Contains("Abilita Applicazione Defender Guard"))
             {
                 SetCheckboxState("AbilitaApplicazioneDefenderGuard", true);
                 currentStep++;
@@ -691,90 +658,87 @@ namespace WinHubX.Forms.Settaggi
                 {
                     var startInfo = new System.Diagnostics.ProcessStartInfo()
                     {
-                        FileName = "powershell.exe",
-                        Arguments = "Enable-WindowsOptionalFeature -online -FeatureName \"Windows-Defender-ApplicationGuard\" -NoRestart -WarningAction SilentlyContinue",
-                        UseShellExecute = false,
-                        CreateNoWindow = true,
-                        RedirectStandardOutput = true,
-                        RedirectStandardError = true,
+                        FileName = Path.Join(Environment.SystemDirectory, "WindowsPowerShell", "v1.0", "powershell.exe"),
+                        UseShellExecute = true,
+                        WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden,
                         Verb = "runas"
                     };
+                    startInfo.ArgumentList.Add("-NoProfile");
+                    startInfo.ArgumentList.Add("-NonInteractive");
+                    startInfo.ArgumentList.Add("-Command");
+                    startInfo.ArgumentList.Add("Enable-WindowsOptionalFeature -Online -FeatureName 'Windows-Defender-ApplicationGuard' -NoRestart -WarningAction SilentlyContinue");
 
-                    using (var process = System.Diagnostics.Process.Start(startInfo))
+                    using (var process = System.Diagnostics.Process.Start(startInfo)
+                        ?? throw new InvalidOperationException("Impossibile avviare la modifica di Windows Defender."))
                     {
                         process.WaitForExit();
 
-                        var output = process.StandardOutput.ReadToEnd();
-                        var error = process.StandardError.ReadToEnd();
                     }
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedDefenderOperationFailure(ex))
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
             }
             else
             {
                 SetCheckboxState("AbilitaApplicazioneDefenderGuard", false);
             }
-            if (AbilitaDefender.CheckedItems.Contains("Abilita Protezione Account Warning"))
+            if (selection.Enable.Contains("Abilita Protezione Account Warning"))
             {
                 SetCheckboxState("AbilitaProtezioneAccountWarning", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 try
                 {
-                    DeleteRegistryKey(@"Software\Microsoft\Windows Security Health\State", RegistryView.Registry64);
-                    DeleteRegistryKey(@"Software\Microsoft\Windows Security Health\State", RegistryView.Registry32);
+                    DeleteRegistryValue(@"Software\Microsoft\Windows Security Health\State", "AccountProtection_MicrosoftAccount_Disconnected");
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedDefenderOperationFailure(ex))
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
             }
             else
             {
                 SetCheckboxState("AbilitaProtezioneAccountWarning", false);
             }
-            if (AbilitaDefender.CheckedItems.Contains("Abilita Blocco Download Files"))
+            if (selection.Enable.Contains("Abilita Blocco Download Files"))
             {
                 SetCheckboxState("AbilitaBloccoDownloadFiles", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 try
                 {
-                    DeleteRegistryKey3arg(@"Software\Microsoft\Windows\CurrentVersion\Policies\Attachments", "SaveZoneInformation", RegistryView.Registry64);
-                    DeleteRegistryKey3arg(@"Software\Microsoft\Windows\CurrentVersion\Policies\Attachments", "SaveZoneInformation", RegistryView.Registry32);
+                    DeleteRegistryValue(@"Software\Microsoft\Windows\CurrentVersion\Policies\Attachments", "SaveZoneInformation");
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedDefenderOperationFailure(ex))
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
             }
             else
             {
                 SetCheckboxState("AbilitaBloccoDownloadFiles", false);
             }
-            if (AbilitaDefender.CheckedItems.Contains("Abilita Windows Script Host"))
+            if (selection.Enable.Contains("Abilita Windows Script Host"))
             {
                 SetCheckboxState("AbilitaWindowsScriptHost", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 try
                 {
-                    DeleteRegistryKey3arg(@"SOFTWARE\Microsoft\Windows Script Host\Settings", "Enabled", RegistryView.Registry64);
-                    DeleteRegistryKey3arg(@"SOFTWARE\Microsoft\Windows Script Host\Settings", "Enabled", RegistryView.Registry32);
+                    DeleteRegistryValue(@"SOFTWARE\Microsoft\Windows Script Host\Settings", "Enabled");
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedDefenderOperationFailure(ex))
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
             }
             else
             {
                 SetCheckboxState("AbilitaWindowsScriptHost", false);
             }
-            if (AbilitaDefender.CheckedItems.Contains("Abilita .NET Strong Cryptography"))
+            if (selection.Enable.Contains("Abilita .NET Strong Cryptography"))
             {
                 SetCheckboxState("AbilitaNETStrongCryptography", true);
                 currentStep++;
@@ -786,106 +750,99 @@ namespace WinHubX.Forms.Settaggi
                     SetDwordRegistryValue(@"SOFTWARE\Microsoft\.NETFramework\v4.0.30319", "SchUseStrongCrypto", 1, RegistryView.Registry32);
                     SetDwordRegistryValue(@"SOFTWARE\Wow6432Node\Microsoft\.NETFramework\v4.0.30319", "SchUseStrongCrypto", 1, RegistryView.Registry64);
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedDefenderOperationFailure(ex))
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
             }
             else
             {
                 SetCheckboxState("AbilitaNETStrongCryptography", false);
             }
-            if (AbilitaDefender.CheckedItems.Contains("Livello Massimo UAC"))
+            if (selection.Enable.Contains("Livello Massimo UAC"))
             {
                 SetCheckboxState("LivelloMassimoUAC", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 try
                 {
-                    SetDwordRegistryValue(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System", "ConsentPromptBehaviorAdmin", 5, RegistryView.Registry64);
-                    SetDwordRegistryValue(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System", "ConsentPromptBehaviorAdmin", 5, RegistryView.Registry32);
+                    SetDwordRegistryValue(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System", "ConsentPromptBehaviorAdmin", 5);
 
-                    SetDwordRegistryValue(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System", "PromptOnSecureDesktop", 1, RegistryView.Registry64);
-                    SetDwordRegistryValue(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System", "PromptOnSecureDesktop", 1, RegistryView.Registry32);
+                    SetDwordRegistryValue(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System", "PromptOnSecureDesktop", 1);
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedDefenderOperationFailure(ex))
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
             }
             else
             {
                 SetCheckboxState("LivelloMassimoUAC", false);
             }
-            if (AbilitaDefender.CheckedItems.Contains("Abilita Implicit Administrative Sheres"))
+            if (selection.Enable.Contains("Abilita Implicit Administrative Sheres"))
             {
                 SetCheckboxState("AbilitaImplicitAdministrativeSheres", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 try
                 {
-                    DeleteRegistryKey3arg(@"SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters", "AutoShareWks", RegistryView.Registry64);
-                    DeleteRegistryKey3arg(@"SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters", "AutoShareWks", RegistryView.Registry32);
+                    DeleteRegistryValue(@"SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters", "AutoShareWks");
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedDefenderOperationFailure(ex))
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
             }
             else
             {
                 SetCheckboxState("AbilitaImplicitAdministrativeSheres", false);
             }
-            if (AbilitaDefender.CheckedItems.Contains("Abilita Windows Firewall"))
+            if (selection.Enable.Contains("Abilita Windows Firewall"))
             {
                 SetCheckboxState("AbilitaWindowsFirewall", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 try
                 {
-                    DeleteRegistryKey3arg(@"SOFTWARE\Policies\Microsoft\WindowsFirewall\StandardProfile", "EnableFirewall", RegistryView.Registry64);
-                    DeleteRegistryKey3arg(@"SOFTWARE\Policies\Microsoft\WindowsFirewall\StandardProfile", "EnableFirewall", RegistryView.Registry32);
+                    DeleteRegistryValue(@"SOFTWARE\Policies\Microsoft\WindowsFirewall\StandardProfile", "EnableFirewall");
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedDefenderOperationFailure(ex))
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
             }
             else
             {
                 SetCheckboxState("AbilitaWindowsFirewall", false);
             }
-            if (AbilitaDefender.CheckedItems.Contains("Abilita Windows Defender CLoud"))
+            if (selection.Enable.Contains("Abilita Windows Defender CLoud"))
             {
                 SetCheckboxState("AbilitaWindowsDefenderCLoud", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 try
                 {
-                    DeleteRegistryKey3arg(@"SOFTWARE\Policies\Microsoft\Windows Defender\Spynet", "SpynetReporting", RegistryView.Registry64);
-                    DeleteRegistryKey3arg(@"SOFTWARE\Policies\Microsoft\Windows Defender\Spynet", "SpynetReporting", RegistryView.Registry32);
+                    DeleteRegistryValue(@"SOFTWARE\Policies\Microsoft\Windows Defender\Spynet", "SpynetReporting");
 
-                    DeleteRegistryKey3arg(@"SOFTWARE\Policies\Microsoft\Windows Defender\Spynet", "SubmitSamplesConsent", RegistryView.Registry64);
-                    DeleteRegistryKey3arg(@"SOFTWARE\Policies\Microsoft\Windows Defender\Spynet", "SubmitSamplesConsent", RegistryView.Registry32);
+                    DeleteRegistryValue(@"SOFTWARE\Policies\Microsoft\Windows Defender\Spynet", "SubmitSamplesConsent");
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedDefenderOperationFailure(ex))
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
             }
             else
             {
                 SetCheckboxState("AbilitaWindowsDefenderCLoud", false);
             }
-            if (AbilitaDefender.CheckedItems.Contains("Abilita Windows Defender SysTray"))
+            if (selection.Enable.Contains("Abilita Windows Defender SysTray"))
             {
                 SetCheckboxState("AbilitaWindowsDefenderSysTray", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 try
                 {
-                    DeleteRegistryKey3arg(@"SOFTWARE\Policies\Microsoft\Windows Defender Security Center\Systray", "HideSystray", RegistryView.Registry64);
-                    DeleteRegistryKey3arg(@"SOFTWARE\Policies\Microsoft\Windows Defender Security Center\Systray", "HideSystray", RegistryView.Registry32);
+                    DeleteRegistryValue(@"SOFTWARE\Policies\Microsoft\Windows Defender Security Center\Systray", "HideSystray");
                     var buildVersion = Environment.OSVersion.Version.Build;
 
                     if (buildVersion == 14393)
@@ -904,23 +861,22 @@ namespace WinHubX.Forms.Settaggi
                         SetStringRegistryValue(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", "SecurityHealth", @"%windir%\system32\SecurityHealthSystray.exe", RegistryView.Registry32);
                     }
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedDefenderOperationFailure(ex))
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
             }
             else
             {
                 SetCheckboxState("AbilitaWindowsDefenderSysTray", false);
             }
-            if (AbilitaDefender.CheckedItems.Contains("Abilita Windows Defender Services"))
+            if (selection.Enable.Contains("Abilita Windows Defender Services"))
             {
                 SetCheckboxState("AbilitaWindowsDefenderServices", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 try
                 {
-                    TakeOwnRegistry(@"SYSTEM\CurrentControlSet\Services\WinDefend");
                     SetDwordRegistryValue(@"SYSTEM\CurrentControlSet\Services\WinDefend", "Start", 3, RegistryView.Registry64);
                     SetDwordRegistryValue(@"SYSTEM\CurrentControlSet\Services\WinDefend", "AutorunsDisabled", 4, RegistryView.Registry64);
                     SetDwordRegistryValue(@"SYSTEM\CurrentControlSet\Services\WdNisSvc", "Start", 3, RegistryView.Registry64);
@@ -934,26 +890,39 @@ namespace WinHubX.Forms.Settaggi
                     SetDwordRegistryValue(@"SYSTEM\CurrentControlSet\Services\Sense", "Start", 3, RegistryView.Registry32);
                     SetDwordRegistryValue(@"SYSTEM\CurrentControlSet\Services\Sense", "AutorunsDisabled", 4, RegistryView.Registry32);
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedDefenderOperationFailure(ex))
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
             }
             else
             {
                 SetCheckboxState("AbilitaWindowsDefenderServices", false);
             }
+
+            try
+            {
+                ApplyPendingRegistryMutations();
+            }
+            catch (Exception ex) when (IsExpectedDefenderOperationFailure(ex))
+            {
+                failures.Add($"Modifiche Registro Defender (UAC): {ex.GetBaseException().Message}");
+            }
+
+            e.Result = failures;
         }
 
-        private void btnProtezioneMinima_Click(object sender, EventArgs e)
+        private void btnProtezioneMinima_Click(object? sender, EventArgs e)
         {
             try
             {
+                pendingRegistryMutations = new ElevatedRegistryMutationBatch();
+                pendingRegistryAclMutations = new ElevatedRegistryAclMutationBatch();
                 SetMpPreference("EnableControlledFolderAccess", false);
-                DeleteRegistryKey3arg(@"SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity", "Enabled", RegistryView.Registry64);
-                DeleteRegistryKey3arg(@"SOFTWARE\Microsoft\.NETFramework\v4.0.30319", "SchUseStrongCrypto", RegistryView.Registry64);
-                DeleteRegistryKey3arg(@"SOFTWARE\Wow6432Node\Microsoft\.NETFramework\v4.0.30319", "SchUseStrongCrypto", RegistryView.Registry32);
-                DeleteRegistryKey3arg(@"SOFTWARE\Microsoft\Windows\CurrentVersion\QualityCompat", "cadca5fe-87d3-4b96-b7fb-a231484277cc", RegistryView.Registry64);
+                DeleteRegistryValue(@"SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity", "Enabled", RegistryView.Registry64);
+                DeleteRegistryValue(@"SOFTWARE\Microsoft\.NETFramework\v4.0.30319", "SchUseStrongCrypto", RegistryView.Registry64);
+                DeleteRegistryValue(@"SOFTWARE\Wow6432Node\Microsoft\.NETFramework\v4.0.30319", "SchUseStrongCrypto", RegistryView.Registry32);
+                DeleteRegistryValue(@"SOFTWARE\Microsoft\Windows\CurrentVersion\QualityCompat", "cadca5fe-87d3-4b96-b7fb-a231484277cc", RegistryView.Registry64);
                 SetDwordRegistryValue(@"Software\Microsoft\Windows Security Health\State", "AccountProtection_MicrosoftAccount_Disconnected", 1, RegistryView.Registry64);
                 SetDwordRegistryValue(@"Software\Microsoft\Windows\CurrentVersion\Policies\Attachments", "SaveZoneInformation", 1, RegistryView.Registry64);
                 SetDwordRegistryValue(@"SOFTWARE\Microsoft\Windows Script Host\Settings", "Enabled", 0, RegistryView.Registry64);
@@ -962,10 +931,10 @@ namespace WinHubX.Forms.Settaggi
                 SetDwordRegistryValue(@"SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters", "AutoShareWks", 0, RegistryView.Registry64);
                 SetDwordRegistryValue(@"SOFTWARE\Policies\Microsoft\Windows Defender\Spynet", "SpynetReporting", 0, RegistryView.Registry64);
                 SetDwordRegistryValue(@"SOFTWARE\Policies\Microsoft\Windows Defender\Spynet", "SubmitSamplesConsent", 2, RegistryView.Registry64);
-                DeleteRegistryKey3arg(@"SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity", "Enabled", RegistryView.Registry32);
-                DeleteRegistryKey3arg(@"SOFTWARE\Microsoft\.NETFramework\v4.0.30319", "SchUseStrongCrypto", RegistryView.Registry32);
-                DeleteRegistryKey3arg(@"SOFTWARE\Wow6432Node\Microsoft\.NETFramework\v4.0.30319", "SchUseStrongCrypto", RegistryView.Registry64);
-                DeleteRegistryKey3arg(@"SOFTWARE\Microsoft\Windows\CurrentVersion\QualityCompat", "cadca5fe-87d3-4b96-b7fb-a231484277cc", RegistryView.Registry32);
+                DeleteRegistryValue(@"SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity", "Enabled", RegistryView.Registry32);
+                DeleteRegistryValue(@"SOFTWARE\Microsoft\.NETFramework\v4.0.30319", "SchUseStrongCrypto", RegistryView.Registry32);
+                DeleteRegistryValue(@"SOFTWARE\Wow6432Node\Microsoft\.NETFramework\v4.0.30319", "SchUseStrongCrypto", RegistryView.Registry64);
+                DeleteRegistryValue(@"SOFTWARE\Microsoft\Windows\CurrentVersion\QualityCompat", "cadca5fe-87d3-4b96-b7fb-a231484277cc", RegistryView.Registry32);
                 SetDwordRegistryValue(@"Software\Microsoft\Windows Security Health\State", "AccountProtection_MicrosoftAccount_Disconnected", 1, RegistryView.Registry32);
                 SetDwordRegistryValue(@"Software\Microsoft\Windows\CurrentVersion\Policies\Attachments", "SaveZoneInformation", 1, RegistryView.Registry32);
                 SetDwordRegistryValue(@"SOFTWARE\Microsoft\Windows Script Host\Settings", "Enabled", 0, RegistryView.Registry32);
@@ -974,30 +943,46 @@ namespace WinHubX.Forms.Settaggi
                 SetDwordRegistryValue(@"SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters", "AutoShareWks", 0, RegistryView.Registry32);
                 SetDwordRegistryValue(@"SOFTWARE\Policies\Microsoft\Windows Defender\Spynet", "SpynetReporting", 0, RegistryView.Registry32);
                 SetDwordRegistryValue(@"SOFTWARE\Policies\Microsoft\Windows Defender\Spynet", "SubmitSamplesConsent", 2, RegistryView.Registry32);
+                ApplyPendingRegistryMutations();
             }
-            catch (Exception)
+            catch (Exception ex) when (IsExpectedDefenderOperationFailure(ex))
             {
-
+                pendingRegistryMutations = null;
+                _ = MessageBox.Show(
+                    $"La protezione minima non è stata applicata completamente: {ex.GetBaseException().Message}",
+                    "WinHubX - Errore",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
             }
         }
 
-        private void backgroundWorker1_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
+        private void backgroundWorker1_ProgressChanged(object? sender, System.ComponentModel.ProgressChangedEventArgs e)
         {
             progressBar1.Value = Math.Min(e.ProgressPercentage, progressBar1.MaxValue);
         }
 
-        private void backgroundWorker1_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        private void backgroundWorker1_RunWorkerCompleted(object? sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
-            string messaggio = LanguageManager.GetTranslation("Global", "modifichesuccesso");
+            CompletionMessage completion = BackgroundWorkerCompletionMessageFactory.Create(
+                e,
+                "Alcune impostazioni Defender non sono state applicate:",
+                LanguageManager.GetTranslation("Global", "modifichesuccesso"));
+            MessageBoxIcon icon = completion.Severity switch
+            {
+                CompletionMessageSeverity.Error => MessageBoxIcon.Error,
+                CompletionMessageSeverity.Warning => MessageBoxIcon.Warning,
+                _ => MessageBoxIcon.Information
+            };
+
             _ = MessageBox.Show(
-                messaggio,
+                completion.Text,
                 "WinHubX",
                 MessageBoxButtons.OK,
-                MessageBoxIcon.Information
+                icon
             );
         }
 
-        private void btnSuggeriti_Click(object sender, EventArgs e)
+        private void btnSuggeriti_Click(object? sender, EventArgs e)
         {
             var daDisabilitare = new List<string>
     {
@@ -1008,19 +993,17 @@ namespace WinHubX.Forms.Settaggi
             for (int i = 0; i < DisabilitaDefender.Items.Count; i++)
                 DisabilitaDefender.SetItemChecked(i, false);
 
-            foreach (string nome in daDisabilitare)
+            foreach (int index in daDisabilitare.Select(nome => DisabilitaDefender.Items.IndexOf(nome)).Where(static index => index >= 0))
             {
-                int index = DisabilitaDefender.Items.IndexOf(nome);
-                if (index != -1)
-                    DisabilitaDefender.SetItemChecked(index, true);
+                DisabilitaDefender.SetItemChecked(index, true);
             }
         }
 
-        private void AbilitaDefender_ItemCheck(object sender, ItemCheckEventArgs e)
+        private void AbilitaDefender_ItemCheck(object? sender, ItemCheckEventArgs e)
         {
             if (e.NewValue == CheckState.Checked)
             {
-                string itemName = AbilitaDefender.Items[e.Index].ToString();
+                string itemName = AbilitaDefender.Items[e.Index]?.ToString() ?? string.Empty;
                 string disabilitaName = itemName.Replace("Abilita", "Disabilita");
 
                 int index = DisabilitaDefender.Items.IndexOf(disabilitaName);
@@ -1033,12 +1016,12 @@ namespace WinHubX.Forms.Settaggi
             }
         }
 
-        private void DisabilitaDefender_ItemCheck(object sender, ItemCheckEventArgs e)
+        private void DisabilitaDefender_ItemCheck(object? sender, ItemCheckEventArgs e)
         {
             {
                 if (e.NewValue == CheckState.Checked)
                 {
-                    string itemName = DisabilitaDefender.Items[e.Index].ToString();
+                    string itemName = DisabilitaDefender.Items[e.Index]?.ToString() ?? string.Empty;
                     string abilitaName = itemName.Replace("Disabilita", "Abilita");
 
                     int index = AbilitaDefender.Items.IndexOf(abilitaName);
@@ -1052,7 +1035,7 @@ namespace WinHubX.Forms.Settaggi
             }
         }
 
-        private void DisabilitaDefender_MouseDown(object sender, MouseEventArgs e)
+        private void DisabilitaDefender_MouseDown(object? sender, MouseEventArgs e)
         {
             int index = DisabilitaDefender.IndexFromPoint(e.Location);
             if (index != ListBox.NoMatches)
@@ -1062,7 +1045,7 @@ namespace WinHubX.Forms.Settaggi
             DisabilitaDefender.ClearSelected();
         }
 
-        private void AbilitaDefender_MouseDown(object sender, MouseEventArgs e)
+        private void AbilitaDefender_MouseDown(object? sender, MouseEventArgs e)
         {
             int index = AbilitaDefender.IndexFromPoint(e.Location);
             if (index != ListBox.NoMatches)
@@ -1072,7 +1055,7 @@ namespace WinHubX.Forms.Settaggi
             AbilitaDefender.ClearSelected();
         }
 
-        private void btnReset_Click(object sender, EventArgs e)
+        private void btnReset_Click(object? sender, EventArgs e)
         {
             for (int i = 0; i < AbilitaDefender.Items.Count; i++)
             {

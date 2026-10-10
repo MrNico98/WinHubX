@@ -1,25 +1,7 @@
-﻿namespace WinHubX.Forms.Settaggi
+namespace WinHubX.Forms.Settaggi
 {
     partial class FormRipristinoSO
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
-
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -32,10 +14,10 @@
             checkBox_hw = new CheckBox();
             checkBox_sw = new CheckBox();
             dateTimePicker1 = new DateTimePicker();
-            progressBar1 = new CuoreUI.Controls.cuiProgressBarHorizontal();
+            progressBar1 = new HartUI.Controls.cuiProgressBarHorizontal();
             label3 = new Label();
             labeltempo = new Label();
-            btn_CreaISOVerdi = new CuoreUI.Controls.cuiButton();
+            btn_CreaISOVerdi = new HartUI.Controls.cuiButton();
             richTextBox1 = new RichTextBox();
             richTextBox2 = new RichTextBox();
             SuspendLayout();
@@ -106,9 +88,7 @@
             btn_CreaISOVerdi.HoverImageTint = Color.White;
             btn_CreaISOVerdi.HoverOutline = Color.FromArgb(46, 125, 50);
             btn_CreaISOVerdi.Image = Properties.Resources.pngCheckCreaISO;
-            btn_CreaISOVerdi.ImageAutoCenter = true;
             btn_CreaISOVerdi.ImageExpand = new Point(0, 0);
-            btn_CreaISOVerdi.ImageOffset = new Point(0, 0);
             btn_CreaISOVerdi.Name = "btn_CreaISOVerdi";
             btn_CreaISOVerdi.NormalBackground = Color.FromArgb(37, 38, 39);
             btn_CreaISOVerdi.NormalForeColor = Color.White;
@@ -121,7 +101,6 @@
             btn_CreaISOVerdi.PressedOutline = Color.FromArgb(46, 125, 50);
             btn_CreaISOVerdi.Rounding = new Padding(8);
             btn_CreaISOVerdi.TextAlignment = StringAlignment.Center;
-            btn_CreaISOVerdi.TextOffset = new Point(0, 0);
             btn_CreaISOVerdi.Click += buttonStart_Click;
             // 
             // richTextBox1
@@ -164,10 +143,10 @@
         private CheckBox checkBox_hw;
         private CheckBox checkBox_sw;
         private DateTimePicker dateTimePicker1;
-        private CuoreUI.Controls.cuiProgressBarHorizontal progressBar1;
+        private HartUI.Controls.cuiProgressBarHorizontal progressBar1;
         private Label label3;
         private Label labeltempo;
-        private CuoreUI.Controls.cuiButton btn_CreaISOVerdi;
+        private HartUI.Controls.cuiButton btn_CreaISOVerdi;
         private RichTextBox richTextBox1;
         private RichTextBox richTextBox2;
     }

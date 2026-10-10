@@ -1,27 +1,9 @@
-﻿using CuoreUI.Controls;
+using HartUI.Controls;
 
 namespace WinHubX.Forms.CreaISO
 {
     partial class FormCreazioneISO
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
-
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -98,9 +80,7 @@ namespace WinHubX.Forms.CreaISO
             btnStopVerdi.HoverImageTint = Color.White;
             btnStopVerdi.HoverOutline = Color.FromArgb(192, 0, 0);
             btnStopVerdi.Image = Properties.Resources.pngCloseCreazioneISO;
-            btnStopVerdi.ImageAutoCenter = true;
             btnStopVerdi.ImageExpand = new Point(0, 0);
-            btnStopVerdi.ImageOffset = new Point(0, 0);
             btnStopVerdi.Name = "btnStopVerdi";
             btnStopVerdi.NormalBackground = Color.FromArgb(37, 38, 39);
             btnStopVerdi.NormalForeColor = Color.White;
@@ -113,7 +93,6 @@ namespace WinHubX.Forms.CreaISO
             btnStopVerdi.PressedOutline = Color.FromArgb(192, 0, 0);
             btnStopVerdi.Rounding = new Padding(8);
             btnStopVerdi.TextAlignment = StringAlignment.Center;
-            btnStopVerdi.TextOffset = new Point(0, 0);
             btnStopVerdi.Click += btnStop_Click;
             // 
             // FormCreazioneISO
@@ -139,10 +118,8 @@ namespace WinHubX.Forms.CreaISO
         private RichTextBox richTextBox1;
         private Label label3;
         private Label label1;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private cuiProgressBarHorizontal progressBar1;
-        private CuoreUI.Controls.cuiProgressBarHorizontal cuiProgressBarHorizontal1;
-        private CuoreUI.Controls.cuiProgressBarHorizontal progressBar2;
+        private HartUI.Controls.cuiProgressBarHorizontal progressBar2;
         private cuiButton btnStopVerdi;
     }
 }

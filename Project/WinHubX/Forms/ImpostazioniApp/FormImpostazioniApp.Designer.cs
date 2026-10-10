@@ -1,25 +1,7 @@
-﻿namespace WinHubX.Forms.ImpostazioniApp
+namespace WinHubX.Forms.ImpostazioniApp
 {
     partial class FormImpostazioniApp
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
-
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -33,14 +15,14 @@
             radioButton_temadisistema = new RadioButton();
             radioButton_temascuro = new RadioButton();
             radioButton_temachiaro = new RadioButton();
-            btnApplicaVerdi = new CuoreUI.Controls.cuiButton();
-            cuiPanel6 = new CuoreUI.Controls.cuiPanel();
+            btnApplicaVerdi = new HartUI.Controls.cuiButton();
+            cuiPanel6 = new HartUI.Controls.cuiPanel();
             pictureBox7 = new PictureBox();
             pictureBox6 = new PictureBox();
             pictureBox2 = new PictureBox();
             label8 = new Label();
             pictureBox10 = new PictureBox();
-            cuiPanel1 = new CuoreUI.Controls.cuiPanel();
+            cuiPanel1 = new HartUI.Controls.cuiPanel();
             pictureBox5 = new PictureBox();
             pictureBox4 = new PictureBox();
             pictureBox3 = new PictureBox();
@@ -50,8 +32,8 @@
             radioButton_italianolinuga = new RadioButton();
             pictureBox1 = new PictureBox();
             labelversione = new Label();
-            btnAggiornamento = new CuoreUI.Controls.cuiButton();
-            switch_aggiornamentoavvio = new CuoreUI.Controls.cuiSwitch();
+            btnAggiornamento = new HartUI.Controls.cuiButton();
+            switch_aggiornamentoavvio = new HartUI.Controls.cuiSwitch();
             label6 = new Label();
             cuiPanel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox7).BeginInit();
@@ -115,9 +97,7 @@
             btnApplicaVerdi.HoverImageTint = Color.White;
             btnApplicaVerdi.HoverOutline = Color.FromArgb(46, 125, 50);
             btnApplicaVerdi.Image = Properties.Resources.pngCheckCreaISO;
-            btnApplicaVerdi.ImageAutoCenter = true;
             btnApplicaVerdi.ImageExpand = new Point(0, 0);
-            btnApplicaVerdi.ImageOffset = new Point(0, 0);
             btnApplicaVerdi.Name = "btnApplicaVerdi";
             btnApplicaVerdi.NormalBackground = Color.FromArgb(37, 38, 39);
             btnApplicaVerdi.NormalForeColor = Color.White;
@@ -130,7 +110,6 @@
             btnApplicaVerdi.PressedOutline = Color.FromArgb(46, 125, 50);
             btnApplicaVerdi.Rounding = new Padding(8);
             btnApplicaVerdi.TextAlignment = StringAlignment.Center;
-            btnApplicaVerdi.TextOffset = new Point(0, 0);
             btnApplicaVerdi.Click += btnInstallaVerdi_Click;
             // 
             // cuiPanel6
@@ -293,9 +272,7 @@
             btnAggiornamento.HoverImageTint = Color.White;
             btnAggiornamento.HoverOutline = Color.FromArgb(0, 126, 249);
             btnAggiornamento.Image = Properties.Resources.pngclick;
-            btnAggiornamento.ImageAutoCenter = true;
             btnAggiornamento.ImageExpand = new Point(0, 0);
-            btnAggiornamento.ImageOffset = new Point(0, 0);
             btnAggiornamento.Name = "btnAggiornamento";
             btnAggiornamento.NormalBackground = Color.FromArgb(37, 38, 39);
             btnAggiornamento.NormalForeColor = Color.White;
@@ -308,7 +285,6 @@
             btnAggiornamento.PressedOutline = Color.FromArgb(0, 126, 249);
             btnAggiornamento.Rounding = new Padding(8);
             btnAggiornamento.TextAlignment = StringAlignment.Center;
-            btnAggiornamento.TextOffset = new Point(0, 0);
             btnAggiornamento.Click += btnAggiornamento_Click;
             // 
             // switch_aggiornamentoavvio
@@ -318,15 +294,12 @@
             switch_aggiornamentoavvio.CheckedBackground = Color.FromArgb(0, 126, 249);
             switch_aggiornamentoavvio.CheckedForeground = Color.White;
             switch_aggiornamentoavvio.CheckedOutlineColor = Color.Empty;
-            switch_aggiornamentoavvio.CheckedSymbolColor = Color.FromArgb(0, 126, 249);
             switch_aggiornamentoavvio.Name = "switch_aggiornamentoavvio";
             switch_aggiornamentoavvio.OutlineThickness = 1F;
-            switch_aggiornamentoavvio.ShowSymbols = false;
             switch_aggiornamentoavvio.ThumbSizeModifier = new Size(0, 0);
             switch_aggiornamentoavvio.UncheckedBackground = Color.FromArgb(64, 128, 128, 128);
             switch_aggiornamentoavvio.UncheckedForeground = Color.White;
             switch_aggiornamentoavvio.UncheckedOutlineColor = Color.Empty;
-            switch_aggiornamentoavvio.UncheckedSymbolColor = Color.Gray;
             switch_aggiornamentoavvio.CheckedChanged += switch_aggiornamentoavvio_CheckedChanged;
             // 
             // label6
@@ -372,15 +345,13 @@
         #endregion
 
         private Label label3;
-        private CheckBox checkBox_powerpoint;
-        private CuoreUI.Controls.cuiButton btnInstallaVerdi;
         private RadioButton radioButton_temachiaro;
         private RadioButton radioButton_temadisistema;
         private RadioButton radioButton_temascuro;
-        private CuoreUI.Controls.cuiPanel cuiPanel6;
+        private HartUI.Controls.cuiPanel cuiPanel6;
         private Label label8;
         private PictureBox pictureBox10;
-        private CuoreUI.Controls.cuiPanel cuiPanel1;
+        private HartUI.Controls.cuiPanel cuiPanel1;
         private RadioButton radioButton_sistemalingua;
         private RadioButton radioButton_ingleselingua;
         private Label label1;
@@ -393,9 +364,9 @@
         private PictureBox pictureBox7;
         private PictureBox pictureBox6;
         private Label labelversione;
-        private CuoreUI.Controls.cuiButton btnAggiornamento;
-        private CuoreUI.Controls.cuiButton btnApplicaVerdi;
-        private CuoreUI.Controls.cuiSwitch switch_aggiornamentoavvio;
+        private HartUI.Controls.cuiButton btnAggiornamento;
+        private HartUI.Controls.cuiButton btnApplicaVerdi;
+        private HartUI.Controls.cuiSwitch switch_aggiornamentoavvio;
         private Label label6;
     }
 }

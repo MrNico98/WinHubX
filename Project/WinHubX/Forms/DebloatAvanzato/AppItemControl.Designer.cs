@@ -4,13 +4,13 @@ namespace WinHubX.Forms.DebloatAvanzato
 {
     partial class AppItemControl
     {
-        private System.ComponentModel.IContainer components = null;
-
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if (disposing)
             {
-                components.Dispose();
+                pictureBox.LoadCompleted -= PictureBox_LoadCompleted;
+                pictureBox.CancelAsync();
+                _toolTip.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -38,7 +38,7 @@ namespace WinHubX.Forms.DebloatAvanzato
             // lblNome
             // 
             lblNome.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            lblNome.Font = new Font("Arial", 9F, FontStyle.Bold);
+            lblNome.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             lblNome.ForeColor = Color.Black;
             lblNome.Location = new Point(69, 12);
             lblNome.Name = "lblNome";

@@ -1,0 +1,18 @@
+name: Domanda pubblica sulla sicurezza
+description: Per vulnerabilità reali usa il canale privato, non questa issue.
+title: "[Security question]: "
+labels: [security]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Non inserire dettagli riproducibili, exploit, log sensibili, credenziali o dati personali.**
+
+        Per segnalare una vulnerabilità usa il canale privato indicato in [SECURITY.md](https://github.com/LightYagami28/WinHubX/blob/main/SECURITY.md) o [apri una segnalazione privata](https://github.com/LightYagami28/WinHubX/security/advisories/new).
+  - type: checkboxes
+    id: acknowledgement
+    attributes:
+      label: Conferma
+      options:
+        - label: Questa è una domanda generale e non contiene dettagli di una vulnerabilità non divulgata.
+          required: true

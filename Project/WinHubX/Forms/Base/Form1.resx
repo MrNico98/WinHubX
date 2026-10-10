@@ -160,7 +160,7 @@
     <value>pictureBoxlblalto</value>
   </data>
   <data name="&gt;&gt;pnlNav.Type" xml:space="preserve">
-    <value>CuoreUI.Controls.cuiPanel, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+    <value>HartUI.Controls.cuiPanel, HartUI, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="btnWin.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleLeft</value>
@@ -2133,7 +2133,7 @@
     <value>254, 51</value>
   </data>
   <data name="&gt;&gt;cuiFormRounder1.Type" xml:space="preserve">
-    <value>CuoreUI.Components.cuiFormRounder, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+    <value>HartUI.Components.cuiFormRounder, HartUI, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="picMinimizzaApp.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>

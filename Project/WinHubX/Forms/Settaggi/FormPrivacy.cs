@@ -1,24 +1,40 @@
 ﻿using Microsoft.Win32;
 using Microsoft.Win32.TaskScheduler;
 using System.ComponentModel;
-using System.ServiceProcess;
+using System.Text;
 using System.Text.Json;
 using WinHubX.Forms.Base;
 using WinHubX.Impostazioni;
 
 namespace WinHubX.Forms.Settaggi
 {
-    public partial class FormPrivacy : Form
+    public partial class FormPrivacy : Form, IImportedSettingsForm
     {
-        private Form1 form1;
-        private FormSettaggi formSettaggi;
+        private sealed record PrivacySelection(HashSet<string> Disable, HashSet<string> Enable);
+
+        private static bool IsExpectedPrivacyOperationFailure(Exception exception) =>
+            exception is IOException
+                or UnauthorizedAccessException
+                or System.Security.SecurityException
+                or System.ComponentModel.Win32Exception
+                or System.Runtime.InteropServices.COMException
+                or TaskSchedulerException
+                or System.Management.ManagementException
+                or InvalidOperationException
+                or OperationCanceledException
+                or TimeoutException
+                or ArgumentException
+                or System.Text.Json.JsonException;
+
+        private readonly Form1 form1;
+        private readonly FormSettaggi formSettaggi;
         private int tIndex = -1;
         private int totalSteps = 0;
         public FormPrivacy(FormSettaggi formSettaggi, Form1 form1)
         {
             InitializeComponent();
-            form1 = form1;
-            formSettaggi = formSettaggi;
+            this.form1 = form1;
+            this.formSettaggi = formSettaggi;
             LoadCheckboxStates();
             DisabilitaPrivacy.MouseMove += new MouseEventHandler(checkedListBox1_MouseMove);
             AbilitaPrivacy.MouseMove += new MouseEventHandler(checkedListBox2_MouseMove);
@@ -37,7 +53,7 @@ namespace WinHubX.Forms.Settaggi
             };
         }
 
-        private void checkedListBox1_MouseMove(object sender, MouseEventArgs e)
+        private void checkedListBox1_MouseMove(object? sender, MouseEventArgs e)
         {
             int index = DisabilitaPrivacy.IndexFromPoint(e.Location);
             if (tIndex != index)
@@ -51,7 +67,7 @@ namespace WinHubX.Forms.Settaggi
             }
         }
 
-        private void checkedListBox2_MouseMove(object sender, MouseEventArgs e)
+        private void checkedListBox2_MouseMove(object? sender, MouseEventArgs e)
         {
             int index = AbilitaPrivacy.IndexFromPoint(e.Location);
             if (tIndex != index)
@@ -77,15 +93,210 @@ namespace WinHubX.Forms.Settaggi
 
         private void SetCheckboxState(string itemName, bool isChecked)
         {
-            using (RegistryKey key = Registry.CurrentUser.CreateSubKey("Software\\WinHubX"))
+            using (RegistryKey? key = Registry.CurrentUser.CreateSubKey("Software\\WinHubX"))
             {
-                key.SetValue(itemName, isChecked ? 1 : 0, RegistryValueKind.DWord);
+                key?.SetValue(itemName, isChecked ? 1 : 0, RegistryValueKind.DWord);
             }
+        }
+
+        private void ApplySelectedPrivacyOption(
+            HashSet<string> selectedOptions,
+            string optionName,
+            string checkboxName,
+            System.Action apply,
+            List<string> failures,
+            ref int currentStep,
+            bool reportWhenNotSelected = false,
+            bool setCheckboxAfterProgress = false,
+            string? uncheckedCheckboxName = null)
+        {
+            if (!selectedOptions.Contains(optionName))
+            {
+                if (reportWhenNotSelected)
+                {
+                    currentStep++;
+                    backgroundWorker1.ReportProgress(currentStep);
+                }
+                SetCheckboxState(uncheckedCheckboxName ?? checkboxName, false);
+                return;
+            }
+
+            if (!setCheckboxAfterProgress)
+                SetCheckboxState(checkboxName, true);
+            currentStep++;
+            backgroundWorker1.ReportProgress(currentStep);
+            if (setCheckboxAfterProgress)
+                SetCheckboxState(checkboxName, true);
+            try
+            {
+                apply();
+            }
+            catch (Exception ex) when (IsExpectedPrivacyOperationFailure(ex))
+            {
+                failures.Add(ex.GetBaseException().Message);
+            }
+        }
+
+        private void ConfigureReservedStorage(bool enabled)
+        {
+            ElevatedRegistryMutationBatch registryChanges = new();
+            foreach (RegistryView view in new[] { RegistryView.Registry64, RegistryView.Registry32 })
+            {
+                registryChanges.SetValue(RegistryHive.LocalMachine,
+                    @"SOFTWARE\Microsoft\Windows\CurrentVersion\ReservedStorage", "ReservedStorageState",
+                    enabled ? 1 : 0, RegistryValueKind.DWord, view);
+            }
+
+            string state = enabled ? "Enabled" : "Disabled";
+            string script = "$ErrorActionPreference = 'Stop'" + Environment.NewLine
+                + $"Set-WindowsReservedStorageState -State {state} -Online -ErrorAction Stop" + Environment.NewLine
+                + registryChanges.BuildCommand();
+            RunElevatedPowerShellScript(Convert.ToBase64String(Encoding.Unicode.GetBytes(script)));
+        }
+
+        private void ConfigureActivityFeed(bool enabled)
+        {
+            ElevatedRegistryMutationBatch registryChanges = new();
+            foreach (RegistryView view in new[] { RegistryView.Registry64, RegistryView.Registry32 })
+            {
+                foreach (string valueName in new[] { "EnableActivityFeed", "PublishUserActivities", "UploadUserActivities" })
+                {
+                    registryChanges.SetValue(RegistryHive.LocalMachine,
+                        @"SOFTWARE\Policies\Microsoft\Windows\System", valueName, enabled ? 1 : 0,
+                        RegistryValueKind.DWord, view);
+                }
+            }
+
+            ApplyElevatedRegistryMutations(registryChanges);
+        }
+
+        private void ConfigureWifiSense(bool enabled)
+        {
+            int value = enabled ? 1 : 0;
+            ElevatedRegistryMutationBatch registryChanges = new();
+            foreach (RegistryView view in new[] { RegistryView.Registry64, RegistryView.Registry32 })
+            {
+                registryChanges.SetValue(RegistryHive.LocalMachine,
+                    @"Software\Microsoft\PolicyManager\default\WiFi", "AllowWiFiHotSpotReporting", value,
+                    RegistryValueKind.DWord, view);
+                registryChanges.SetValue(RegistryHive.LocalMachine,
+                    @"Software\Microsoft\PolicyManager\default\WiFi", "AllowAutoConnectToWiFiSenseHotspots", value,
+                    RegistryValueKind.DWord, view);
+                foreach (string policyName in new[] { "AllowWiFiHotSpotReporting", "AllowAutoConnectToWiFiSenseHotspots" })
+                {
+                    registryChanges.SetValue(RegistryHive.LocalMachine,
+                        $@"SOFTWARE\Microsoft\PolicyManager\default\WiFi\{policyName}", "Value", value,
+                        RegistryValueKind.DWord, view);
+                }
+                registryChanges.SetValue(RegistryHive.LocalMachine,
+                    @"SOFTWARE\Microsoft\WcmSvc\wifinetworkmanager\config", "AutoConnectAllowedOEM", value,
+                    RegistryValueKind.DWord, view);
+                registryChanges.SetValue(RegistryHive.LocalMachine,
+                    @"SOFTWARE\Microsoft\WcmSvc\wifinetworkmanager\config", "WiFISenseAllowed", value,
+                    RegistryValueKind.DWord, view);
+            }
+
+            ApplyElevatedRegistryMutations(registryChanges);
+        }
+
+        private void ConfigureErrorReporting(bool enabled)
+        {
+            ElevatedRegistryMutationBatch registryChanges = new();
+            foreach (RegistryView view in new[] { RegistryView.Registry64, RegistryView.Registry32 })
+            {
+                if (enabled)
+                {
+                    registryChanges.DeleteValue(RegistryHive.LocalMachine,
+                        @"SOFTWARE\Microsoft\Windows\Windows Error Reporting", "Disabled", view);
+                }
+                else
+                {
+                    registryChanges.SetValue(RegistryHive.LocalMachine,
+                        @"SOFTWARE\Microsoft\Windows\Windows Error Reporting", "Disabled", 1,
+                        RegistryValueKind.DWord, view);
+                }
+            }
+
+            string taskScript = PrivacyScheduledTaskScriptBuilder.BuildScript(
+            [new PrivacyScheduledTaskChange(
+                @"Microsoft\Windows\Windows Error Reporting\QueueReporting", Enable: enabled)]);
+            ApplyElevatedRegistryMutations(registryChanges, taskScript);
+        }
+
+        private void ConfigureDiagnosticTracking(bool enabled)
+        {
+            ElevatedRegistryMutationBatch registryChanges = new();
+            if (enabled)
+            {
+                registryChanges.SetValue(RegistryHive.LocalMachine,
+                    @"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection", "AllowTelemetry", 3,
+                    RegistryValueKind.DWord, RegistryView.Registry64);
+                registryChanges.SetValue(RegistryHive.LocalMachine,
+                    @"SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Policies\DataCollection", "AllowTelemetry", 3,
+                    RegistryValueKind.DWord, RegistryView.Default);
+            }
+            else
+            {
+                foreach (RegistryView view in new[] { RegistryView.Registry64, RegistryView.Registry32 })
+                {
+                    registryChanges.SetValue(RegistryHive.LocalMachine,
+                        @"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System", "DisableDiagnostics", 1,
+                        RegistryValueKind.DWord, view);
+                }
+            }
+
+            ConfigureServices(registryChanges,
+                new PrivacyServiceChange("DiagTrack", enabled ? "Automatic" : "Disabled", StartAfterConfiguration: enabled));
+        }
+
+        private void ConfigureWapPushService(bool enabled)
+        {
+            ElevatedRegistryMutationBatch registryChanges = new();
+            if (enabled)
+            {
+                registryChanges.SetValue(RegistryHive.LocalMachine,
+                    @"SYSTEM\CurrentControlSet\Services\dmwappushservice", "DelayedAutoStart", 1,
+                    RegistryValueKind.DWord, RegistryView.Registry64);
+                registryChanges.SetValue(RegistryHive.LocalMachine,
+                    @"SYSTEM\WOW6432Node\CurrentControlSet\Services\dmwappushservice", "DelayedAutoStart", 1,
+                    RegistryValueKind.DWord, RegistryView.Default);
+            }
+            else
+            {
+                foreach (RegistryView view in new[] { RegistryView.Registry64, RegistryView.Registry32 })
+                {
+                    registryChanges.SetValue(RegistryHive.LocalMachine,
+                        @"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System", "DisableWAPPushService", 1,
+                        RegistryValueKind.DWord, view);
+                }
+            }
+
+            ConfigureServices(registryChanges,
+                new PrivacyServiceChange("dmwappushservice", enabled ? "Automatic" : "Disabled", StartAfterConfiguration: enabled));
+        }
+
+        private void ConfigureHomeGroup(bool enabled)
+        {
+            ElevatedRegistryMutationBatch registryChanges = new();
+            if (!enabled)
+            {
+                foreach (RegistryView view in new[] { RegistryView.Registry64, RegistryView.Registry32 })
+                {
+                    registryChanges.SetValue(RegistryHive.LocalMachine,
+                        @"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System", "DisableHomeGroup", 1,
+                        RegistryValueKind.DWord, view);
+                }
+            }
+
+            string startType = enabled ? "Manual" : "Disabled";
+            ConfigureServices(registryChanges,
+                new PrivacyServiceChange("HomeGroupListener", startType, StartAfterConfiguration: false),
+                new PrivacyServiceChange("HomeGroupProvider", startType, StartAfterConfiguration: false));
         }
 
         private bool GetCheckboxState(string itemName)
         {
-            using (RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\WinHubX"))
+            using (RegistryKey? key = Registry.CurrentUser.OpenSubKey("Software\\WinHubX"))
             {
                 return key?.GetValue(itemName) is int value && value == 1;
             }
@@ -144,67 +355,59 @@ namespace WinHubX.Forms.Settaggi
 
         private void ExecutePowerShellScript(string script, bool use32BitRegistry = false)
         {
-            Thread thread = new Thread(() =>
+            if (use32BitRegistry)
             {
-                try
-                {
-                    if (use32BitRegistry)
-                    {
-                        script = script.Replace("HKLM:\\SOFTWARE\\", "HKLM:\\SOFTWARE\\WOW6432Node\\");
-                    }
+                script = script.Replace("HKLM:\\SOFTWARE\\", "HKLM:\\SOFTWARE\\WOW6432Node\\");
+            }
 
-                    var startInfo = new System.Diagnostics.ProcessStartInfo()
-                    {
-                        FileName = @"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe",
-                        Arguments = $"-Command \"{script}\"",
-                        UseShellExecute = false,
-                        CreateNoWindow = true,
-                        RedirectStandardOutput = true,
-                        RedirectStandardError = true
-                    };
-                    using (var process = System.Diagnostics.Process.Start(startInfo))
-                    {
-                        if (process != null)
-                        {
-                            process.WaitForExit();
+            var startInfo = new System.Diagnostics.ProcessStartInfo
+            {
+                FileName = Path.Join(Environment.SystemDirectory, "WindowsPowerShell", "v1.0", "powershell.exe"),
+                UseShellExecute = false,
+                CreateNoWindow = true,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true
+            };
+            startInfo.ArgumentList.Add("-NoProfile");
+            startInfo.ArgumentList.Add("-NonInteractive");
+            startInfo.ArgumentList.Add("-Command");
+            startInfo.ArgumentList.Add(script);
 
-                            var output = process.StandardOutput.ReadToEnd();
-                            var error = process.StandardError.ReadToEnd();
-                            if (!string.IsNullOrEmpty(output))
-                            {
+            using var process = System.Diagnostics.Process.Start(startInfo)
+                ?? throw new InvalidOperationException("Impossibile avviare Windows PowerShell.");
+            Task<string> outputTask = process.StandardOutput.ReadToEndAsync();
+            Task<string> errorTask = process.StandardError.ReadToEndAsync();
+            process.WaitForExit();
 
-                            }
+            string output = outputTask.GetAwaiter().GetResult();
+            string error = errorTask.GetAwaiter().GetResult();
+            if (!string.IsNullOrWhiteSpace(output))
+            {
+                System.Diagnostics.Debug.WriteLine(output);
+            }
 
-                            if (!string.IsNullOrEmpty(error))
-                            {
+            if (process.ExitCode != 0)
+            {
+                throw new InvalidOperationException(
+                    $"Lo script PowerShell è terminato con codice {process.ExitCode}: {error}");
+            }
 
-                            }
-                        }
-                        else
-                        {
-
-                        }
-                    }
-                }
-                catch (Exception)
-                {
-
-                }
-            });
-
-            thread.Start();
+            if (!string.IsNullOrWhiteSpace(error))
+            {
+                System.Diagnostics.Debug.WriteLine(error);
+            }
         }
 
         private void btnSuggeriti_Click(object sender, EventArgs e)
         {
-            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+            string path = Path.Join(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                                        "WinHubX\\Computer\\osehardware.json");
 
             string tipoDisk = "";
             if (File.Exists(path))
             {
                 string json = File.ReadAllText(path);
-                HardwareInfo info = JsonSerializer.Deserialize<HardwareInfo>(json);
+                HardwareInfo? info = JsonSerializer.Deserialize<HardwareInfo>(json);
                 tipoDisk = info?.Hardware?.Disk ?? "";
             }
 
@@ -232,56 +435,64 @@ namespace WinHubX.Forms.Settaggi
             }
             for (int i = 0; i < DisabilitaPrivacy.Items.Count; i++)
                 DisabilitaPrivacy.SetItemChecked(i, false);
-            foreach (string nome in daDisabilitare)
+            foreach (int index in daDisabilitare.Select(nome => DisabilitaPrivacy.Items.IndexOf(nome)).Where(static index => index >= 0))
             {
-                int index = DisabilitaPrivacy.Items.IndexOf(nome);
-                if (index != -1)
-                    DisabilitaPrivacy.SetItemChecked(index, true);
+                DisabilitaPrivacy.SetItemChecked(index, true);
             }
-            string[] daAbilitare;
-
-            if (isHDD)
-            {
-                daAbilitare = new string[] { "Abilita Schedul Defrag" };
-            }
-            else
-            {
-                daAbilitare = new string[0];
-            }
+            string[] daAbilitare = isHDD ? ["Abilita Schedul Defrag"] : [];
             for (int i = 0; i < AbilitaPrivacy.Items.Count; i++)
                 AbilitaPrivacy.SetItemChecked(i, false);
-            foreach (string nome in daAbilitare)
+            foreach (int index in daAbilitare.Select(nome => AbilitaPrivacy.Items.IndexOf(nome)).Where(static index => index >= 0))
             {
-                int index = AbilitaPrivacy.Items.IndexOf(nome);
-                if (index != -1)
-                    AbilitaPrivacy.SetItemChecked(index, true);
+                AbilitaPrivacy.SetItemChecked(index, true);
             }
         }
 
 
         private void btnAvviaSelezionati_Click(object sender, EventArgs e)
         {
-            totalSteps = 0;
-            totalSteps = DisabilitaPrivacy.CheckedItems.Count + AbilitaPrivacy.CheckedItems.Count;
-            if (totalSteps == 0) totalSteps = 1;
+            if (backgroundWorker1.IsBusy)
+            {
+                return;
+            }
+
+            var selection = new PrivacySelection(
+                DisabilitaPrivacy.CheckedItems.Cast<string>().ToHashSet(StringComparer.Ordinal),
+                AbilitaPrivacy.CheckedItems.Cast<string>().ToHashSet(StringComparer.Ordinal));
+            totalSteps = selection.Disable.Count + selection.Enable.Count;
+            if (totalSteps == 0)
+            {
+                return;
+            }
 
             progressBar1.MaxValue = totalSteps;
             progressBar1.Value = 0;
-            if (!backgroundWorker1.IsBusy)
-            {
-                backgroundWorker1.RunWorkerAsync();
-            }
+            backgroundWorker1.RunWorkerAsync(selection);
         }
+
+        System.Threading.Tasks.Task IImportedSettingsForm.ApplyImportedSettingsAsync() =>
+            ImportedSettingsWorker.RunAsync(
+                backgroundWorker1,
+                () => btnAvviaSelezionati_Click(btnAvviaSelezionatiVerdi, EventArgs.Empty));
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            string messaggio = LanguageManager.GetTranslation("Global", "modifichesuccesso");
+            CompletionMessage completion = BackgroundWorkerCompletionMessageFactory.Create(
+                e,
+                "Alcune impostazioni privacy non sono state applicate:",
+                LanguageManager.GetTranslation("Global", "modifichesuccesso"));
+            MessageBoxIcon icon = completion.Severity switch
+            {
+                CompletionMessageSeverity.Error => MessageBoxIcon.Error,
+                CompletionMessageSeverity.Warning => MessageBoxIcon.Warning,
+                _ => MessageBoxIcon.Information
+            };
 
             _ = MessageBox.Show(
-                messaggio,
+                completion.Text,
                 "WinHubX",
                 MessageBoxButtons.OK,
-                MessageBoxIcon.Information
+                icon
             );
         }
 
@@ -291,35 +502,41 @@ namespace WinHubX.Forms.Settaggi
         }
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
+            if (e.Argument is not PrivacySelection selection)
+            {
+                throw new InvalidOperationException("Selezione delle impostazioni privacy non valida.");
+            }
+
             int currentStep = 0;
-            if (DisabilitaPrivacy.CheckedItems.Contains("Disabilita Opzioni Lingua"))
+            var failures = new List<string>();
+            if (selection.Disable.Contains("Disabilita Opzioni Lingua"))
             {
                 SetCheckboxState("DisabilitaOpzioniLingua", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 try
                 {
-                    using (RegistryKey key64 = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64)
+                    using (RegistryKey? key64 = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64)
                                                           .OpenSubKey(@"Control Panel\International\User Profile", writable: true))
                     {
                         key64?.SetValue("HttpAcceptLanguageOptOut", 1, RegistryValueKind.DWord);
                     }
-                    using (RegistryKey key32 = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32)
+                    using (RegistryKey? key32 = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32)
                                                           .OpenSubKey(@"Control Panel\International\User Profile", writable: true))
                     {
                         key32?.SetValue("HttpAcceptLanguageOptOut", 1, RegistryValueKind.DWord);
                     }
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedPrivacyOperationFailure(ex))
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
             }
             else
             {
                 SetCheckboxState("DisabilitaOpzioniLingua", false);
             }
-            if (DisabilitaPrivacy.CheckedItems.Contains("Disabilita Suggerimenti App"))
+            if (selection.Disable.Contains("Disabilita Suggerimenti App"))
             {
                 SetCheckboxState("DisabilitaSuggerimentiApp", true);
                 currentStep++;
@@ -354,16 +571,21 @@ namespace WinHubX.Forms.Settaggi
                 { @"Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager", new Tuple<string, int>("SubscribedContent-338388Enabled", 0) },
                 { @"Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager", new Tuple<string, int>("SubscribedContent-338389Enabled", 0) }
                 };
-                    foreach (var registryView in new[] { RegistryView.Registry64, RegistryView.Registry32 })
+                    ElevatedRegistryMutationBatch registryChanges = new();
+                    RegistryView[] registryViews = [RegistryView.Registry64, RegistryView.Registry32];
+                    foreach (RegistryView registryView in registryViews)
                     {
-                        foreach (var setting in registrySettings)
+                        foreach (var setting in registrySettings.Where(static setting =>
+                                     !setting.Key.StartsWith("Software\\", StringComparison.OrdinalIgnoreCase)))
                         {
-                            using (RegistryKey baseKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, registryView))
-                            using (RegistryKey subKey = baseKey.CreateSubKey(setting.Key, writable: true))
-                            {
-                                subKey?.SetValue(setting.Value.Item1, setting.Value.Item2, RegistryValueKind.DWord);
-                            }
+                            registryChanges.SetValue(RegistryHive.LocalMachine, setting.Key,
+                                setting.Value.Item1, setting.Value.Item2, RegistryValueKind.DWord, registryView);
                         }
+                    }
+                    ApplyElevatedRegistryMutations(registryChanges);
+
+                    foreach (RegistryView registryView in registryViews)
+                    {
                         using (RegistryKey baseKeyCU = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, registryView))
                         {
                             foreach (var setting in registrySettings.Where(s => s.Key.StartsWith("Software", StringComparison.OrdinalIgnoreCase)))
@@ -376,65 +598,85 @@ namespace WinHubX.Forms.Settaggi
                         }
                     }
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedPrivacyOperationFailure(ex))
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
             }
             else
             {
                 SetCheckboxState("DisabilitaSuggerimentiApp", false);
             }
-            if (DisabilitaPrivacy.CheckedItems.Contains("Disabilita Telemetria"))
+            if (selection.Disable.Contains("Disabilita Telemetria"))
             {
                 SetCheckboxState("DisabilitaTelemetria", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 try
                 {
-                    using (RegistryKey key64_1 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64)
-                                                             .OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection", writable: true))
+                    ElevatedRegistryMutationBatch registryChanges = new();
+                    foreach (RegistryView view in new[] { RegistryView.Registry64, RegistryView.Registry32 })
                     {
-                        key64_1?.SetValue("AllowTelemetry", 0, RegistryValueKind.DWord);
+                        registryChanges.SetValue(RegistryHive.LocalMachine,
+                            @"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection",
+                            "AllowTelemetry", 0, RegistryValueKind.DWord, view);
+                        registryChanges.SetValue(RegistryHive.LocalMachine,
+                            @"SOFTWARE\Policies\Microsoft\Windows\DataCollection",
+                            "AllowTelemetry", 0, RegistryValueKind.DWord, view);
                     }
-                    using (RegistryKey key64_2 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64)
-                                                             .OpenSubKey(@"SOFTWARE\Policies\Microsoft\Windows\DataCollection", writable: true))
+                    registryChanges.SetValue(RegistryHive.LocalMachine,
+                        @"SOFTWARE\Policies\Microsoft\Windows\DataCollection",
+                        "DoNotShowFeedbackNotifications", 1, RegistryValueKind.DWord, RegistryView.Registry64);
+                    registryChanges.SetValue(RegistryHive.LocalMachine,
+                        @"SOFTWARE\Policies\Microsoft\Windows\AdvertisingInfo",
+                        "DisabledByGroupPolicy", 1, RegistryValueKind.DWord, RegistryView.Registry64);
+                    registryChanges.SetValue(RegistryHive.LocalMachine,
+                        @"SOFTWARE\Microsoft\Windows\Windows Error Reporting",
+                        "Disabled", 1, RegistryValueKind.DWord, RegistryView.Registry64);
+                    registryChanges.SetValue(RegistryHive.LocalMachine,
+                        @"SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config",
+                        "DODownloadMode", 1, RegistryValueKind.DWord, RegistryView.Registry64);
+                    registryChanges.SetValue(RegistryHive.LocalMachine,
+                        @"SYSTEM\CurrentControlSet\Control\Remote Assistance",
+                        "fAllowToGetHelp", 0, RegistryValueKind.DWord, RegistryView.Registry64);
+
+                    PrivacyScheduledTaskChange[] taskChanges =
+                    [
+                        new(@"Microsoft\Windows\Application Experience\Microsoft Compatibility Appraiser", Enable: false),
+                        new(@"Microsoft\Windows\Application Experience\ProgramDataUpdater", Enable: false),
+                        new(@"Microsoft\Windows\Autochk\Proxy", Enable: false),
+                        new(@"Microsoft\Windows\Customer Experience Improvement Program\Consolidator", Enable: false),
+                        new(@"Microsoft\Windows\Customer Experience Improvement Program\UsbCeip", Enable: false),
+                        new(@"Microsoft\Windows\DiskDiagnostic\Microsoft-Windows-DiskDiagnosticDataCollector", Enable: false),
+                        new(@"Microsoft\Windows\Feedback\Siuf\DmClient", Enable: false),
+                        new(@"Microsoft\Windows\Feedback\Siuf\DmClientOnScenarioDownload", Enable: false),
+                        new(@"Microsoft\Windows\Windows Error Reporting\QueueReporting", Enable: false),
+                        new(@"Microsoft\Windows\Application Experience\MareBackup", Enable: false),
+                        new(@"Microsoft\Windows\Application Experience\StartupAppTask", Enable: false),
+                        new(@"Microsoft\Windows\Application Experience\PcaPatchDbTask", Enable: false),
+                        new(@"Microsoft\Windows\Maps\MapsUpdateTask", Enable: false)
+                    ];
+                    string scheduledTaskScript = PrivacyScheduledTaskScriptBuilder.BuildScript(taskChanges);
+                    string elevatedScript = registryChanges.BuildCommand() + Environment.NewLine + scheduledTaskScript;
+                    RunElevatedPowerShellScript(Convert.ToBase64String(Encoding.Unicode.GetBytes(elevatedScript)));
+
+                    using (RegistryKey? key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager"))
                     {
-                        key64_2?.SetValue("AllowTelemetry", 0, RegistryValueKind.DWord);
-                    }
-                    using (RegistryKey key32_1 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32)
-                                                             .OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection", writable: true))
-                    {
-                        key32_1?.SetValue("AllowTelemetry", 0, RegistryValueKind.DWord);
+                        key?.SetValue("ContentDeliveryAllowed", 0, RegistryValueKind.DWord);
+                        key?.SetValue("OemPreInstalledAppsEnabled", 0, RegistryValueKind.DWord);
+                        key?.SetValue("PreInstalledAppsEnabled", 0, RegistryValueKind.DWord);
+                        key?.SetValue("PreInstalledAppsEverEnabled", 0, RegistryValueKind.DWord);
+                        key?.SetValue("SilentInstalledAppsEnabled", 0, RegistryValueKind.DWord);
+                        key?.SetValue("SubscribedContent-338387Enabled", 0, RegistryValueKind.DWord);
+                        key?.SetValue("SubscribedContent-338388Enabled", 0, RegistryValueKind.DWord);
+                        key?.SetValue("SubscribedContent-338389Enabled", 0, RegistryValueKind.DWord);
+                        key?.SetValue("SubscribedContent-353698Enabled", 0, RegistryValueKind.DWord);
+                        key?.SetValue("SystemPaneSuggestionsEnabled", 0, RegistryValueKind.DWord);
                     }
 
-                    using (RegistryKey key32_2 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32)
-                                                             .OpenSubKey(@"SOFTWARE\Policies\Microsoft\Windows\DataCollection", writable: true))
+                    using (RegistryKey? key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Microsoft\Siuf\Rules"))
                     {
-                        key32_2?.SetValue("AllowTelemetry", 0, RegistryValueKind.DWord);
-                    }
-                    using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager"))
-                    {
-                        key.SetValue("ContentDeliveryAllowed", 0, RegistryValueKind.DWord);
-                        key.SetValue("OemPreInstalledAppsEnabled", 0, RegistryValueKind.DWord);
-                        key.SetValue("PreInstalledAppsEnabled", 0, RegistryValueKind.DWord);
-                        key.SetValue("PreInstalledAppsEverEnabled", 0, RegistryValueKind.DWord);
-                        key.SetValue("SilentInstalledAppsEnabled", 0, RegistryValueKind.DWord);
-                        key.SetValue("SubscribedContent-338387Enabled", 0, RegistryValueKind.DWord);
-                        key.SetValue("SubscribedContent-338388Enabled", 0, RegistryValueKind.DWord);
-                        key.SetValue("SubscribedContent-338389Enabled", 0, RegistryValueKind.DWord);
-                        key.SetValue("SubscribedContent-353698Enabled", 0, RegistryValueKind.DWord);
-                        key.SetValue("SystemPaneSuggestionsEnabled", 0, RegistryValueKind.DWord);
-                    }
-
-                    using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Microsoft\Siuf\Rules"))
-                    {
-                        key.SetValue("NumberOfSIUFInPeriod", 0, RegistryValueKind.DWord);
-                    }
-
-                    using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Policies\Microsoft\Windows\DataCollection"))
-                    {
-                        key.SetValue("DoNotShowFeedbackNotifications", 1, RegistryValueKind.DWord);
+                        key?.SetValue("NumberOfSIUFInPeriod", 0, RegistryValueKind.DWord);
                     }
 
                     using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Policies\Microsoft\Windows\CloudContent"))
@@ -442,25 +684,6 @@ namespace WinHubX.Forms.Settaggi
                         key.SetValue("DisableTailoredExperiencesWithDiagnosticData", 1, RegistryValueKind.DWord);
                     }
 
-                    using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Policies\Microsoft\Windows\AdvertisingInfo"))
-                    {
-                        key.SetValue("DisabledByGroupPolicy", 1, RegistryValueKind.DWord);
-                    }
-
-                    using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Microsoft\Windows\Windows Error Reporting"))
-                    {
-                        key.SetValue("Disabled", 1, RegistryValueKind.DWord);
-                    }
-
-                    using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config"))
-                    {
-                        key.SetValue("DODownloadMode", 1, RegistryValueKind.DWord);
-                    }
-
-                    using (RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SYSTEM\CurrentControlSet\Control\Remote Assistance"))
-                    {
-                        key.SetValue("fAllowToGetHelp", 0, RegistryValueKind.DWord);
-                    }
                     using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Policies\Microsoft\Windows\Windows Feeds"))
                     {
                         key.SetValue("EnableFeeds", 0, RegistryValueKind.DWord);
@@ -480,270 +703,114 @@ namespace WinHubX.Forms.Settaggi
                     {
                         key.SetValue("ScoobeSystemSettingEnabled", 0, RegistryValueKind.DWord);
                     }
-                    ExecutePowerShellScript(@"
-            Disable-ScheduledTask -TaskName ""Microsoft\Windows\Application Experience\Microsoft Compatibility Appraiser"";
-            Disable-ScheduledTask -TaskName ""Microsoft\Windows\Application Experience\ProgramDataUpdater"";
-            Disable-ScheduledTask -TaskName ""Microsoft\Windows\Autochk\Proxy"";
-            Disable-ScheduledTask -TaskName ""Microsoft\Windows\Customer Experience Improvement Program\Consolidator"";
-            Disable-ScheduledTask -TaskName ""Microsoft\Windows\Customer Experience Improvement Program\UsbCeip"";
-            Disable-ScheduledTask -TaskName ""Microsoft\Windows\DiskDiagnostic\Microsoft-Windows-DiskDiagnosticDataCollector"";
-    Disable-ScheduledTask -TaskName ""Microsoft\Windows\Feedback\Siuf\DmClient"";
-    Disable-ScheduledTask -TaskName ""Microsoft\Windows\Feedback\Siuf\DmClientOnScenarioDownload"";
-    Disable-ScheduledTask -TaskName ""Microsoft\Windows\Windows Error Reporting\QueueReporting"";
-    Disable-ScheduledTask -TaskName ""Microsoft\Windows\Application Experience\MareBackup"";
-    Disable-ScheduledTask -TaskName ""Microsoft\Windows\Application Experience\StartupAppTask"";
-    Disable-ScheduledTask -TaskName ""Microsoft\Windows\Application Experience\PcaPatchDbTask"";
-    Disable-ScheduledTask -TaskName ""Microsoft\Windows\Maps\MapsUpdateTask"";
-        ");
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedPrivacyOperationFailure(ex))
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
             }
             else
             {
                 SetCheckboxState("DisabilitaTelemetria", false);
             }
-            if (DisabilitaPrivacy.CheckedItems.Contains("Disabilita Tracking"))
+            if (selection.Disable.Contains("Disabilita Tracking"))
             {
                 SetCheckboxState("DisabilitaTracking", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 try
                 {
-                    using (RegistryKey key64_1 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64)
-                                                             .OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location", writable: true))
+                    ElevatedRegistryMutationBatch registryChanges = new();
+                    foreach (RegistryView view in new[] { RegistryView.Registry64, RegistryView.Registry32 })
                     {
-                        key64_1?.SetValue("Value", "Deny", RegistryValueKind.String);
+                        registryChanges.SetValue(RegistryHive.LocalMachine,
+                            @"SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location",
+                            "Value", "Deny", RegistryValueKind.String, view);
+                        registryChanges.SetValue(RegistryHive.LocalMachine,
+                            @"SOFTWARE\Microsoft\Windows NT\CurrentVersion\Sensor\Overrides\{BFA794E4-F964-4FDB-90F6-51056BFE4B44}",
+                            "SensorPermissionState", 0, RegistryValueKind.DWord, view);
+                        registryChanges.SetValue(RegistryHive.LocalMachine,
+                            @"SYSTEM\CurrentControlSet\Services\lfsvc\Service\Configuration",
+                            "Status", 0, RegistryValueKind.DWord, view);
                     }
-
-                    using (RegistryKey key64_2 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64)
-                                                             .OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\Sensor\Overrides\{BFA794E4-F964-4FDB-90F6-51056BFE4B44}", writable: true))
-                    {
-                        key64_2?.SetValue("SensorPermissionState", 0, RegistryValueKind.DWord);
-                    }
-
-                    using (RegistryKey key64_3 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64)
-                                                             .OpenSubKey(@"SYSTEM\CurrentControlSet\Services\lfsvc\Service\Configuration", writable: true))
-                    {
-                        key64_3?.SetValue("Status", 0, RegistryValueKind.DWord);
-                    }
-                    using (RegistryKey key32_1 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32)
-                                                             .OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location", writable: true))
-                    {
-                        key32_1?.SetValue("Value", "Deny", RegistryValueKind.String);
-                    }
-                    using (RegistryKey key32_2 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32)
-                                                             .OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\Sensor\Overrides\{BFA794E4-F964-4FDB-90F6-51056BFE4B44}", writable: true))
-                    {
-                        key32_2?.SetValue("SensorPermissionState", 0, RegistryValueKind.DWord);
-                    }
-                    using (RegistryKey key32_3 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32)
-                                                             .OpenSubKey(@"SYSTEM\CurrentControlSet\Services\lfsvc\Service\Configuration", writable: true))
-                    {
-                        key32_3?.SetValue("Status", 0, RegistryValueKind.DWord);
-                    }
+                    ApplyElevatedRegistryMutations(registryChanges);
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedPrivacyOperationFailure(ex))
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
             }
             else
             {
                 SetCheckboxState("DisabilitaTracking", false);
             }
-            if (DisabilitaPrivacy.CheckedItems.Contains("Disabilita Segnalazione Errori"))
-            {
-                SetCheckboxState("DisabilitaSegnalazioneErrori", true);
-                currentStep++;
-                backgroundWorker1.ReportProgress(currentStep);
-                try
-                {
-                    using (RegistryKey key64 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64)
-                                                              .OpenSubKey(@"SOFTWARE\Microsoft\Windows\Windows Error Reporting", writable: true))
-                    {
-                        key64?.SetValue("Disabled", 1, RegistryValueKind.DWord);
-                    }
-                    using (RegistryKey key32 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32)
-                                                              .OpenSubKey(@"SOFTWARE\Microsoft\Windows\Windows Error Reporting", writable: true))
-                    {
-                        key32?.SetValue("Disabled", 1, RegistryValueKind.DWord);
-                    }
-                    using (Microsoft.Win32.TaskScheduler.TaskService ts = new Microsoft.Win32.TaskScheduler.TaskService())
-                    {
-                        Microsoft.Win32.TaskScheduler.Task task = ts.GetTask(@"Microsoft\Windows\Windows Error Reporting\QueueReporting");
-                        if (task != null)
-                        {
-                            task.Enabled = false;
-                        }
-                    }
-                }
-                catch (Exception)
-                {
-
-                }
-            }
-            else
-            {
-                SetCheckboxState("DisabilitaSegnalazioneErrori", false);
-            }
-            if (DisabilitaPrivacy.CheckedItems.Contains("Disabilita Tracking Diagnostica"))
-            {
-                SetCheckboxState("DisabilitaTrackingDiagnostica", true);
-                currentStep++;
-                backgroundWorker1.ReportProgress(currentStep);
-                try
-                {
-                    using (ServiceController service = new ServiceController("DiagTrack"))
-                    {
-                        service.Stop();
-                        service.WaitForStatus(ServiceControllerStatus.Stopped);
-                    }
-                    ExecutePowerShellScript(@"Set-Service -Name 'DiagTrack' -StartupType Disabled -ErrorAction SilentlyContinue");
-                    using (RegistryKey key64 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64)
-                                                          .OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System", writable: true))
-                    {
-                        key64?.SetValue("DisableDiagnostics", 1, RegistryValueKind.DWord);
-                    }
-
-                    using (RegistryKey key32 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32)
-                                                          .OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System", writable: true))
-                    {
-                        key32?.SetValue("DisableDiagnostics", 1, RegistryValueKind.DWord);
-                    }
-                }
-                catch (Exception)
-                {
-
-                }
-            }
-            else
-            {
-                SetCheckboxState("DisabilitaTrackingDiagnostica", false);
-            }
-            if (DisabilitaPrivacy.CheckedItems.Contains("Disabilita WAP Push Service"))
-            {
-                SetCheckboxState("DisabilitaWAPPushService", true);
-                currentStep++;
-                backgroundWorker1.ReportProgress(currentStep);
-                try
-                {
-                    using (ServiceController service = new ServiceController("dmwappushservice"))
-                    {
-                        service.Stop();
-                        service.WaitForStatus(ServiceControllerStatus.Stopped);
-                    }
-                    ExecutePowerShellScript(@"Stop-Service -Name 'dmwappushservice' -WarningAction SilentlyContinue;
-                Set-Service -Name 'dmwappushservice' -StartupType Disabled");
-                    using (RegistryKey key64 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64)
-                                                          .OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System", writable: true))
-                    {
-                        key64?.SetValue("DisableWAPPushService", 1, RegistryValueKind.DWord);
-                    }
-                    using (RegistryKey key32 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32)
-                                                          .OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System", writable: true))
-                    {
-                        key32?.SetValue("DisableWAPPushService", 1, RegistryValueKind.DWord);
-                    }
-                }
-                catch (Exception)
-                {
-
-                }
-            }
-            else
-            {
-                SetCheckboxState("DisabilitaWAPPushService", false);
-            }
-            if (DisabilitaPrivacy.CheckedItems.Contains("Disabilita Home Group"))
-            {
-                SetCheckboxState("DisabilitaHomeGroup", true);
-                currentStep++;
-                backgroundWorker1.ReportProgress(currentStep);
-                try
-                {
-                    using (ServiceController listenerService = new ServiceController("HomeGroupListener"))
-                    {
-                        listenerService.Stop();
-                        listenerService.WaitForStatus(ServiceControllerStatus.Stopped);
-                    }
-
-                    using (ServiceController providerService = new ServiceController("HomeGroupProvider"))
-                    {
-                        providerService.Stop();
-                        providerService.WaitForStatus(ServiceControllerStatus.Stopped);
-                    }
-                    ExecutePowerShellScript(@"Stop-Service -Name 'HomeGroupListener' -WarningAction SilentlyContinue;
-                Set-Service -Name 'HomeGroupListener' -StartupType Disabled;
-                Stop-Service -Name 'HomeGroupProvider' -WarningAction SilentlyContinue;
-                Set-Service -Name 'HomeGroupProvider' -StartupType Disabled;");
-                    using (RegistryKey key64 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64)
-                                                          .OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System", writable: true))
-                    {
-                        key64?.SetValue("DisableHomeGroup", 1, RegistryValueKind.DWord);
-                    }
-                    using (RegistryKey key32 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32)
-                                                          .OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System", writable: true))
-                    {
-                        key32?.SetValue("DisableHomeGroup", 1, RegistryValueKind.DWord);
-                    }
-                }
-                catch (Exception)
-                {
-
-                }
-            }
-            else
-            {
-                SetCheckboxState("DisbailitaHomeGroup", false);
-            }
-            if (DisabilitaPrivacy.CheckedItems.Contains("Disabilita Assistenza Remota"))
+            ApplySelectedPrivacyOption(selection.Disable, "Disabilita Segnalazione Errori",
+                "DisabilitaSegnalazioneErrori", () => ConfigureErrorReporting(enabled: false), failures, ref currentStep);
+            ApplySelectedPrivacyOption(selection.Disable, "Disabilita Tracking Diagnostica",
+                "DisabilitaTrackingDiagnostica", () => ConfigureDiagnosticTracking(enabled: false), failures, ref currentStep);
+            ApplySelectedPrivacyOption(selection.Disable, "Disabilita WAP Push Service",
+                "DisabilitaWAPPushService", () => ConfigureWapPushService(enabled: false), failures, ref currentStep);
+            ApplySelectedPrivacyOption(selection.Disable, "Disabilita Home Group", "DisabilitaHomeGroup",
+                () => ConfigureHomeGroup(enabled: false), failures, ref currentStep,
+                uncheckedCheckboxName: "DisbailitaHomeGroup");
+            if (selection.Disable.Contains("Disabilita Assistenza Remota"))
             {
                 SetCheckboxState("DisabilitaAssistenzaRemota", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 try
                 {
-                    using (RegistryKey key64 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64)
-                                                          .OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Remote Assistance", writable: true))
+                    ElevatedRegistryMutationBatch registryChanges = new();
+                    foreach (RegistryView view in new[] { RegistryView.Registry64, RegistryView.Registry32 })
                     {
-                        key64?.SetValue("fAllowToGetHelp", 0, RegistryValueKind.DWord);
+                        registryChanges.SetValue(RegistryHive.LocalMachine,
+                            @"SYSTEM\CurrentControlSet\Control\Remote Assistance", "fAllowToGetHelp", 0,
+                            RegistryValueKind.DWord, view);
                     }
-                    using (RegistryKey key32 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32)
-                                                          .OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Remote Assistance", writable: true))
-                    {
-                        key32?.SetValue("fAllowToGetHelp", 0, RegistryValueKind.DWord);
-                    }
+                    ApplyElevatedRegistryMutations(registryChanges);
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedPrivacyOperationFailure(ex))
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
             }
             else
             {
                 SetCheckboxState("DisabilitaAssistenzaRemota", false);
             }
-            if (DisabilitaPrivacy.CheckedItems.Contains("Disabilita Schedul Defrag"))
+            if (selection.Disable.Contains("Disabilita Schedul Defrag"))
             {
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 SetCheckboxState("DisbailitaSchedulDefrag", true);
-                ExecutePowerShellScript(@"Disable-ScheduledTask -TaskName \""Microsoft\\Windows\\Defrag\\ScheduledDefrag\""");
+                try
+                {
+                    ApplyElevatedRegistryMutations(new ElevatedRegistryMutationBatch(),
+                        PrivacyScheduledTaskScriptBuilder.BuildScript(
+                            [new PrivacyScheduledTaskChange(@"Microsoft\Windows\Defrag\ScheduledDefrag", Enable: false)]));
+                }
+                catch (Exception ex) when (IsExpectedPrivacyOperationFailure(ex))
+                {
+                    failures.Add(ex.GetBaseException().Message);
+                }
             }
             else
             {
                 SetCheckboxState("DisbailitaSchedulDefrag", false);
             }
-            if (DisabilitaPrivacy.CheckedItems.Contains("Disabilita Xbox Features"))
+            if (selection.Disable.Contains("Disabilita Xbox Features"))
             {
                 SetCheckboxState("DisabilitaXboxFeatures", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 try
                 {
+                    ElevatedRegistryMutationBatch registryChanges = new();
+                    registryChanges.SetValue(RegistryHive.LocalMachine,
+                        @"SOFTWARE\Policies\Microsoft\Windows\GameDVR", "AllowGameDVR", 0,
+                        RegistryValueKind.DWord, RegistryView.Registry64);
+                    ApplyElevatedRegistryMutations(registryChanges);
+
                     ExecutePowerShellScript(@"
                 Get-AppxPackage ""Microsoft.XboxApp"" | Remove-AppxPackage -ErrorAction SilentlyContinue;
                 Get-AppxPackage ""Microsoft.XboxIdentityProvider"" | Remove-AppxPackage -ErrorAction SilentlyContinue;
@@ -752,242 +819,87 @@ namespace WinHubX.Forms.Settaggi
                 Get-AppxPackage ""Microsoft.Xbox.TCUI"" | Remove-AppxPackage -ErrorAction SilentlyContinue;
             ");
 
-                    using (RegistryKey key32 = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32)
+                    using (RegistryKey? key32 = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32)
                                                              .OpenSubKey(@"System\GameConfigStore", writable: true))
                     {
                         key32?.SetValue("GameDVR_Enabled", 0, RegistryValueKind.DWord);
                     }
-                    using (RegistryKey key64 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64)
-                                                             .OpenSubKey(@"SOFTWARE\Policies\Microsoft\Windows\GameDVR", writable: true))
-                    {
-                        key64?.SetValue("AllowGameDVR", 0, RegistryValueKind.DWord);
-                    }
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedPrivacyOperationFailure(ex))
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
             }
             else
             {
                 SetCheckboxState("DisabilitaXboxFeatures", false);
             }
-            if (DisabilitaPrivacy.CheckedItems.Contains("Disabilita Auto Manteinance"))
+            if (selection.Disable.Contains("Disabilita Auto Manteinance"))
             {
                 SetCheckboxState("DisabilitaAutoManteinance", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 try
                 {
-                    using (RegistryKey key64 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64)
-                                                             .OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\Maintenance", writable: true))
+                    ElevatedRegistryMutationBatch registryChanges = new();
+                    foreach (RegistryView view in new[] { RegistryView.Registry64, RegistryView.Registry32 })
                     {
-                        key64?.SetValue("MaintenanceDisabled", 1, RegistryValueKind.DWord);
+                        registryChanges.SetValue(RegistryHive.LocalMachine,
+                            @"SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\Maintenance",
+                            "MaintenanceDisabled", 1, RegistryValueKind.DWord, view);
                     }
-                    using (RegistryKey key32 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32)
-                                                             .OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\Maintenance", writable: true))
-                    {
-                        key32?.SetValue("MaintenanceDisabled", 1, RegistryValueKind.DWord);
-                    }
+                    ApplyElevatedRegistryMutations(registryChanges);
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedPrivacyOperationFailure(ex))
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
             }
             else
             {
                 SetCheckboxState("DisabilitaAutoManteinance", false);
             }
-            if (DisabilitaPrivacy.CheckedItems.Contains("Disabilita Spazio Riservato"))
-            {
-                SetCheckboxState("DisabilitaSpazioRiservato", true);
-                currentStep++;
-                backgroundWorker1.ReportProgress(currentStep);
-                try
-                {
-                    ExecutePowerShellScript(@"Set-WindowsReservedStorageState -State Disabled");
-                    using (RegistryKey key64 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64)
-                                                             .OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\ReservedStorage", writable: true))
-                    {
-                        key64?.SetValue("ReservedStorageState", 0, RegistryValueKind.DWord);
-                    }
-                    using (RegistryKey key32 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32)
-                                                             .OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\ReservedStorage", writable: true))
-                    {
-                        key32?.SetValue("ReservedStorageState", 0, RegistryValueKind.DWord);
-                    }
-                }
-                catch (Exception)
-                {
-
-                }
-            }
-            else
-            {
-                SetCheckboxState("DisabilitaSpazioRiservato", false);
-            }
-            if (DisabilitaPrivacy.CheckedItems.Contains("Disabilita Tweaks Game DVR"))
+            ApplySelectedPrivacyOption(selection.Disable, "Disabilita Spazio Riservato",
+                "DisabilitaSpazioRiservato", () => ConfigureReservedStorage(enabled: false), failures, ref currentStep);
+            if (selection.Disable.Contains("Disabilita Tweaks Game DVR"))
             {
                 SetCheckboxState("DisabilitaTweaksGameDVR", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 try
                 {
-                    ExecutePowerShellScript(@"
-                Set-ItemProperty -Path ""HKLM:\System\GameConfigStore"" -Name ""GameDVR_DXGIHonorFSEWindowsCompatible"" -Type Hex -Value 00000000;
-                Set-ItemProperty -Path ""HKLM:\System\GameConfigStore"" -Name ""GameDVR_HonorUserFSEBehaviorMode"" -Type Hex -Value 00000000;
-                Set-ItemProperty -Path ""HKLM:\System\GameConfigStore"" -Name ""GameDVR_EFSEFeatureFlags"" -Type Hex -Value 00000000;
-                Set-ItemProperty -Path ""HKLM:\System\GameConfigStore"" -Name ""GameDVR_Enabled"" -Type DWord -Value 00000000;
-            ", false);
-
-                    ExecutePowerShellScript(@"
-                Set-ItemProperty -Path ""HKLM:\SOFTWARE\WOW6432Node\System\GameConfigStore"" -Name ""GameDVR_DXGIHonorFSEWindowsCompatible"" -Type Hex -Value 00000000;
-                Set-ItemProperty -Path ""HKLM:\SOFTWARE\WOW6432Node\System\GameConfigStore"" -Name ""GameDVR_HonorUserFSEBehaviorMode"" -Type Hex -Value 00000000;
-                Set-ItemProperty -Path ""HKLM:\SOFTWARE\WOW6432Node\System\GameConfigStore"" -Name ""GameDVR_EFSEFeatureFlags"" -Type Hex -Value 00000000;
-                Set-ItemProperty -Path ""HKLM:\SOFTWARE\WOW6432Node\System\GameConfigStore"" -Name ""GameDVR_Enabled"" -Type DWord -Value 00000000;
-            ", true);
-                    using (RegistryKey key64 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64)
-                                                             .OpenSubKey(@"SYSTEM\GameConfigStore", writable: true))
+                    ElevatedRegistryMutationBatch registryChanges = new();
+                    foreach (RegistryView view in new[] { RegistryView.Registry64, RegistryView.Registry32 })
                     {
-                        if (key64 != null)
+                        foreach (string valueName in new[]
                         {
-                            key64.SetValue("GameDVR_DXGIHonorFSEWindowsCompatible", 0, RegistryValueKind.Binary);
-                            key64.SetValue("GameDVR_HonorUserFSEBehaviorMode", 0, RegistryValueKind.Binary);
-                            key64.SetValue("GameDVR_EFSEFeatureFlags", 0, RegistryValueKind.Binary);
-                            key64.SetValue("GameDVR_Enabled", 0, RegistryValueKind.DWord);
-                        }
-                    }
-                    using (RegistryKey key32 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32)
-                                                             .OpenSubKey(@"SYSTEM\GameConfigStore", writable: true))
-                    {
-                        if (key32 != null)
+                            "GameDVR_DXGIHonorFSEWindowsCompatible",
+                            "GameDVR_HonorUserFSEBehaviorMode",
+                            "GameDVR_EFSEFeatureFlags"
+                        })
                         {
-                            key32.SetValue("GameDVR_DXGIHonorFSEWindowsCompatible", 0, RegistryValueKind.Binary);
-                            key32.SetValue("GameDVR_HonorUserFSEBehaviorMode", 0, RegistryValueKind.Binary);
-                            key32.SetValue("GameDVR_EFSEFeatureFlags", 0, RegistryValueKind.Binary);
-                            key32.SetValue("GameDVR_Enabled", 0, RegistryValueKind.DWord);
+                            registryChanges.SetValue(RegistryHive.LocalMachine, @"SYSTEM\GameConfigStore", valueName,
+                                new byte[4], RegistryValueKind.Binary, view);
                         }
+                        registryChanges.SetValue(RegistryHive.LocalMachine, @"SYSTEM\GameConfigStore", "GameDVR_Enabled",
+                            0, RegistryValueKind.DWord, view);
                     }
+                    ApplyElevatedRegistryMutations(registryChanges);
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedPrivacyOperationFailure(ex))
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
             }
             else
             {
                 SetCheckboxState("DisabilitaTweaksGameDVR", false);
             }
-            if (DisabilitaPrivacy.CheckedItems.Contains("Disabilita Storia Attivita"))
-            {
-                SetCheckboxState("DisabilitaStoriaAttivita", true);
-                currentStep++;
-                backgroundWorker1.ReportProgress(currentStep);
-                try
-                {
-                    using (RegistryKey key64 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64)
-                                                             .CreateSubKey(@"SOFTWARE\Policies\Microsoft\Windows\System"))
-                    {
-                        if (key64 != null)
-                        {
-                            key64.SetValue("EnableActivityFeed", 0, RegistryValueKind.DWord);
-                            key64.SetValue("PublishUserActivities", 0, RegistryValueKind.DWord);
-                            key64.SetValue("UploadUserActivities", 0, RegistryValueKind.DWord);
-                        }
-                    }
-                    using (RegistryKey key32 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32)
-                                                             .CreateSubKey(@"SOFTWARE\Policies\Microsoft\Windows\System"))
-                    {
-                        if (key32 != null)
-                        {
-                            key32.SetValue("EnableActivityFeed", 0, RegistryValueKind.DWord);
-                            key32.SetValue("PublishUserActivities", 0, RegistryValueKind.DWord);
-                            key32.SetValue("UploadUserActivities", 0, RegistryValueKind.DWord);
-                        }
-                    }
-                }
-                catch (Exception)
-                {
-
-                }
-            }
-            else
-            {
-                SetCheckboxState("DisabilitaStoriaAttivita", false);
-            }
-            if (DisabilitaPrivacy.CheckedItems.Contains("Disabilita Wifi-Sense"))
-            {
-                SetCheckboxState("DisabilitaWifiSense", true);
-                currentStep++;
-                backgroundWorker1.ReportProgress(currentStep);
-                try
-                {
-                    using (RegistryKey key64 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64)
-                                                             .CreateSubKey(@"Software\Microsoft\PolicyManager\default\WiFi"))
-                    {
-                        if (key64 != null)
-                        {
-                            key64.SetValue("AllowWiFiHotSpotReporting", 0, RegistryValueKind.DWord);
-                            key64.SetValue("AllowAutoConnectToWiFiSenseHotspots", 0, RegistryValueKind.DWord);
-                        }
-                    }
-                    using (RegistryKey key32 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32)
-                                                             .CreateSubKey(@"Software\Microsoft\PolicyManager\default\WiFi"))
-                    {
-                        if (key32 != null)
-                        {
-                            key32.SetValue("AllowWiFiHotSpotReporting", 0, RegistryValueKind.DWord);
-                            key32.SetValue("AllowAutoConnectToWiFiSenseHotspots", 0, RegistryValueKind.DWord);
-                        }
-                    }
-                    using (RegistryKey key32WiFiHotSpot = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32).OpenSubKey(@"SOFTWARE\Microsoft\PolicyManager\default\WiFi\AllowWiFiHotSpotReporting", true))
-                    {
-                        key32WiFiHotSpot?.SetValue("Value", 0, RegistryValueKind.DWord);
-                    }
-
-                    using (RegistryKey key64WiFiHotSpot = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64).OpenSubKey(@"SOFTWARE\Microsoft\PolicyManager\default\WiFi\AllowWiFiHotSpotReporting", true))
-                    {
-                        key64WiFiHotSpot?.SetValue("Value", 0, RegistryValueKind.DWord);
-                    }
-                    using (RegistryKey key32AutoConnect = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32).OpenSubKey(@"SOFTWARE\Microsoft\PolicyManager\default\WiFi\AllowAutoConnectToWiFiSenseHotspots", true))
-                    {
-                        key32AutoConnect?.SetValue("Value", 0, RegistryValueKind.DWord);
-                    }
-
-                    using (RegistryKey key64AutoConnect = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64).OpenSubKey(@"SOFTWARE\Microsoft\PolicyManager\default\WiFi\AllowAutoConnectToWiFiSenseHotspots", true))
-                    {
-                        key64AutoConnect?.SetValue("Value", 0, RegistryValueKind.DWord);
-                    }
-                    using (RegistryKey key32OEM = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32).OpenSubKey(@"SOFTWARE\Microsoft\WcmSvc\wifinetworkmanager\config", true))
-                    {
-                        key32OEM?.SetValue("AutoConnectAllowedOEM", 0, RegistryValueKind.DWord);
-                    }
-
-                    using (RegistryKey key64OEM = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64).OpenSubKey(@"SOFTWARE\Microsoft\WcmSvc\wifinetworkmanager\config", true))
-                    {
-                        key64OEM?.SetValue("AutoConnectAllowedOEM", 0, RegistryValueKind.DWord);
-                    }
-                    using (RegistryKey key32SenseAllowed = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32).OpenSubKey(@"SOFTWARE\Microsoft\WcmSvc\wifinetworkmanager\config", true))
-                    {
-                        key32SenseAllowed?.SetValue("WiFISenseAllowed", 0, RegistryValueKind.DWord);
-                    }
-
-                    using (RegistryKey key64SenseAllowed = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64).OpenSubKey(@"SOFTWARE\Microsoft\WcmSvc\wifinetworkmanager\config", true))
-                    {
-                        key64SenseAllowed?.SetValue("WiFISenseAllowed", 0, RegistryValueKind.DWord);
-                    }
-                }
-                catch (Exception)
-                {
-
-                }
-            }
-            else
-            {
-                SetCheckboxState("DisabilitaWifiSense", false);
-            }
-            if (DisabilitaPrivacy.CheckedItems.Contains("Disabilita Notifiche Tray/Calendario"))
+            ApplySelectedPrivacyOption(selection.Disable, "Disabilita Storia Attivita",
+                "DisabilitaStoriaAttivita", () => ConfigureActivityFeed(enabled: false), failures, ref currentStep);
+            ApplySelectedPrivacyOption(selection.Disable, "Disabilita Wifi-Sense", "DisabilitaWifiSense",
+                () => ConfigureWifiSense(enabled: false), failures, ref currentStep);
+            if (selection.Disable.Contains("Disabilita Notifiche Tray/Calendario"))
             {
                 SetCheckboxState("DisabilitaNotificheTrayCalendario", true);
                 currentStep++;
@@ -1016,16 +928,16 @@ namespace WinHubX.Forms.Settaggi
                         key32?.SetValue("ToastEnabled", 0, RegistryValueKind.DWord);
                     }
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedPrivacyOperationFailure(ex))
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
             }
             else
             {
                 SetCheckboxState("DisabilitaNotificheTrayCalendario", false);
             }
-            if (AbilitaPrivacy.CheckedItems.Contains("Abilita Opzioni Lingua"))
+            if (selection.Enable.Contains("Abilita Opzioni Lingua"))
             {
                 SetCheckboxState("AbilitaOpzioniLingua", true);
                 currentStep++;
@@ -1037,22 +949,31 @@ namespace WinHubX.Forms.Settaggi
                         key?.SetValue("HttpAcceptLanguageOptOut", 0, RegistryValueKind.DWord);
                     }
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedPrivacyOperationFailure(ex))
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
             }
             else
             {
                 SetCheckboxState("AbilitaOpzioniLingua", false);
             }
-            if (AbilitaPrivacy.CheckedItems.Contains("Abilita Suggerimenti App"))
+            if (selection.Enable.Contains("Abilita Suggerimenti App"))
             {
                 SetCheckboxState("AbilitaSuggerimentiApp", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 try
                 {
+                    ElevatedRegistryMutationBatch registryChanges = new();
+                    registryChanges.DeleteValue(RegistryHive.LocalMachine,
+                        @"SOFTWARE\Policies\Microsoft\Windows\CloudContent", "DisableWindowsConsumerFeatures",
+                        RegistryView.Registry64);
+                    registryChanges.DeleteValue(RegistryHive.LocalMachine,
+                        @"SOFTWARE\Policies\Microsoft\Windows\CloudContent", "DisableThirdPartySuggestions",
+                        RegistryView.Registry64);
+                    ApplyElevatedRegistryMutations(registryChanges);
+
                     string contentDeliveryPath = @"SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager";
                     using (RegistryKey key = Registry.CurrentUser.CreateSubKey(contentDeliveryPath))
                     {
@@ -1070,22 +991,17 @@ namespace WinHubX.Forms.Settaggi
                             key.DeleteValue("SubscribedContent-353698Enabled", false);
                         }
                     }
-                    string cloudContentPath = @"SOFTWARE\Policies\Microsoft\Windows\CloudContent";
-                    using (RegistryKey policyKey = Registry.LocalMachine.OpenSubKey(cloudContentPath, writable: true))
-                    {
-                        policyKey?.DeleteValue("DisableWindowsConsumerFeatures", false);
-                    }
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedPrivacyOperationFailure(ex))
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
             }
             else
             {
                 SetCheckboxState("AbilitaSuggerimentiApp", false);
             }
-            if (AbilitaPrivacy.CheckedItems.Contains("Abilita Telemetria"))
+            if (selection.Enable.Contains("Abilita Telemetria"))
             {
                 SetCheckboxState("AbilitaTelemetria", true);
                 currentStep++;
@@ -1095,624 +1011,305 @@ namespace WinHubX.Forms.Settaggi
                     string dataCollectionPath = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection";
                     string wow6432NodePath = @"SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Policies\DataCollection";
                     string policiesPath = @"SOFTWARE\Policies\Microsoft\Windows\DataCollection";
-                    using (RegistryKey key = Registry.LocalMachine.CreateSubKey(dataCollectionPath))
-                    {
-                        key?.SetValue("AllowTelemetry", 3, RegistryValueKind.DWord);
-                    }
-
-                    using (RegistryKey key = Registry.LocalMachine.CreateSubKey(wow6432NodePath))
-                    {
-                        key?.SetValue("AllowTelemetry", 3, RegistryValueKind.DWord);
-                    }
-
-                    using (RegistryKey key = Registry.LocalMachine.CreateSubKey(policiesPath))
-                    {
-                        key?.SetValue("AllowTelemetry", 3, RegistryValueKind.DWord);
-                    }
-                    StartService("DiagTrack");
-                    StartService("dmwappushservice");
+                    var registryChanges = new ElevatedRegistryMutationBatch();
+                    registryChanges.SetValue(RegistryHive.LocalMachine, dataCollectionPath, "AllowTelemetry", 3,
+                        RegistryValueKind.DWord, RegistryView.Default);
+                    registryChanges.SetValue(RegistryHive.LocalMachine, wow6432NodePath, "AllowTelemetry", 3,
+                        RegistryValueKind.DWord, RegistryView.Default);
+                    registryChanges.SetValue(RegistryHive.LocalMachine, policiesPath, "AllowTelemetry", 3,
+                        RegistryValueKind.DWord, RegistryView.Default);
+                    ConfigureServices(registryChanges,
+                        new PrivacyServiceChange("DiagTrack", "Automatic", StartAfterConfiguration: true),
+                        new PrivacyServiceChange("dmwappushservice", "Automatic", StartAfterConfiguration: true));
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedPrivacyOperationFailure(ex))
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
             }
             else
             {
                 SetCheckboxState("AbilitaTelemetria", false);
             }
-            if (AbilitaPrivacy.CheckedItems.Contains("Abilita Tracking"))
+            if (selection.Enable.Contains("Abilita Tracking"))
             {
                 SetCheckboxState("AbilitaTracking", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 try
                 {
-                    string capabilityAccessPath = @"SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location";
-                    string sensorOverridesPath = @"SOFTWARE\Microsoft\Windows NT\CurrentVersion\Sensor\Overrides\{BFA794E4-F964-4FDB-90F6-51056BFE4B44}";
-                    string serviceConfigurationPath = @"SYSTEM\CurrentControlSet\Services\lfsvc\Service\Configuration";
-                    using (RegistryKey key = Registry.LocalMachine.CreateSubKey(capabilityAccessPath))
-                    {
-                        key?.SetValue("Value", "Allow", RegistryValueKind.String);
-                    }
-                    using (RegistryKey key = Registry.LocalMachine.CreateSubKey(sensorOverridesPath))
-                    {
-                        key?.SetValue("SensorPermissionState", 1, RegistryValueKind.DWord);
-                    }
-                    using (RegistryKey key = Registry.LocalMachine.CreateSubKey(serviceConfigurationPath))
-                    {
-                        key?.SetValue("Status", 1, RegistryValueKind.DWord);
-                    }
+                    ElevatedRegistryMutationBatch registryChanges = new();
+                    registryChanges.SetValue(RegistryHive.LocalMachine,
+                        @"SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location",
+                        "Value", "Allow", RegistryValueKind.String, RegistryView.Registry64);
+                    registryChanges.SetValue(RegistryHive.LocalMachine,
+                        @"SOFTWARE\Microsoft\Windows NT\CurrentVersion\Sensor\Overrides\{BFA794E4-F964-4FDB-90F6-51056BFE4B44}",
+                        "SensorPermissionState", 1, RegistryValueKind.DWord, RegistryView.Registry64);
+                    registryChanges.SetValue(RegistryHive.LocalMachine,
+                        @"SYSTEM\CurrentControlSet\Services\lfsvc\Service\Configuration",
+                        "Status", 1, RegistryValueKind.DWord, RegistryView.Registry64);
+                    ApplyElevatedRegistryMutations(registryChanges);
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedPrivacyOperationFailure(ex))
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
             }
             else
             {
                 SetCheckboxState("AbilitaTracking", false);
             }
-            if (AbilitaPrivacy.CheckedItems.Contains("Abilita Segnalazione Errori"))
-            {
-                SetCheckboxState("AbilitaSegnalazioneErrori", true);
-                currentStep++;
-                backgroundWorker1.ReportProgress(currentStep);
-                try
-                {
-                    string errorReportingPath64 = @"SOFTWARE\Microsoft\Windows\Windows Error Reporting";
-                    using (RegistryKey key64 = Registry.LocalMachine.OpenSubKey(errorReportingPath64, writable: true))
-                    {
-                        key64?.DeleteValue("Disabled", false);
-                    }
-                    string errorReportingPath32 = @"SOFTWARE\WOW6432Node\Microsoft\Windows\Windows Error Reporting";
-                    using (RegistryKey key32 = Registry.LocalMachine.OpenSubKey(errorReportingPath32, writable: true))
-                    {
-                        key32?.DeleteValue("Disabled", false);
-                    }
-                    using (var taskService = new TaskService())
-                    {
-                        var task = taskService.GetTask(@"Microsoft\Windows\Windows Error Reporting\QueueReporting");
-                        if (task != null)
-                        {
-                            if (task.State == TaskState.Disabled)
-                            {
-                                task.Enabled = true;
-                                _ = taskService.RootFolder.RegisterTaskDefinition(task.Name, task.Definition);
-                            }
-                        }
-                    }
-                }
-                catch (Exception)
-                {
-
-                }
-            }
-            else
-            {
-                SetCheckboxState("AbilitaSegnalazioneErrori", false);
-            }
-            if (AbilitaPrivacy.CheckedItems.Contains("Abilita Tracking Diagnostica"))
-            {
-                SetCheckboxState("AbilitaTrackingDiagnostica", true);
-                currentStep++;
-                backgroundWorker1.ReportProgress(currentStep);
-                try
-                {
-                    using (RegistryKey key64 = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection", writable: true))
-                    {
-                        key64?.SetValue("AllowTelemetry", 3, RegistryValueKind.DWord);
-                    }
-                    using (RegistryKey key32 = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Policies\DataCollection", writable: true))
-                    {
-                        key32?.SetValue("AllowTelemetry", 3, RegistryValueKind.DWord);
-                    }
-                    var service = new System.ServiceProcess.ServiceController("DiagTrack");
-                    if (service.Status != System.ServiceProcess.ServiceControllerStatus.Running)
-                    {
-                        service.Start();
-                        service.WaitForStatus(System.ServiceProcess.ServiceControllerStatus.Running);
-                    }
-                    ExecutePowerShellScript(@"Set-Service -Name 'DiagTrack' -StartupType 'Automatic'");
-                }
-                catch (Exception)
-                {
-
-                }
-            }
-            else
-            {
-                SetCheckboxState("AbilitaTrackingDiagnostica", false);
-            }
-            if (AbilitaPrivacy.CheckedItems.Contains("Abilita WAP Push Service"))
-            {
-                SetCheckboxState("AbilitaWAPPushService", true);
-                currentStep++;
-                backgroundWorker1.ReportProgress(currentStep);
-                try
-                {
-                    using (RegistryKey key64 = Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Services\dmwappushservice", writable: true))
-                    {
-                        key64?.SetValue("DelayedAutoStart", 1, RegistryValueKind.DWord);
-                    }
-                    using (RegistryKey key32 = Registry.LocalMachine.OpenSubKey(@"SYSTEM\WOW6432Node\CurrentControlSet\Services\dmwappushservice", writable: true))
-                    {
-                        key32?.SetValue("DelayedAutoStart", 1, RegistryValueKind.DWord);
-                    }
-                    var service = new System.ServiceProcess.ServiceController("dmwappushservice");
-                    if (service.Status != System.ServiceProcess.ServiceControllerStatus.Running)
-                    {
-                        service.Start();
-                        service.WaitForStatus(System.ServiceProcess.ServiceControllerStatus.Running);
-                    }
-                    ExecutePowerShellScript(@"Set-Service -Name 'dmwappushservice' -StartupType 'Automatic'");
-                }
-                catch (Exception)
-                {
-
-                }
-            }
-            else
-            {
-                SetCheckboxState("AbilitaWAPPushService", false);
-            }
-            if (AbilitaPrivacy.CheckedItems.Contains("Abilita Home Group"))
-            {
-                SetCheckboxState("AbilitaHomeGroup", true);
-                currentStep++;
-                backgroundWorker1.ReportProgress(currentStep);
-                try
-                {
-                    StopService("HomeGroupListener");
-                    SetServiceStartupType("HomeGroupListener", "Manual");
-
-                    StopService("HomeGroupProvider");
-                    SetServiceStartupType("HomeGroupProvider", "Manual");
-                    ExecutePowerShellScript(@"
-                Stop-Service -Name 'HomeGroupListener' -WarningAction SilentlyContinue;
-                Set-Service -Name 'HomeGroupListener' -StartupType 'Manual';
-                Stop-Service -Name 'HomeGroupProvider' -WarningAction SilentlyContinue;
-                Set-Service -Name 'HomeGroupProvider' -StartupType 'Manual';
-            ");
-                }
-                catch (Exception)
-                {
-
-                }
-            }
-            else
-            {
-                SetCheckboxState("AbilitaHomeGroup", false);
-            }
-            if (AbilitaPrivacy.CheckedItems.Contains("Abilita Assistenza Remota"))
+            ApplySelectedPrivacyOption(selection.Enable, "Abilita Segnalazione Errori",
+                "AbilitaSegnalazioneErrori", () => ConfigureErrorReporting(enabled: true), failures, ref currentStep);
+            ApplySelectedPrivacyOption(selection.Enable, "Abilita Tracking Diagnostica",
+                "AbilitaTrackingDiagnostica", () => ConfigureDiagnosticTracking(enabled: true), failures, ref currentStep);
+            ApplySelectedPrivacyOption(selection.Enable, "Abilita WAP Push Service",
+                "AbilitaWAPPushService", () => ConfigureWapPushService(enabled: true), failures, ref currentStep);
+            ApplySelectedPrivacyOption(selection.Enable, "Abilita Home Group", "AbilitaHomeGroup",
+                () => ConfigureHomeGroup(enabled: true), failures, ref currentStep);
+            if (selection.Enable.Contains("Abilita Assistenza Remota"))
             {
                 SetCheckboxState("AbilitaAssistenzaRemota", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 try
                 {
-                    string remoteAssistanceKey64 = @"SYSTEM\CurrentControlSet\Control\Remote Assistance";
-                    string remoteAssistanceKey32 = @"SOFTWARE\WOW6432Node\SYSTEM\CurrentControlSet\Control\Remote Assistance";
-                    using (RegistryKey key64 = Registry.LocalMachine.OpenSubKey(remoteAssistanceKey64, true))
-                    {
-                        key64?.SetValue("fAllowToGetHelp", 1, RegistryValueKind.DWord);
-                    }
-                    using (RegistryKey key32 = Registry.LocalMachine.OpenSubKey(remoteAssistanceKey32, true))
-                    {
-                        key32?.SetValue("fAllowToGetHelp", 1, RegistryValueKind.DWord);
-                    }
+                    ElevatedRegistryMutationBatch registryChanges = new();
+                    registryChanges.SetValue(RegistryHive.LocalMachine,
+                        @"SYSTEM\CurrentControlSet\Control\Remote Assistance", "fAllowToGetHelp", 1,
+                        RegistryValueKind.DWord, RegistryView.Registry64);
+                    registryChanges.SetValue(RegistryHive.LocalMachine,
+                        @"SYSTEM\CurrentControlSet\Control\Remote Assistance", "fAllowToGetHelp", 1,
+                        RegistryValueKind.DWord, RegistryView.Registry32);
+                    ApplyElevatedRegistryMutations(registryChanges);
                 }
-                catch (UnauthorizedAccessException)
+                catch (UnauthorizedAccessException ex)
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedPrivacyOperationFailure(ex))
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
             }
             else
             {
                 SetCheckboxState("AbilitaAssistenzaRemota", false);
             }
-            if (AbilitaPrivacy.CheckedItems.Contains("Abilita Schedul Defrag"))
+            if (selection.Enable.Contains("Abilita Schedul Defrag"))
             {
                 SetCheckboxState("AbilitaSchedulDefrag", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 try
                 {
-                    using (TaskService ts = new TaskService())
-                    {
-                        Microsoft.Win32.TaskScheduler.Task task = ts.FindTask("Microsoft\\Windows\\Defrag\\ScheduledDefrag");
-
-                        if (task != null)
-                        {
-                            task.Enabled = true;
-                        }
-                        else
-                        {
-
-                        }
-                    }
-                    ModifyRegistryForDefrag(true);
-                    ModifyRegistryForDefrag(false);
+                    ElevatedRegistryMutationBatch registryChanges = new();
+                    registryChanges.SetValue(RegistryHive.LocalMachine,
+                        @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Defrag",
+                        "ScheduledDefrag", 1, RegistryValueKind.DWord, RegistryView.Registry64);
+                    registryChanges.SetValue(RegistryHive.LocalMachine,
+                        @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Defrag",
+                        "ScheduledDefrag", 1, RegistryValueKind.DWord, RegistryView.Registry32);
+                    ApplyElevatedRegistryMutations(registryChanges, PrivacyScheduledTaskScriptBuilder.BuildScript(
+                    [new PrivacyScheduledTaskChange(@"Microsoft\Windows\Defrag\ScheduledDefrag", Enable: true)]));
                 }
-                catch (UnauthorizedAccessException)
+                catch (UnauthorizedAccessException ex)
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedPrivacyOperationFailure(ex))
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
             }
             else
             {
                 SetCheckboxState("AbilitaSchedulDefrag", false);
             }
-            if (AbilitaPrivacy.CheckedItems.Contains("Abilita Xbox Features"))
+            if (selection.Enable.Contains("Abilita Xbox Features"))
             {
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 SetCheckboxState("AbilitaXboxFeatures", true);
+                ElevatedRegistryMutationBatch registryChanges = new();
+                registryChanges.DeleteValue(RegistryHive.LocalMachine,
+                    @"SOFTWARE\Policies\Microsoft\Windows\GameDVR", "AllowGameDVR", RegistryView.Registry64);
+                ApplyElevatedRegistryMutations(registryChanges);
                 ExecutePowerShellScript(@"Get-AppxPackage -AllUsers """"Microsoft.XboxApp"""" | ForEach {Add-AppxPackage -DisableDevelopmentMode -Register """"$($_.InstallLocation)\AppXManifest.xml""""};
                      Get-AppxPackage -AllUsers """"Microsoft.XboxIdentityProvider"""" | ForEach {Add-AppxPackage -DisableDevelopmentMode -Register """"$($_.InstallLocation)\AppXManifest.xml""""};
                      Get-AppxPackage -AllUsers """"Microsoft.XboxSpeechToTextOverlay"""" | ForEach {Add-AppxPackage -DisableDevelopmentMode -Register """"$($_.InstallLocation)\AppXManifest.xml""""};
                      Get-AppxPackage -AllUsers """"Microsoft.XboxGameOverlay"""" | ForEach {Add-AppxPackage -DisableDevelopmentMode -Register """"$($_.InstallLocation)\AppXManifest.xml""""};
                      Get-AppxPackage -AllUsers """"Microsoft.Xbox.TCUI"""" | ForEach {Add-AppxPackage -DisableDevelopmentMode -Register """"$($_.InstallLocation)\AppXManifest.xml""""};
-                     Set-ItemProperty -Path """"HKCU:\System\GameConfigStore"""" -Name """"GameDVR_Enabled"""" -Type DWord -Value 1;
-                     Remove-ItemProperty -Path """"HKLM:\SOFTWARE\Policies\Microsoft\Windows\GameDVR"""" -Name """"AllowGameDVR"""" -ErrorAction SilentlyContinue""");
+                     Set-ItemProperty -Path """"HKCU:\System\GameConfigStore"""" -Name """"GameDVR_Enabled"""" -Type DWord -Value 1""");
             }
             else
             {
                 SetCheckboxState("AbilitaXboxFeatures", false);
             }
-            if (AbilitaPrivacy.CheckedItems.Contains("Abilita Auto Manteinance"))
+            if (selection.Enable.Contains("Abilita Auto Manteinance"))
             {
                 SetCheckboxState("AbilitaAutoManteinance", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 try
                 {
-                    using (RegistryKey key64 = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\Maintenance", writable: true))
-                    {
-                        if (key64 != null)
-                        {
-                            key64.SetValue("MaintenanceDisabled", 0, RegistryValueKind.DWord);
-                        }
-                        else
-                        {
-
-                        }
-                    }
-                    using (RegistryKey key32 = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\WOW6432Node\Microsoft\Windows NT\CurrentVersion\Schedule\Maintenance", writable: true))
-                    {
-                        if (key32 != null)
-                        {
-                            key32.SetValue("MaintenanceDisabled", 0, RegistryValueKind.DWord);
-                        }
-                        else
-                        {
-
-                        }
-                    }
+                    ElevatedRegistryMutationBatch registryChanges = new();
+                    registryChanges.SetValue(RegistryHive.LocalMachine,
+                        @"SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\Maintenance",
+                        "MaintenanceDisabled", 0, RegistryValueKind.DWord, RegistryView.Registry64);
+                    registryChanges.SetValue(RegistryHive.LocalMachine,
+                        @"SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\Maintenance",
+                        "MaintenanceDisabled", 0, RegistryValueKind.DWord, RegistryView.Registry32);
+                    ApplyElevatedRegistryMutations(registryChanges);
                 }
-                catch (UnauthorizedAccessException)
+                catch (UnauthorizedAccessException ex)
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedPrivacyOperationFailure(ex))
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
             }
             else
             {
                 SetCheckboxState("AbilitaAutoManteinance", false);
             }
-            if (AbilitaPrivacy.CheckedItems.Contains("Abilita Spazio Riservato"))
-            {
-                currentStep++;
-                backgroundWorker1.ReportProgress(currentStep);
-                SetCheckboxState("AbilitaSpazioRiservato", true);
-                ExecutePowerShellScript(@"Set-WindowsReservedStorageState -State Enabled");
-            }
-            else
-            {
-                currentStep++;
-                backgroundWorker1.ReportProgress(currentStep);
-                SetCheckboxState("AbilitaSpazioRiservato", false);
-            }
-            if (AbilitaPrivacy.CheckedItems.Contains("Abilita Tweaks Game DVR"))
+            ApplySelectedPrivacyOption(selection.Enable, "Abilita Spazio Riservato",
+                "AbilitaSpazioRiservato", () => ConfigureReservedStorage(enabled: true), failures,
+                ref currentStep, reportWhenNotSelected: true, setCheckboxAfterProgress: true);
+            if (selection.Enable.Contains("Abilita Tweaks Game DVR"))
             {
                 SetCheckboxState("AbilitaTweaksGameDVR", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 try
                 {
-                    using (RegistryKey key64 = Registry.LocalMachine.OpenSubKey(@"SYSTEM\GameConfigStore", writable: true))
+                    ElevatedRegistryMutationBatch registryChanges = new();
+                    foreach (RegistryView view in new[] { RegistryView.Registry64, RegistryView.Registry32 })
                     {
-                        if (key64 != null)
+                        foreach (string valueName in new[]
                         {
-                            key64.DeleteValue("GameDVR_DXGIHonorFSEWindowsCompatible", throwOnMissingValue: false);
-                            key64.DeleteValue("GameDVR_HonorUserFSEBehaviorMode", throwOnMissingValue: false);
-                            key64.DeleteValue("GameDVR_EFSEFeatureFlags", throwOnMissingValue: false);
-                            key64.DeleteValue("GameDVR_Enabled", throwOnMissingValue: false);
-                        }
-                        else
+                            "GameDVR_DXGIHonorFSEWindowsCompatible",
+                            "GameDVR_HonorUserFSEBehaviorMode",
+                            "GameDVR_EFSEFeatureFlags",
+                            "GameDVR_Enabled"
+                        })
                         {
-
+                            registryChanges.DeleteValue(RegistryHive.LocalMachine, @"SYSTEM\GameConfigStore", valueName, view);
                         }
                     }
-                    using (RegistryKey key32 = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\WOW6432Node\SYSTEM\GameConfigStore", writable: true))
-                    {
-                        if (key32 != null)
-                        {
-                            key32.DeleteValue("GameDVR_DXGIHonorFSEWindowsCompatible", throwOnMissingValue: false);
-                            key32.DeleteValue("GameDVR_HonorUserFSEBehaviorMode", throwOnMissingValue: false);
-                            key32.DeleteValue("GameDVR_EFSEFeatureFlags", throwOnMissingValue: false);
-                            key32.DeleteValue("GameDVR_Enabled", throwOnMissingValue: false);
-                        }
-                        else
-                        {
-
-                        }
-                    }
+                    ApplyElevatedRegistryMutations(registryChanges);
                 }
-                catch (UnauthorizedAccessException)
+                catch (UnauthorizedAccessException ex)
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedPrivacyOperationFailure(ex))
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
             }
             else
             {
                 SetCheckboxState("AbilitaTweaksGameDVR", false);
             }
-            if (AbilitaPrivacy.CheckedItems.Contains("Abilita Storie Attivita"))
-            {
-                SetCheckboxState("AbilitaStoriaAttivita", true);
-                currentStep++;
-                backgroundWorker1.ReportProgress(currentStep);
-                try
-                {
-                    using (RegistryKey key64 = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Policies\Microsoft\Windows\System", writable: true))
-                    {
-                        if (key64 != null)
-                        {
-                            key64.SetValue("EnableActivityFeed", 1, RegistryValueKind.DWord);
-                            key64.SetValue("PublishUserActivities", 1, RegistryValueKind.DWord);
-                            key64.SetValue("UploadUserActivities", 1, RegistryValueKind.DWord);
-                        }
-                        else
-                        {
-
-                        }
-                    }
-                    using (RegistryKey key32 = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\WOW6432Node\Policies\Microsoft\Windows\System", writable: true))
-                    {
-                        if (key32 != null)
-                        {
-                            key32.SetValue("EnableActivityFeed", 1, RegistryValueKind.DWord);
-                            key32.SetValue("PublishUserActivities", 1, RegistryValueKind.DWord);
-                            key32.SetValue("UploadUserActivities", 1, RegistryValueKind.DWord);
-                        }
-                        else
-                        {
-
-                        }
-                    }
-                }
-                catch (UnauthorizedAccessException)
-                {
-
-                }
-                catch (Exception)
-                {
-
-                }
-            }
-            else
-            {
-                SetCheckboxState("AbilitaStoriaAttivita", false);
-            }
-            if (AbilitaPrivacy.CheckedItems.Contains("Abilita Wifi-Sense"))
-            {
-                SetCheckboxState("AbilitaWifiSense", true);
-                currentStep++;
-                backgroundWorker1.ReportProgress(currentStep);
-                try
-                {
-                    using (RegistryKey key64 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64)
-                                                             .CreateSubKey(@"Software\Microsoft\PolicyManager\default\WiFi"))
-                    {
-                        if (key64 != null)
-                        {
-                            key64.SetValue("AllowWiFiHotSpotReporting", 1, RegistryValueKind.DWord);
-                            key64.SetValue("AllowAutoConnectToWiFiSenseHotspots", 1, RegistryValueKind.DWord);
-                        }
-                    }
-                    using (RegistryKey key32 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32)
-                                                             .CreateSubKey(@"Software\Microsoft\PolicyManager\default\WiFi"))
-                    {
-                        if (key32 != null)
-                        {
-                            key32.SetValue("AllowWiFiHotSpotReporting", 1, RegistryValueKind.DWord);
-                            key32.SetValue("AllowAutoConnectToWiFiSenseHotspots", 1, RegistryValueKind.DWord);
-                        }
-                    }
-                    using (RegistryKey key32WiFiHotSpot = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32).OpenSubKey(@"SOFTWARE\Microsoft\PolicyManager\default\WiFi\AllowWiFiHotSpotReporting", true))
-                    {
-                        key32WiFiHotSpot?.SetValue("Value", 1, RegistryValueKind.DWord);
-                    }
-
-                    using (RegistryKey key64WiFiHotSpot = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64).OpenSubKey(@"SOFTWARE\Microsoft\PolicyManager\default\WiFi\AllowWiFiHotSpotReporting", true))
-                    {
-                        key64WiFiHotSpot?.SetValue("Value", 1, RegistryValueKind.DWord);
-                    }
-                    using (RegistryKey key32AutoConnect = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32).OpenSubKey(@"SOFTWARE\Microsoft\PolicyManager\default\WiFi\AllowAutoConnectToWiFiSenseHotspots", true))
-                    {
-                        key32AutoConnect?.SetValue("Value", 1, RegistryValueKind.DWord);
-                    }
-
-                    using (RegistryKey key64AutoConnect = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64).OpenSubKey(@"SOFTWARE\Microsoft\PolicyManager\default\WiFi\AllowAutoConnectToWiFiSenseHotspots", true))
-                    {
-                        key64AutoConnect?.SetValue("Value", 1, RegistryValueKind.DWord);
-                    }
-                    using (RegistryKey key32OEM = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32).OpenSubKey(@"SOFTWARE\Microsoft\WcmSvc\wifinetworkmanager\config", true))
-                    {
-                        key32OEM?.SetValue("AutoConnectAllowedOEM", 1, RegistryValueKind.DWord);
-                    }
-
-                    using (RegistryKey key64OEM = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64).OpenSubKey(@"SOFTWARE\Microsoft\WcmSvc\wifinetworkmanager\config", true))
-                    {
-                        key64OEM?.SetValue("AutoConnectAllowedOEM", 1, RegistryValueKind.DWord);
-                    }
-                    using (RegistryKey key32SenseAllowed = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32).OpenSubKey(@"SOFTWARE\Microsoft\WcmSvc\wifinetworkmanager\config", true))
-                    {
-                        key32SenseAllowed?.SetValue("WiFISenseAllowed", 1, RegistryValueKind.DWord);
-                    }
-
-                    using (RegistryKey key64SenseAllowed = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64).OpenSubKey(@"SOFTWARE\Microsoft\WcmSvc\wifinetworkmanager\config", true))
-                    {
-                        key64SenseAllowed?.SetValue("WiFISenseAllowed", 1, RegistryValueKind.DWord);
-                    }
-                }
-                catch (UnauthorizedAccessException)
-                {
-
-                }
-                catch (Exception)
-                {
-
-                }
-            }
-            else
-            {
-                SetCheckboxState("AbilitaStoriaAttivita", false);
-            }
-            if (AbilitaPrivacy.CheckedItems.Contains("Abilita Notifiche Tray/Calendario"))
+            ApplySelectedPrivacyOption(selection.Enable, "Abilita Storie Attivita",
+                "AbilitaStoriaAttivita", () => ConfigureActivityFeed(enabled: true), failures, ref currentStep);
+            ApplySelectedPrivacyOption(selection.Enable, "Abilita Wifi-Sense", "AbilitaWifiSense",
+                () => ConfigureWifiSense(enabled: true), failures, ref currentStep);
+            if (selection.Enable.Contains("Abilita Notifiche Tray/Calendario"))
             {
                 SetCheckboxState("AbilitaNotificheTrayCalendario", true);
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 try
                 {
-                    using (RegistryKey key64 = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64)
+                    using (RegistryKey? key64 = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64)
                                                              .CreateSubKey(@"Software\Policies\Microsoft\Windows\Explorer"))
                     {
                         key64?.SetValue("DisableNotificationCenter", 0, RegistryValueKind.DWord);
                     }
 
-                    using (RegistryKey key64 = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64)
+                    using (RegistryKey? key64 = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64)
                                                              .CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\PushNotifications"))
                     {
                         key64?.SetValue("ToastEnabled", 1, RegistryValueKind.DWord);
                     }
-                    using (RegistryKey key32 = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32)
+                    using (RegistryKey? key32 = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32)
                                                              .CreateSubKey(@"Software\Policies\Microsoft\Windows\Explorer"))
                     {
                         key32?.SetValue("DisableNotificationCenter", 0, RegistryValueKind.DWord);
                     }
 
-                    using (RegistryKey key32 = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32)
+                    using (RegistryKey? key32 = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32)
                                                              .CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\PushNotifications"))
                     {
                         key32?.SetValue("ToastEnabled", 1, RegistryValueKind.DWord);
                     }
                 }
-                catch (UnauthorizedAccessException)
+                catch (UnauthorizedAccessException ex)
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedPrivacyOperationFailure(ex))
                 {
-
+                    failures.Add(ex.GetBaseException().Message);
                 }
             }
             else
             {
                 SetCheckboxState("AbilitaNotificheTrayCalendario", false);
             }
+
+            e.Result = failures;
         }
 
-        private void StopService(string serviceName)
+        private static void ConfigureServices(ElevatedRegistryMutationBatch registryChanges, params PrivacyServiceChange[] changes)
         {
-            var service = new System.ServiceProcess.ServiceController(serviceName);
-            if (service.Status == System.ServiceProcess.ServiceControllerStatus.Running)
-            {
-                service.Stop();
-                service.WaitForStatus(System.ServiceProcess.ServiceControllerStatus.Stopped);
-            }
+            string encodedScript = PrivacyServiceScriptBuilder.BuildEncodedCommand(changes, registryChanges);
+            RunElevatedPowerShellScript(encodedScript);
         }
-        private void SetServiceStartupType(string serviceName, string startupType)
+
+        private static void ApplyElevatedRegistryMutations(ElevatedRegistryMutationBatch registryChanges, string? additionalScript = null)
         {
-            ExecutePowerShellScript($"Set-Service -Name '{serviceName}' -StartupType '{startupType}'");
+            ArgumentNullException.ThrowIfNull(registryChanges);
+            if (registryChanges.Count == 0 && string.IsNullOrWhiteSpace(additionalScript))
+                return;
+
+            string script = registryChanges.Count > 0 ? registryChanges.BuildCommand() : "$ErrorActionPreference = 'Stop'";
+            if (!string.IsNullOrWhiteSpace(additionalScript))
+                script += Environment.NewLine + additionalScript;
+            RunElevatedPowerShellScript(Convert.ToBase64String(Encoding.Unicode.GetBytes(script)));
         }
 
-        private void StartService(string serviceName)
+        private static void RunElevatedPowerShellScript(string encodedScript)
         {
-            try
+            var startInfo = new System.Diagnostics.ProcessStartInfo
             {
-                using (var serviceController = new ServiceController(serviceName))
-                {
-                    if (serviceController.Status != ServiceControllerStatus.Running)
-                    {
-                        serviceController.Start();
-                        serviceController.WaitForStatus(ServiceControllerStatus.Running);
-                    }
-                    using (RegistryKey key = Registry.LocalMachine.OpenSubKey($@"SYSTEM\CurrentControlSet\Services\{serviceName}", true))
-                    {
-                        key?.SetValue("Start", 2, RegistryValueKind.DWord);
-                    }
-                }
-            }
-            catch (Exception)
-            {
+                FileName = Path.Join(Environment.SystemDirectory, "WindowsPowerShell", "v1.0", "powershell.exe"),
+                UseShellExecute = true,
+                Verb = "runas",
+                WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden
+            };
+            startInfo.ArgumentList.Add("-NoLogo");
+            startInfo.ArgumentList.Add("-NoProfile");
+            startInfo.ArgumentList.Add("-NonInteractive");
+            startInfo.ArgumentList.Add("-EncodedCommand");
+            startInfo.ArgumentList.Add(encodedScript);
 
-            }
-        }
-        private void ModifyRegistryForDefrag(bool is32Bit)
-        {
-            try
-            {
-                string registryPath = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Defrag";
-                RegistryKey registryKey;
-
-                if (is32Bit)
-                {
-                    registryKey = Registry.LocalMachine.OpenSubKey(registryPath, true);
-                }
-                else
-                {
-                    registryKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64).OpenSubKey(registryPath, true);
-                }
-
-                if (registryKey != null)
-                {
-                    registryKey.SetValue("ScheduledDefrag", 1, RegistryValueKind.DWord);
-                    registryKey.Close();
-                }
-                else
-                {
-
-                }
-            }
-            catch (Exception)
-            {
-
-            }
+            using System.Diagnostics.Process process = System.Diagnostics.Process.Start(startInfo)
+                ?? throw new InvalidOperationException("Impossibile avviare la configurazione elevata dei servizi.");
+            process.WaitForExit();
+            if (process.ExitCode != 0)
+                throw new InvalidOperationException($"La configurazione del servizio è terminata con codice {process.ExitCode}.");
         }
 
-        private void AbilitaPrivacy_ItemCheck(object sender, ItemCheckEventArgs e)
+        private void AbilitaPrivacy_ItemCheck(object? sender, ItemCheckEventArgs e)
         {
             if (e.NewValue == CheckState.Checked)
             {
-                string itemName = AbilitaPrivacy.Items[e.Index].ToString();
+                string itemName = AbilitaPrivacy.Items[e.Index]?.ToString() ?? string.Empty;
                 string disabilitaName = itemName.Replace("Abilita", "Disabilita");
 
                 int index = DisabilitaPrivacy.Items.IndexOf(disabilitaName);
@@ -1725,12 +1322,12 @@ namespace WinHubX.Forms.Settaggi
             }
         }
 
-        private void DisabilitaPrivacy_ItemCheck(object sender, ItemCheckEventArgs e)
+        private void DisabilitaPrivacy_ItemCheck(object? sender, ItemCheckEventArgs e)
         {
             {
                 if (e.NewValue == CheckState.Checked)
                 {
-                    string itemName = DisabilitaPrivacy.Items[e.Index].ToString();
+                    string itemName = DisabilitaPrivacy.Items[e.Index]?.ToString() ?? string.Empty;
                     string abilitaName = itemName.Replace("Disabilita", "Abilita");
 
                     int index = AbilitaPrivacy.Items.IndexOf(abilitaName);

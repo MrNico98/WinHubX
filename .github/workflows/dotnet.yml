@@ -1,0 +1,68 @@
+name: .NET build
+
+on:
+  push:
+    branches: [main, experiment/net11-modernization]
+  pull_request:
+    branches: [main, experiment/net11-modernization]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+    env:
+      TESTINGPLATFORM_TELEMETRY_OPTOUT: '1'
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Check changed-line whitespace
+        shell: pwsh
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          BEFORE_SHA: ${{ github.event.before }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          if ($env:EVENT_NAME -eq 'pull_request') {
+            git diff --check "${env:BASE_SHA}...${env:HEAD_SHA}"
+          } else {
+            git diff --check "${env:BEFORE_SHA}" "${env:HEAD_SHA}"
+          }
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Setup .NET 10 SDK
+        if: ${{ (github.event_name == 'pull_request' && github.base_ref == 'main') || (github.event_name != 'pull_request' && github.ref_name == 'main') }}
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 10.0.x
+          dotnet-quality: ga
+      - name: Setup .NET 11 preview SDK
+        if: ${{ (github.event_name == 'pull_request' && github.base_ref == 'experiment/net11-modernization') || (github.event_name != 'pull_request' && github.ref_name == 'experiment/net11-modernization') }}
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 11.0.x
+          dotnet-quality: preview
+      - name: Restore
+        run: dotnet restore Project/WinHubX.sln
+      - name: Build
+        run: dotnet build Project/WinHubX.sln --configuration Release --no-restore -warnaserror --nologo
+      - name: Test
+        run: dotnet run --project Project/WinHubX.Tests/WinHubX.Tests.csproj --configuration Release --no-build --no-restore
+      - name: Dependency audit
+        run: dotnet list Project/WinHubX/WinHubX.csproj package --vulnerable --include-transitive
+      - name: Publish artifact
+        run: dotnet publish Project/WinHubX/WinHubX.csproj --configuration Release --no-restore --output artifacts/WinHubX
+      - name: Smoke test published application startup
+        shell: pwsh
+        run: ./.github/scripts/smoke-test-published-app.ps1 -ExecutablePath ./artifacts/WinHubX/WinHubX.exe
+      - name: Generate SHA-256 manifest for published files
+        shell: pwsh
+        env:
+          GITHUB_SHA: ${{ github.sha }}
+        run: ./scripts/New-ArtifactSha256Manifest.ps1 -ArtifactDirectory ./artifacts/WinHubX
+      - uses: actions/upload-artifact@v7
+        with:
+          name: WinHubX
+          path: artifacts/WinHubX

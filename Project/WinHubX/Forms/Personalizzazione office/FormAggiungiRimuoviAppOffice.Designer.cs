@@ -1,27 +1,9 @@
-﻿using System.Windows.Forms;
+using System.Windows.Forms;
 
 namespace WinHubX.Forms.Personalizzazione_office
 {
     partial class FormAggiungiRimuoviAppOffice
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
-
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -44,8 +26,8 @@ namespace WinHubX.Forms.Personalizzazione_office
             flowPanelAppsRimuovi = new FlowLayoutPanel();
             label3 = new Label();
             panel20 = new Panel();
-            btn_avviaVerdi = new CuoreUI.Controls.cuiButton();
-            progressBar1 = new CuoreUI.Controls.cuiProgressBarHorizontal();
+            btn_avviaVerdi = new HartUI.Controls.cuiButton();
+            progressBar1 = new HartUI.Controls.cuiProgressBarHorizontal();
             tableLayoutPanel2.SuspendLayout();
             panel5.SuspendLayout();
             panel6.SuspendLayout();
@@ -154,9 +136,7 @@ namespace WinHubX.Forms.Personalizzazione_office
             btn_avviaVerdi.HoverImageTint = Color.White;
             btn_avviaVerdi.HoverOutline = Color.FromArgb(46, 125, 50);
             btn_avviaVerdi.Image = Properties.Resources.pngCheckCreaISO;
-            btn_avviaVerdi.ImageAutoCenter = true;
             btn_avviaVerdi.ImageExpand = new Point(0, 0);
-            btn_avviaVerdi.ImageOffset = new Point(0, 0);
             btn_avviaVerdi.Name = "btn_avviaVerdi";
             btn_avviaVerdi.NormalBackground = Color.FromArgb(37, 38, 39);
             btn_avviaVerdi.NormalForeColor = Color.White;
@@ -169,7 +149,6 @@ namespace WinHubX.Forms.Personalizzazione_office
             btn_avviaVerdi.PressedOutline = Color.FromArgb(46, 125, 50);
             btn_avviaVerdi.Rounding = new Padding(8);
             btn_avviaVerdi.TextAlignment = StringAlignment.Center;
-            btn_avviaVerdi.TextOffset = new Point(0, 0);
             btn_avviaVerdi.Click += BtnInstall_Click;
             // 
             // progressBar1
@@ -215,8 +194,8 @@ namespace WinHubX.Forms.Personalizzazione_office
         private Label label4;
         private Label label1;
         private Panel panel20;
-        private CuoreUI.Controls.cuiButton btn_avviaVerdi;
-        private CuoreUI.Controls.cuiProgressBarHorizontal progressBar1;
+        private HartUI.Controls.cuiButton btn_avviaVerdi;
+        private HartUI.Controls.cuiProgressBarHorizontal progressBar1;
         private FlowLayoutPanel flowPanelAppsInstall;
         private FlowLayoutPanel flowPanelAppsRimuovi;
     }

@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.ComponentModel;
 using System.Globalization;
 using System.Management;
 using WinHubX.Forms.Base;
@@ -8,19 +9,33 @@ namespace WinHubX.Forms.Settaggi
 {
     public partial class FormRipristinoSO : Form
     {
-        private Form1 form1;
-        private FormSettaggi formSettaggi;
-        private CancellationTokenSource cts = new();
-        private System.Windows.Forms.Timer countdownTimer;
+        private static bool IsExpectedRepairOperationFailure(Exception exception) =>
+            exception is IOException
+                or UnauthorizedAccessException
+                or System.Security.SecurityException
+                or System.ComponentModel.Win32Exception
+                or System.Runtime.InteropServices.COMException
+                or ManagementException
+                or InvalidOperationException
+                or NotSupportedException
+                or ArgumentException
+                or OperationCanceledException
+                or TimeoutException;
+
+        private long _cpuStressResultBits;
+        private readonly Form1 form1;
+        private readonly FormSettaggi formSettaggi;
+        private ElevatedProcessBrokerClient? _repairBroker;
+        private System.Windows.Forms.Timer? countdownTimer;
         private int remainingTime;
-        private CancellationTokenSource cancellationTokenSource;
+        private CancellationTokenSource? cancellationTokenSource;
 
         public FormRipristinoSO(FormSettaggi formSettaggi, Form1 form1)
         {
             LanguageManager.LoadTranslations();
             InitializeComponent();
-            form1 = form1;
-            formSettaggi = formSettaggi;
+            this.form1 = form1;
+            this.formSettaggi = formSettaggi;
             ThemeManager.ApplyThemeToControl(this, ThemeManager.IsDarkTheme);
             btn_CreaISOVerdi.Content = LanguageManager.CurrentLanguage switch
             {
@@ -30,78 +45,144 @@ namespace WinHubX.Forms.Settaggi
             };
         }
 
-        private async void buttonStart_Click(object sender, EventArgs e)
+        private async void buttonStart_Click(object? sender, EventArgs e)
         {
+            if (cancellationTokenSource is not null)
+                return;
+
+            bool runSoftwareRepair = checkBox_sw.Checked;
+            bool runHardwareTest = checkBox_hw.Checked;
+            if (!runSoftwareRepair && !runHardwareTest)
+            {
+                MessageBox.Show(this, "Seleziona almeno un controllo da eseguire.", "WinHubX",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             progressBar1.Value = 0;
-            cancellationTokenSource = new CancellationTokenSource();
+            using CancellationTokenSource scanCancellation = new();
+            cancellationTokenSource = scanCancellation;
+            CancellationToken token = scanCancellation.Token;
+            btn_CreaISOVerdi.Enabled = false;
             label3.Visible = false;
 
             try
             {
-                if (checkBox_sw.Checked)
-                    await StartScanAsyncSW(cancellationTokenSource.Token);
+                if (runSoftwareRepair)
+                    await StartScanAsyncSW(token);
 
-                if (checkBox_hw.Checked)
+                if (runHardwareTest)
                 {
                     label3.Visible = true;
-                    await StartScanAsync(cancellationTokenSource.Token);
+                    int durationMinutes = (int)dateTimePicker1.Value.TimeOfDay.TotalMinutes;
+                    if (durationMinutes <= 0)
+                        throw new InvalidOperationException("La durata del test hardware deve essere maggiore di zero.");
+                    await StartScanAsync(durationMinutes, token);
                 }
             }
-            catch (OperationCanceledException)
+            catch (OperationCanceledException) when (token.IsCancellationRequested)
             {
                 UpdateLabel(LanguageManager.GetTranslation("FormRipristinoSO", "operazioneAnnullata"));
+            }
+            catch (Exception ex) when (IsExpectedRepairOperationFailure(ex))
+            {
+                LogMessage($"Errore durante il ripristino: {ex.Message}");
+                _ = MessageBox.Show(this, ex.Message, "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
                 label3.Visible = false;
+                countdownTimer?.Stop();
+                if (ReferenceEquals(cancellationTokenSource, scanCancellation))
+                    cancellationTokenSource = null;
+                btn_CreaISOVerdi.Enabled = true;
             }
         }
 
         private async Task StartScanAsyncSW(CancellationToken token)
         {
-            var steps = new (string Label, string Command)[]
+            string? workspaceRoot = null;
+            bool completed = false;
+            string windowsDrive = Path.GetPathRoot(Environment.SystemDirectory)?.TrimEnd(Path.DirectorySeparatorChar)
+                ?? throw new IOException("Impossibile determinare il volume di Windows.");
+
+            var steps = new (string Label, string? Executable, string[]? Arguments)[]
             {
-        ("backupRegistro", null),
-        ("controlloFileSistema", "DISM /Online /Cleanup-Image /CheckHealth"),
-        ("scansioneErroriSistema", "DISM /Online /Cleanup-Image /ScanHealth"),
-        ("ripristinoFileSistema", "DISM /Online /Cleanup-Image /RestoreHealth"),
-        ("esecuzioneSfc", "sfc /scannow"),
-        ("puliziaWinSxS", "Dism.exe /online /Cleanup-Image /StartComponentCleanup"),
-        ("pianificazioneChkdsk", "fsutil dirty set C:")
+                ("backupRegistro", null, null),
+                ("controlloFileSistema", "dism.exe", ["/Online", "/Cleanup-Image", "/CheckHealth"]),
+                ("scansioneErroriSistema", "dism.exe", ["/Online", "/Cleanup-Image", "/ScanHealth"]),
+                ("ripristinoFileSistema", "dism.exe", ["/Online", "/Cleanup-Image", "/RestoreHealth"]),
+                ("esecuzioneSfc", "sfc.exe", ["/scannow"]),
+                ("puliziaWinSxS", "dism.exe", ["/Online", "/Cleanup-Image", "/StartComponentCleanup"]),
+                ("pianificazioneChkdsk", "chkdsk.exe", [windowsDrive, "/scan"])
             };
 
-            int total = steps.Length + 1;
-            int current = 0;
-            UpdateLabel(LanguageManager.GetTranslation("FormRipristinoSO", steps[0].Label));
-            await BackupRegistryAsync(token);
-            UpdateProgress(++current, total);
-            foreach (var step in steps.Skip(1))
+            try
             {
-                UpdateLabel(LanguageManager.GetTranslation("FormRipristinoSO", step.Label));
-                if (step.Command != null)
-                    await RunCommandAsync(step.Command, token);
+                _repairBroker = await ElevatedProcessBrokerClient.StartAsync(token);
+                workspaceRoot = _repairBroker.WorkspaceRoot;
+                string repairDirectory = Path.Join(workspaceRoot, "Repair");
+                Directory.CreateDirectory(repairDirectory);
 
+                int total = steps.Length + 1;
+                int current = 0;
+                UpdateLabel(LanguageManager.GetTranslation("FormRipristinoSO", steps[0].Label));
+                await BackupRegistryAsync(repairDirectory, token);
                 UpdateProgress(++current, total);
+                foreach (var step in steps.Skip(1))
+                {
+                    UpdateLabel(LanguageManager.GetTranslation("FormRipristinoSO", step.Label));
+                    if (step.Executable is not null && step.Arguments is not null)
+                        await RunCommandAsync(step.Executable, step.Arguments, token);
+
+                    UpdateProgress(++current, total);
+                }
+                UpdateLabel(LanguageManager.GetTranslation("FormRipristinoSO", "registrazioneDll"));
+                await RegisterSystemDLLs(token);
+                UpdateProgress(total, total);
+                UpdateLabel(LanguageManager.GetTranslation("FormRipristinoSO", "ripristinoCompletato"));
+                MessageBox.Show(
+                    LanguageManager.GetTranslation("FormRipristinoSO", "msgRipristinoCompletato"),
+                    "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                completed = true;
             }
-            UpdateLabel(LanguageManager.GetTranslation("FormRipristinoSO", "registrazioneDll"));
-            await RegisterSystemDLLs(token);
-            UpdateProgress(++current, total);
-            UpdateLabel(LanguageManager.GetTranslation("FormRipristinoSO", "ripristinoCompletato"));
-            MessageBox.Show(
-                LanguageManager.GetTranslation("FormRipristinoSO", "msgRipristinoCompletato"),
-                "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            finally
+            {
+                ElevatedProcessBrokerClient? broker = _repairBroker;
+                _repairBroker = null;
+                if (broker is not null)
+                {
+                    try
+                    {
+                        await broker.DisposeAsync();
+                    }
+                    catch (Exception ex) when (IsExpectedRepairOperationFailure(ex))
+                    {
+                        AppendSafe($"Chiusura del broker UAC non riuscita: {ex.Message}");
+                    }
+                }
+
+                if (completed && workspaceRoot is not null && Directory.Exists(workspaceRoot))
+                    Directory.Delete(workspaceRoot, recursive: true);
+            }
         }
 
-        private async Task BackupRegistryAsync(CancellationToken token)
+        private async Task BackupRegistryAsync(string repairDirectory, CancellationToken token)
         {
             string desktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            string pathHKLM = Path.Combine(desktop, "RegistryBackup_HKLM.reg");
-            string pathHKCU = Path.Combine(desktop, "RegistryBackup_HKCU.reg");
+            if (string.IsNullOrWhiteSpace(desktop))
+                throw new IOException("Impossibile determinare la cartella Desktop per i backup del Registro.");
+            string pathHKLM = Path.Join(repairDirectory, "RegistryBackup_HKLM.reg");
+            string pathHKCU = Path.Join(repairDirectory, "RegistryBackup_HKCU.reg");
 
-            await RunCommandAsync($"reg export HKLM\\SOFTWARE \"{pathHKLM}\" /y", token);
-            await RunCommandAsync($"reg export HKCU \"{pathHKCU}\" /y", token);
+            await RunCommandAsync("reg.exe", ["export-hklm", pathHKLM], token);
+            await RunUserCommandAsync("reg.exe", ["export", "HKCU", pathHKCU, "/y"], token);
 
-            LogMessage($"Backup registro creato: {pathHKLM} + {pathHKCU}");
+            Directory.CreateDirectory(desktop);
+            File.Copy(pathHKLM, Path.Join(desktop, Path.GetFileName(pathHKLM)), overwrite: true);
+            File.Copy(pathHKCU, Path.Join(desktop, Path.GetFileName(pathHKCU)), overwrite: true);
+
+            LogMessage($"Backup registro creato sul Desktop: RegistryBackup_HKLM.reg + RegistryBackup_HKCU.reg");
         }
 
         private async Task RegisterSystemDLLs(CancellationToken token)
@@ -110,32 +191,104 @@ namespace WinHubX.Forms.Settaggi
 
             foreach (string dll in dlls)
             {
-                await RunCommandAsync($"regsvr32 /s {dll}", token);
+                await RunCommandAsync("regsvr32.exe", ["regsvr32", "/s", dll], token);
                 LogMessage($"Registrata DLL: {dll}");
             }
         }
 
-        private async Task RunCommandAsync(string command, CancellationToken token)
+        private async Task RunCommandAsync(string executable, IEnumerable<string> arguments, CancellationToken token)
         {
-            var psi = new ProcessStartInfo
+            ElevatedProcessBrokerClient broker = _repairBroker
+                ?? throw new InvalidOperationException("Broker UAC per il ripristino non inizializzato.");
+            string[] processArguments = arguments.ToArray();
+            string utility = Path.GetFileNameWithoutExtension(executable).ToLowerInvariant();
+            IReadOnlyList<string> utilityArguments = utility switch
             {
-                FileName = "cmd.exe",
-                Arguments = $"/c {command}",
+                "sfc" => ["sfc", .. processArguments],
+                "chkdsk" => ["chkdsk", .. processArguments],
+                "regsvr32" => processArguments,
+                "reg" when processArguments.Length == 2 && processArguments[0] == "export-hklm"
+                    => processArguments,
+                _ => []
+            };
+
+            int exitCode = utility switch
+            {
+                "dism" => await broker.RunDismAsync(processArguments,
+                    (line, isError) => AppendSafe(isError ? $"[ERRORE] {line}" : line), token),
+                "sfc" or "chkdsk" or "regsvr32" or "reg" when utilityArguments.Count > 0
+                    => await broker.RunSystemUtilityAsync(utilityArguments,
+                        (line, isError) => AppendSafe(isError ? $"[ERRORE] {line}" : line), token),
+                _ => throw new InvalidOperationException($"Comando elevato non previsto nel ripristino: {executable}.")
+            };
+
+            if (exitCode != 0)
+                throw new InvalidOperationException($"{executable} è terminato con codice {exitCode}.");
+        }
+
+        private async Task RunUserCommandAsync(string executable, IReadOnlyList<string> arguments, CancellationToken token)
+        {
+            if (!Path.GetFileName(executable).Equals("reg.exe", StringComparison.OrdinalIgnoreCase)
+                || arguments.Count != 4
+                || !arguments[0].Equals("export", StringComparison.OrdinalIgnoreCase)
+                || !arguments[1].Equals("HKCU", StringComparison.OrdinalIgnoreCase)
+                || !arguments[3].Equals("/y", StringComparison.OrdinalIgnoreCase))
+                throw new InvalidOperationException("È consentito solo esportare l'hive HKCU senza elevazione.");
+
+            var startInfo = new ProcessStartInfo
+            {
+                FileName = Path.Join(Environment.SystemDirectory, executable),
+                WorkingDirectory = Environment.SystemDirectory,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
                 UseShellExecute = false,
                 CreateNoWindow = true
             };
+            foreach (string argument in arguments)
+                startInfo.ArgumentList.Add(argument);
 
-            using var process = new Process { StartInfo = psi };
-            process.OutputDataReceived += (_, e) => AppendSafe(e.Data);
-            process.ErrorDataReceived += (_, e) => AppendSafe($"[ERRORE] {e.Data}");
+            using Process process = Process.Start(startInfo)
+                ?? throw new InvalidOperationException($"Impossibile avviare {executable}.");
+            Task<string> outputTask = process.StandardOutput.ReadToEndAsync(token);
+            Task<string> errorTask = process.StandardError.ReadToEndAsync(token);
 
-            process.Start();
-            process.BeginOutputReadLine();
-            process.BeginErrorReadLine();
+            try
+            {
+                await process.WaitForExitAsync(token);
+            }
+            catch (OperationCanceledException)
+            {
+                try
+                {
+                    if (!process.HasExited)
+                        process.Kill(entireProcessTree: true);
+                }
+                catch (Exception ex) when (ex is InvalidOperationException or Win32Exception)
+                {
+                    Debug.WriteLine($"Process cancellation failed: {ex.Message}");
+                }
 
-            await process.WaitForExitAsync(token);
+                await process.WaitForExitAsync(CancellationToken.None);
+                try
+                {
+                    _ = await Task.WhenAll(outputTask, errorTask);
+                }
+                catch (Exception ex) when (token.IsCancellationRequested
+                    && ex is OperationCanceledException or IOException)
+                {
+                    Debug.WriteLine($"Drenaggio output annullato insieme al processo: {ex.Message}");
+                }
+
+                throw;
+            }
+
+            string output = await outputTask;
+            string error = await errorTask;
+            string errorDetails = error?.Trim() ?? string.Empty;
+            AppendSafe(output.TrimEnd());
+            AppendSafe(string.IsNullOrWhiteSpace(error) ? string.Empty : $"[ERRORE] {error.TrimEnd()}");
+            if (process.ExitCode != 0)
+                throw new InvalidOperationException($"{executable} è terminato con codice {process.ExitCode}: {errorDetails}");
         }
 
         private void AppendSafe(string? text)
@@ -153,57 +306,54 @@ namespace WinHubX.Forms.Settaggi
             progressBar1.Value = Math.Min(100, percent);
         }
 
-        private async Task StartScanAsync(CancellationToken cancellationToken)
+        private async Task StartScanAsync(int testDurationMinutes, CancellationToken token)
         {
+            remainingTime = checked(testDurationMinutes * 60);
+            progressBar1.Visible = true;
+            labeltempo.Visible = true;
+            labeltempo.Text = LanguageManager.FormatTranslation("FormRipristinoSO", "scansioneInCorsoConTempo", testDurationMinutes);
+            richTextBox1.Clear();
+            cancellationTokenSource?.CancelAfter(TimeSpan.FromMinutes(testDurationMinutes));
+
+            using System.Windows.Forms.Timer scanTimer = new() { Interval = 1000 };
+            countdownTimer = scanTimer;
+            scanTimer.Tick += UpdateCountdown;
             try
             {
-                int testDurationMinutes = (int)dateTimePicker1.Value.TimeOfDay.TotalMinutes;
-                remainingTime = testDurationMinutes;
-
-                progressBar1.Visible = true;
-                labeltempo.Visible = true;
-                labeltempo.Text = string.Format(LanguageManager.GetTranslation("FormRipristinoSO", "scansioneInCorsoConTempo"), remainingTime);
-                richTextBox1.Clear();
-                cancellationTokenSource = new CancellationTokenSource();
-                CancellationToken token = cancellationTokenSource.Token;
-
-                if (checkBox_hw.Checked)
-                {
-                    if (countdownTimer == null)
-                    {
-                        countdownTimer = new System.Windows.Forms.Timer();
-                        countdownTimer.Interval = 1000;
-                        countdownTimer.Tick += UpdateCountdown;
-                    }
-                    remainingTime = testDurationMinutes * 60;
-                    countdownTimer.Start();
-
-                    await RunStressTestsContinuously(testDurationMinutes, token);
-                }
-            }
-            catch (Exception ex)
-            {
-                richTextBox1.AppendText($"Error: {ex.Message}\n");
+                scanTimer.Start();
+                await RunStressTestsContinuously(token);
+                token.ThrowIfCancellationRequested();
+                labeltempo.Text = "Completato!";
             }
             finally
             {
-                labeltempo.Text = "Completato!";
+                scanTimer.Stop();
+                scanTimer.Tick -= UpdateCountdown;
+                if (ReferenceEquals(countdownTimer, scanTimer))
+                    countdownTimer = null;
                 progressBar1.Visible = false;
-                countdownTimer?.Dispose();
             }
         }
 
-        private async Task RunStressTestsContinuously(int testDurationMinutes, CancellationToken token)
+        private async Task RunStressTestsContinuously(CancellationToken token)
         {
-            VerifyDiskStatus();
+            await Task.Run(() => VerifyDiskStatus(token), token);
+            token.ThrowIfCancellationRequested();
 
-            Task cpuTestTask = StressTestCPUAsync(token);
-            Task ramTestTask = TestRAMAsync(token);
+            using CancellationTokenSource testTasksSource = CancellationTokenSource.CreateLinkedTokenSource(token);
+            CancellationToken testToken = testTasksSource.Token;
+            Task cpuTestTask = StressTestCPUAsync(testToken);
+            Task ramTestTask = TestRAMAsync(testToken);
+            Task allTests = Task.WhenAll(cpuTestTask, ramTestTask);
+            Task firstTest = await Task.WhenAny(cpuTestTask, ramTestTask);
+            if (firstTest.IsFaulted || firstTest.IsCanceled)
+                testTasksSource.Cancel();
 
-            await Task.WhenAll(cpuTestTask, ramTestTask);
+            await allTests;
+            token.ThrowIfCancellationRequested();
         }
 
-        private void UpdateCountdown(object sender, EventArgs e)
+        private void UpdateCountdown(object? sender, EventArgs e)
         {
             if (remainingTime > 0)
             {
@@ -213,12 +363,13 @@ namespace WinHubX.Forms.Settaggi
                 string formattedTime = timeSpan.ToString(@"hh\:mm\:ss");
 
                 labeltempo.Text = LanguageManager.GetTranslation("FormRipristinoSO", "scansioneInCorso");
-                label3.Text = string.Format(LanguageManager.GetTranslation("FormRipristinoSO", "tempoRimanente"), formattedTime);
+                label3.Text = LanguageManager.FormatTranslation("FormRipristinoSO", "tempoRimanente", formattedTime);
             }
             else
             {
                 countdownTimer?.Stop();
                 labeltempo.Text = LanguageManager.GetTranslation("FormRipristinoSO", "scansioneCompletata");
+                cancellationTokenSource?.Cancel();
             }
         }
 
@@ -228,13 +379,16 @@ namespace WinHubX.Forms.Settaggi
         {
             UpdateLabel("Avvio stress test CPU...");
             LogMessage("Preparazione stress test CPU...");
+            Task? monitorTask = null;
+            using CancellationTokenSource workerSource = CancellationTokenSource.CreateLinkedTokenSource(token);
+            CancellationToken workerToken = workerSource.Token;
 
             try
             {
                 int numThreads = Environment.ProcessorCount;
                 LogMessage($"Utilizzando {numThreads} thread per il test.");
 
-                Task monitorTask = MonitorCPUUsageAsync(token);
+                monitorTask = Task.Run(() => MonitorCPUUsageAsync(workerToken), workerToken);
 
                 List<Task> tasks = new();
                 for (int i = 0; i < numThreads; i++)
@@ -243,25 +397,46 @@ namespace WinHubX.Forms.Settaggi
                     {
                         Thread.CurrentThread.Priority = ThreadPriority.BelowNormal;
                         double result = 0;
-                        while (!token.IsCancellationRequested)
+                        while (!workerToken.IsCancellationRequested)
                         {
                             for (int j = 0; j < 10_000_000; j++)
                             {
                                 result += Math.Sqrt(j) * Math.Sin(j);
-                                if (j % 1_000_000 == 0 && token.IsCancellationRequested)
+                                if (j % 1_000_000 == 0 && workerToken.IsCancellationRequested)
                                     return;
                             }
+                            Interlocked.Exchange(ref _cpuStressResultBits, BitConverter.DoubleToInt64Bits(result));
                             _ = Thread.Yield();
                         }
-                    }, token));
+                    }, workerToken));
                 }
 
                 await Task.WhenAll(tasks);
-                monitorTask.Dispose();
+                double checksum = BitConverter.Int64BitsToDouble(Interlocked.Read(ref _cpuStressResultBits));
+                LogMessage($"Checksum test CPU: {checksum:R}");
+                token.ThrowIfCancellationRequested();
             }
-            catch (Exception ex)
+            catch (OperationCanceledException) when (token.IsCancellationRequested)
+            {
+                throw;
+            }
+            catch (Exception ex) when (IsExpectedRepairOperationFailure(ex))
             {
                 LogError($"Errore test CPU: {ex.Message}");
+                throw;
+            }
+            finally
+            {
+                workerSource.Cancel();
+                try
+                {
+                    if (monitorTask is not null)
+                        await monitorTask;
+                }
+                catch (OperationCanceledException) when (workerSource.IsCancellationRequested)
+                {
+                    Debug.WriteLine("Monitoraggio CPU annullato durante il rilascio delle risorse del test.");
+                }
             }
         }
 
@@ -273,7 +448,7 @@ namespace WinHubX.Forms.Settaggi
             {
                 try
                 {
-                    var cpuUsage = GetCPUUsage();
+                    var cpuUsage = await GetCPUUsageAsync(token);
                     var cpuTemp = GetCPUTemperature();
                     if (cpuTemp > thermalThreshold)
                     {
@@ -284,7 +459,11 @@ namespace WinHubX.Forms.Settaggi
                         LogMessage($"CPU Usage: {cpuUsage}%");
                     }
                 }
-                catch (Exception ex)
+                catch (OperationCanceledException) when (token.IsCancellationRequested)
+                {
+                    throw;
+                }
+                catch (Exception ex) when (IsExpectedRepairOperationFailure(ex))
                 {
                     LogError($"Errore monitoraggio CPU: {ex.Message}");
                 }
@@ -292,11 +471,11 @@ namespace WinHubX.Forms.Settaggi
                 await Task.Delay(6000, token);
             }
         }
-        private static float GetCPUUsage()
+        private static async Task<float> GetCPUUsageAsync(CancellationToken token)
         {
             using PerformanceCounter cpuCounter = new("Processor", "% Processor Time", "_Total");
             _ = cpuCounter.NextValue();
-            Task.Delay(500).Wait();
+            await Task.Delay(500, token);
             return cpuCounter.NextValue();
         }
 
@@ -305,13 +484,18 @@ namespace WinHubX.Forms.Settaggi
             try
             {
                 using ManagementObjectSearcher searcher = new("root\\WMI", "SELECT * FROM MSAcpi_ThermalZoneTemperature");
-                foreach (ManagementObject obj in searcher.Get())
-                {
-                    double tempK = Convert.ToDouble(obj["CurrentTemperature"]);
-                    return (float)((tempK - 2732) / 10.0);
-                }
+                using ManagementObjectCollection zones = searcher.Get();
+                using ManagementObject? zone = zones.Cast<ManagementObject>().FirstOrDefault();
+                if (zone is null)
+                    return -1;
+
+                double tempK = Convert.ToDouble(zone["CurrentTemperature"]);
+                return (float)((tempK - 2732) / 10.0);
             }
-            catch { }
+            catch (Exception ex) when (IsExpectedRepairOperationFailure(ex))
+            {
+                Debug.WriteLine($"Lettura temperatura CPU non disponibile: {ex}");
+            }
             return -1;
         }
         public async Task TestRAMAsync(CancellationToken token)
@@ -321,40 +505,57 @@ namespace WinHubX.Forms.Settaggi
 
             try
             {
-                int blockSize = 1024 * 1024 * 50;
-                long maxRam = GetTotalRAM() * 80 / 100;
-                long allocatedRam = 0;
-
-                LogMessage($"Allocazione fino a {maxRam / (1024 * 1024)} MB di RAM...");
-                Queue<byte[]> memoryBlocks = new();
-
-                while (!token.IsCancellationRequested && allocatedRam < maxRam)
+                bool skippedForSafety = false;
+                await Task.Run(() =>
                 {
-                    byte[] block = new byte[blockSize];
-                    for (int i = 0; i < block.Length; i += 4096)
+                    const int blockSize = 50 * 1024 * 1024;
+                    long totalRam = GetTotalRAM();
+                    long availableRam = GetAvailableRAM();
+                    long maxRam = Math.Min(totalRam * 80 / 100, Math.Min(availableRam / 4, 2L * 1024 * 1024 * 1024));
+                    if (maxRam <= 0)
                     {
-                        block[i] = (byte)(i % 256);
+                        skippedForSafety = true;
+                        LogMessage("Test RAM saltato: memoria disponibile non determinabile in sicurezza.");
+                        return;
                     }
 
-                    memoryBlocks.Enqueue(block);
-                    allocatedRam += blockSize;
-                    if (allocatedRam % (1024 * 1024 * 500) == 0)
+                    LogMessage($"Allocazione controllata fino a {maxRam / (1024 * 1024)} MB di RAM...");
+                    Queue<byte[]> memoryBlocks = new();
+                    long allocatedRam = 0;
+                    try
                     {
-                        LogMessage($"RAM allocata: {allocatedRam / (1024 * 1024)} MB...");
+                        while (allocatedRam < maxRam)
+                        {
+                            token.ThrowIfCancellationRequested();
+                            int nextBlockSize = (int)Math.Min(blockSize, maxRam - allocatedRam);
+                            byte[] block = GC.AllocateUninitializedArray<byte>(nextBlockSize);
+                            for (int i = 0; i < block.Length; i += 4096)
+                                block[i] = (byte)(i % 256);
+
+                            memoryBlocks.Enqueue(block);
+                            allocatedRam += nextBlockSize;
+                            if (allocatedRam % (500L * 1024 * 1024) < nextBlockSize)
+                                LogMessage($"RAM allocata: {allocatedRam / (1024 * 1024)} MB...");
+                            Thread.Sleep(20);
+                        }
                     }
-
-                    await Task.Delay(20, token);
-                }
-
-                LogMessage("Liberazione memoria...");
-                memoryBlocks.Clear();
-                GC.Collect();
-
-                UpdateLabel("Test RAM completato.");
+                    finally
+                    {
+                        LogMessage("Rilascio dei riferimenti alla memoria di test...");
+                        memoryBlocks.Clear();
+                    }
+                }, token);
+                token.ThrowIfCancellationRequested();
+                UpdateLabel(skippedForSafety ? "Test RAM saltato per sicurezza." : "Test RAM completato.");
             }
-            catch (Exception ex)
+            catch (OperationCanceledException) when (token.IsCancellationRequested)
+            {
+                throw;
+            }
+            catch (Exception ex) when (IsExpectedRepairOperationFailure(ex))
             {
                 LogError($"Errore test RAM: {ex.Message}");
+                throw;
             }
         }
         private static long GetTotalRAM()
@@ -362,28 +563,50 @@ namespace WinHubX.Forms.Settaggi
             try
             {
                 using ManagementObjectSearcher searcher = new("SELECT TotalPhysicalMemory FROM Win32_ComputerSystem");
-                foreach (ManagementObject obj in searcher.Get())
-                {
-                    return Convert.ToInt64(obj["TotalPhysicalMemory"]);
-                }
+                using ManagementObjectCollection systems = searcher.Get();
+                using ManagementObject? system = systems.Cast<ManagementObject>().FirstOrDefault();
+                return system is null ? 0 : Convert.ToInt64(system["TotalPhysicalMemory"]);
             }
-            catch (Exception ex)
+            catch (Exception ex) when (IsExpectedRepairOperationFailure(ex))
             {
                 Debug.WriteLine($"Errore lettura RAM: {ex.Message}");
             }
 
-            return 8L * 1024 * 1024 * 1024;
+            return 0;
         }
-        public void VerifyDiskStatus()
+
+        private static long GetAvailableRAM()
+        {
+            try
+            {
+                using ManagementObjectSearcher searcher = new("SELECT FreePhysicalMemory FROM Win32_OperatingSystem");
+                using ManagementObjectCollection operatingSystems = searcher.Get();
+                using ManagementObject? operatingSystem = operatingSystems.Cast<ManagementObject>().FirstOrDefault();
+                return operatingSystem is null
+                    ? 0
+                    : checked(Convert.ToInt64(operatingSystem["FreePhysicalMemory"]) * 1024);
+            }
+            catch (Exception ex) when (IsExpectedRepairOperationFailure(ex))
+            {
+                Debug.WriteLine($"Lettura della RAM disponibile non riuscita: {ex}");
+            }
+
+            return 0;
+        }
+        private void VerifyDiskStatus(CancellationToken token)
         {
             UpdateLabel("Verifica stato del disco...");
             LogMessage("Inizio controllo avanzato del disco...");
 
             try
             {
-                using ManagementObjectSearcher searcher = new("SELECT * FROM Win32_DiskDrive");
-                foreach (ManagementObject disk in searcher.Get())
+                using ManagementObjectSearcher searcher = new("SELECT DeviceID, Model, Size, Signature, Status FROM Win32_DiskDrive");
+                using ManagementObjectCollection disks = searcher.Get();
+                foreach (ManagementObject disk in disks)
                 {
+                    using (disk)
+                    {
+                    token.ThrowIfCancellationRequested();
                     string deviceId = disk["DeviceID"]?.ToString() ?? "Sconosciuto";
                     string model = disk["Model"]?.ToString() ?? "Modello sconosciuto";
                     long diskSize = Convert.ToInt64(disk["Size"] ?? 0) / (1024 * 1024 * 1024);
@@ -393,36 +616,32 @@ namespace WinHubX.Forms.Settaggi
                     UpdateLabel($"Analisi {model}...");
 
                     AppendToRichTextBox2(diskInfo + Environment.NewLine);
-                    string NamespacePath = @"\\.\root\cimv2";
-                    string ClassName = "Win32_DiskDrive";
-                    ManagementClass oClass = new ManagementClass(NamespacePath + ":" + ClassName);
-
-                    foreach (ManagementObject oObject in oClass.GetInstances())
+                    string? signature = disk["Signature"]?.ToString();
+                    if (string.IsNullOrEmpty(signature))
                     {
-                        var sign = Convert.ToString(oObject["Signature"]);
-                        var smartModel = Convert.ToString(oObject["Model"]);
-                        var status = Convert.ToString(oObject["Status"]);
-
-                        if (Equals(sign, ""))
-                        {
-                            AppendToRichTextBox2("DISK model: " + smartModel);
-                            AppendToRichTextBox2("Status: " + status);
-                            AppendToRichTextBox2(Environment.NewLine);
-                        }
+                        AppendToRichTextBox2($"Stato WMI: {disk["Status"]?.ToString() ?? "Non disponibile"}");
+                        AppendToRichTextBox2(Environment.NewLine);
                     }
-                    string speedResults = DiskSpeedTest(deviceId);
-                    AppendToRichTextBox2(speedResults + Environment.NewLine);
-
                     LogMessage("-------------------------------------------------");
                     AppendToRichTextBox2("-------------------------------------------------" + Environment.NewLine);
+                    }
                 }
+
+                token.ThrowIfCancellationRequested();
+                string speedResults = DiskSpeedTest(token);
+                AppendToRichTextBox2(speedResults + Environment.NewLine);
 
                 UpdateLabel("Verifica disco completata.");
                 LogMessage("Verifica disco completata con successo.");
             }
-            catch (Exception ex)
+            catch (OperationCanceledException) when (token.IsCancellationRequested)
+            {
+                throw;
+            }
+            catch (Exception ex) when (IsExpectedRepairOperationFailure(ex))
             {
                 LogError($"Errore verifica disco: {ex.Message}");
+                throw;
             }
         }
         private void AppendToRichTextBox2(string message)
@@ -440,32 +659,63 @@ namespace WinHubX.Forms.Settaggi
                 richTextBox2.ScrollToCaret();
             }
         }
-        private string DiskSpeedTest(string deviceId)
+        private string DiskSpeedTest(CancellationToken token)
         {
+            string tempFile = Path.Join(Path.GetTempPath(), $"WinHubX-disk-test-{Guid.NewGuid():N}.tmp");
             try
             {
-                string tempFile = Path.Combine(Path.GetTempPath(), "disk_speed_test.tmp");
-                byte[] data = new byte[1024 * 1024 * 50];
-                new Random().NextBytes(data);
+                const int testSizeMb = 50;
+                const int bufferSize = 1024 * 1024;
+                byte[] buffer = GC.AllocateUninitializedArray<byte>(bufferSize);
+                Random.Shared.NextBytes(buffer);
                 Stopwatch stopwatch = Stopwatch.StartNew();
-                File.WriteAllBytes(tempFile, data);
+                using (FileStream output = new(tempFile, FileMode.CreateNew, FileAccess.Write, FileShare.None, bufferSize, FileOptions.SequentialScan))
+                {
+                    for (int writtenMb = 0; writtenMb < testSizeMb; writtenMb++)
+                    {
+                        token.ThrowIfCancellationRequested();
+                        output.Write(buffer, 0, buffer.Length);
+                    }
+                    output.Flush(flushToDisk: true);
+                }
                 stopwatch.Stop();
-                double writeSpeed = (50.0 / (stopwatch.ElapsedMilliseconds / 1000.0));
+                double writeSpeed = testSizeMb / Math.Max(stopwatch.Elapsed.TotalSeconds, double.Epsilon);
                 stopwatch.Restart();
-                _ = File.ReadAllBytes(tempFile);
+                using (FileStream input = new(tempFile, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize, FileOptions.SequentialScan))
+                {
+                    while (true)
+                    {
+                        token.ThrowIfCancellationRequested();
+                        if (input.Read(buffer, 0, buffer.Length) == 0)
+                            break;
+                    }
+                }
                 stopwatch.Stop();
-                double readSpeed = (50.0 / (stopwatch.ElapsedMilliseconds / 1000.0));
+                double readSpeed = testSizeMb / Math.Max(stopwatch.Elapsed.TotalSeconds, double.Epsilon);
 
-                File.Delete(tempFile);
-
-                string speedResult = $"Velocità scrittura: {writeSpeed:F2} MB/s | Velocità lettura: {readSpeed:F2} MB/s";
+                string volumeRoot = Path.GetPathRoot(Path.GetTempPath()) ?? "volume temporaneo";
+                string speedResult = $"Velocità volume temporaneo ({volumeRoot}): scrittura {writeSpeed:F2} MB/s | lettura {readSpeed:F2} MB/s";
                 LogMessage(speedResult);
                 return speedResult;
             }
-            catch (Exception ex)
+            catch (OperationCanceledException) when (token.IsCancellationRequested)
+            {
+                throw;
+            }
+            catch (Exception ex) when (IsExpectedRepairOperationFailure(ex))
             {
                 LogError($"Errore test velocità disco: {ex.Message}");
                 return "Errore test velocità disco";
+            }
+            finally
+            {
+                try
+                {
+                    if (File.Exists(tempFile))
+                        File.Delete(tempFile);
+                }
+                catch (IOException ex) { Debug.WriteLine($"Impossibile eliminare il file temporaneo del benchmark disco: {ex}"); }
+                catch (UnauthorizedAccessException ex) { Debug.WriteLine($"Accesso negato durante la rimozione del benchmark disco: {ex}"); }
             }
         }
 

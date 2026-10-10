@@ -1,4 +1,4 @@
-﻿namespace WinHubX.Forms.Settaggi
+namespace WinHubX.Forms.Settaggi
 {
     partial class FormPrivacy
     {
@@ -36,14 +36,14 @@
             AbilitaPrivacy = new CheckedListBox();
             backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             toolTip1 = new ToolTip(components);
-            cuiPanel2 = new CuoreUI.Controls.cuiPanel();
+            cuiPanel2 = new HartUI.Controls.cuiPanel();
             pictureBoxPowerPoint = new PictureBox();
-            btnSuggeritiVerdi = new CuoreUI.Controls.cuiButton();
+            btnSuggeritiVerdi = new HartUI.Controls.cuiButton();
             label3 = new Label();
             label2 = new Label();
-            btnAvviaSelezionatiVerdi = new CuoreUI.Controls.cuiButton();
-            progressBar1 = new CuoreUI.Controls.cuiProgressBarHorizontal();
-            btnResetVerdi = new CuoreUI.Controls.cuiButton();
+            btnAvviaSelezionatiVerdi = new HartUI.Controls.cuiButton();
+            progressBar1 = new HartUI.Controls.cuiProgressBarHorizontal();
+            btnResetVerdi = new HartUI.Controls.cuiButton();
             cuiPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxPowerPoint).BeginInit();
             SuspendLayout();
@@ -133,9 +133,7 @@
             btnSuggeritiVerdi.HoverImageTint = Color.White;
             btnSuggeritiVerdi.HoverOutline = Color.FromArgb(46, 125, 50);
             btnSuggeritiVerdi.Image = Properties.Resources.pngCheckCreaISO;
-            btnSuggeritiVerdi.ImageAutoCenter = true;
             btnSuggeritiVerdi.ImageExpand = new Point(0, 0);
-            btnSuggeritiVerdi.ImageOffset = new Point(0, 0);
             btnSuggeritiVerdi.Name = "btnSuggeritiVerdi";
             btnSuggeritiVerdi.NormalBackground = Color.FromArgb(37, 38, 39);
             btnSuggeritiVerdi.NormalForeColor = Color.White;
@@ -148,7 +146,6 @@
             btnSuggeritiVerdi.PressedOutline = Color.FromArgb(46, 125, 50);
             btnSuggeritiVerdi.Rounding = new Padding(8);
             btnSuggeritiVerdi.TextAlignment = StringAlignment.Center;
-            btnSuggeritiVerdi.TextOffset = new Point(0, 0);
             btnSuggeritiVerdi.Click += btnSuggeriti_Click;
             // 
             // label3
@@ -180,9 +177,7 @@
             btnAvviaSelezionatiVerdi.HoverImageTint = Color.White;
             btnAvviaSelezionatiVerdi.HoverOutline = Color.FromArgb(46, 125, 50);
             btnAvviaSelezionatiVerdi.Image = Properties.Resources.pngCheckCreaISO;
-            btnAvviaSelezionatiVerdi.ImageAutoCenter = true;
             btnAvviaSelezionatiVerdi.ImageExpand = new Point(0, 0);
-            btnAvviaSelezionatiVerdi.ImageOffset = new Point(0, 0);
             btnAvviaSelezionatiVerdi.Name = "btnAvviaSelezionatiVerdi";
             btnAvviaSelezionatiVerdi.NormalBackground = Color.FromArgb(37, 38, 39);
             btnAvviaSelezionatiVerdi.NormalForeColor = Color.White;
@@ -195,7 +190,6 @@
             btnAvviaSelezionatiVerdi.PressedOutline = Color.FromArgb(46, 125, 50);
             btnAvviaSelezionatiVerdi.Rounding = new Padding(8);
             btnAvviaSelezionatiVerdi.TextAlignment = StringAlignment.Center;
-            btnAvviaSelezionatiVerdi.TextOffset = new Point(0, 0);
             btnAvviaSelezionatiVerdi.Click += btnAvviaSelezionati_Click;
             // 
             // progressBar1
@@ -226,9 +220,7 @@
             btnResetVerdi.HoverImageTint = Color.White;
             btnResetVerdi.HoverOutline = Color.FromArgb(0, 126, 249);
             btnResetVerdi.Image = Properties.Resources.pngRipristinaDefenderTweaks;
-            btnResetVerdi.ImageAutoCenter = true;
             btnResetVerdi.ImageExpand = new Point(0, 0);
-            btnResetVerdi.ImageOffset = new Point(0, 0);
             btnResetVerdi.Name = "btnResetVerdi";
             btnResetVerdi.NormalBackground = Color.FromArgb(37, 38, 39);
             btnResetVerdi.NormalForeColor = Color.White;
@@ -241,7 +233,6 @@
             btnResetVerdi.PressedOutline = Color.FromArgb(0, 126, 249);
             btnResetVerdi.Rounding = new Padding(8);
             btnResetVerdi.TextAlignment = StringAlignment.Center;
-            btnResetVerdi.TextOffset = new Point(0, 0);
             btnResetVerdi.Click += btnReset_Click;
             // 
             // FormPrivacy
@@ -273,13 +264,13 @@
         private CheckedListBox AbilitaPrivacy;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private ToolTip toolTip1;
-        private CuoreUI.Controls.cuiButton btnAvviaSelezionatiVerdi;
-        private CuoreUI.Controls.cuiProgressBarHorizontal progressBar1;
-        private CuoreUI.Controls.cuiPanel cuiPanel2;
-        private CuoreUI.Controls.cuiButton btnSuggeritiVerdi;
+        private HartUI.Controls.cuiButton btnAvviaSelezionatiVerdi;
+        private HartUI.Controls.cuiProgressBarHorizontal progressBar1;
+        private HartUI.Controls.cuiPanel cuiPanel2;
+        private HartUI.Controls.cuiButton btnSuggeritiVerdi;
         private Label label3;
         private Label label2;
         private PictureBox pictureBoxPowerPoint;
-        private CuoreUI.Controls.cuiButton btnResetVerdi;
+        private HartUI.Controls.cuiButton btnResetVerdi;
     }
 }

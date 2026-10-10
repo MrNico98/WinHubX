@@ -6,18 +6,32 @@ using WinHubX.Impostazioni;
 
 namespace WinHubX.Forms.Settaggi
 {
-    public partial class FormUpdate : Form
+    public partial class FormUpdate : Form, IImportedSettingsForm
     {
-        private Form1 form1;
+        private static bool IsExpectedUpdateOperationFailure(Exception exception) =>
+            exception is IOException
+                or UnauthorizedAccessException
+                or System.Security.SecurityException
+                or System.ComponentModel.Win32Exception
+                or System.Runtime.InteropServices.COMException
+                or InvalidOperationException
+                or OperationCanceledException
+                or TimeoutException
+                or ArgumentException;
+
+        private sealed record UpdateSelection(HashSet<string> Disable, HashSet<string> Enable);
+
+        private readonly Form1 form1;
         private FormSettaggi formSettaggi;
         private int totalSteps = 0;
         private int tIndex = -1;
+        private ElevatedRegistryMutationBatch? pendingRegistryMutations;
         public FormUpdate(FormSettaggi formSettaggi, Form1 form1)
         {
             LanguageManager.LoadTranslations();
             InitializeComponent();
-            form1 = form1;
-            formSettaggi = formSettaggi;
+            this.form1 = form1;
+            this.formSettaggi = formSettaggi;
             LoadCheckboxStates();
             DisabilitaUpdate.MouseMove += new MouseEventHandler(checkedListBox1_MouseMove);
             AbilitaUpdate.MouseMove += new MouseEventHandler(checkedListBox2_MouseMove);
@@ -48,7 +62,7 @@ namespace WinHubX.Forms.Settaggi
             };
         }
 
-        private void checkedListBox1_MouseMove(object sender, MouseEventArgs e)
+        private void checkedListBox1_MouseMove(object? sender, MouseEventArgs e)
         {
             int index = DisabilitaUpdate.IndexFromPoint(e.Location);
             if (tIndex != index)
@@ -62,7 +76,7 @@ namespace WinHubX.Forms.Settaggi
             }
         }
 
-        private void checkedListBox2_MouseMove(object sender, MouseEventArgs e)
+        private void checkedListBox2_MouseMove(object? sender, MouseEventArgs e)
         {
             int index = AbilitaUpdate.IndexFromPoint(e.Location);
             if (tIndex != index)
@@ -110,11 +124,11 @@ namespace WinHubX.Forms.Settaggi
 
         private bool GetCheckboxState(string itemName)
         {
-            using (RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\WinHubX"))
+            using (RegistryKey? key = Registry.CurrentUser.OpenSubKey("Software\\WinHubX"))
             {
                 if (key != null)
                 {
-                    object value = key.GetValue(itemName);
+                    object? value = key.GetValue(itemName);
                     if (value != null)
                     {
                         return (int)value == 1;
@@ -153,23 +167,30 @@ namespace WinHubX.Forms.Settaggi
 
         private void btnAvviaSelezionatiUpda_Click(object sender, EventArgs e)
         {
-            totalSteps = 0;
+            var selection = new UpdateSelection(
+                DisabilitaUpdate.CheckedItems.Cast<string>().ToHashSet(StringComparer.Ordinal),
+                AbilitaUpdate.CheckedItems.Cast<string>().ToHashSet(StringComparer.Ordinal));
+            totalSteps = selection.Disable.Count + selection.Enable.Count;
+            if (totalSteps == 0 || backgroundWorker1.IsBusy)
+            {
+                return;
+            }
 
-            totalSteps = DisabilitaUpdate.CheckedItems.Count + AbilitaUpdate.CheckedItems.Count;
-            if (totalSteps == 0) totalSteps = 1;
             progressBar2.MaxValue = totalSteps;
             progressBar2.Value = 0;
-
-            if (!backgroundWorker1.IsBusy)
-            {
-                backgroundWorker1.RunWorkerAsync();
-            }
+            backgroundWorker1.RunWorkerAsync(selection);
         }
+
+        Task IImportedSettingsForm.ApplyImportedSettingsAsync() =>
+            ImportedSettingsWorker.RunAsync(
+                backgroundWorker1,
+                () => btnAvviaSelezionatiUpda_Click(btnAvviaSelezionatiVerdi, EventArgs.Empty));
 
         private void btnUpdateEssential_Click(object sender, EventArgs e)
         {
             try
             {
+                pendingRegistryMutations = new ElevatedRegistryMutationBatch();
                 var registryChanges = new (string Path, string Name, int Value)[]
                 {
             (@"HKLM\SOFTWARE\Policies\Microsoft\Windows\Device Metadata", "PreventDeviceMetadataFromNetwork", 1),
@@ -188,6 +209,7 @@ namespace WinHubX.Forms.Settaggi
                 {
                     UpdateRegistry(change.Path, change.Name, change.Value, false);
                 }
+                ApplyPendingRegistryMutations();
 
                 string messaggio = LanguageManager.GetTranslation("Global", "modifichesuccesso");
 
@@ -198,44 +220,83 @@ namespace WinHubX.Forms.Settaggi
                     MessageBoxIcon.Information
                 );
             }
-            catch (Exception)
+            catch (Exception ex) when (IsExpectedUpdateOperationFailure(ex))
             {
-
+                ShowOperationError(ex);
             }
         }
 
         private void UpdateRegistry(string path, string name, int value, bool is64Bit)
         {
-            var regPath = is64Bit ? path : path.Replace("SOFTWARE", "SOFTWARE\\WOW6432Node");
+            RegistryView view = is64Bit ? RegistryView.Registry64 : RegistryView.Registry32;
+            GetPendingRegistryMutations().SetValue(RegistryHive.LocalMachine,
+                GetLocalMachineSubKeyPath(path), name, value, RegistryValueKind.DWord, view);
+        }
 
-            var startInfo = new System.Diagnostics.ProcessStartInfo()
+        private ElevatedRegistryMutationBatch GetPendingRegistryMutations() =>
+            pendingRegistryMutations ??= new ElevatedRegistryMutationBatch();
+
+        private static string GetLocalMachineSubKeyPath(string path)
+        {
+            const string prefix = "HKLM\\";
+            if (!path.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
+                throw new ArgumentException("Il percorso deve appartenere a HKEY_LOCAL_MACHINE.", nameof(path));
+            return path[prefix.Length..];
+        }
+
+        private void ApplyPendingRegistryMutations(string? additionalScript = null)
+        {
+            if (pendingRegistryMutations is null || pendingRegistryMutations.Count == 0)
+                return;
+
+            string script = pendingRegistryMutations.BuildCommand();
+            if (!string.IsNullOrWhiteSpace(additionalScript))
+                script += Environment.NewLine + additionalScript;
+            var startInfo = new ProcessStartInfo
             {
-                FileName = "reg.exe",
-                Arguments = $"add \"{regPath}\" /v \"{name}\" /t REG_DWORD /d {value} /f",
-                UseShellExecute = false,
-                CreateNoWindow = true,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true
+                FileName = Path.Join(Environment.SystemDirectory, "WindowsPowerShell", "v1.0", "powershell.exe"),
+                UseShellExecute = true,
+                WindowStyle = ProcessWindowStyle.Hidden,
+                Verb = "runas"
             };
+            startInfo.ArgumentList.Add("-NoProfile");
+            startInfo.ArgumentList.Add("-NonInteractive");
+            startInfo.ArgumentList.Add("-EncodedCommand");
+            startInfo.ArgumentList.Add(Convert.ToBase64String(System.Text.Encoding.Unicode.GetBytes(script)));
+            using Process process = Process.Start(startInfo)
+                ?? throw new InvalidOperationException("Impossibile avviare il processo elevato per Windows Update.");
+            process.WaitForExit();
+            if (process.ExitCode != 0)
+                throw new InvalidOperationException($"Le modifiche di Windows Update sono terminate con codice {process.ExitCode}.");
+            pendingRegistryMutations = null;
+        }
 
-            using (var process = System.Diagnostics.Process.Start(startInfo))
+        private static void RunElevatedPowerShellCommand(string command, string operationDescription)
+        {
+            var startInfo = new ProcessStartInfo
             {
-                process.WaitForExit();
+                FileName = Path.Join(Environment.SystemDirectory, "WindowsPowerShell", "v1.0", "powershell.exe"),
+                UseShellExecute = true,
+                WindowStyle = ProcessWindowStyle.Hidden,
+                Verb = "runas"
+            };
+            startInfo.ArgumentList.Add("-NoProfile");
+            startInfo.ArgumentList.Add("-NonInteractive");
+            startInfo.ArgumentList.Add("-Command");
+            startInfo.ArgumentList.Add(command);
 
-                var output = process.StandardOutput.ReadToEnd();
-                var error = process.StandardError.ReadToEnd();
-
-                if (process.ExitCode != 0)
-                {
-                    throw new Exception($"Error: {error}");
-                }
-            }
+            using Process process = Process.Start(startInfo)
+                ?? throw new InvalidOperationException("Impossibile avviare il processo PowerShell.");
+            process.WaitForExit();
+            if (process.ExitCode != 0)
+                throw new InvalidOperationException($"{operationDescription} terminata con codice {process.ExitCode}.");
         }
 
         private void btnResetUpdate_Click(object sender, EventArgs e)
         {
             try
             {
+                pendingRegistryMutations = new ElevatedRegistryMutationBatch();
                 var registryChanges = new (string Path, string Name, int Value)[]
                 {
             (@"HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU", "NoAutoUpdate", 0),
@@ -250,27 +311,26 @@ namespace WinHubX.Forms.Settaggi
                 {
                     UpdateRegistry(change.Path, change.Name, change.Value, false);
                 }
-                StartService("BITS");
-                StartService("wuauserv");
-                var registryRemovals = new[]
+                var registryRemovals = new (string Path, string Name)[]
                 {
-            @"HKLM\SOFTWARE\Policies\Microsoft\Windows\Device Metadata", "PreventDeviceMetadataFromNetwork",
-            @"HKLM\SOFTWARE\Policies\Microsoft\Windows\DriverSearching", "DontPromptForWindowsUpdate",
-            @"HKLM\SOFTWARE\Policies\Microsoft\Windows\DriverSearching", "DontSearchWindowsUpdate",
-            @"HKLM\SOFTWARE\Policies\Microsoft\Windows\DriverSearching", "DriverUpdateWizardWuSearchEnabled",
-            @"HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate", "ExcludeWUDriversInQualityUpdate",
-            @"HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU", "NoAutoRebootWithLoggedOnUsers",
-            @"HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU", "AUPowerManagement",
-            @"HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings", "BranchReadinessLevel",
-            @"HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings", "DeferFeatureUpdatesPeriodInDays",
-            @"HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings", "DeferQualityUpdatesPeriodInDays"
+            (@"HKLM\SOFTWARE\Policies\Microsoft\Windows\Device Metadata", "PreventDeviceMetadataFromNetwork"),
+            (@"HKLM\SOFTWARE\Policies\Microsoft\Windows\DriverSearching", "DontPromptForWindowsUpdate"),
+            (@"HKLM\SOFTWARE\Policies\Microsoft\Windows\DriverSearching", "DontSearchWindowsUpdate"),
+            (@"HKLM\SOFTWARE\Policies\Microsoft\Windows\DriverSearching", "DriverUpdateWizardWuSearchEnabled"),
+            (@"HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate", "ExcludeWUDriversInQualityUpdate"),
+            (@"HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU", "NoAutoRebootWithLoggedOnUsers"),
+            (@"HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU", "AUPowerManagement"),
+            (@"HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings", "BranchReadinessLevel"),
+            (@"HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings", "DeferFeatureUpdatesPeriodInDays"),
+            (@"HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings", "DeferQualityUpdatesPeriodInDays")
                 };
 
                 foreach (var removal in registryRemovals)
                 {
-                    RemoveRegistryValue(removal, true);
-                    RemoveRegistryValue(removal, false);
+                    RemoveRegistryValue(removal.Path, removal.Name, true);
+                    RemoveRegistryValue(removal.Path, removal.Name, false);
                 }
+                ApplyPendingRegistryMutations("Set-Service -Name BITS,wuauserv -StartupType Automatic -ErrorAction Stop");
                 string messaggio = LanguageManager.GetTranslation("Global", "modifichesuccesso");
 
                 _ = MessageBox.Show(
@@ -280,165 +340,131 @@ namespace WinHubX.Forms.Settaggi
                     MessageBoxIcon.Information
                 );
             }
-            catch (Exception)
+            catch (Exception ex) when (IsExpectedUpdateOperationFailure(ex))
             {
-
+                pendingRegistryMutations = null;
+                ShowOperationError(ex);
             }
         }
 
-        private void RemoveRegistryValue(string path, bool is64Bit)
+        private void RemoveRegistryValue(string path, string name, bool is64Bit)
         {
-            var regPath = is64Bit ? path : path.Replace("SOFTWARE", "SOFTWARE\\WOW6432Node");
-
-            var startInfo = new System.Diagnostics.ProcessStartInfo()
+            const string localMachinePrefix = "HKLM\\";
+            if (!path.StartsWith(localMachinePrefix, StringComparison.OrdinalIgnoreCase))
             {
-                FileName = "reg.exe",
-                Arguments = $"delete \"{regPath}\" /f",
-                UseShellExecute = false,
-                CreateNoWindow = true,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true
-            };
-
-            using (var process = System.Diagnostics.Process.Start(startInfo))
-            {
-                process.WaitForExit();
-
-                var error = process.StandardError.ReadToEnd();
-                if (process.ExitCode != 0 && !error.Contains("ERROR_FILE_NOT_FOUND"))
-                {
-                    throw new Exception($"Failed to remove registry value: {error}");
-                }
+                throw new ArgumentException("Il percorso deve appartenere a HKEY_LOCAL_MACHINE.", nameof(path));
             }
-        }
 
-        private void StartService(string serviceName)
-        {
-            var startInfo = new System.Diagnostics.ProcessStartInfo()
-            {
-                FileName = "sc.exe",
-                Arguments = $"config \"{serviceName}\" start= auto",
-                UseShellExecute = false,
-                CreateNoWindow = true,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true
-            };
-
-            using (var process = System.Diagnostics.Process.Start(startInfo))
-            {
-                process.WaitForExit();
-
-                var error = process.StandardError.ReadToEnd();
-                if (process.ExitCode != 0)
-                {
-                    throw new Exception($"Error {serviceName}: {error}");
-                }
-            }
+            RegistryView view = is64Bit ? RegistryView.Registry64 : RegistryView.Registry32;
+            GetPendingRegistryMutations().DeleteValue(RegistryHive.LocalMachine,
+                path[localMachinePrefix.Length..], name, view);
         }
 
         private void ModificaChiaveRegistro(RegistryView view)
         {
-            try
-            {
-                using (var key = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, view).CreateSubKey(@"SOFTWARE\Policies\Microsoft\Windows\Device Metadata", true))
-                {
-                    key?.SetValue("PreventDeviceMetadataFromNetwork", 1, RegistryValueKind.DWord);
-                }
-
-                using (var key = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, view).CreateSubKey(@"SOFTWARE\Policies\Microsoft\Windows\DriverSearching", true))
-                {
-                    key?.SetValue("SearchOrderConfig", 0, RegistryValueKind.DWord);
-                }
-
-                using (var key = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, view).CreateSubKey(@"SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate", true))
-                {
-                    key?.SetValue("ExcludeWUDriversInQualityUpdate", 1, RegistryValueKind.DWord);
-                }
-            }
-            catch (Exception)
-            {
-
-            }
+            var batch = GetPendingRegistryMutations();
+            batch.SetValue(RegistryHive.LocalMachine, @"SOFTWARE\Policies\Microsoft\Windows\Device Metadata", "PreventDeviceMetadataFromNetwork", 1, RegistryValueKind.DWord, view);
+            batch.SetValue(RegistryHive.LocalMachine, @"SOFTWARE\Policies\Microsoft\Windows\DriverSearching", "SearchOrderConfig", 0, RegistryValueKind.DWord, view);
+            batch.SetValue(RegistryHive.LocalMachine, @"SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate", "ExcludeWUDriversInQualityUpdate", 1, RegistryValueKind.DWord, view);
         }
+
+        private void ShowOperationError(Exception exception)
+        {
+            _ = MessageBox.Show(
+                $"L'operazione non è stata completata. {exception.GetBaseException().Message}",
+                "WinHubX",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
         private void ModificaDownloadAutomatico(RegistryView view)
         {
-            try
-            {
-                using (var key = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, view).CreateSubKey(@"SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU", true))
-                {
-                    key?.SetValue("AUOptions", 2, RegistryValueKind.DWord);
-                }
-            }
-            catch (Exception)
-            {
-
-            }
+            GetPendingRegistryMutations().SetValue(RegistryHive.LocalMachine,
+                @"SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU", "AUOptions", 2, RegistryValueKind.DWord, view);
         }
 
         private void RimuoviDriverUpdate()
         {
-            using (var key64 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64))
-            using (var key32 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32))
+            foreach (RegistryView view in new[] { RegistryView.Registry64, RegistryView.Registry32 })
             {
-                key64.DeleteValue(@"SOFTWARE\Policies\Microsoft\Windows\Device Metadata", false);
-                key32.DeleteValue(@"SOFTWARE\Policies\Microsoft\Windows\Device Metadata", false);
-                key64.DeleteValue(@"SOFTWARE\Policies\Microsoft\Windows\DriverSearching", false);
-                key32.DeleteValue(@"SOFTWARE\Policies\Microsoft\Windows\DriverSearching", false);
-                key64.DeleteValue(@"SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate", false);
-                key32.DeleteValue(@"SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate", false);
+                var batch = GetPendingRegistryMutations();
+                batch.DeleteValue(RegistryHive.LocalMachine, @"SOFTWARE\Policies\Microsoft\Windows\Device Metadata", "PreventDeviceMetadataFromNetwork", view);
+                batch.DeleteValue(RegistryHive.LocalMachine, @"SOFTWARE\Policies\Microsoft\Windows\DriverSearching", "SearchOrderConfig", view);
+                batch.DeleteValue(RegistryHive.LocalMachine, @"SOFTWARE\Policies\Microsoft\Windows\DriverSearching", "DontPromptForWindowsUpdate", view);
+                batch.DeleteValue(RegistryHive.LocalMachine, @"SOFTWARE\Policies\Microsoft\Windows\DriverSearching", "DontSearchWindowsUpdate", view);
+                batch.DeleteValue(RegistryHive.LocalMachine, @"SOFTWARE\Policies\Microsoft\Windows\DriverSearching", "DriverUpdateWizardWuSearchEnabled", view);
+                batch.DeleteValue(RegistryHive.LocalMachine, @"SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate", "ExcludeWUDriversInQualityUpdate", view);
             }
         }
 
         private void RimuoviRiavvioAutomatico()
         {
-            using (var key64 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64))
-            using (var key32 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32))
+            foreach (RegistryView view in new[] { RegistryView.Registry64, RegistryView.Registry32 })
             {
-                key64.DeleteValue(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\MusNotification.exe", false);
-                key32.DeleteValue(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\MusNotification.exe", false);
+                var batch = GetPendingRegistryMutations();
+                batch.DeleteValue(RegistryHive.LocalMachine, @"SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU", "NoAutoRebootWithLoggedOnUsers", view);
+                batch.DeleteValue(RegistryHive.LocalMachine, @"SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU", "AUPowerManagement", view);
             }
         }
         private void ModificaNotificheUpdate(bool enable)
         {
-            string cmdArgument = enable
-                ? "/c takeown /F \"%WinDIR%\\System32\\MusNotification.exe\" && icacls \"%WinDIR%\\System32\\MusNotification.exe\" /allow \"%EveryOne%:(X)\" && takeown /F \"%WinDIR%\\System32\\MusNotificationUx.exe\" && icacls \"%WinDIR%\\System32\\MusNotificationUx.exe\" /allow \"%EveryOne%:(X)\""
-                : "/c takeown /F \"%WinDIR%\\System32\\MusNotification.exe\" && icacls \"%WinDIR%\\System32\\MusNotification.exe\" /deny \"%EveryOne%:(X)\" && takeown /F \"%WinDIR%\\System32\\MusNotificationUx.exe\" && icacls \"%WinDIR%\\System32\\MusNotificationUx.exe\" /deny \"%EveryOne%:(X)\"";
+            string windowsDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Windows);
+            string musNotification = Path.Join(windowsDirectory, "System32", "MusNotification.exe");
+            string musNotificationUx = Path.Join(windowsDirectory, "System32", "MusNotificationUx.exe");
+            string escapedNotification = EscapePowerShellLiteral(musNotification);
+            string escapedNotificationUx = EscapePowerShellLiteral(musNotificationUx);
+            string accessControlCommand = enable
+                ? "& $icacls $target /remove:d Everyone"
+                : "& $icacls $target /deny 'Everyone:(X)'";
+            string script = $"$ErrorActionPreference = 'Stop'; $takeown = Join-Path $env:SystemRoot 'System32\\takeown.exe'; $icacls = Join-Path $env:SystemRoot 'System32\\icacls.exe'; $targets = @('{escapedNotification}', '{escapedNotificationUx}'); foreach ($target in $targets) {{ & $takeown /F $target /A; if ($LASTEXITCODE -ne 0) {{ exit $LASTEXITCODE }}; {accessControlCommand}; if ($LASTEXITCODE -ne 0) {{ exit $LASTEXITCODE }} }}";
+            string encodedScript = Convert.ToBase64String(System.Text.Encoding.Unicode.GetBytes(script));
 
             var startInfo = new ProcessStartInfo()
             {
-                FileName = "cmd.exe",
-                Arguments = cmdArgument,
-                UseShellExecute = false,
-                CreateNoWindow = true,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
+                FileName = Path.Join(Environment.SystemDirectory, "WindowsPowerShell", "v1.0", "powershell.exe"),
+                UseShellExecute = true,
+                WindowStyle = ProcessWindowStyle.Hidden,
                 Verb = "runas"
             };
+            startInfo.ArgumentList.Add("-NoProfile");
+            startInfo.ArgumentList.Add("-NonInteractive");
+            startInfo.ArgumentList.Add("-EncodedCommand");
+            startInfo.ArgumentList.Add(encodedScript);
 
-            using (var process = Process.Start(startInfo))
+            using (var process = Process.Start(startInfo)
+                ?? throw new InvalidOperationException("Impossibile avviare il processo di sistema."))
             {
                 process.WaitForExit();
-                var output = process.StandardOutput.ReadToEnd();
-                var error = process.StandardError.ReadToEnd();
+                if (process.ExitCode != 0)
+                    throw new InvalidOperationException($"La modifica dei permessi delle notifiche Windows Update è terminata con codice {process.ExitCode}.");
             }
         }
 
+        private static string EscapePowerShellLiteral(string value) => value.Replace("'", "''", StringComparison.Ordinal);
+
         private void RimuoviAUOptions()
         {
-            using (var key64 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64))
-            using (var key32 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32))
+            foreach (RegistryView view in new[] { RegistryView.Registry64, RegistryView.Registry32 })
             {
-                key64.DeleteValue(@"SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU", false);
-                key32.DeleteValue(@"SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU", false);
+                GetPendingRegistryMutations().DeleteValue(RegistryHive.LocalMachine,
+                    @"SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU", "AUOptions", view);
             }
         }
 
         private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
-            int currentStep = 0;
-            if (DisabilitaUpdate.CheckedItems.Contains("Disabilita Download Automatico Windows Update"))
+            if (e.Argument is not UpdateSelection selection)
             {
-                SetCheckboxState("DisabilitaDownloadAutomaticoWindowsUpdate", true);
+                throw new InvalidOperationException("Selezione delle impostazioni Windows Update non valida.");
+            }
+
+            int currentStep = 0;
+            var failures = new List<string>();
+            pendingRegistryMutations = new ElevatedRegistryMutationBatch();
+            int failuresBeforeCurrentOperation = 0;
+            if (selection.Disable.Contains("Disabilita Download Automatico Windows Update"))
+            {
+                failuresBeforeCurrentOperation = failures.Count;
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 try
@@ -446,57 +472,46 @@ namespace WinHubX.Forms.Settaggi
                     ModificaDownloadAutomatico(RegistryView.Registry32);
                     ModificaDownloadAutomatico(RegistryView.Registry64);
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedUpdateOperationFailure(ex))
                 {
-
+                    failures.Add($"Download automatico: {ex.GetBaseException().Message}");
+                }
+                if (failures.Count == failuresBeforeCurrentOperation)
+                {
+                    SetCheckboxState("DisabilitaDownloadAutomaticoWindowsUpdate", true);
                 }
             }
             else
             {
                 SetCheckboxState("DisabilitaDownloadAutomaticoWindowsUpdate", false);
             }
-            if (DisabilitaUpdate.CheckedItems.Contains("Disabilita Update Prodotti Microsoft"))
+            if (selection.Disable.Contains("Disabilita Update Prodotti Microsoft"))
             {
-                SetCheckboxState("DisabilitaUpdateProdottiMicrosoft", true);
+                failuresBeforeCurrentOperation = failures.Count;
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 try
                 {
-                    var startInfo = new System.Diagnostics.ProcessStartInfo()
-                    {
-                        FileName = "powershell.exe",
-                        Arguments = @"
-                        If ((New-Object -ComObject Microsoft.Update.ServiceManager).Services | Where-Object { $_.ServiceID -eq ""7971f918-a847-4430-9279-4a52d1efe18d""}) {
-                        (New-Object -ComObject Microsoft.Update.ServiceManager).RemoveService(""7971f918-a847-4430-9279-4a52d1efe18d"")
-                          }
-                           ",
-                        UseShellExecute = false,
-                        CreateNoWindow = true,
-                        RedirectStandardOutput = true,
-                        RedirectStandardError = true,
-                        Verb = "runus"
-                    };
-
-                    using (var process = System.Diagnostics.Process.Start(startInfo))
-                    {
-                        process.WaitForExit();
-
-                        var output = process.StandardOutput.ReadToEnd();
-                        var error = process.StandardError.ReadToEnd();
-                    }
+                    RunElevatedPowerShellCommand(
+                        "$ErrorActionPreference='Stop'; $manager=New-Object -ComObject Microsoft.Update.ServiceManager; if ($manager.Services | Where-Object { $_.ServiceID -eq '7971f918-a847-4430-9279-4a52d1efe18d' }) { $manager.RemoveService('7971f918-a847-4430-9279-4a52d1efe18d') }",
+                        "Rimozione del servizio Microsoft Update");
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedUpdateOperationFailure(ex))
                 {
-
+                    failures.Add($"Microsoft Update: {ex.GetBaseException().Message}");
+                }
+                if (failures.Count == failuresBeforeCurrentOperation)
+                {
+                    SetCheckboxState("DisabilitaUpdateProdottiMicrosoft", true);
                 }
             }
             else
             {
                 SetCheckboxState("DisabilitaUpdateProdottiMicrosoft", false);
             }
-            if (DisabilitaUpdate.CheckedItems.Contains("Disabilita Download Driver Windows Update"))
+            if (selection.Disable.Contains("Disabilita Download Driver Windows Update"))
             {
-                SetCheckboxState("DisabilitaDownloadDriverWindowsUpdate", true);
+                failuresBeforeCurrentOperation = failures.Count;
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 try
@@ -504,165 +519,191 @@ namespace WinHubX.Forms.Settaggi
                     ModificaChiaveRegistro(RegistryView.Registry32);
                     ModificaChiaveRegistro(RegistryView.Registry64);
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedUpdateOperationFailure(ex))
                 {
-
+                    failures.Add($"Driver Windows Update: {ex.GetBaseException().Message}");
+                }
+                if (failures.Count == failuresBeforeCurrentOperation)
+                {
+                    SetCheckboxState("DisabilitaDownloadDriverWindowsUpdate", true);
                 }
             }
             else
             {
                 SetCheckboxState("DisabilitaDownloadDriverWindowsUpdate", false);
             }
-            if (DisabilitaUpdate.CheckedItems.Contains("Disabilita Riavvio Automatico Windows Update"))
+            if (selection.Disable.Contains("Disabilita Riavvio Automatico Windows Update"))
             {
-                SetCheckboxState("DisabilitaRiavvioAutomaticoWindowsUpdate", true);
+                failuresBeforeCurrentOperation = failures.Count;
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 try
                 {
-                    using (var key = Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU", true))
+                    var batch = GetPendingRegistryMutations();
+                    foreach (RegistryView view in new[] { RegistryView.Registry64, RegistryView.Registry32 })
                     {
-                        if (key != null)
-                        {
-                            key.SetValue("NoAutoRebootWithLoggedOnUsers", 1, RegistryValueKind.DWord);
-                            key.SetValue("AUPowerManagement", 0, RegistryValueKind.DWord);
-                        }
+                        batch.SetValue(RegistryHive.LocalMachine, @"SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU", "NoAutoRebootWithLoggedOnUsers", 1, RegistryValueKind.DWord, view);
+                        batch.SetValue(RegistryHive.LocalMachine, @"SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU", "AUPowerManagement", 0, RegistryValueKind.DWord, view);
                     }
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedUpdateOperationFailure(ex))
                 {
-
+                    failures.Add($"Riavvio automatico: {ex.GetBaseException().Message}");
+                }
+                if (failures.Count == failuresBeforeCurrentOperation)
+                {
+                    SetCheckboxState("DisabilitaRiavvioAutomaticoWindowsUpdate", true);
                 }
             }
             else
             {
                 SetCheckboxState("DisabilitaRiavvioAutomaticoWindowsUpdate", false);
             }
-            if (DisabilitaUpdate.CheckedItems.Contains("Disabilita Notifiche Update"))
+            if (selection.Disable.Contains("Disabilita Notifiche Update"))
             {
-                SetCheckboxState("DisabilitaNotificheUpdate", true);
+                failuresBeforeCurrentOperation = failures.Count;
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 try
                 {
                     ModificaNotificheUpdate(false);
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedUpdateOperationFailure(ex))
                 {
-
+                    failures.Add($"Notifiche Windows Update: {ex.GetBaseException().Message}");
+                }
+                if (failures.Count == failuresBeforeCurrentOperation)
+                {
+                    SetCheckboxState("DisabilitaNotificheUpdate", true);
                 }
             }
             else
             {
                 SetCheckboxState("DisabilitaNotificheUpdate", false);
             }
-            if (AbilitaUpdate.CheckedItems.Contains("Abilita Download Automatico Windows Update"))
+            if (selection.Enable.Contains("Abilita Download Automatico Windows Update"))
             {
-                SetCheckboxState("AbilitaDownloadAutomaticoWindowsUpdate", true);
+                failuresBeforeCurrentOperation = failures.Count;
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 try
                 {
                     RimuoviAUOptions();
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedUpdateOperationFailure(ex))
                 {
-
+                    failures.Add($"Ripristino download automatico: {ex.GetBaseException().Message}");
+                }
+                if (failures.Count == failuresBeforeCurrentOperation)
+                {
+                    SetCheckboxState("AbilitaDownloadAutomaticoWindowsUpdate", true);
                 }
             }
             else
             {
                 SetCheckboxState("AbilitaDownloadAutomaticoWindowsUpdate", false);
             }
-            if (AbilitaUpdate.CheckedItems.Contains("Abilita Update Prodotti Microsoft"))
+            if (selection.Enable.Contains("Abilita Update Prodotti Microsoft"))
             {
-                SetCheckboxState("AbilitaUpdateProdottiMicrosoft", true);
+                failuresBeforeCurrentOperation = failures.Count;
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 try
                 {
-                    var startInfo = new System.Diagnostics.ProcessStartInfo()
-                    {
-                        FileName = "powershell.exe",
-                        Arguments = "(New-Object -ComObject Microsoft.Update.ServiceManager).AddService2(\"7971f918-a847-4430-9279-4a52d1efe18d\", 7, \"\")",
-                        UseShellExecute = false,
-                        CreateNoWindow = true,
-                        RedirectStandardOutput = true,
-                        RedirectStandardError = true,
-                        Verb = "runus"
-                    };
-
-                    using (var process = System.Diagnostics.Process.Start(startInfo))
-                    {
-                        process.WaitForExit();
-
-                        var output = process.StandardOutput.ReadToEnd();
-                        var error = process.StandardError.ReadToEnd();
-                    }
+                    RunElevatedPowerShellCommand(
+                        "(New-Object -ComObject Microsoft.Update.ServiceManager).AddService2('7971f918-a847-4430-9279-4a52d1efe18d', 7, '')",
+                        "Attivazione del servizio Microsoft Update");
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedUpdateOperationFailure(ex))
                 {
-
+                    failures.Add($"Servizio Microsoft Update: {ex.GetBaseException().Message}");
+                }
+                if (failures.Count == failuresBeforeCurrentOperation)
+                {
+                    SetCheckboxState("AbilitaUpdateProdottiMicrosoft", true);
                 }
             }
             else
             {
                 SetCheckboxState("AbilitaUpdateProdottiMicrosoft", false);
             }
-            if (AbilitaUpdate.CheckedItems.Contains("Abilita Download Driver Windows Update"))
+            if (selection.Enable.Contains("Abilita Download Driver Windows Update"))
             {
-                SetCheckboxState("AbilitaDownloadDriverWindowsUpdate", true);
+                failuresBeforeCurrentOperation = failures.Count;
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 try
                 {
                     RimuoviDriverUpdate();
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedUpdateOperationFailure(ex))
                 {
-
+                    failures.Add($"Ripristino driver Windows Update: {ex.GetBaseException().Message}");
+                }
+                if (failures.Count == failuresBeforeCurrentOperation)
+                {
+                    SetCheckboxState("AbilitaDownloadDriverWindowsUpdate", true);
                 }
             }
             else
             {
                 SetCheckboxState("AbilitaDownloadDriverWindowsUpdate", false);
             }
-            if (AbilitaUpdate.CheckedItems.Contains("Abilita Riavvio Automatico Windows Update"))
+            if (selection.Enable.Contains("Abilita Riavvio Automatico Windows Update"))
             {
-                SetCheckboxState("AbilitaRiavvioAutomaticoWindowsUpdate", true);
+                failuresBeforeCurrentOperation = failures.Count;
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 try
                 {
                     RimuoviRiavvioAutomatico();
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedUpdateOperationFailure(ex))
                 {
-
+                    failures.Add($"Ripristino riavvio automatico: {ex.GetBaseException().Message}");
+                }
+                if (failures.Count == failuresBeforeCurrentOperation)
+                {
+                    SetCheckboxState("AbilitaRiavvioAutomaticoWindowsUpdate", true);
                 }
             }
             else
             {
                 SetCheckboxState("AbilitaRiavvioAutomaticoWindowsUpdate", false);
             }
-            if (AbilitaUpdate.CheckedItems.Contains("Abilita Notifiche Update"))
+            if (selection.Enable.Contains("Abilita Notifiche Update"))
             {
-                SetCheckboxState("AbilitaNotificheUpdate", true);
+                failuresBeforeCurrentOperation = failures.Count;
                 currentStep++;
                 backgroundWorker1.ReportProgress(currentStep);
                 try
                 {
                     ModificaNotificheUpdate(true);
                 }
-                catch (Exception)
+                catch (Exception ex) when (IsExpectedUpdateOperationFailure(ex))
                 {
-
+                    failures.Add($"Ripristino notifiche Windows Update: {ex.GetBaseException().Message}");
+                }
+                if (failures.Count == failuresBeforeCurrentOperation)
+                {
+                    SetCheckboxState("AbilitaNotificheUpdate", true);
                 }
             }
             else
             {
                 SetCheckboxState("AbilitaNotificheUpdate", false);
             }
+
+            try
+            {
+                ApplyPendingRegistryMutations();
+            }
+            catch (Exception ex) when (IsExpectedUpdateOperationFailure(ex))
+            {
+                failures.Add($"Modifiche Registro Windows Update (UAC): {ex.GetBaseException().Message}");
+            }
+
+            e.Result = failures;
         }
 
         private void backgroundWorker1_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
@@ -672,6 +713,36 @@ namespace WinHubX.Forms.Settaggi
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
+            if (e.Error is not null)
+            {
+                ShowOperationError(e.Error);
+                return;
+            }
+
+            if (e.Cancelled)
+            {
+                _ = MessageBox.Show(
+                    "Operazione annullata.",
+                    "WinHubX",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (e.Result is List<string> failures && failures.Count > 0)
+            {
+                string details = string.Join(Environment.NewLine, failures.Take(5));
+                string remaining = failures.Count > 5
+                    ? $"{Environment.NewLine}Altri errori: {failures.Count - 5}."
+                    : string.Empty;
+                _ = MessageBox.Show(
+                    $"Alcune impostazioni non sono state applicate:{Environment.NewLine}{details}{remaining}",
+                    "WinHubX",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
+
             string messaggio = LanguageManager.GetTranslation("Global", "modifichesuccesso");
 
             _ = MessageBox.Show(
@@ -690,19 +761,17 @@ namespace WinHubX.Forms.Settaggi
     };
             for (int i = 0; i < DisabilitaUpdate.Items.Count; i++)
                 DisabilitaUpdate.SetItemChecked(i, false);
-            foreach (string nome in daDisabilitare)
+            foreach (int index in daDisabilitare.Select(nome => DisabilitaUpdate.Items.IndexOf(nome)).Where(static index => index >= 0))
             {
-                int index = DisabilitaUpdate.Items.IndexOf(nome);
-                if (index != -1)
-                    DisabilitaUpdate.SetItemChecked(index, true);
+                DisabilitaUpdate.SetItemChecked(index, true);
             }
         }
 
-        private void DisabilitaUpdate_ItemCheck(object sender, ItemCheckEventArgs e)
+        private void DisabilitaUpdate_ItemCheck(object? sender, ItemCheckEventArgs e)
         {
             if (e.NewValue == CheckState.Checked)
             {
-                string itemName = DisabilitaUpdate.Items[e.Index].ToString();
+                string itemName = DisabilitaUpdate.Items[e.Index]?.ToString() ?? string.Empty;
                 string abilitaName = itemName.Replace("Disabilita", "Abilita");
 
                 int index = AbilitaUpdate.Items.IndexOf(abilitaName);
@@ -715,11 +784,11 @@ namespace WinHubX.Forms.Settaggi
             }
         }
 
-        private void AbilitaUpdate_ItemCheck(object sender, ItemCheckEventArgs e)
+        private void AbilitaUpdate_ItemCheck(object? sender, ItemCheckEventArgs e)
         {
             if (e.NewValue == CheckState.Checked)
             {
-                string itemName = AbilitaUpdate.Items[e.Index].ToString();
+                string itemName = AbilitaUpdate.Items[e.Index]?.ToString() ?? string.Empty;
                 string disabilitaName = itemName.Replace("Abilita", "Disabilita");
 
                 int index = DisabilitaUpdate.Items.IndexOf(disabilitaName);

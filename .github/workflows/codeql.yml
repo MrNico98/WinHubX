@@ -1,0 +1,54 @@
+name: CodeQL
+
+on:
+  push:
+    branches: [main, experiment/net11-modernization]
+  pull_request:
+    branches: [main, experiment/net11-modernization]
+  schedule:
+    - cron: '31 3 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  analyze:
+    name: Analyze C#
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v4
+        with:
+          languages: csharp
+          queries: security-and-quality
+
+      - name: Setup .NET 10 SDK
+        if: ${{ (github.event_name == 'pull_request' && github.base_ref == 'main') || (github.event_name != 'pull_request' && github.ref_name == 'main') }}
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 10.0.x
+          dotnet-quality: ga
+
+      - name: Setup .NET 11 preview SDK
+        if: ${{ (github.event_name == 'pull_request' && github.base_ref == 'experiment/net11-modernization') || (github.event_name != 'pull_request' && github.ref_name == 'experiment/net11-modernization') }}
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 11.0.x
+          dotnet-quality: preview
+
+      - name: Restore
+        run: dotnet restore Project/WinHubX/WinHubX.csproj
+
+      - name: Build for CodeQL
+        run: dotnet build Project/WinHubX/WinHubX.csproj --configuration Release --no-restore --warnaserror --nologo
+
+      - name: Analyze
+        uses: github/codeql-action/analyze@v4
+        with:
+          category: /language:csharp

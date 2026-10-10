@@ -148,7 +148,7 @@
     <value />
   </data>
   <data name="&gt;&gt;btn_cambiaBianco.Type" xml:space="preserve">
-    <value>CuoreUI.Controls.cuiButton, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+    <value>HartUI.Controls.cuiButton, HartUI, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;pictureBox5.Type" xml:space="preserve">
     <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -292,7 +292,7 @@
     <value>cuiPanel2</value>
   </data>
   <data name="&gt;&gt;groupBox6.Type" xml:space="preserve">
-    <value>CuoreUI.Controls.cuiPanel, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+    <value>HartUI.Controls.cuiPanel, HartUI, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="RemProcRad.Text" xml:space="preserve">
     <value>Rimuovi</value>
@@ -436,7 +436,7 @@
     <value>Non aggiungere driver aggiuntivi</value>
   </data>
   <data name="&gt;&gt;cuiPanel4.Type" xml:space="preserve">
-    <value>CuoreUI.Controls.cuiPanel, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+    <value>HartUI.Controls.cuiPanel, HartUI, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="label10.TabIndex" type="System.Int32, mscorlib">
     <value>104</value>
@@ -571,7 +571,7 @@
     <value>NoControl</value>
   </data>
   <data name="&gt;&gt;cuiPanel1.Type" xml:space="preserve">
-    <value>CuoreUI.Controls.cuiPanel, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+    <value>HartUI.Controls.cuiPanel, HartUI, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="label6.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleLeft</value>
@@ -610,7 +610,7 @@
     <value>True</value>
   </data>
   <data name="&gt;&gt;cuiPanel5.Type" xml:space="preserve">
-    <value>CuoreUI.Controls.cuiPanel, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+    <value>HartUI.Controls.cuiPanel, HartUI, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="cuiPanel6.TabIndex" type="System.Int32, mscorlib">
     <value>124</value>
@@ -712,7 +712,7 @@
     <value>Top, Right</value>
   </data>
   <data name="&gt;&gt;btn_browserBianco.Type" xml:space="preserve">
-    <value>CuoreUI.Controls.cuiButton, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+    <value>HartUI.Controls.cuiButton, HartUI, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;DriverCartella.ZOrder" xml:space="preserve">
     <value>2</value>
@@ -799,7 +799,7 @@
     <value>True</value>
   </data>
   <data name="&gt;&gt;cuiPanel3.Type" xml:space="preserve">
-    <value>CuoreUI.Controls.cuiPanel, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+    <value>HartUI.Controls.cuiPanel, HartUI, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;pictureBox15.Parent" xml:space="preserve">
     <value>cuiPanel6</value>
@@ -1231,7 +1231,7 @@
     <value>1</value>
   </data>
   <data name="&gt;&gt;groupBox7.Type" xml:space="preserve">
-    <value>CuoreUI.Controls.cuiPanel, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+    <value>HartUI.Controls.cuiPanel, HartUI, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;NotDisWinDefRad.Name" xml:space="preserve">
     <value>NotDisWinDefRad</value>
@@ -1282,7 +1282,7 @@
     <value>7, 68</value>
   </data>
   <data name="&gt;&gt;cuiPanel6.Type" xml:space="preserve">
-    <value>CuoreUI.Controls.cuiPanel, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+    <value>HartUI.Controls.cuiPanel, HartUI, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;Win11StockRad.ZOrder" xml:space="preserve">
     <value>3</value>
@@ -1306,7 +1306,7 @@
     <value />
   </data>
   <data name="&gt;&gt;cuiPanel2.Type" xml:space="preserve">
-    <value>CuoreUI.Controls.cuiPanel, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+    <value>HartUI.Controls.cuiPanel, HartUI, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="pictureBox12.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>Zoom</value>
@@ -1432,7 +1432,7 @@
     <value>x32</value>
   </data>
   <data name="&gt;&gt;btn_CreaISOVerdi.Type" xml:space="preserve">
-    <value>CuoreUI.Controls.cuiButton, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+    <value>HartUI.Controls.cuiButton, HartUI, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="RemEdgeRad.ToolTip" xml:space="preserve">
     <value />

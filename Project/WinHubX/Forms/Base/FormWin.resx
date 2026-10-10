@@ -139,7 +139,7 @@
     <value>btnDriverRSTPrinci</value>
   </data>
   <data name="&gt;&gt;btnDriverRSTPrinci.Type" xml:space="preserve">
-    <value>CuoreUI.Controls.cuiButton, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+    <value>HartUI.Controls.cuiButton, HartUI, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;btnDriverRSTPrinci.Parent" xml:space="preserve">
     <value>panel50</value>
@@ -166,7 +166,7 @@
     <value>btnDownloadIsoPrinci</value>
   </data>
   <data name="&gt;&gt;btnDownloadIsoPrinci.Type" xml:space="preserve">
-    <value>CuoreUI.Controls.cuiButton, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+    <value>HartUI.Controls.cuiButton, HartUI, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;btnDownloadIsoPrinci.Parent" xml:space="preserve">
     <value>panel50</value>
@@ -193,7 +193,7 @@
     <value>btnAttivaWindowsPrinci</value>
   </data>
   <data name="&gt;&gt;btnAttivaWindowsPrinci.Type" xml:space="preserve">
-    <value>CuoreUI.Controls.cuiButton, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+    <value>HartUI.Controls.cuiButton, HartUI, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;btnAttivaWindowsPrinci.Parent" xml:space="preserve">
     <value>panel50</value>
@@ -220,7 +220,7 @@
     <value>btnCambiaEdizionePrinci</value>
   </data>
   <data name="&gt;&gt;btnCambiaEdizionePrinci.Type" xml:space="preserve">
-    <value>CuoreUI.Controls.cuiButton, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+    <value>HartUI.Controls.cuiButton, HartUI, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;btnCambiaEdizionePrinci.Parent" xml:space="preserve">
     <value>panel50</value>
@@ -247,7 +247,7 @@
     <value>btnCreaIsoPrinci</value>
   </data>
   <data name="&gt;&gt;btnCreaIsoPrinci.Type" xml:space="preserve">
-    <value>CuoreUI.Controls.cuiButton, CuoreUI, Culture=neutral, PublicKeyToken=null</value>
+    <value>HartUI.Controls.cuiButton, HartUI, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;btnCreaIsoPrinci.Parent" xml:space="preserve">
     <value>panel50</value>

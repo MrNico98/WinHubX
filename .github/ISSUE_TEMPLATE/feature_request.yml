@@ -1,0 +1,26 @@
+name: Proposta funzionalità
+description: Proponi una modifica circoscritta e spiegane il valore.
+title: "[Feature]: "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problema che vuoi risolvere
+      description: Descrivi il caso d'uso, non solo la soluzione desiderata.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposta
+      description: Descrivi il comportamento atteso e le alternative considerate.
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: Impatto e rischi
+      description: Indica eventuali effetti su Windows, privilegi, prestazioni o compatibilità.
+    validations:
+      required: true

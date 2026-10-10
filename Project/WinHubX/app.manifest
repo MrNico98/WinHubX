@@ -16,7 +16,7 @@
             Rimuovere questo elemento se l'applicazione richiede questa virtualizzazione per
             compatibilità con le versioni precedenti.
         -->
-				<requestedExecutionLevel level="highestAvailable" uiAccess="false" />
+				<requestedExecutionLevel level="asInvoker" uiAccess="false" />
 			</requestedPrivileges>
 		</security>
 	</trustInfo>
@@ -40,7 +40,9 @@
 			<!--<supportedOS Id="{1f676c76-80e1-4239-95bb-83d0f6d0da78}" />-->
 
 			<!-- Windows 10 -->
-			<!--<supportedOS Id="{8e0f7a12-bfb3-4fe8-b9a5-48fd50a15a9a}" />-->
+			<supportedOS Id="{8e0f7a12-bfb3-4fe8-b9a5-48fd50a15a9a}" />
+
+			<!-- Windows 11 usa lo stesso compatibility GUID di Windows 10 -->
 
 		</application>
 	</compatibility>
@@ -54,14 +56,13 @@
 
   <application xmlns="urn:schemas-microsoft-com:asm.v3">
     <windowsSettings>
-      <dpiAware xmlns="http://schemas.microsoft.com/SMI/2005/WindowsSettings">true</dpiAware>
       <longPathAware xmlns="http://schemas.microsoft.com/SMI/2016/WindowsSettings">true</longPathAware>
     </windowsSettings>
   </application>
 
 
 	<!-- Abilita i temi per finestre di dialogo e controlli comuni di Windows (Windows XP e versioni successive) -->
-	<!--
+
   <dependency>
     <dependentAssembly>
       <assemblyIdentity
@@ -74,6 +75,5 @@
         />
     </dependentAssembly>
   </dependency>
-  -->
 
 </assembly>
